@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support Markticulous</title>
+<meta name="description" content="Free apps, made meticulously. Chip in if one of them earns a place on your computer.">
+<style>
+  :root {
+    --bg: #f4f3ef; --card: #fff; --ink: #1b1b19; --mute: #6d6b65; --rule: #dedbd3;
+    --gold: #c9a24a; --gold-ink: #1b1b19;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #141412; --card: #1d1d1b; --ink: #ecebe6; --mute: #9a978f; --rule: #33322e; }
+  }
+  :root[data-theme="dark"] { --bg: #141412; --card: #1d1d1b; --ink: #ecebe6; --mute: #9a978f; --rule: #33322e; }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 48px 16px 64px; }
+  h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 16px; }
+  h2 { font-size: 1.1rem; margin: 40px 0 12px; }
+  p { margin: 0 0 16px; }
+  .mute { color: var(--mute); }
+  .thanks { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
+  .btn {
+    display: inline-block; background: var(--gold); color: var(--gold-ink);
+    padding: 12px 22px; border-radius: 999px; font-weight: 600; text-decoration: none;
+  }
+  .btn:hover, .btn:focus-visible { filter: brightness(1.08); }
+  .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .apps li { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
+  .apps b { display: block; }
+  .apps a { color: inherit; }
+  #supporters { display: none; }
+  #supporters ul { margin: 0; padding-left: 1.2em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Free apps, made meticulously.</h1>
+  <p id="from" class="thanks" hidden></p>
+  <p>Every app here is free, with no ads, no tracking and no catch. I spend a long time on the small details. If one of them earns a place on your computer, you can chip in.</p>
+  <p><a class="btn" id="kofi" rel="noopener">Buy me a coffee on Ko-fi</a></p>
+
+  <h2>The apps</h2>
+  <ul class="apps" id="apps"></ul>
+
+  <section id="supporters">
+    <h2>Thank you ♥</h2>
+    <ul id="supporter-list"></ul>
+  </section>
+</main>
+<script>
+  const KOFI_URL = 'https://ko-fi.com/markticulous';
+  // Add a line here for each new app. slug matches ?app= in the hub link.
+  const APPS = [
+    { slug: 'clipee', name: 'Clipee', blurb: 'Fast, private clipboard manager for Windows.', url: 'https://github.com/markticulous/Clipee' },
+    { slug: 'backee', name: 'Backee', blurb: 'Fast, private backup for Windows.' },
+    { slug: 'deskside-radio', name: 'Deskside Radio', blurb: 'A radio for your desk.' },
+  ];
+
+  document.getElementById('kofi').href = KOFI_URL;
+
+  const list = document.getElementById('apps');
+  for (const app of APPS) {
+    const li = document.createElement('li');
+    const name = document.createElement('b');
+    if (app.url) {
+      const a = document.createElement('a');
+      a.href = app.url;
+      a.rel = 'noopener';
+      a.textContent = app.name;
+      name.append(a);
+    } else {
+      name.textContent = app.name;
+    }
+    const blurb = document.createElement('span');
+    blurb.className = 'mute';
+    blurb.textContent = app.blurb;
+    li.append(name, blurb);
+    list.append(li);
+  }
+
+  // ?app=clipee -> "Thanks for using Clipee." Only known slugs are used.
+  const slug = new URLSearchParams(location.search).get('app');
+  const from = APPS.find((a) => a.slug === slug);
+  if (from) {
+    const el = document.getElementById('from');
+    el.textContent = 'Thanks for using ' + from.name + '.';
+    el.hidden = false;
+  }
+
+  // Supporters wall: opt-in names only. Hidden if empty or unreachable.
+  fetch('supporters.json')
+    .then((r) => (r.ok ? r.json() : []))
+    .then((names) => {
+      if (!Array.isArray(names) || names.length === 0) return;
+      const ul = document.getElementById('supporter-list');
+      for (const n of names) {
+        const li = document.createElement('li');
+        li.textContent = String(n);
+        ul.append(li);
+      }
+      document.getElementById('supporters').style.display = 'block';
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
