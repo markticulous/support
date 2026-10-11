@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Backee logo (A9): lowercase b inside a circular back-up arrow, Midnight to Cyan tile. 32 px and up. -->
+  <defs><linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172554"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#tile)"/>
+  <g transform="translate(0 0.5)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.2"><path d="M30 11 A21 21 0 1 0 51 32 V27.1"/><path d="M45.4 32.7 L51 27.1 L56.6 32.7"/><path d="M23.5 18 V45.25"/><circle cx="31" cy="37.75" r="7.5"/></g>
+</svg>

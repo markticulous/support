@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 15.40 131.50 32.45" width="526" height="130">
+  <!-- Backee wordmark (C): custom monoline lowercase built on the logo b (bowl r7.5, stroke 4.2); "ee" in brand cyan. For light backgrounds. -->
+  <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#0F172A"><path d="M2.10 18 V45.25"/><circle cx="9.60" cy="37.75" r="7.5"/><circle cx="33.40" cy="37.75" r="7.5"/><path d="M40.90 30.25 V45.25"/><path d="M62.50 32.45 A7.5 7.5 0 1 0 62.50 43.05"/><path d="M71.30 18 V45.25"/><path d="M81.30 30.25 L71.30 39.75"/><path d="M75.50 35.75 L81.80 45.25"/></g>
+    <g stroke="#06B6D4"><path d="M90.60 37.75 H105.60 A7.5 7.5 0 1 0 103.41 43.05"/><path d="M114.40 37.75 H129.40 A7.5 7.5 0 1 0 127.21 43.05"/></g>
+  </g>
+</svg>
