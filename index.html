@@ -6,92 +6,253 @@
 <title>Support Markticulous</title>
 <meta name="description" content="Free apps, made meticulously. Chip in if one of them earns a place on your computer.">
 <style>
+  /* Tagee's wordmark face, hosted here so the page makes no request to a font service (Fraunces, SIL Open Font License). */
+  @font-face { font-family: "Fraunces"; font-style: normal; font-weight: 600; font-display: swap; src: url(assets/fraunces-600.woff2) format("woff2"); }
+
+  /* Windows Fluent look: a soft Mica-like ground, 8px surfaces with a hairline, 4px controls, one blue accent.
+     Light and dark follow the system. */
   :root {
-    --bg: #f4f3ef; --card: #fff; --ink: #1b1b19; --mute: #6d6b65; --rule: #dedbd3;
-    --gold: #c9a24a; --gold-ink: #1b1b19;
+    --bg: #f3f3f3; --surface: rgba(255, 255, 255, .78); --surface-solid: #fbfbfb; --stroke: rgba(0, 0, 0, .07);
+    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a;
+    --accent: #0067c0; --accent-hover: #1975c5; --accent-press: #3a86cb; --on-accent: #ffffff;
+    --ctrl: #ffffff; --ctrl-hover: #f6f6f6; --ctrl-stroke: rgba(0, 0, 0, .09); --ctrl-stroke-bottom: rgba(0, 0, 0, .16);
+    --info-bg: #e6f0fa; --info-stroke: rgba(0, 103, 192, .22);
+    --plate-line: #cfcbc2; --plate-ink: #7a7871;
+    --tagee-ee: #c2410c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg: #141412; --card: #1d1d1b; --ink: #ecebe6; --mute: #9a978f; --rule: #33322e; }
+    :root {
+      --bg: #1f1f1f; --surface: rgba(255, 255, 255, .045); --surface-solid: #2b2b2b; --stroke: rgba(255, 255, 255, .08);
+      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d;
+      --accent: #60cdff; --accent-hover: #6fd2ff; --accent-press: #86d8ff; --on-accent: #003a56;
+      --ctrl: rgba(255, 255, 255, .06); --ctrl-hover: rgba(255, 255, 255, .09); --ctrl-stroke: rgba(255, 255, 255, .09); --ctrl-stroke-bottom: rgba(255, 255, 255, .09);
+      --info-bg: rgba(96, 205, 255, .1); --info-stroke: rgba(96, 205, 255, .28);
+      --plate-line: #4a4842; --plate-ink: #a5a299;
+      --tagee-ee: #ee6a2c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
   }
-  :root[data-theme="dark"] { --bg: #141412; --card: #1d1d1b; --ink: #ecebe6; --mute: #9a978f; --rule: #33322e; }
 
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0; color: var(--text); font: 15px/1.55 var(--font);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(900px 420px at 88% -8%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%),
+      radial-gradient(700px 420px at -6% 6%, color-mix(in srgb, #8a63d2 8%, transparent), transparent 70%);
+    background-repeat: no-repeat;
+    -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 640px; margin: 0 auto; padding: 48px 16px 64px; }
-  h1 { font-size: 2.2rem; line-height: 1.15; margin: 0 0 16px; }
-  h2 { font-size: 1.1rem; margin: 40px 0 12px; }
-  p { margin: 0 0 16px; }
-  .mute { color: var(--mute); }
-  .thanks { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  .wrap { width: min(980px, 100% - 32px); margin-inline: auto; }
+
+  /* Top bar */
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
+  .brand { font: 600 15px/1 var(--font-display); letter-spacing: .01em; color: var(--text); display: inline-flex; align-items: center; gap: 10px; }
+  .brand i { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); display: block; }
+
+  /* Controls */
   .btn {
-    display: inline-block; background: var(--gold); color: var(--gold-ink);
-    padding: 12px 22px; border-radius: 999px; font-weight: 600; text-decoration: none;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 32px; padding: 5px 14px;
+    border-radius: 4px; border: 1px solid var(--ctrl-stroke); border-bottom-color: var(--ctrl-stroke-bottom);
+    background: var(--ctrl); color: var(--text); font: 400 14px/1.2 var(--font); text-decoration: none; cursor: pointer;
+    transition: background .12s ease;
   }
-  .btn:hover, .btn:focus-visible { filter: brightness(1.08); }
-  .apps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-  .apps li { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 16px; }
-  .apps b { display: block; }
-  .apps a { color: inherit; }
+  .btn:hover { background: var(--ctrl-hover); text-decoration: none; }
+  .btn.accent { background: var(--accent); color: var(--on-accent); border-color: transparent; font-weight: 600; }
+  .btn.accent:hover { background: var(--accent-hover); }
+  .btn.accent:active { background: var(--accent-press); }
+  .btn.big { min-height: 40px; padding-inline: 20px; font-size: 15px; }
+
+  /* InfoBar (shown when someone arrives from an app) */
+  .info {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin-bottom: 8px; border-radius: 4px;
+    background: var(--info-bg); border: 1px solid var(--info-stroke); font-size: 14px;
+  }
+  .info[hidden] { display: none; }
+  .info svg { width: 16px; height: 16px; flex: none; color: var(--accent); }
+
+  /* Hero */
+  .hero { padding-block: 56px 40px; max-width: 720px; animation: rise .5s cubic-bezier(.1, .9, .2, 1) both; }
+  h1 { font: 600 clamp(2rem, 6vw, 3.1rem)/1.1 var(--font-display); letter-spacing: -.02em; margin: 0 0 16px; text-wrap: balance; }
+  .lede { font-size: 1.08rem; color: var(--text2); margin: 0 0 28px; max-width: 58ch; }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+  .kofi { display: inline-flex; min-height: 40px; align-items: center; transform: translateY(-2px); } /* Ko-fi's own button sits a touch low beside ours */
+  .fine { margin: 16px 0 0; color: var(--text3); font-size: 13px; }
+
+  /* Sections */
+  section { padding-block: 24px; }
+  h2 { font: 600 1.25rem/1.2 var(--font-display); margin: 0 0 16px; }
+
+  .apps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 720px) { .apps { grid-template-columns: minmax(0, 1fr); } }
+  .card {
+    display: grid; gap: 16px; align-content: start; padding: 20px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--stroke); box-shadow: var(--shadow);
+    -webkit-backdrop-filter: blur(24px) saturate(1.3); backdrop-filter: blur(24px) saturate(1.3);
+  }
+  .app-head { display: flex; align-items: center; gap: 14px; }
+  .app-head > img { width: 56px; height: 56px; border-radius: 12px; flex: none; display: block; }
+  .app-head h3 { margin: 0 0 5px; font-weight: 400; line-height: 1; }
+  .app-head .tag { color: var(--text3); font-size: 13px; }
+
+  /* One wordmark per app, each in its own brand's style. */
+  .wm { display: inline-block; vertical-align: middle; }
+  .wm-clipee { font: 600 15px/1.2 var(--font); letter-spacing: .34em; text-transform: uppercase; color: var(--text2); }
+  .wm-tagee { font: 600 29px/1 "Fraunces", Georgia, "Times New Roman", serif; letter-spacing: -.02em; color: var(--text); }
+  .wm-tagee b { font-weight: inherit; color: var(--tagee-ee); }
+  .wm-deskside {
+    font: 700 13px/1 "Archivo", "Helvetica Neue", Arial, sans-serif; letter-spacing: .24em; text-transform: uppercase; color: #231a0a;
+    padding: 7px 12px 6px; border-radius: 2px; background: linear-gradient(#e2c06a, #a9832f);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 1px 2px rgba(0, 0, 0, .35);
+  }
+  .wm-backee { display: block; height: 24px; width: auto; margin-top: 3px; } /* the logo's tile is drawn 3.5px inside its box, so the wordmark drops 3px to be level with the tile's top edge */
+  .app-head.top { align-items: flex-start; }
+  .soon {
+    display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 5px 14px; border-radius: 4px;
+    background: var(--ctrl); border: 1px dashed var(--ctrl-stroke-bottom); color: var(--text2); font-size: 14px;
+  }
+  .card p { margin: 0; color: var(--text2); }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .fact { padding: 16px 18px; border-radius: 8px; background: var(--surface); border: 1px solid var(--stroke); }
+  .fact b { display: block; font: 600 15px/1.3 var(--font-display); margin-bottom: 4px; }
+  .fact span { color: var(--text2); font-size: 14px; }
+
   #supporters { display: none; }
-  #supporters ul { margin: 0; padding-left: 1.2em; }
+  #supporters ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  #supporters li { padding: 5px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--stroke); font-size: 14px; }
+
+  footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
+  /* The maker plate: Rams variant, the one the apps wear. It is never altered. */
+  .plate {
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; border: 1px solid var(--plate-line); border-radius: 1px 6px 1px 6px;
+    padding: 3px 7px; font: 500 9.5px/1 "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--plate-ink);
+  }
+  .plate .dim { opacity: .6; }
+
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero { animation: none; } html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
-<main>
-  <h1>Free apps, made meticulously.</h1>
-  <p id="from" class="thanks" hidden></p>
-  <p>Every app here is free, with no ads, no tracking and no catch. I spend a long time on the small details. If one of them earns a place on your computer, you can chip in.</p>
-  <p><a class="btn" id="kofi" rel="noopener">Buy me a coffee on Ko-fi</a></p>
+<div class="wrap">
+  <header class="bar">
+    <span class="brand"><i aria-hidden="true"></i>Markticulous</span>
+    <a class="btn" href="https://github.com/markticulous" rel="noopener">GitHub</a>
+  </header>
 
-  <h2>The apps</h2>
-  <ul class="apps" id="apps"></ul>
+  <main>
+    <div class="info" id="from" role="status" hidden>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 14s-6-3.6-6-8.2A3.3 3.3 0 0 1 8 4a3.3 3.3 0 0 1 6 1.8C14 10.4 8 14 8 14z"/></svg>
+      <span id="from-text"></span>
+    </div>
 
-  <section id="supporters">
-    <h2>Thank you ♥</h2>
-    <ul id="supporter-list"></ul>
-  </section>
-</main>
+    <div class="hero">
+      <h1>Free apps, made meticulously.</h1>
+      <p class="lede">Every app here is free, with no ads, no tracking and no catch. I spend a long time on the small details. If one of them earns a place on your computer, you can chip in.</p>
+      <div class="cta">
+        <span class="kofi">
+          <script src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
+          <script>kofiwidget2.init('Support me on Ko-fi', '#0067c0', 'C8D628MIWA'); kofiwidget2.draw();</script>
+          <noscript><a class="btn accent big" href="https://ko-fi.com/markticulous" rel="noopener">Support me on Ko-fi</a></noscript>
+        </span>
+        <a class="btn big" href="#apps">See the apps</a>
+      </div>
+      <p class="fine">Nothing is ever locked behind a donation. The Ko-fi button is loaded from Ko-fi.</p>
+    </div>
+
+    <section id="apps" aria-labelledby="apps-h">
+      <h2 id="apps-h">The apps</h2>
+      <div class="apps">
+        <article class="card">
+          <div class="app-head">
+            <img src="assets/clipee.png" alt="" width="56" height="56">
+            <div><h3><span class="wm wm-clipee">Clipee</span></h3><span class="tag">Windows 10 and 11</span></div>
+          </div>
+          <p>A fast, private clipboard manager. It remembers what you copy, so you can find it and paste it again. Opens with Ctrl+Alt+V.</p>
+          <div class="row">
+            <a class="btn accent" href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="https://github.com/markticulous/Clipee" rel="noopener">Learn more</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="app-head">
+            <img src="assets/deskside-radio.png" alt="" width="56" height="56">
+            <div><h3><span class="wm wm-deskside">Deskside Radio</span></h3><span class="tag">Windows, Mac and Linux</span></div>
+          </div>
+          <p>A desktop internet radio that looks like a radio: search for stations, displays song title &amp; artist, set play schedules, amazing themes, and much more.</p>
+          <div class="row">
+            <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="https://github.com/markticulous/deskside-radio" rel="noopener">Learn more</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="app-head">
+            <img src="assets/tagee.svg" alt="" width="56" height="56">
+            <div><h3><span class="wm wm-tagee">Tag<b>ee</b></span></h3><span class="tag">Web service</span></div>
+          </div>
+          <p>Scannable QR tags for luggage, cases and stickers. When someone finds your lost item, they scan the tag and leave you a message.</p>
+          <div class="row">
+            <span class="soon">Coming soon</span>
+          </div>
+        </article>
+        <article class="card">
+          <div class="app-head top">
+            <img src="assets/backee.svg" alt="" width="56" height="56">
+            <div>
+              <h3>
+                <picture>
+                  <source srcset="assets/backee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+                  <img class="wm wm-backee" src="assets/backee-wordmark-light.svg" alt="Backee" height="24">
+                </picture>
+              </h3>
+              <span class="tag">Windows 10 and 11</span>
+            </div>
+          </div>
+          <p>Fast, private backup for Windows. Still being built.</p>
+          <div class="row"><span class="soon">Coming soon</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="free-h">
+      <h2 id="free-h">How it works</h2>
+      <div class="facts">
+        <div class="fact"><b>Free, always</b><span>Every feature, for everyone.</span></div>
+        <div class="fact"><b>Private</b><span>No ads, no tracking, no accounts.</span></div>
+        <div class="fact"><b>Asked once</b><span>One small thank-you card, after real use. "Don't ask again" means it.</span></div>
+      </div>
+    </section>
+
+    <section id="supporters" aria-labelledby="sup-h">
+      <h2 id="sup-h">Thank you &hearts;</h2>
+      <ul id="supporter-list"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
+    <span>&copy; Markticulous</span>
+  </footer>
+</div>
+
 <script>
-  const KOFI_URL = 'https://ko-fi.com/markticulous';
-  // Add a line here for each new app. slug matches ?app= in the hub link.
-  const APPS = [
-    { slug: 'clipee', name: 'Clipee', blurb: 'Fast, private clipboard manager for Windows.', url: 'https://github.com/markticulous/Clipee' },
-    { slug: 'backee', name: 'Backee', blurb: 'Fast, private backup for Windows.' },
-    { slug: 'deskside-radio', name: 'Deskside Radio', blurb: 'A radio for your desk.' },
-  ];
-
-  document.getElementById('kofi').href = KOFI_URL;
-
-  const list = document.getElementById('apps');
-  for (const app of APPS) {
-    const li = document.createElement('li');
-    const name = document.createElement('b');
-    if (app.url) {
-      const a = document.createElement('a');
-      a.href = app.url;
-      a.rel = 'noopener';
-      a.textContent = app.name;
-      name.append(a);
-    } else {
-      name.textContent = app.name;
-    }
-    const blurb = document.createElement('span');
-    blurb.className = 'mute';
-    blurb.textContent = app.blurb;
-    li.append(name, blurb);
-    list.append(li);
-  }
-
-  // ?app=clipee -> "Thanks for using Clipee." Only known slugs are used.
+  // ?app=clipee -> "Thanks for using Clipee." Only known slugs are used; nothing from the address is inserted as HTML.
+  const APPS = { clipee: 'Clipee', 'deskside-radio': 'Deskside Radio', backee: 'Backee' };
   const slug = new URLSearchParams(location.search).get('app');
-  const from = APPS.find((a) => a.slug === slug);
-  if (from) {
-    const el = document.getElementById('from');
-    el.textContent = 'Thanks for using ' + from.name + '.';
-    el.hidden = false;
+  if (slug && Object.prototype.hasOwnProperty.call(APPS, slug)) {
+    document.getElementById('from-text').textContent = 'Thanks for using ' + APPS[slug] + '.';
+    document.getElementById('from').hidden = false;
   }
 
   // Supporters wall: opt-in names only. Hidden if empty or unreachable.
