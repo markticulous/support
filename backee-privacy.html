@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backee Privacy Policy</title>
+<link rel="icon" type="image/svg+xml" href="assets/backee-v1.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/backee-v1-32.png">
+<meta name="description" content="Backee collects nothing about you. Your files go only where you choose to back them up.">
+<style>
+  /* Same Windows Fluent look as the Support Markticulous page (index.html): light and dark follow the system. */
+  :root {
+    --bg: #f3f3f3; --surface: rgba(255, 255, 255, .78); --stroke: rgba(0, 0, 0, .07);
+    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a; --accent: #0067c0;
+    --info-bg: #e6f0fa; --info-stroke: rgba(0, 103, 192, .22);
+    --plate-line: #cfcbc2; --plate-ink: #7a7871;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1f1f1f; --surface: rgba(255, 255, 255, .045); --stroke: rgba(255, 255, 255, .08);
+      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d; --accent: #60cdff;
+      --info-bg: rgba(96, 205, 255, .1); --info-stroke: rgba(96, 205, 255, .28);
+      --plate-line: #4a4842; --plate-ink: #a5a299;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 15px/1.6 var(--font); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .wrap { width: min(760px, 100% - 32px); margin-inline: auto; }
+  .bar { display: flex; align-items: center; gap: 12px; padding-block: 18px; }
+  .bar img { width: 32px; height: 32px; display: block; }
+  .bar a { color: var(--text); font: 600 15px/1 var(--font-display); }
+  h1 { font: 600 clamp(1.8rem, 5vw, 2.5rem)/1.15 var(--font-display); letter-spacing: -.02em; margin: 32px 0 8px; }
+  .updated { color: var(--text3); font-size: 13px; margin: 0 0 24px; }
+  .card { padding: 20px 24px; border-radius: 8px; background: var(--surface); border: 1px solid var(--stroke); box-shadow: var(--shadow); margin-bottom: 16px; }
+  .short { background: var(--info-bg); border: 1px solid var(--info-stroke); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .short p { margin: 0; font-size: 1.02rem; }
+  h2 { font: 600 1.15rem/1.3 var(--font-display); margin: 0 0 10px; }
+  p, ul { margin: 0 0 10px; }
+  p:last-child, ul:last-child { margin-bottom: 0; }
+  li { margin-bottom: 6px; }
+  code { font: 13px/1.4 "Cascadia Mono", Consolas, monospace; }
+  footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
+  footer nav { display: flex; gap: 16px; }
+  .plate {
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; border: 1px solid var(--plate-line); border-radius: 1px 6px 1px 6px;
+    padding: 3px 7px; font: 500 9.5px/1 "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--plate-ink);
+  }
+  .plate .dim { opacity: .6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <img src="assets/backee-v1.svg" alt="">
+    <a href="./?app=backee">Backee</a>
+  </header>
+
+  <main>
+    <h1>Backee Privacy Policy</h1>
+    <p class="updated">Last updated: October 15, 2026</p>
+
+    <div class="short">
+      <p><strong>In short:</strong> Backee collects nothing about you. It has no servers, no accounts, no analytics and no ads. Your files go only to the places you choose to back them up, and the sign-ins and passwords you give Backee stay on your PC.</p>
+    </div>
+
+    <div class="card">
+      <h2>Who makes Backee</h2>
+      <p>Backee is a free backup app for Windows, made by one person under the name Markticulous. In this policy, "we" means Markticulous.</p>
+    </div>
+
+    <div class="card">
+      <h2>What we collect</h2>
+      <p>Nothing. Backee does not send us your files, your file names, your settings, your usage or any information about your PC. It has no telemetry and no crash reporting, and we run no servers that Backee talks to.</p>
+    </div>
+
+    <div class="card">
+      <h2>What stays on your PC</h2>
+      <p>Backee keeps the following on your own computer, so that it can do its job:</p>
+      <ul>
+        <li>Your backup settings, the history of backups and restores, and a log, in <code>C:\ProgramData\Backee</code>.</li>
+        <li>Your personal settings, such as the theme, in <code>%LocalAppData%\Backee</code>.</li>
+        <li>The encryption passwords, cloud access keys and cloud sign-ins you enter. These are protected by Windows (DPAPI) and can be read only by the Backee service on that PC. They are never shown again and never leave your computer, except when they are used to sign in to the service you chose.</li>
+      </ul>
+      <p>Uninstalling Backee and deleting these folders removes all of it.</p>
+    </div>
+
+    <div class="card">
+      <h2>Where your files go</h2>
+      <p>Your files go only to the backup destinations you set up: a drive or folder on your PC, a synced folder, an S3-compatible bucket, your OneDrive or your Google Drive. Backee sends them directly from your PC to that place. They never pass through us.</p>
+      <p>If you turn on encryption, Backee encrypts your backup with your password (AES-256) before it leaves your PC. Nobody can open it without that password, including us.</p>
+    </div>
+
+    <div class="card">
+      <h2>Google Drive</h2>
+      <p>If you choose to back up to Google Drive, Backee asks Google for two permissions:</p>
+      <ul>
+        <li><strong>See, edit, create and delete only the specific Google Drive files that Backee uses</strong> (<code>drive.file</code>). Backee can reach only the files and folders it creates itself, in a folder called Backee in your My Drive. It cannot see any of your other files.</li>
+        <li><strong>Your email address</strong>, so Backee can show which Google account a backup uses.</li>
+      </ul>
+      <p>Backee uses this access only to store, list, read and remove your backups in that folder, on your PC, for you. The data goes directly between your PC and Google. It is never sent to us or to anyone else, never sold, never used for advertising, and never read by a person.</p>
+      <p>Backee's use and transfer of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      <p>You can remove Backee's access at any time in your Google Account, under <a href="https://myaccount.google.com/connections">Your connections to third-party apps and services</a>. Removing access does not delete the backups already in your Drive; delete the Backee folder there if you no longer want them.</p>
+    </div>
+
+    <div class="card">
+      <h2>Microsoft OneDrive</h2>
+      <p>If you choose to back up to OneDrive, Backee asks Microsoft for access to its own app folder only (<code>Files.ReadWrite.AppFolder</code>), plus your basic profile so it can show which account a backup uses. Backee cannot see your other OneDrive files. As with Google Drive, the data goes directly between your PC and Microsoft and never to us.</p>
+      <p>You can remove Backee's access at any time at <a href="https://account.live.com/consent/Manage">account.live.com/consent/Manage</a>.</p>
+    </div>
+
+    <div class="card">
+      <h2>Other connections</h2>
+      <p>Backee connects only to the backup destinations you set up. It opens a web page, such as the User Guide, Ko-fi or this page, only when you click a link, and then your browser loads it as usual.</p>
+    </div>
+
+    <div class="card">
+      <h2>Children</h2>
+      <p>Backee is not aimed at children, and since it collects nothing, it collects nothing from children either.</p>
+    </div>
+
+    <div class="card">
+      <h2>Changes and contact</h2>
+      <p>If this policy changes, the new version will be posted on this page with a new date at the top.</p>
+      <p>Questions: <a href="mailto:markticulous@gmail.com">markticulous@gmail.com</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
+    <nav><a href="backee-privacy.html">Privacy</a><a href="backee-terms.html">Terms</a></nav>
+    <span>&copy; Markticulous</span>
+  </footer>
+</div>
+</body>
+</html>
