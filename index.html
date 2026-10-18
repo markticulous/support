@@ -8,6 +8,7 @@
 <style>
   /* Tagee's wordmark face, hosted here so the page makes no request to a font service (Fraunces, SIL Open Font License). */
   @font-face { font-family: "Fraunces"; font-style: normal; font-weight: 600; font-display: swap; src: url(assets/fraunces-600.woff2) format("woff2"); }
+  @font-face { font-family: "Oswald"; font-style: normal; font-weight: 500; font-display: swap; src: url(assets/oswald-500.woff2) format("woff2"); } /* the Markticulous wordmark; SIL Open Font License, see assets/OFL-Oswald.txt */
 
   /* Windows Fluent look: a soft Mica-like ground, 8px surfaces with a hairline, 4px controls, one blue accent.
      Light and dark follow the system. */
@@ -56,8 +57,10 @@
 
   /* Top bar */
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
-  .brand { font: 600 18px/1 var(--font-display); letter-spacing: .01em; color: var(--text); display: inline-flex; align-items: center; gap: 12px; }
+  .brand { color: var(--text); display: inline-flex; align-items: center; gap: 12px; }
   .brand img { width: 40px; height: 40px; border-radius: 9px; display: block; flex: none; object-fit: cover; box-shadow: 0 0 0 1px var(--stroke); } /* the Markticulous logo, mildly rounded corners */
+  /* The wordmark: Oswald in the plate shape (hairline ring, top-left and bottom-right corners cropped), a touch shorter than the logo (36 px against 40 px), centred on it so the text does not move. */
+  .brand-plate { display: inline-flex; align-items: center; height: 36px; padding: 0 calc(18px - .16em) 0 18px; font: 500 17px/1 "Oswald", "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .16em; text-transform: uppercase; border-radius: 2px 12px 2px 12px; box-shadow: inset 0 0 0 2px currentColor; }
 
   /* Controls */
   .btn {
@@ -150,7 +153,7 @@
 <body>
 <div class="wrap">
   <header class="bar">
-    <span class="brand"><img src="assets/markticulous.jpg" alt="" width="40" height="40">Markticulous</span>
+    <span class="brand"><img src="assets/markticulous.jpg" alt="" width="40" height="40"><span class="brand-plate">Markticulous</span></span>
     <a class="btn" href="https://github.com/markticulous" rel="noopener">GitHub</a>
   </header>
 

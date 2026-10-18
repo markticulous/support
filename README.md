@@ -6,4 +6,4 @@ The apps are free, with no ads and no tracking, and nothing in them is locked. T
 
 - `index.html`: the page.
 - `supporters.json`: names of supporters who chose to be listed.
-- `assets/`: logos, wordmarks and the Fraunces font (SIL Open Font License, see `assets/OFL-Fraunces.txt`).
+- `assets/`: logos, wordmarks and the Fraunces and Oswald fonts (SIL Open Font License, see `assets/OFL-Fraunces.txt` and `assets/OFL-Oswald.txt`).
