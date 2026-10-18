@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Clipee logo (S1): elongated paperclip lying flat, open end right, Markticulous standard tile (Midnight to Cyan). Left curves widened and glyph made taller 2026-10-14, nudged 0.5 down for optical centring. Previous 45° version: clipee-e9-45deg.svg -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172554"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#tile)"/>
+  <path d="M54 19.5 H24 A14 12.5 0 0 0 24 44.5 H48 A3 3 0 0 0 48 38.5 H24 A8 6.5 0 0 1 24 25.5 H42"
+        transform="translate(32 32.5) scale(1.08) translate(-32 -32)"
+        fill="none" stroke="#fff" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
