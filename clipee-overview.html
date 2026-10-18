@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Clipee how-to video</title>
+<title>Clipee overview video</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <meta name="description" content="A short video tour of Clipee, a free, private clipboard manager for Windows.">
 <style>
@@ -48,11 +48,11 @@
     <a href="./">Support Markticulous</a>
   </header>
   <main>
-    <h1>Clipee how-to</h1>
-    <p>A short tour of Clipee, the free and private clipboard manager for Windows. The captions are part of the video.</p>
-    <video controls preload="metadata" playsinline poster="assets/clipee-how-to-poster.jpg">
-      <source src="assets/clipee-how-to.mp4" type="video/mp4">
-      Your browser cannot play this video. <a href="assets/clipee-how-to.mp4">Download it instead.</a>
+    <h1>Clipee overview</h1>
+    <p>A short overview of Clipee, the free and private clipboard manager for Windows. The captions are part of the video.</p>
+    <video controls preload="metadata" playsinline poster="assets/clipee-overview-poster.jpg">
+      <source src="assets/clipee-overview.mp4" type="video/mp4">
+      Your browser cannot play this video. <a href="assets/clipee-overview.mp4">Download it instead.</a>
     </video>
     <div class="links">
       <a href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download Clipee</a>
@@ -61,8 +61,9 @@
   </main>
   <footer>
     <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
-    <span>&copy; Markticulous</span>
+    <span>&copy; <span data-year>2026</span> Markticulous</span>
   </footer>
 </div>
+<script>document.querySelectorAll("[data-year]").forEach(function (e) { e.textContent = new Date().getFullYear(); });</script>
 </body>
 </html>
