@@ -106,7 +106,7 @@
   }
   /* In the apps grid: heading, then the description (it takes the spare room), then the buttons, which always sit at the bottom. */
   .apps .card { grid-template-rows: auto 1fr auto; align-content: stretch; gap: 12px; padding-block: 18px; } /* a little shorter than the other cards */
-  .apps .card .row { align-self: end; align-items: baseline; }
+  .apps .card .row { align-self: end; align-items: baseline; margin-top: 2px; }
   .app-head { display: flex; align-items: center; gap: 14px; }
   .app-head > img { width: 56px; height: 56px; border-radius: 12px; flex: none; display: block; }
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
