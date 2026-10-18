@@ -1,0 +1,39 @@
+# One-off: publishes the hub update waiting on the release-2026-11-01 branch
+# at 12:01 AM Toronto time (EDT, 04:01 UTC) on 1 November 2026, then switches
+# itself off. GitHub may start scheduled runs late at busy times.
+# "Run workflow" on the Actions tab publishes it early.
+name: Publish the 1 November 2026 hub update
+
+on:
+  schedule:
+    - cron: '1 4 1 11 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  actions: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Bring the update onto main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ "$(date -u +%Y)" != "2026" ]; then
+            echo "Only scheduled for 2026; nothing to do."
+            exit 0
+          fi
+          git fetch origin release-2026-11-01
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git merge --no-edit origin/release-2026-11-01
+          git push origin HEAD:main
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/builds" || echo "Pages build request not accepted; the push should start one anyway."
+          gh workflow disable publish-2026-11-01.yml
