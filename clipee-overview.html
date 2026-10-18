@@ -32,6 +32,8 @@
   .bar { display: flex; align-items: center; gap: 12px; padding-block: 18px; }
   .bar img { width: 32px; height: 32px; border-radius: 6px; display: block; }
   .bar a { color: var(--text); font: 600 15px/1 var(--font-display); }
+  .back { display: inline-block; margin-top: 8px; font-size: 14px; }
+  .back + h1 { margin-top: 12px; }
   h1 { font: 600 clamp(1.8rem, 5vw, 2.5rem)/1.15 var(--font-display); letter-spacing: -.02em; margin: 24px 0 8px; }
   p { color: var(--text2); margin: 0 0 20px; }
   video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #000; border-radius: 8px; box-shadow: var(--shadow); border: 1px solid var(--stroke); }
@@ -48,6 +50,7 @@
     <a href="./">Support Markticulous</a>
   </header>
   <main>
+    <a class="back" href="./#apps">&larr; Back to Markticulous apps</a>
     <h1>Clipee overview</h1>
     <p>A short overview of Clipee, the free and private clipboard manager for Windows. The captions are part of the video.</p>
     <video controls preload="metadata" playsinline poster="assets/clipee-overview-poster.jpg">
