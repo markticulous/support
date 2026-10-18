@@ -13,7 +13,7 @@
      Light and dark follow the system. */
   :root {
     --bg: #f3f3f3; --surface: rgba(255, 255, 255, .78); --surface-solid: #fbfbfb; --stroke: rgba(0, 0, 0, .07);
-    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a;
+    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a; --text4: #8f8f8f;
     --accent: #0067c0; --accent-hover: #1975c5; --accent-press: #3a86cb; --on-accent: #ffffff;
     --ctrl: #ffffff; --ctrl-hover: #f6f6f6; --ctrl-stroke: rgba(0, 0, 0, .09); --ctrl-stroke-bottom: rgba(0, 0, 0, .16);
     --info-bg: #e6f0fa; --info-stroke: rgba(0, 103, 192, .22);
@@ -26,7 +26,7 @@
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #1f1f1f; --surface: rgba(255, 255, 255, .045); --surface-solid: #2b2b2b; --stroke: rgba(255, 255, 255, .08);
-      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d;
+      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d; --text4: #b3b3b3;
       --accent: #60cdff; --accent-hover: #6fd2ff; --accent-press: #86d8ff; --on-accent: #003a56;
       --ctrl: rgba(255, 255, 255, .06); --ctrl-hover: rgba(255, 255, 255, .09); --ctrl-stroke: rgba(255, 255, 255, .09); --ctrl-stroke-bottom: rgba(255, 255, 255, .09);
       --info-bg: rgba(96, 205, 255, .1); --info-stroke: rgba(96, 205, 255, .28);
@@ -86,7 +86,7 @@
   .lede { font-size: 1.08rem; color: var(--text2); margin: 0 0 28px; max-width: 58ch; }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
   .kofi { display: inline-flex; min-height: 40px; align-items: center; transform: translateY(-2px); } /* Ko-fi's own button sits a touch low beside ours */
-  .fine { margin: 16px 0 0; color: var(--text3); font-size: 13px; }
+  .fine { margin: 16px 0 0; color: var(--text4); font-size: 13px; } /* a shade lighter than the other small grey text */
 
   /* Sections */
   section { padding-block: 24px; }
