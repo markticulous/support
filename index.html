@@ -111,7 +111,7 @@
   .app-head > img { width: 56px; height: 56px; border-radius: 12px; flex: none; display: block; }
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
   .app-head h3 { margin: 0; font-weight: 400; line-height: 1; }
-  .card .tag { flex: 1 1 8em; text-align: right; color: var(--text3); font-size: 12px; } /* platform line: right end of the button row, on the buttons' text baseline */
+  .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
   .card .tag > span { white-space: nowrap; } /* a long line breaks only between its parts */
 
   /* One wordmark per app, each in its own brand's style. */
@@ -230,7 +230,7 @@
           <div class="row">
             <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
             <a class="btn" href="https://github.com/markticulous/deskside-radio/releases" rel="noopener">Learn more</a>
-            <span class="tag"><span>Browser based ·</span> <span>Windows, Mac and Linux</span></span>
+            <span class="tag">Multi-OS browser based</span>
           </div>
         </article>
         <article class="card">
