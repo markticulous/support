@@ -112,7 +112,7 @@
 
   /* One wordmark per app, each in its own brand's style. */
   .wm { display: inline-block; vertical-align: middle; }
-  .wm-clipee { font: 600 15px/1.2 var(--font); letter-spacing: .34em; text-transform: uppercase; color: var(--text2); }
+  .wm-clipee { display: block; height: 24px; width: auto; margin-top: 3px; } /* same drawn-wordmark treatment as Backee */
   .wm-tagee { font: 600 29px/1 "Fraunces", Georgia, "Times New Roman", serif; letter-spacing: -.02em; color: var(--text); }
   .wm-tagee b { font-weight: inherit; color: var(--tagee-ee); }
   .wm-deskside {
@@ -181,9 +181,15 @@
       <h2 id="apps-h">The apps</h2>
       <div class="apps">
         <article class="card">
-          <div class="app-head">
+          <div class="app-head top">
             <img src="assets/clipee.png" alt="" width="56" height="56">
-            <div><h3><span class="wm wm-clipee">Clipee</span></h3><span class="tag">Windows 10 and 11</span></div>
+            <div>
+              <h3>
+                <picture>
+                  <source srcset="assets/clipee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+                  <img class="wm wm-clipee" src="assets/clipee-wordmark-light.svg" alt="Clipee" height="24">
+                </picture>
+              </h3><span class="tag">Windows 10 and 11</span></div>
           </div>
           <p>A fast, private clipboard manager. It remembers what you copy, so you can find it and paste it again. Opens with Ctrl+Alt+V.</p>
           <div class="row">
