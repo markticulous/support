@@ -320,7 +320,7 @@
           <a class="btn accent" href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download</a>
           <a class="btn" href="#clipee">Details</a>
           <a class="btn" href="clipee-overview.html">&#9654; Overview</a>
-          <span class="tag">Windows 10 and 11</span>
+          <span class="tag" data-release="markticulous/Clipee">Windows 10 and 11</span>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -339,7 +339,7 @@
         <div class="row">
           <a class="btn accent" href="https://github.com/markticulous/Backee/releases/latest" rel="noopener">Download</a>
           <a class="btn" href="#backee">Details</a>
-          <span class="tag">Windows 10 and 11</span>
+          <span class="tag" data-release="markticulous/Backee">Windows 10 and 11</span>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -351,7 +351,7 @@
         <div class="row">
           <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
           <a class="btn" href="#deskside-radio">Details</a>
-          <span class="tag">Multi-OS browser based</span>
+          <span class="tag" data-release="markticulous/deskside-radio">Multi-OS browser based</span>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -540,6 +540,27 @@
       document.getElementById('supporters').style.display = 'block';
     })
     .catch(() => {});
+
+  // Live apps' current version ("v1.0.0 · Windows 10 and 11"), from GitHub's public releases API. Cached for the visit;
+  // shows nothing if GitHub cannot be reached, so the line never carries a stale number.
+  for (const tag of document.querySelectorAll('[data-release]')) {
+    const repo = tag.dataset.release, key = 'ver:' + repo;
+    const show = (v) => {
+      if (!/^v?\d+(\.\d+){1,3}$/.test(v)) return;
+      tag.prepend(document.createTextNode((v.startsWith('v') ? v : 'v' + v) + ' · '));
+    };
+    let cached = null;
+    try { cached = sessionStorage.getItem(key); } catch (e) {}
+    if (cached) { show(cached); continue; }
+    fetch('https://api.github.com/repos/' + repo + '/releases/latest')
+      .then((r) => (r.ok ? r.json() : null))
+      .then((rel) => {
+        if (!rel || typeof rel.tag_name !== 'string') return;
+        try { sessionStorage.setItem(key, rel.tag_name); } catch (e) {}
+        show(rel.tag_name);
+      })
+      .catch(() => {});
+  }
 
   // Back to top: shows after 400px, holds 24px above the footer, jumps under reduced motion.
   const toTop = document.getElementById('top'), foot = document.getElementById('foot');
