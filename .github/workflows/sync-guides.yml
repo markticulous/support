@@ -1,0 +1,53 @@
+name: Sync User Guides
+
+# Keeps guides/<app>/ the same as the User Guide inside each app's latest release, so the hub never shows a guide that
+# differs from the one people have installed. Backee and Clipee attach user-guide.zip to every release; Deskside Radio's
+# guide is read from its repo at the latest release tag. Runs daily and on demand (Actions > Sync User Guides > Run).
+on:
+  schedule:
+    - cron: '17 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-guides
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the released guides
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for app in Backee Clipee; do
+            dir="guides/${app,,}"
+            tmp="$(mktemp -d)"
+            if gh release download --repo "markticulous/$app" --pattern user-guide.zip --dir "$tmp"; then
+              rm -rf "$dir" && mkdir -p "$dir"
+              unzip -q "$tmp/user-guide.zip" -d "$dir"
+              echo "$app: guide from $(gh release view --repo "markticulous/$app" --json tagName --jq .tagName)"
+            else
+              echo "$app: the latest release has no user-guide.zip yet; keeping the current copy"
+            fi
+          done
+          tag="$(gh release view --repo markticulous/deskside-radio --json tagName --jq .tagName)"
+          mkdir -p guides/deskside-radio
+          curl -fsSL "https://raw.githubusercontent.com/markticulous/deskside-radio/$tag/User%20Reference%20Guide.html" \
+            -o guides/deskside-radio/index.html
+          echo "Deskside Radio: guide from $tag"
+
+      - name: Commit and publish if anything changed
+        run: |
+          set -euo pipefail
+          git add guides
+          if git diff --cached --quiet; then echo "The guides are already in sync."; exit 0; fi
+          git -c user.name=Markticulous -c user.email=325823999+markticulous@users.noreply.github.com \
+            commit -m "chore(guides): match the User Guides to the latest releases"
+          git push

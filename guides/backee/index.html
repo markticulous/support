@@ -416,6 +416,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <li><a href="#safe">Keeping your backups safe</a></li>
       <li><a href="#fast">Why Backee is fast</a></li>
       <li><a href="#support">Support Markticulous</a></li>
+      <li><a href="#install">Installing and updating</a></li>
       <li><a href="#wrong">If something goes wrong</a></li>
     </ol>
   </nav>
@@ -433,8 +434,11 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </ol>
       <p>That is all. Your first backup starts at once. To see that it worked, look at the new tile on the Home page. It shows a percentage while it runs, and a green <strong>OK</strong> when it is finished.</p>
       <figure>
-        <img src="images/home.png" alt="The Backee Home page with a banner saying the files are protected and one backup tile showing a green OK label">
-        <figcaption>The Home page after a first backup. The banner and the green OK label tell you all is well.</figcaption>
+        <picture>
+          <source srcset="images/home-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/home.png" alt="The Backee Home page with three backup tiles: Documents + Desktop with a green Reviewed label, and Photos and Windows system with green OK labels, each showing its schedule and compression level">
+        </picture>
+        <figcaption>The Home page with three backups. Each tile shows how its last backup went; the banner at the top sums them all up, so it says Not backed up yet until every backup has run once.</figcaption>
       </figure>
     </section>
 
@@ -465,10 +469,11 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <li><strong>A backup failed</strong>. Open Activity to see why.</li>
         <li><strong>Backups are paused</strong>. You paused them from the tray menu.</li>
         <li><strong>Backee cannot reach its service</strong>. The service is not running (see <a href="#wrong">If something goes wrong</a>).</li>
+        <li><strong>Backee is starting with Windows</strong>, with a grey dot. Backee has just started with Windows and its service is still coming up, which can take a minute or two. Your backups appear in a moment; nothing needs doing.</li>
       </ul>
       <p>The <strong>Back up all now</strong> button on the banner starts every backup that is not already running. It asks first (<strong>Back up all now?</strong>), then the backups run in the background. It is greyed out until you have a backup.</p>
       <h3>The tiles</h3>
-      <p>Each backup has a tile. It shows the name, the folder the backups go to, the schedule and compression, and a line about the last run. A coloured stripe on the left and a small label at the top right tell you the state:</p>
+      <p>Each backup has a tile. It shows the name, the folder the backups go to, the schedule and compression (for example <strong>Monthly on day 1 at 21:00 &middot; Max compression (LVL 19)</strong>), and a line about the last run. A weekly schedule on Monday to Friday reads <strong>Weekdays</strong>, on Saturday and Sunday <strong>Weekends</strong>, and on every day <strong>Every day</strong>; four to six other days read, for example, <strong>4 days a week</strong>, and pointing at the line shows the days. The level number is always shown, as in <strong>Balanced compression (LVL 3)</strong>; only <strong>No compression</strong> has none. A coloured stripe on the left and a small label at the top right tell you the state:</p>
       <table class="ref">
         <thead><tr><th>Label</th><th>Meaning</th></tr></thead>
         <tbody>
@@ -482,13 +487,14 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>Failed</td><td>It did not work. The tile says why. Red.</td></tr>
         </tbody>
       </table>
-      <p>The button at the bottom right of every tile is <strong>Back up now</strong>, or <strong>Stop</strong> while that backup runs. It asks first (for example <strong>Back up Documents now?</strong>) and then runs in the background. The tiles are wide, three across at most. The <strong>&#8943;</strong> button next to it opens a menu. Items that have nothing to act on are greyed out:</p>
+      <p>The button at the bottom right of every tile is <strong>Back up now</strong>, or <strong>Stop</strong> while that backup runs. It asks first (for example <strong>Back up Documents now?</strong>) and then runs in the background. After you confirm <strong>Stop</strong>, the tile says <strong>Stopping</strong> with moving dots, <strong>Stop</strong> is greyed out, and the tray and Activity say so too, until the backup has really ended; that can take a moment. The tiles are wide, three across at most. The <strong>&#8943;</strong> button next to it opens a menu. Items that have nothing to act on are greyed out:</p>
       <ul>
         <li><strong>Back up now</strong>. Greyed out while the backup runs.</li>
         <li><strong>Show details</strong>. Opens Activity with this backup chosen. Greyed out until it has run.</li>
         <li><strong>Restore files&hellip;</strong>. Opens Restore with this backup chosen. Greyed out until a run has stored a version.</li>
         <li><strong>Open backup folder</strong>. Opens the folder the backups go to in File Explorer. Greyed out for cloud storage, and when the folder cannot be found, for example because the USB drive is unplugged.</li>
         <li><strong>Mark as reviewed</strong>. Available when the last run ended with warnings or was stopped (see <a href="#activity">Activity</a>).</li>
+        <li><strong>Download cloud files to this PC&hellip;</strong> and <strong>It's ok, don't tell me again</strong>. With <strong>Mark as reviewed</strong>, they have their own section of the menu, headed by the tile's label (for example <strong>Warnings</strong>). Available when the last run left out files that are only in OneDrive (see <a href="#online-only">Files that are only in OneDrive</a>). Greyed out otherwise.</li>
         <li><strong>Edit&hellip;</strong> and <strong>Delete&hellip;</strong>.</li>
       </ul>
       <p>While an image of a backup is open as a virtual disk, its tile shows a pill such as <strong>Mounted as G:</strong>. Hover over it to see the file behind the disk (see <a href="#images">Disk and partition images</a>).</p>
@@ -545,30 +551,41 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 
       <h3>Step 1: What</h3>
       <figure>
-        <img src="images/new-what.png" alt="The What step of the New backup window with the Files &amp; folders, Partition and Whole disk tiles above a list of chosen folders and their sizes">
+        <picture>
+          <source srcset="images/new-what-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/new-what.png" alt="The What step of the New backup window with the Files &amp; folders, Partition and Whole disk tiles above a list of chosen folders and their sizes">
+        </picture>
         <figcaption>Step 1. Pick the folders to back up. Each one shows its size.</figcaption>
       </figure>
       <p>Click <strong>＋ Add folder&hellip;</strong> and choose one or more folders. Each shows its size once Backee has measured it. The <strong>&#10005;</strong> beside a folder removes it. Backee copies files from a shadow copy, so files that are open or locked are included (see <a href="#safe">Keeping your backups safe</a>).</p>
-      <p>Click <strong>Exclusions&hellip;</strong> to skip some files. Type one name or pattern per line, such as <code>*.iso</code> or <code>node_modules</code>. Backee already skips temporary files, caches, the recycle bin and the system paging and hibernation files.</p>
+      <p>Click <strong>Exclusions&hellip;</strong> to skip some files. A checklist of common kinds of files appears: videos, music, disk images, archives, installers, developer folders, game libraries, unfinished downloads and system clutter. Tick the ones you do not need. Each row says how many files it covers and how much space they take in the folders you chose, so you can see what ticking it saves. Backee counts in the background and updates the numbers when you add or remove a folder. A file can match more than one row, so do not add the numbers together. Below the checklist, type your own names or patterns, one per line, such as <code>*.psd</code> or <code>Old projects</code>. To skip one particular folder, click <strong>Add folder to skip&hellip;</strong> and choose it. Backee skips exactly that folder and everything inside it, and the folder must be inside one of the folders the backup copies. A line in the box that is a full path, such as <code>D:\Documents\Old projects</code>, means that one folder only. Backee already skips temporary files, caches, the recycle bin and the system paging and hibernation files.</p>
       <p><strong>Files that are online-only in OneDrive.</strong> If a folder is inside your Microsoft OneDrive, some of its files may be kept in the cloud only (Windows shows a cloud icon beside them). Backee can only back up files that are on this PC. When it finds such files, a warning under the folder list says how many there are and how large they are. Click <strong>Keep on this device</strong> and OneDrive downloads them, and Backee backs each file up once it is on this PC. The button is greyed out when the drive does not have enough free space. This never stops you from going on to the next step. Other cloud folders, such as Dropbox or Google Drive, can have online-only files too. If a backup finds any, Activity lists them with the same advice.</p>
       <p>Above the folder list, three tiles choose what kind of backup this is. <strong>Files &amp; folders</strong> is the one described here. <strong>Partition</strong> backs up a drive as an image, and <strong>Whole disk</strong> backs up every partition on one disk as an image. Images are described in <a href="#images">Disk and partition images</a>.</p>
       <figure>
-        <img src="images/new-what-image.png" alt="The What step of the New backup window with Partition chosen and the Windows system card, showing the disk and its locked start-up partitions">
+        <picture>
+          <source srcset="images/new-what-image-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/new-what-image.png" alt="The What step of the New backup window with Partition chosen and the Windows system card: a bar of the disk with each partition in its own colour, and the locked start-up partitions listed below with a small square of the same colour">
+        </picture>
         <figcaption>Step 1 with <strong>Partition</strong> chosen. The <strong>Windows system</strong> card holds everything needed to start this PC.</figcaption>
       </figure>
+      <p>The bar under <strong>Windows system</strong> is the disk. Every kind of partition has its own colour, and the same colour shows as a small square beside its name in the list: Windows in the accent colour, the boot loader (EFI) in green, the recovery partition in amber, the small Microsoft reserved partition in grey, and any other data partition in a paler accent. Grey at the end is free space. Even a tiny partition gets a visible slice.</p>
 
       <h3>Step 2: Where</h3>
       <figure>
-        <img src="images/new-where.png" alt="The Where step with the choices This PC or USB drive and Synced folder, and a box for the folder path">
-        <figcaption>Step 2. Choose the place the backups are saved.</figcaption>
+        <picture>
+          <source srcset="images/new-where-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/new-where.png" alt="The Where step with Synced folder chosen: its list of sync folders and the folder path box open right under it, and the other choices below">
+        </picture>
+        <figcaption>Step 2. Choose the place the backups are saved. The settings for a choice open right under it.</figcaption>
       </figure>
       <ul>
         <li><strong>This PC or USB drive</strong>. Another disk or a removable drive. A USB drive is found again even if Windows gives it a different drive letter.</li>
-        <li><strong>Synced folder</strong>. Your OneDrive, Google Drive, Dropbox or Sync.com folder. The sync app uploads the backup for you. Backee lists the ones it finds on this PC.</li>
+        <li><strong>Synced folder</strong>. The folder of a sync app, such as OneDrive, Dropbox, Sync.com, Box Drive or iCloud. The sync app uploads the backup for you. Backee lists the ones it finds on this PC: the well-known apps by name, and any other app that registers its folder with Windows. Nothing is chosen for you: the list starts with <strong>Select a synced folder here, or browse below</strong>, and <strong>Next</strong> stays greyed out until you pick one or type or browse to a folder. If what you type is one of the listed folders, it is selected; any other path clears the choice.</li>
         <li><strong>OneDrive account</strong>. Sign in with Microsoft and Backee uploads directly, without the OneDrive app.</li>
         <li><strong>Google Drive account</strong>. Sign in with Google and Backee uploads directly, without the Google Drive app.</li>
       </ul>
-      <p>For <strong>This PC or USB drive</strong> or <strong>Synced folder</strong>, click <strong>Browse&hellip;</strong> or type a path. Backee makes a folder called <code>Backee</code> there, and a folder for each backup inside it. A line under the box shows where the backups will go.</p>
+      <p>For <strong>This PC or USB drive</strong> or <strong>Synced folder</strong>, click <strong>Browse&hellip;</strong> or type a path. Backee makes a folder called <code>Backee</code> there, and a folder for each backup inside it. A line under the box shows where the backups will go. Each choice's settings open right under it.</p>
+      <p>Backee backs up through a background service that runs separately from your own sign-in. When you create a backup, the service checks that it can reach the folder, and if it cannot, Backee says <strong>Backee runs in the background and cannot reach</strong> the folder. Some sync apps show their folder only while you are signed in. Google Drive for desktop does this with its <strong>G:\My Drive</strong> drive: Backee shows a caution when you choose it. Choose a mirrored folder on a local drive instead, or use the <strong>Google Drive account</strong> choice.</p>
       <p><strong>OneDrive account.</strong></p>
       <div class="note">
         <p class="lede">OneDrive support is in beta</p>
@@ -599,30 +616,49 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 
       <h3>Step 3: When</h3>
       <figure>
-        <img src="images/new-when.png" alt="The When step with schedule choices and the Smart versions to keep setting">
-        <figcaption>Step 3. Choose how often to back up and how many old versions to keep.</figcaption>
+        <picture>
+          <source srcset="images/new-when-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/new-when.png" alt="The When step for a Partition backup: Monthly chosen, Every greyed out, Smart for disks chosen, and the Estimated space section with a space bar and a list of figures">
+        </picture>
+        <figcaption>Step 3, here for a partition backup. Choose how often to back up and how many old versions to keep, and see the space it will need.</figcaption>
       </figure>
       <p>Pick one schedule:</p>
       <ul>
-        <li><strong>Every</strong> a number of hours.</li>
-        <li><strong>Daily</strong> at a time you choose. This is the starting choice, at 21:00.</li>
+        <li><strong>Every</strong> a number of hours. This is greyed out for a partition or a whole disk, because every run reads all the used space on the drive, which can take an hour or more. Point at it to read why.</li>
+        <li><strong>Daily</strong> at a time you choose. This is the starting choice for folders, at 21:00.</li>
         <li><strong>Weekly on</strong> the days you tick. The starting day is Sunday.</li>
-        <li><strong>Monthly on day</strong> a day of the month.</li>
+        <li><strong>Monthly on day</strong> a day of the month. This is the starting choice for a partition or a whole disk, because those backups are large and every run reads all the used space again.</li>
         <li><strong>Only when I click Back up now</strong>. Nothing runs by itself.</li>
       </ul>
-      <p>Times use the 24-hour clock. If the PC is off at the chosen time, the backup catches up soon after the PC is back on. You can change this in Settings (see <a href="#settings">Settings</a>).</p>
+      <p>Times use the 24-hour clock. Point at the <strong>i</strong> beside <strong>Schedule</strong> to read what happens when the PC is off at the chosen time: the backup catches up as soon as it can. You can change this in Settings (see <a href="#settings">Settings</a>).</p>
       <h3>Versions to keep</h3>
       <p>Every backup adds a new <strong>version</strong>, a snapshot of your folders at that moment. Old versions are removed so the backup does not grow for ever. You choose how many to keep:</p>
       <ul>
-        <li><strong>Smart (recommended)</strong>. Keeps hourly versions for a day, daily ones for two weeks, weekly ones for two months and monthly ones for a year.</li>
+        <li><strong>Smart for disks (recommended)</strong>. Shown only when you back up a partition or a whole disk, and the starting choice for them. Keeps the newest backup from each of the last 3 months, so you can go back about 2 months, whatever the schedule. Pair it with a file backup of your folders, which runs more often.</li>
+        <li><strong>Smart</strong> (recommended). Shown for folders only; a partition or whole-disk backup offers Smart for disks instead. Keeps hourly versions for a day, daily ones for two weeks, weekly ones for two months and monthly ones for a year. A disk backup saved with this choice by an earlier version opens in <strong>Edit</strong> as <strong>Custom</strong> with the same numbers, so nothing changes.</li>
         <li><strong>Keep the last</strong> a number of versions.</li>
         <li><strong>Keep for</strong> a number of days.</li>
         <li><strong>Custom</strong>. Your own counts of hourly, daily, weekly and monthly versions.</li>
       </ul>
+      <h3>Estimated space</h3>
+      <p>Below the choices, Backee estimates the space the backup will need at its destination. It starts from the size of what you chose (the used space for a disk), the compression you picked and a typical amount of change, and it works out how many versions your schedule and your choice of versions to keep will hold. The section lists:</p>
+      <ul>
+        <li><strong>Size to back up</strong>. The folders, less any kinds of files you chose to skip, or the used space of the partitions or disk.</li>
+        <li><strong>First backup</strong>. What the first version takes after compression.</li>
+        <li><strong>Each later backup adds</strong>. The new data one more backup stores. When backups are a month apart this is the same as growth per month, so it is left out.</li>
+        <li><strong>Growth per month</strong>. How much a month of backups adds, before old versions are removed.</li>
+        <li><strong>Levels off at</strong>. The most the backup grows to, and how old its oldest version is by then, once older versions are removed. If your choice never removes versions within a year, this line says <strong>After a year</strong> instead.</li>
+        <li><strong>Versions kept</strong>. How many versions the backup holds at most, and how old the oldest is.</li>
+        <li><strong>The space bar</strong>, above the list. For a drive on this PC or a synced folder, a heading says how the drive will look once the backups level off, for example <strong>Drive Z after about 2 months</strong>, with how much is free now at the right. The bar is the drive: the solid part is the least the backups will take, the faint part is the most they could take if a lot changes, and the grey is what stays free. A legend under the bar names the three. If the most is more than the free space, the heading turns amber and says <strong>which may not be enough</strong>. Cloud destinations show no bar.</li>
+      </ul>
+      <p>While Backee measures your folders, the section says <strong>Estimating</strong>. When you edit a backup that has already run, Backee uses what that backup really stored and how much its recent runs added, instead of typical figures. It is only an estimate: real sizes depend on how much changes and how well it compresses. Point at the <strong>i</strong> beside <strong>Estimated space</strong> to read that note.</p>
 
       <h3>Step 4: Options</h3>
       <figure>
-        <img src="images/new-options.png" alt="The Options step with the backup name, five compression buttons, the encryption box and a password strength meter">
+        <picture>
+          <source srcset="images/new-options-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/new-options.png" alt="The Options step with the backup name, five compression buttons, the encryption box and a password strength meter">
+        </picture>
         <figcaption>Step 4. Name the backup, choose compression and decide on encryption.</figcaption>
       </figure>
       <p><strong>Name</strong> starts as the name of your folder or folders. Change it if you like.</p>
@@ -637,7 +673,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>Max</td><td>The smallest backups, and slow.</td></tr>
         </tbody>
       </table>
-      <p>Tick <strong>Advanced: level</strong> to pick any level on a slider instead. You can change the starting choice for new backups in Settings.</p>
+      <p>Tick <strong>Advanced: level</strong> to pick any level from 1 to 22 on a slider instead. The slider starts at the button you had chosen. A band under it shows the same four names as the buttons, <strong>Fast</strong>, <strong>Balanced</strong>, <strong>High</strong> and <strong>Max</strong>, with the current one in bold, and a line under that says what the level means, for example <em>Level 22, Max: The smallest backups, much slower. For archives that rarely change.</em> You can change the starting choice for new backups in Settings.</p>
       <h3>Encryption</h3>
       <p>Tick <strong>Encrypt this backup (AES-256)</strong> to lock the backup with a password. Type it twice. It needs at least 8 characters. A meter shows how hard it is to guess (<strong>Very weak</strong>, <strong>Weak</strong>, <strong>Fair</strong>, <strong>Good</strong> or <strong>Strong</strong>) and a short hint says how to improve it.</p>
       <div class="note">
@@ -645,18 +681,26 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <p>If you lose this password, the backup cannot be opened by anyone, including Markticulous. Keep it somewhere safe, away from the PC. Encryption cannot be changed after the backup is created.</p>
       </div>
       <p>Backee also keeps a copy of the password inside the Backee service, protected by Windows, so scheduled backups can run without asking you each time.</p>
-      <p>Last, <strong>Fail instead of backing up live files if a shadow copy cannot be made</strong> is off by default. Leave it off unless you would rather have no backup than one made from files that were in use.</p>
+      <h3>Warnings and failures</h3>
+      <p>For a backup of folders, the last part of the step has two boxes.</p>
+      <ul>
+        <li><strong>Tell me when files that are only in OneDrive are left out</strong> is ticked by default. Untick it to stop the warnings and notifications about those files for this backup (see <a href="#online-only">Files that are only in OneDrive</a>). The choice is kept for your Windows user.</li>
+        <li><strong>Fail instead of backing up live files if a shadow copy cannot be made</strong> is off by default. Leave it off unless you would rather have no backup than one made from files that were in use.</li>
+      </ul>
       <h3>Finishing</h3>
       <p>Click <strong>Create</strong> to save the backup, or <strong>Create and run now</strong> to save it and start it at once. Creating a backup needs an administrator, so Windows asks once for permission (see <a href="#who">Who can change what</a>).</p>
       <h3>Changing or deleting a backup</h3>
-      <p>On the backup tile, click <strong>&#8943;</strong>, then <strong>Edit&hellip;</strong> or <strong>Delete&hellip;</strong>. Editing opens the same window with a <strong>Save</strong> button. You can change the folders, schedule, versions, compression and name. The place the backups go and the encryption cannot be changed after the backup is created. Deleting asks you first. Backee then stops backing it up, but the versions already stored are kept. Delete that folder yourself if you no longer need them.</p>
+      <p>On the backup tile, click <strong>&#8943;</strong>, then <strong>Edit&hellip;</strong> or <strong>Delete&hellip;</strong>. Editing opens the same window with a <strong>Save</strong> button. You can change the folders, schedule, versions, compression and name. The place the backups go and the encryption cannot be changed after the backup is created. A new name does not rename the backup&rsquo;s folder: the line under <strong>Name</strong> says where it is saved, and every version stays together there. Deleting asks you first. Backee then stops backing it up, but the versions already stored are kept. Delete that folder yourself if you no longer need them. You can open it again later with <strong>Open an existing backup</strong> (see <a href="#reopen">Opening a backup from before</a>). The deleted backup's runs stay on the <strong>Activity</strong> page. If you later create a backup with the same name, it starts with an empty history and never shows the deleted backup's runs. Its folder takes the same name if you deleted the old folder; if the old folder is still there, the new one gets a number added (for example <code>documents-2</code>), so the old versions are never mixed in.</p>
     </section>
 
     <section id="restore">
       <h2 class="sec"><span class="n">05</span>Getting files back</h2>
       <p>Open <strong>Restore</strong> in the main window. Restoring needs an administrator, because a backup can hold every user&rsquo;s files. The first time, the page says <strong>Restoring needs administrator rights</strong>. Click <strong>Continue as administrator</strong>. Windows asks once, and Backee opens this page again.</p>
       <figure>
-        <img src="images/restore.png" alt="The Restore page with a backup and version chosen, a timeline of dots, a folder tree and a file list with ticks">
+        <picture>
+          <source srcset="images/restore-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/restore.png" alt="The Restore page with a backup and version chosen, a timeline of dots, a folder tree and a file list with ticks">
+        </picture>
         <figcaption>The Restore page. Choose a backup and a version, tick what you want, then restore it.</figcaption>
       </figure>
       <ol class="steps">
@@ -679,10 +723,29 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>Files that already exist are left as they are.</dd>
       </dl>
       <p>A line under your choice says how many files already exist and what will happen to them. Click <strong>Preview</strong> to see what a restore would change. Nothing is written until you click <strong>Restore</strong>.</p>
-      <p>While it runs, a box shows <strong>Restoring&hellip;</strong> with a progress bar and a <strong>Stop</strong> button. Files restored before you stop are kept. At the end Backee tells you how it went: <strong>Restore finished</strong>, <strong>Restore finished with problems</strong> (some files could not be restored because that part of the backup is damaged, and it names them), <strong>Restore stopped</strong> or <strong>Restore failed</strong>.</p>
+      <p>While it runs, a box shows <strong>Restoring&hellip;</strong> with a progress bar and a <strong>Stop</strong> button. After you confirm, the box says <strong>Stopping</strong> with moving dots and <strong>Stop</strong> is greyed out until the restore has ended. Files restored before you stop are kept. At the end Backee tells you how it went: <strong>Restore finished</strong>, <strong>Restore finished with problems</strong> (some files could not be restored because that part of the backup is damaged, and it names them), <strong>Restore stopped</strong> or <strong>Restore failed</strong>.</p>
       <h3>Closing the window while it runs</h3>
       <p>A restore is done by the Backee service, not by the window, so it keeps running if you close the window or the tray icon. Open Backee again and the restore shows up at once: on the <strong>Restore</strong> page with its progress bar and <strong>Stop</strong> button, on <strong>Home</strong> (the top line and the tile of that backup say what it is restoring to and how far it has got), and in the tray icon, which animates while a restore runs. When it ends, the <strong>Restore</strong> page tells you how it went, the same as if you had never closed the window. Every restore that has finished or been stopped is also listed in <strong>Activity</strong>.</p>
       <p>A restore that is cut off, by <strong>Stop</strong>, a power cut or a crash, never leaves a half-written file behind and never damages the original. Backee writes each file under a temporary name and swaps it into place only when it is complete. A file that was already there stays exactly as it was until its replacement is whole.</p>
+      <h3 id="reopen">Opening a backup from before</h3>
+      <p>Use <strong>Open an existing backup&hellip;</strong> when you have a new PC, have reinstalled Windows, or deleted a backup from Backee by mistake. The backup folder is still where you left it, and Backee can read it again. The button is under the backup list on <strong>Restore</strong>. When there are no backups yet, <strong>Home</strong> has a card for it too.</p>
+      <figure>
+        <picture>
+          <source srcset="images/open-backup-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/open-backup.png" alt="The Open an existing backup window with a list of backups found on this PC, each with its folder and where it is kept, and an Open button">
+        </picture>
+        <figcaption>Open an existing backup. Choose what Backee found, or look in a place yourself.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li>Choose where to look. <strong>On this PC</strong> searches every drive; click <strong>Refresh</strong> to search again, for example after you plug in a USB drive. <strong>Browse&hellip;</strong> looks in any folder you choose. For <strong>OneDrive</strong> or <strong>Google Drive</strong>, sign in as you do in New backup. For an S3 provider, enter the bucket and the keys.</li>
+        <li>Each backup found shows its folder and where it is. Pick one. If it is encrypted, type its password. After five wrong passwords Backee makes you wait five minutes before you try again.</li>
+        <li>If the backup is already in Backee, the window says <strong>Already in Backee as</strong> and its name, with a <strong>Show it</strong> link that takes you to it on Restore.</li>
+        <li><strong>Open</strong> is greyed out until a backup, and its password if it has one, is chosen. Click it.</li>
+      </ol>
+      <p>Backee adds the backup as <strong>Restore only</strong>. Its tile on Home has a <strong>Restore only</strong> label and says <strong>Opened from</strong> and the place. The main button is <strong>Restore&hellip;</strong>, and the backup never runs by itself. You can restore from it at once, as described above.</p>
+      <p>To keep backing up to that folder, choose <strong>Back up to this folder again&hellip;</strong> in the tile&rsquo;s <strong>&#8943;</strong> menu, or use the link in the card at the top of <strong>Restore</strong>. The backup window opens filled in from the backup&rsquo;s saved settings: its name, folders, schedule, versions to keep, compression and exclusions. Where it goes and the encryption are fixed. A folder that is not on this PC shows <strong>&hellip; is not on this PC.</strong> Remove it or choose another before you save. Click <strong>Save and run now</strong> and the backup becomes a normal backup again and runs at once. It keeps its history, so this run stores only what changed since the last version.</p>
+      <p>To take the backup out of Backee, choose <strong>Remove from Backee</strong> in the <strong>&#8943;</strong> menu. Only Backee forgets it. The folder and everything in it stay where they are.</p>
+      <p>Every backup keeps a small settings file in its own folder, updated after each successful run. It holds the name, folders, schedule, versions to keep, compression and exclusions. It never holds a password, a sign-in, or where the backup is kept. A backup made before this file existed has none, so Backee guesses: the folders come from the newest version, and the rest are the same as in New backup.</p>
     </section>
 
     <section id="images">
@@ -703,10 +766,13 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>If an image includes a drive that uses BitLocker, Backee asks for a password for the image in Step 4, because the files in the image would otherwise be readable by anyone who can reach the backup. If you do not want a password, tick <strong>Store this image unencrypted. Anyone who can reach the backup can read these files.</strong> A line then repeats what that means. Choose this only for a backup in a place that only you can reach.</p>
 
       <h3>Three ways back</h3>
-      <p>Open <strong>Restore</strong> and pick the image backup and a version. The page lists the partitions in that version. Pick one and choose one of these.</p>
+      <p>Open <strong>Restore</strong> and pick the image backup and a version. The page lists the partitions or disks in that version. A <strong>Windows system</strong> backup is one row, with the parts it holds named under it, because it is only ever put back as a whole. Pick a row and choose one of these.</p>
       <figure>
-        <img src="images/restore-image.png" alt="The Restore page with an image version chosen, a list of its partitions and the buttons Restore partition, Restore disk and Open as virtual disk">
-        <figcaption>The Restore page for an image. Pick a partition, then choose how to bring it back.</figcaption>
+        <picture>
+          <source srcset="images/restore-image-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/restore-image.png" alt="The Restore page with a Windows system version chosen: one Windows system row naming EFI System, Windows and Recovery, a greyed Restore disk button and Open as virtual disk">
+        </picture>
+        <figcaption>The Restore page for a Windows system image: one row, opened as a virtual disk from inside Windows.</figcaption>
       </figure>
       <dl class="defs">
         <dt>Restore partition&hellip;</dt>
@@ -719,30 +785,57 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Backee never restores over the drive Windows is running from. A restore can be stopped, and the progress box works as it does for files (see <a href="#restore">Getting files back</a>).</p>
 
       <h3>The Windows drive and the recovery USB</h3>
-      <p>The Windows drive and the partitions that start the PC cannot be put back from inside Windows, because Windows is using them. A <strong>Windows system</strong> image is kept safely, and you can open it as a virtual disk to copy files out, but <strong>Restore partition&hellip;</strong> is not offered for it. To put it back, use the Backee recovery USB, which starts the PC without Windows (see <a href="#recovery">Recovery USB</a>).</p>
+      <p>The Windows drive and the partitions that start the PC cannot be put back from inside Windows, because Windows is using them. A <strong>Windows system</strong> image is kept safely, and you can open it as a virtual disk to copy files out (the Windows partition gets its own drive letter), but <strong>Restore disk&hellip;</strong> is greyed out for it. To put it back, use the Backee recovery USB, which starts the PC without Windows (see <a href="#recovery">Recovery USB</a>).</p>
     </section>
 
     <section id="recovery">
       <h2 class="sec"><span class="n">07</span>Recovery USB</h2>
       <p>Windows cannot be put back from inside Windows, because Windows is using its own drive. The <strong>Backee recovery USB</strong> is a USB stick that starts the PC without Windows and opens Backee&rsquo;s restore wizard. Use it when Windows will not start, when the disk has failed, or when you move to a new disk or a new PC. With it you restore a Windows system or whole-disk backup (see <a href="#images">Disk and partition images</a>).</p>
-      <p>Make the stick now, while the PC works, and keep it somewhere safe. It holds the tools to restore, not your backup. Keep a Windows system backup on an external USB drive as well, and keep that drive with the stick.</p>
+      <p>Make the stick now, while the PC works, and keep it somewhere safe. It holds the tools to restore, not your backup. Keep a Windows system backup on an external USB drive as well, and keep that drive with the stick. A large external drive can be both at once (see <a href="#recovery-large">Using a large external drive</a>).</p>
 
       <h3>Making a recovery USB</h3>
-      <p>Open <strong>Settings</strong> and choose <strong>Recovery USB</strong>. This page is open to every user. It shows when a stick was last made on this PC, the build of the Windows Recovery Environment that Backee will copy, and a <strong>USB stick</strong> list of the sticks that are plugged in, each with its model and size. While Backee looks, a busy bar and <strong>Looking for USB sticks&hellip;</strong> show. The list updates by itself when you plug a stick in or take one out. <strong>Refresh</strong> looks again.</p>
+      <p>Open <strong>Settings</strong> and choose <strong>Recovery USB</strong>. This page is open to every user. It shows when a stick was last made on this PC, the build of the Windows Recovery Environment that Backee will copy, and a <strong>USB stick</strong> list of the USB drives that are plugged in (sticks, and external SSDs or hard drives), each with its model and size. While Backee looks, a busy bar and <strong>Looking for USB sticks&hellip;</strong> show. The list updates by itself when you plug a stick in or take one out. <strong>Refresh</strong> looks again.</p>
       <dl class="defs">
         <dt>Greyed sticks</dt>
-        <dd>A stick under 2 GB is too small. A &ldquo;removable&rdquo; disk over 256 GB is greyed with <strong>This looks like a backup drive, not a USB stick.</strong> Each greyed row says why.</dd>
+        <dd>A drive under 2 GB is too small. The disk Windows runs from, a disk a backup images and a disk a backup saves to are never listed. Each greyed row says why.</dd>
         <dt>One usable stick</dt>
-        <dd>When exactly one usable stick is plugged in, it is selected already.</dd>
+        <dd>When exactly one usable stick is plugged in, it is selected already. When several are plugged in and exactly one of them is already a Backee recovery USB, that one is selected.</dd>
         <dt>A stick that is already a recovery USB</dt>
         <dd>Its row ends with <strong>&middot; Backee recovery USB</strong> and the date it was made. When you select it, Backee says, for example: <strong>This stick is already a Backee recovery USB, created 25 Oct 2026 (Backee v0.2.1). Making it again replaces it.</strong></dd>
       </dl>
       <figure>
-        <img src="images/settings-recovery.png" alt="The Recovery USB page of Settings with one USB stick listed, and the buttons Create recovery USB and Refresh">
+        <picture>
+          <source srcset="images/settings-recovery-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-recovery.png" alt="The Recovery USB page of Settings with one USB stick listed, and the buttons Create recovery USB and Refresh">
+        </picture>
         <figcaption>Settings, Recovery USB page, with one stick listed.</figcaption>
       </figure>
       <p>Click <strong>Create recovery USB&hellip;</strong>. Backee asks <strong>Erase this USB stick?</strong> and names the stick. Everything on it will be erased. If you agree, click <strong>Erase and create</strong>, and then Windows asks once for administrator permission at that moment. Backee keeps running (see <a href="#who">Who can change what</a>).</p>
-      <p>One bar shows the whole job, with the step and about how many minutes are left. It takes about 3 to 6 minutes. The stick gets a 4 GB start-up partition. The rest of a larger stick is left free. When it is done, a green tick shows with <strong>A Backee recovery USB was created successfully. Keep it somewhere safe.</strong></p>
+      <p>One bar shows the whole job, with the step and about how many minutes are left. It takes about 3 to 6 minutes. The stick gets a 4 GB start-up partition. The rest of a stick under 64 GB is left free. A drive of 64 GB or more is made differently (see <a href="#recovery-large">Using a large external drive</a>). When it is done, a green tick shows with <strong>A Backee recovery USB was created successfully. Keep it somewhere safe.</strong></p>
+      <h3 id="recovery-large">Using a large external drive</h3>
+      <p>A USB drive of 64 GB or more, such as an external SSD, can be the recovery USB and the home of your Windows system backup at the same time. Backee gives it two partitions: a 4 GB start-up partition, and the rest as an NTFS partition named <strong>Backee backups</strong> with its own drive letter.</p>
+      <ul>
+        <li><strong>Room for Windows.</strong> The drive must be able to hold one copy of the Windows system backup, which is about a quarter more than the space Windows uses, rounded up to the next 10 GB. If it cannot, the page says <strong>This drive is too small to hold the Windows system backup as well (it needs about 120 GB). It will only be made a recovery USB.</strong> It is then made like a stick, and the number shown is your own.</li>
+        <li><strong>Erase everything.</strong> If the drive already holds files, a box <strong>Erase everything on this drive</strong> shows, and <strong>Create recovery USB&hellip;</strong> stays greyed until you tick it. The whole drive is erased. Keeping files on it is not offered, so copy them off first.</li>
+        <li><strong>Never listed.</strong> The disk Windows runs from, a disk that a backup images and a disk that a backup saves to are not offered, so a backup drive you already use cannot be wiped by mistake.</li>
+      </ul>
+      <p>When the drive is done, the page says <strong>The recovery drive is ready.</strong> and shows the accent button <strong>Back up Windows to this drive&hellip;</strong>. It opens <strong>New backup</strong> already filled in, with the choices that matter for a recovery drive fixed. If you cancel, nothing is created.</p>
+      <ul>
+        <li><strong>What is fixed:</strong> the Windows system, saved to the root of that drive, <strong>Monthly on day</strong> or <strong>Only when I click Back up now</strong>, and <strong>Keep the last</strong>. The other choices on those steps are greyed out. The last button is <strong>Create and run now</strong>. When the backup has started, Settings closes and the main window shows the Home page.</li>
+        <li><strong>What you can change:</strong> the number of versions to keep, the day of the month and the start time, and <strong>Encrypt this backup</strong>.</li>
+        <li><strong>Why one copy:</strong> a Windows image is large, and the drive is sized for one copy, so the number starts at 1. Raise it only if the drive has room for more.</li>
+        <li><strong>Why encrypted:</strong> the box is ticked because the drive is carried around, and it holds the whole of Windows, including your files and saved sign-ins. If it is lost, the password keeps them private. Keep the password safe, because without it the backup cannot be restored. You can untick the box.</li>
+        <li><strong>Already backed up elsewhere:</strong> if Windows is backed up to another place, the last step says <strong>You already back up Windows to &hellip; This adds a second backup to this drive.</strong></li>
+      </ul>
+      <p>If the drive is unplugged when the backup is due, the backup waits and runs when you plug the drive in again.</p>
+      <p><strong>Making the drive again.</strong> After a major Windows update, select the drive and click <strong>Create recovery USB&hellip;</strong> again. Backee asks <strong>Make this recovery drive again?</strong> and says <strong>Backee replaces the start-up files on this drive. Your backups on Backee backups (E:) are not touched.</strong> Only the start-up partition is redone. For such a drive, Backee looks at the drive itself, not only at its own list of backups, and the page shows one of three lines in cyan under the list.</p>
+      <ul>
+        <li><strong>Holds the Windows system backup &middot; newest version</strong> and its date: the drive holds a backup that Backee already has. No button shows.</li>
+        <li><strong>Holds a backup from</strong> a date <strong>that is not in the Backee index. Open it with Restore, Open an existing backup.</strong> This happens when you removed the backup from Backee but its files are still on the drive. Click <strong>Open it&hellip;</strong>, which opens <strong>Open an existing backup</strong>, and choose the backup from the drive. This is shown instead of <strong>Back up Windows to this drive&hellip;</strong>, so you do not make a second full copy. The line says &ldquo;a backup&rdquo; and not &ldquo;the Windows system backup&rdquo; because Backee cannot tell what an encrypted backup holds until you give its password.</li>
+        <li><strong>No backup on this drive yet</strong>, with the <strong>Back up Windows to this drive&hellip;</strong> button.</li>
+      </ul>
+      <p><strong>Starting and restoring.</strong> Start the PC from the drive as described below. Backee&rsquo;s restore wizard finds the backup on the same drive by itself, so you only need to enter the password and choose a version. The drive itself cannot be chosen as the disk to restore onto.</p>
+
       <h3>Cancelling</h3>
       <p>While the stick is being made, <strong>Cancel</strong> takes the place of <strong>Refresh</strong>. It asks first: <strong>Stop making it</strong> or <strong>Keep going</strong>. It also says whether the stick has been touched yet. Stopping can take a minute or two.</p>
       <ul>
@@ -822,7 +915,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="activity">
       <h2 class="sec"><span class="n">08</span>Activity</h2>
       <figure>
-        <img src="images/activity.png" alt="The Activity page with a list of runs on the left and the details of one run on the right">
+        <picture>
+          <source srcset="images/activity-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/activity.png" alt="The Activity page with a list of runs on the left and the details of one run on the right">
+        </picture>
         <figcaption>The Activity page. Click a run to see its details.</figcaption>
       </figure>
       <p>Activity lists every backup that has run and every restore, newest first, with the backup name, when it started, how long it took and the result. A restore has a small <strong>Restore</strong> tag after its name. A box at the top limits the list to one backup. The <strong>Warnings</strong> and <strong>Waiting</strong> labels on a Home tile, and <strong>Show details</strong> in its <strong>&#8943;</strong> menu, jump here with that backup chosen. If nothing has run yet, the page says <strong>No backups or restores have run yet.</strong></p>
@@ -832,8 +928,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>How many files this version holds, and how many of them were new, changed and unchanged since the last backup. Unchanged files are kept from earlier versions without being stored again, so a run where nothing changed reads and stores nothing, yet its version still restores every file.</dd>
         <dt>Read</dt>
         <dd>How much data Backee read from your files. Files that did not change are not read again.</dd>
-        <dt>New after dedup</dt>
-        <dd>How much of that was new after duplicates were removed. Data that is already in the backup is never stored twice.</dd>
+        <dt>New data</dt>
+        <dd>How much of what was read is not already in the backup. Backee uses deduplication ("dedup" for short): it splits files into pieces and stores each piece only once. A piece that is already in the backup, from an earlier version or another copy of the same file, is not stored again, so a renamed or copied file adds no new data.</dd>
         <dt>Stored (compressed)</dt>
         <dd>How much space the new data takes in the backup after compression.</dd>
         <dt>Shadow copy</dt>
@@ -844,7 +940,17 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Under the facts, notes list any warnings and the files that were skipped, usually because they could not be read. Drag the thin handle between the run list and the details to give either one more room. Click <strong>Copy details</strong> to copy all of it as text, for example to send to someone who is helping you. <strong>Stop</strong> shows while a backup is running.</p>
       <p>A restore shows its own details: the result, when it started, how long it took, how many files and how much data it restored, where the files went (<strong>Original locations</strong> or the folder you chose), and how many files failed or were skipped. A restore that was stopped says <strong>Stopped before it finished.</strong> Activity keeps counts only for restores, not the names of the files.</p>
       <h3>Mark as reviewed</h3>
-      <p>Some warnings are understood and will not go away, for example files that are online-only in OneDrive. When you have looked at a run that ended with warnings, or was stopped, choose <strong>Mark as reviewed</strong> in the <strong>&#8943;</strong> menu on its Home tile. The tile and the tray icon turn green, the tile says <strong>Reviewed</strong>, and Home no longer counts the backup as needing attention. Nothing is changed in the backup, and Activity still says <strong>Warnings</strong> for that run. The mark applies to that one run: the next run that ends with warnings turns the tile and the tray icon amber again. A run that failed cannot be marked as reviewed.</p>
+      <p>Some warnings are understood and will not go away, for example files that are online-only in OneDrive. When you have looked at a run that ended with warnings, or was stopped, choose <strong>Mark as reviewed</strong> in the <strong>&#8943;</strong> menu on its Home tile. The tile and the tray icon turn green, the tile says <strong>OK · reviewed</strong>, and Home no longer counts the backup as needing attention. Nothing is changed in the backup, and Activity still says <strong>Warnings</strong> for that run. The mark applies to that one run: the next run that ends with warnings turns the tile and the tray icon amber again. A run that failed cannot be marked as reviewed.</p>
+      <h3 id="online-only">Files that are only in OneDrive</h3>
+      <p>When a files backup finishes and the only gap is files that OneDrive keeps in the cloud, Backee tells you. A Windows notification appears with the title <strong>&lt;backup name&gt; is backed up</strong> and two lines: how many files on this PC were backed up, and how many files are only in OneDrive, so were not. The Home tile says the same on its last line, for example <strong>12,304 files backed up</strong> and <strong>28,699 only in OneDrive</strong>. Activity starts its details with how many files on this PC were backed up.</p>
+      <p>The notification has two buttons. Clicking the notification itself opens Activity for that backup.</p>
+      <ul>
+        <li><strong>Download them to this PC</strong>. Backee asks <strong>Download files from OneDrive?</strong> and tells you how many files, how large they are in total, and how much free space this PC has. If there is not enough free space for all of them, it says so. Choose <strong>Proceed</strong> and Backee sets those folders to <strong>Always keep on this device</strong>. OneDrive then downloads the files in the background, and the next backup includes the files that have arrived. Choose <strong>Cancel</strong> and nothing changes. The same choice is in the <strong>&#8943;</strong> menu on the Home tile, as <strong>Download cloud files to this PC&hellip;</strong>.</li>
+        <li><strong>It's ok, don't tell me again</strong>. Runs whose only gap is online-only files then show as <strong>OK</strong> in Home, Activity and the tray, and Backee stops sending this notification for that backup. The Home tile and Activity still state how many files are only in OneDrive. The choice is for that one backup and for your Windows user, and it needs no administrator. Runs with files that were skipped or could not be read still show <strong>Warnings</strong>.</li>
+      </ul>
+      <p>To undo the choice, edit the backup and open the <strong>Options</strong> step. Tick <strong>Tell me when files that are only in OneDrive are left out</strong>, then choose <strong>Save</strong>. Backee then marks such runs <strong>Warnings</strong> again and sends the notification. Unticking the box makes the same choice as <strong>It's ok, don't tell me again</strong>. The box is only there for backups of folders.</p>
+      <p>This is different from <strong>Mark as reviewed</strong>. Mark as reviewed covers one run only, and the next run with warnings turns amber again. This choice stays in force for every later run of that backup, but only for online-only files.</p>
+      <p>The notification comes from Backee while it runs in the tray, so none appears when Backee is closed. It appears once for each run. Windows Settings, System, Notifications controls whether Windows shows notifications from Backee.</p>
       <h3>The four results</h3>
       <dl class="defs">
         <dt>OK</dt>
@@ -862,12 +968,15 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h2 class="sec"><span class="n">09</span>Settings</h2>
       <p>Open Settings from the main window or the tray menu. Changes apply at once. There is no Save button. The list on the left also shows <strong>Backee</strong> with the Markticulous plate and the version at the bottom, on every page. Click the plate to open About.</p>
       <figure>
-        <img src="images/settings-general.png" alt="The General page of Settings with start at sign-in, missed backups, battery and default compression">
+        <picture>
+          <source srcset="images/settings-general-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-general.png" alt="The General page of Settings with start at sign-in, missed backups, battery and default compression">
+        </picture>
         <figcaption>Settings, General page.</figcaption>
       </figure>
       <dl class="defs">
         <dt>General</dt>
-        <dd><strong>Start Backee when I sign in</strong> opens the tray icon when you sign in to Windows. Backups run whether or not Backee is open. <strong>Missed backups</strong> decides what happens when the PC was off at the scheduled time: run it once soon after the PC is back on (recommended), or skip it and wait for the next time. <strong>Battery</strong> lets a backup wait while the battery is below a level you pick, and start as soon as the PC is plugged in. <strong>Default compression</strong> is the starting choice for new backups. <strong>Updates</strong> says whether a newer Backee is available. <strong>Update automatically</strong> installs it only when no backup or restore is running and no Backee window is open, and your backups and settings are kept. <strong>Check now</strong> looks at once, and <strong>Install now</strong> shows when an update is ready.</dd>
+        <dd><strong>Start Backee when I sign in</strong> opens the tray icon when you sign in to Windows. Backups run whether or not Backee is open. <strong>Missed backups</strong> decides what happens when the PC was off at the scheduled time: run it once soon after the PC is back on (recommended), or skip it and wait for the next time. <strong>Battery</strong> lets a backup wait while the battery is below a level you pick, and start as soon as the PC is plugged in. <strong>Default compression</strong> is the starting choice for new backups. <strong>Updates</strong> says whether a newer Backee is available. <strong>Update automatically</strong> installs it only when no backup or restore is running and no Backee window is open, and your backups and settings are kept. <strong>Check now</strong> looks at once, and <strong>Install now</strong> shows when an update is ready. Install now does not wait for Backee's windows: they close, the update installs, and Backee starts again. It waits only for a backup or restore that is running.</dd>
         <dt>Appearance</dt>
         <dd>Choose <strong>Follow Windows</strong>, <strong>Light</strong> or <strong>Dark</strong>.</dd>
         <dt>Performance</dt>
@@ -882,7 +991,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>Opens this guide in your web browser.</dd>
       </dl>
       <figure>
-        <img src="images/settings-performance.png" alt="The Performance page of Settings with work priority, worker threads and backups at the same time">
+        <picture>
+          <source srcset="images/settings-performance-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-performance.png" alt="The Performance page of Settings with work priority, worker threads and backups at the same time">
+        </picture>
         <figcaption>Settings, Performance page.</figcaption>
       </figure>
       <p>The settings under <strong>Missed backups</strong>, <strong>Battery</strong>, <strong>Performance</strong> and <strong>Security</strong> belong to the Backee service, so they change things for everyone who uses this PC. They need an administrator. Until then they are greyed out and a note says so. Click <strong>Continue as administrator</strong> and Backee asks Windows once. Start-up, default compression and the theme are only yours and need no permission. On a PC without a battery, the battery options are greyed out, because there is nothing for them to do.</p>
@@ -908,7 +1020,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Creating, editing or deleting a backup, pausing and resuming, and making a recovery USB each start a small helper with administrator rights for just that change. Windows shows its usual prompt asking whether to allow the app to make changes. Choose <strong>Yes</strong>. The Backee window keeps running as it was. If you choose <strong>No</strong>, nothing changes: no backup is saved, no stick is erased. If you are not an administrator, Windows asks for an administrator&rsquo;s name and password instead.</p>
       <h3>For a whole page: Backee restarts as administrator</h3>
       <figure>
-        <img src="images/settings-admin-note.png" alt="The General page of Settings with a yellow note at the top saying the settings need administrator rights, and the Continue as administrator button">
+        <picture>
+          <source srcset="images/settings-admin-note-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-admin-note.png" alt="The General page of Settings with a yellow note at the top saying the settings need administrator rights, and the Continue as administrator button">
+        </picture>
         <figcaption>The yellow note at the top of General, Performance and Security when Backee is not running as an administrator.</figcaption>
       </figure>
       <p>Restoring files, and the service settings in <strong>Settings</strong>, involve many steps on one page (browsing a backup&rsquo;s folders, choosing files, changing several settings), so a prompt for each would be tiring. These pages show a <strong>Continue as administrator</strong> button instead. It asks Windows once, closes Backee and opens it again with administrator rights, back on the same page, with the main window behind any Settings window. Backee keeps those rights until you close it. You do not have to sign out and in as an administrator.</p>
@@ -940,7 +1055,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="support">
       <h2 class="sec"><span class="n">13</span>Support Markticulous</h2>
       <figure>
-        <img src="images/settings-about.png" alt="The About page of Settings with the version, the data folder button and the support section">
+        <picture>
+          <source srcset="images/settings-about-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-about.png" alt="The About page of Settings with the version, the data folder button, and the support section with the supporter adornments">
+        </picture>
         <figcaption>Settings, About page. The support section is at the bottom.</figcaption>
       </figure>
       <p>Backee is made by one person and is free. It has no ads and no tracking. It never sends anything about you anywhere. If it gives you peace of mind, you can help keep it going with a coffee on <a href="https://ko-fi.com/markticulous">Ko-fi</a>.</p>
@@ -950,11 +1068,27 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>When you tell Backee you have supported, it asks for the email you used on Ko-fi. Backee sends only a scrambled version of that email (a hash) to markticulous.com to check it, and only when you click Check. Nothing else is sent. If you would rather not, click <em>Skip the check</em>: Backee takes your word for it, as it always has.</p>
     </section>
 
+    <section id="install">
+      <h2 class="sec"><span class="n">14</span>Installing and updating</h2>
+      <h3>Installing</h3>
+      <ol class="steps">
+        <li>Download Backee from the <a href="https://markticulous.com/support/?app=backee">Backee page</a>. The file is named like <span class="path">Backee-0.5.0-x64.msi</span>.</li>
+        <li>Double-click it. If Windows shows &ldquo;Windows protected your PC&rdquo;, click <strong>More info</strong>, then <strong>Run anyway</strong>. This appears because Backee is new and not yet signed with a publisher certificate.</li>
+        <li>If double-clicking does nothing, Windows has blocked the downloaded file. Right-click it &rarr; <strong>Properties</strong>, tick <strong>Unblock</strong> at the bottom of the General tab, click <strong>OK</strong>, then double-click it again.</li>
+        <li>On the first page, leave <strong>Create a desktop shortcut</strong> ticked if you want one, accept the licence and click <strong>Install</strong>. Windows asks for an administrator's permission. Choose <strong>Yes</strong>.</li>
+      </ol>
+      <p>Backee installs for everyone on the PC, in <span class="path">Program Files\Backee</span>, with the Backee service that runs your backups even when nobody is signed in. Everything it needs comes with it, so there is nothing else to install. You will find Backee in the Start menu, and on your desktop if you kept the shortcut.</p>
+      <h3>Updates</h3>
+      <p>Backee checks for a new version once a day. With <strong>Update automatically</strong> on, it installs the update when no backup or restore is running and no Backee window is open, then starts again. Your backups, jobs and settings are kept, and your choice about the desktop shortcut stays as it was. To check yourself, or to install an update at once, go to <a href="#settings">Settings</a> &rarr; General &rarr; Updates.</p>
+      <h3>Uninstalling</h3>
+      <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Backee and choose <strong>Uninstall</strong>. Your backups stay where they are, and the jobs, passwords and logs stay in <span class="path">%ProgramData%\Backee</span> in case you reinstall. Delete that folder if you want them gone.</p>
+    </section>
+
     <section id="wrong">
-      <h2 class="sec"><span class="n">14</span>If something goes wrong</h2>
+      <h2 class="sec"><span class="n">15</span>If something goes wrong</h2>
       <dl class="defs">
         <dt>&ldquo;Backee cannot reach its service&rdquo;, or a strip saying the service is not running</dt>
-        <dd>Backups will not happen until the service runs. Restart the PC, or open the Windows Services list and start the service named <strong>BackeeService</strong>. The tray icon is amber while it is down.</dd>
+        <dd>If the banner says <strong>Backee is starting with Windows</strong> instead, wait a moment: the service is still starting. Backups will not happen until the service runs. Restart the PC, or open the Windows Services list and start the service named <strong>BackeeService</strong>. The tray icon is amber while it is down.</dd>
         <dt>A backup failed</dt>
         <dd>Open the <strong>&#8943;</strong> menu on its tile and choose <strong>Show details</strong>. In Activity, the notes under the facts say why. A common cause is a drive that is full or a folder that was moved or deleted.</dd>
         <dt>&ldquo;The bucket refused Backee&#39;s access key&rdquo;</dt>
@@ -967,12 +1101,20 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>The folder was deleted, moved or put in the bin. Look in the bin of your Google Drive and restore the <code>Backee</code> folder to My Drive. If it is gone for good, the backups in it are gone too; create a new backup to start again.</dd>
         <dt>&ldquo;Your organisation&#39;s OneDrive does not allow Backee&#39;s app folder&rdquo;</dt>
         <dd>Some work or school Microsoft 365 plans turn off the app folder Backee needs. Personal Microsoft accounts are what Backee supports; use one instead, or choose a synced OneDrive folder as the destination (see <a href="#making">Making a backup</a>, Step 2: Where).</dd>
+        <dt>&ldquo;The backup folder &hellip; is missing&rdquo;</dt>
+        <dd>The folder this backup saves to was renamed, moved or deleted after it had stored at least one version. Backee does not start a new, empty backup in its place, because that would hide your earlier versions and store everything again. Put the folder back under the name the message gives (the line under <strong>Name</strong> in <strong>Edit</strong> shows it too), and the next run carries on with every version kept. If the folder is gone for good, delete the backup and create a new one.</dd>
         <dt>A tile says Waiting</dt>
         <dd>The tile gives the reason. A USB drive that is not plugged in, or a low battery, are the usual ones. It starts by itself when the reason goes away.</dd>
         <dt>Something was skipped</dt>
         <dd>The backup shows <strong>Warnings</strong>. Click the label to open the run in Activity and see which files were skipped. If you understand the warning and accept it, use <strong>Mark as reviewed</strong> in the tile&#39;s <strong>&#8943;</strong> menu: the tile and the tray icon turn green until the next run with warnings.</dd>
         <dt>Files are online-only in OneDrive or another cloud folder</dt>
-        <dd>The backup shows <strong>Warnings</strong>. At the start of the notes, Activity says how many files are online-only and lists them. Their content is in the cloud, not on this PC, so Backee cannot read them. In File Explorer, right-click the folder and choose the option that keeps files on this device, such as <strong>Always keep on this device</strong>. Wait for the files to download, then run the backup again. Files that were backed up while they were on this PC stay in the backup.</dd>
+        <dd>Unless you accepted the online-only files (see <a href="#online-only">Files that are only in OneDrive</a>), the backup shows <strong>Warnings</strong>. At the start of the notes, Activity says how many files are online-only and lists them. Their content is in the cloud, not on this PC, so Backee cannot read them. In File Explorer, right-click the folder and choose the option that keeps files on this device, such as <strong>Always keep on this device</strong>. Wait for the files to download, then run the backup again. Files that were backed up while they were on this PC stay in the backup.</dd>
+        <dt>&ldquo;That password is not right.&rdquo; or &ldquo;Too many wrong passwords&hellip;&rdquo;</dt>
+        <dd>When you open an encrypted backup, check the password and type it again. After five wrong tries Backee makes you wait five minutes, and the message says how long. Then try again. Backee cannot read an encrypted backup without its password, and nobody can recover a lost one.</dd>
+        <dt>&ldquo;This backup was made by a newer Backee&hellip;&rdquo;</dt>
+        <dd>The backup was written by a newer version of Backee than the one on this PC. Update Backee (see <a href="#install">Installing and updating</a>), then open it again.</dd>
+        <dt>&ldquo;There is no Backee backup in this folder.&rdquo;</dt>
+        <dd>The folder you chose with <strong>Browse&hellip;</strong> does not hold a Backee backup. Choose the folder Backee made, the one that holds the backup itself, or use <strong>On this PC</strong> to let Backee search every drive.</dd>
         <dt>A restore did not work</dt>
         <dd>Backee names the files it could not restore. Everything else is restored.</dd>
         <dt>Looking for more detail</dt>

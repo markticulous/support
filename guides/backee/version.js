@@ -1,1 +1,1 @@
-window.BACKEE_VERSION = '0.4.1';
+window.BACKEE_VERSION = '0.6.0';

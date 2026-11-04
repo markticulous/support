@@ -433,7 +433,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="popup">
       <h2 class="sec"><span class="n">02</span>The popup</h2>
       <figure class="popup">
-        <img src="images/popup.png" alt="The Clipee popup with a search box, filter chips, a pinned clip and a list of today's clips">
+        <picture>
+          <source srcset="images/popup-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/popup.png" alt="The Clipee popup with a search box, filter chips, a pinned clip and a list of today's clips">
+        </picture>
         <figcaption>The popup. Pinned clips sit at the top; everything else is grouped by day, newest first.</figcaption>
       </figure>
       <p>Each row is one thing you copied. It shows:</p>
@@ -479,7 +482,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="search">
       <h2 class="sec"><span class="n">04</span>Searching and filters</h2>
       <figure class="popup">
-        <img src="images/popup-search.png" alt="The popup filtered to the one clip containing the word quick">
+        <picture>
+          <source srcset="images/popup-search-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-search.png" alt="The popup filtered to the one clip containing the word quick">
+        </picture>
         <figcaption>Typing &ldquo;quick&rdquo; leaves only the clips that contain it.</figcaption>
       </figure>
       <p>Just start typing when the popup opens. The list narrows with every letter, and the match can be anywhere in the clip, not only at the start.</p>
@@ -502,7 +508,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="menu">
       <h2 class="sec"><span class="n">05</span>The right-click menu</h2>
       <figure class="popup">
-        <img src="images/popup-menu.png" alt="Right-click menu on a text clip: Paste, Edit, Paste as plain text, Paste as, Save as snippet, Pin, Delete, Ignore copies from PowerShell 7">
+        <picture>
+          <source srcset="images/popup-menu-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-menu.png" alt="Right-click menu on a text clip: Paste, Edit, Paste as plain text, Paste as, Save as snippet, Pin, Delete, Ignore copies from Notepad">
+        </picture>
         <figcaption>Right-click any clip for more. The choices change with the kind of clip.</figcaption>
       </figure>
       <p>The menu comes in groups divided by thin lines: the ways to paste first, then anything special to that kind of clip (colours, links and file paths), and <strong>Pin</strong>, <strong>Delete</strong> and <strong>Ignore copies from&hellip;</strong> always at the bottom.</p>
@@ -537,13 +546,19 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p><strong>Pin</strong> a clip you use often and it stays at the top of the popup for good. Pinned clips are never removed by the history limits. Click the arrow beside the <strong>Pinned</strong> heading to fold them away.</p>
       <p><strong>Snippets</strong> are text you write once and paste often: a signature, an address, a standard reply. Find them under the <strong>Snippets</strong> chip in the popup, and manage them in Settings &rarr; Snippets.</p>
       <figure class="window">
-        <img src="images/settings-snippets.png" alt="Settings, Snippets page listing four snippets, two with shortcuts, with Add, Edit and Delete buttons">
+        <picture>
+          <source srcset="images/settings-snippets-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-snippets.png" alt="Settings, Snippets page listing four snippets, two with shortcuts, with Add, Edit and Delete buttons">
+        </picture>
         <figcaption>Settings &rarr; Snippets. Add, edit or delete them here.</figcaption>
       </figure>
       <h3>Placeholders</h3>
       <p>A snippet can contain these, which are filled in when you paste it. In the snippet editor, <strong>Insert</strong> adds them for you, and the preview shows what will be pasted.</p>
-      <figure class="window">
-        <img src="images/snippet-editor.png" alt="The snippet editor for a snippet named Today's date, with the Insert menu open showing Date, Time, Fill-in, Latest clip and Cursor position, a preview of the pasted text below the body, a Shortcut row holding Ctrl+Alt+Shift+D, and a When pressed choice of Paste it or Copy it to the clipboard">
+      <figure class="dialog">
+        <picture>
+          <source srcset="images/snippet-editor-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/snippet-editor.png" alt="The snippet editor for a snippet named Today's date, with the Insert menu open showing Date, Time, Fill-in, Latest clip and Cursor position, a preview of the pasted text below the body, a Shortcut row holding Ctrl+Alt+Shift+D, and a When pressed choice of Paste it or Copy it to the clipboard">
+        </picture>
         <figcaption>The snippet editor. Insert adds placeholders, the preview shows what will be pasted, Shortcut gives the snippet its own keys, and When pressed chooses whether they paste it or copy it.</figcaption>
       </figure>
       <table class="ref">
@@ -571,7 +586,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h2 class="sec"><span class="n">07</span>Settings</h2>
       <p>Open Settings from the tray icon&rsquo;s menu, or press <kbd>Ctrl</kbd>+<kbd>,</kbd> in the popup. Changes take effect straight away; there is no Save button. This guide opens from <strong>User Guide</strong> at the bottom of the Settings list.</p>
       <figure class="window">
-        <img src="images/settings-general.png" alt="Settings, General page">
+        <picture>
+          <source srcset="images/settings-general-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-general.png" alt="Settings, General page">
+        </picture>
         <figcaption>Settings &rarr; General.</figcaption>
       </figure>
       <h3>General</h3>
@@ -591,32 +609,50 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </dl>
       <h3>Appearance</h3>
       <figure class="window">
-        <img src="images/settings-appearance.png" alt="Settings, Appearance page with theme and layout choices">
+        <picture>
+          <source srcset="images/settings-appearance-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-appearance.png" alt="Settings, Appearance page with theme and layout choices">
+        </picture>
         <figcaption>Settings &rarr; Appearance.</figcaption>
       </figure>
       <p><strong>Theme</strong> follows Windows by default, or stays Light or Dark. <strong>Layout</strong> sets how much each row shows. You can also switch layouts straight from the popup: click the list button next to its close button. Here is the same history in each layout, with a code clip selected; in every layout the selected clip sits on a light amber band.</p>
       <div class="layouts">
         <figure>
-          <img src="images/popup-layout-compact.png" alt="The popup in the Compact layout: one line per clip in alternating shades under tinted month headings, the selected clip on an amber band with a gold bar">
+          <picture>
+            <source srcset="images/popup-layout-compact-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="images/popup-layout-compact.png" alt="The popup in the Compact layout: one line per clip in alternating shades under tinted month headings, the selected clip on an amber band with a gold bar">
+          </picture>
           <figcaption><strong>Compact</strong>. One line per clip, set out like a table: tinted month headings and rows in alternating shades, so the most fits on screen. Every clip stays on one line, the selected one too. Rest the pointer on a clip to see the whole clip with its type, app, time and length.</figcaption>
         </figure>
         <figure>
-          <img src="images/popup-layout-comfortable.png" alt="The popup in the Comfortable layout: each clip on up to two lines">
+          <picture>
+            <source srcset="images/popup-layout-comfortable-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="images/popup-layout-comfortable.png" alt="The popup in the Comfortable layout: each clip on up to two lines">
+          </picture>
           <figcaption><strong>Comfortable</strong> (the default). Up to two lines per clip, so most short text shows in full. The selected clip adds a line with its type, app and length. Rest the pointer on a longer clip to read more of it.</figcaption>
         </figure>
         <figure>
-          <img src="images/popup-layout-detailed.png" alt="The popup in the Detailed layout: each clip with a second line giving its type, app, the time it was copied and its characters and words, and a foldable This month group">
+          <picture>
+            <source srcset="images/popup-layout-detailed-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="images/popup-layout-detailed.png" alt="The popup in the Detailed layout: each clip with a second line giving its type, app, the time it was copied and its characters and words, and a foldable This month group">
+          </picture>
           <figcaption><strong>Detailed</strong>. Every clip has a second line with its type, the app it came from, when you copied it, and its characters, words and lines; images show their file size. Month groups can be folded.</figcaption>
         </figure>
         <figure>
-          <img src="images/popup-layout-preview.png" alt="The popup in the Preview layout: one line per clip, with the selected code clip shown in full in a panel at the bottom">
+          <picture>
+            <source srcset="images/popup-layout-preview-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="images/popup-layout-preview.png" alt="The popup in the Preview layout: one line per clip, with the selected code clip shown in full in a panel at the bottom">
+          </picture>
           <figcaption><strong>Preview</strong>. One line per clip, with the selected clip shown in full in a panel at the bottom, headed with its type, app, age and length.</figcaption>
         </figure>
       </div>
       <p><strong>Show details on hover</strong> turns the detail tooltip on or off: resting the pointer on a clip, in any layout, shows the whole clip with its type, app, time and length. <strong>Type stripes</strong> turns the coloured stripe on the left of each row on or off. Compact never shows them. <strong>Month and year section dividers</strong> turns the headings that group the list (This month, Sep 2026, 2025) on or off; off gives one plain list, with only Pinned keeping its heading.</p>
       <h3>Sounds</h3>
       <figure class="window">
-        <img src="images/settings-sounds.png" alt="Settings, Sounds page">
+        <picture>
+          <source srcset="images/settings-sounds-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-sounds.png" alt="Settings, Sounds page">
+        </picture>
         <figcaption>Settings &rarr; Sounds.</figcaption>
       </figure>
       <p>Off to begin with. Turn them on for a small sound when Clipee saves a copy and when it pastes. There are three of each to choose from; the play buttons let you hear them first. The slider under each sets its volume; it plays the sound when you let go, so you can hear the new level.</p>
@@ -628,7 +664,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="privacy">
       <h2 class="sec"><span class="n">08</span>History and privacy</h2>
       <figure class="window">
-        <img src="images/settings-history.png" alt="Settings, History page with days to keep, maximum clips and Delete history">
+        <picture>
+          <source srcset="images/settings-history-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-history.png" alt="Settings, History page with days to keep, maximum clips and Delete history">
+        </picture>
         <figcaption>Settings &rarr; History.</figcaption>
       </figure>
       <h3>How long clips are kept</h3>
@@ -637,7 +676,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p><strong>Delete history&hellip;</strong> clears your clips for good. You will be asked to type <code>DELETE</code> to confirm, and you can choose to keep your pinned clips. Snippets are never touched.</p>
       <h3>What Clipee does not keep</h3>
       <figure class="window">
-        <img src="images/settings-privacy.png" alt="Settings, Privacy page with Pause capture, the password and API key options, and ignored apps with a Choose apps button">
+        <picture>
+          <source srcset="images/settings-privacy-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-privacy.png" alt="Settings, Privacy page with Pause capture, the password and API key options, and ignored apps with a Choose apps button">
+        </picture>
         <figcaption>Settings &rarr; Privacy.</figcaption>
       </figure>
       <ul>
@@ -659,7 +701,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="backup">
       <h2 class="sec"><span class="n">09</span>Backup and restore</h2>
       <figure class="window">
-        <img src="images/settings-backup.png" alt="Settings, Backup page with password, folder, automatic backups, Back up now and Restore">
+        <picture>
+          <source srcset="images/settings-backup-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-backup.png" alt="Settings, Backup page with password, folder, automatic backups, Back up now and Restore">
+        </picture>
         <figcaption>Settings &rarr; Backup.</figcaption>
       </figure>
       <p>A backup is one file holding all your clips, snippets and settings, locked with a password you choose.</p>
@@ -693,7 +738,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h2 class="sec"><span class="n">11</span>Keyboard shortcuts</h2>
       <p>To see the shortcuts as they are set on your PC, including your snippet shortcuts, open Settings &rarr; General and click <strong>Show all shortcuts&hellip;</strong>. <strong>Save as text file&hellip;</strong> saves the list, with Clipee&rsquo;s version and the date, to print or keep.</p>
       <figure class="dialog">
-        <img src="images/shortcuts-dialog.png" alt="The Clipee shortcuts dialog listing the shortcuts anywhere in Windows, the snippet shortcuts (none set yet) and every key in the popup, with a note that the list was saved as a text file, and Save as text file and Close buttons">
+        <picture>
+          <source srcset="images/shortcuts-dialog-dark.png" media="(prefers-color-scheme: dark)">
+          <img src="images/shortcuts-dialog.png" alt="The Clipee shortcuts dialog listing the shortcuts anywhere in Windows, the two snippet shortcuts and every key in the popup, with a note that the list was saved as a text file, and Save as text file and Close buttons">
+        </picture>
         <figcaption>Settings &rarr; General &rarr; Show all shortcuts&hellip;</figcaption>
       </figure>
       <h3>Anywhere in Windows</h3>
@@ -770,7 +818,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
    source copy shows it too); if it is missing, the chip stays "beta". */
 (function () {
   var v = window.CLIPEE_VERSION;
-  if (v) document.getElementById('verChip').textContent = 'v' + v + ' beta';
+  if (v) document.getElementById('verChip').textContent = 'v' + v + (v.startsWith('0.') ? ' beta' : '');   // beta only while 0.x, as in the app
 })();
 </script>
 

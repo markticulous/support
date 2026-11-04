@@ -1,1 +1,1 @@
-window.CLIPEE_VERSION = '0.5.0';
+window.CLIPEE_VERSION = '1.0.1';
