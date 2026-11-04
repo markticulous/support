@@ -5,7 +5,7 @@ name: Sync User Guides
 # guide is read from its repo at the latest release tag. Runs daily and on demand (Actions > Sync User Guides > Run).
 on:
   schedule:
-    - cron: '0 7 * * *'   # 07:00 UTC daily
+    - cron: '15 7 * * *'   # 07:15 UTC daily, off the busy top of the hour
   workflow_dispatch:
 
 permissions:
