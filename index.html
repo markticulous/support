@@ -118,6 +118,15 @@
   .btn.on-band:hover { background: rgba(248, 250, 252, .1); border-color: rgba(248, 250, 252, .7); }
   .soon { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 5px 14px; border-radius: 4px; background: var(--ctrl); border: 1px dashed var(--ctrl-stroke-bottom); color: var(--text2); font-size: 14px; }
   .row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .row.pair { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; } /* the two main buttons share one width */
+  .row.pair .btn { justify-content: center; gap: 6px; }
+  .row.links { gap: 6px 18px; align-items: center; }
+  .lnk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); text-decoration: none; }
+  .lnk:hover { color: var(--accent); text-decoration: underline; }
+  .lnk svg, .btn svg { flex: none; }
+  .links .dot { color: var(--text3); }
+  .apps .card .foot { display: grid; gap: 10px; align-self: end; justify-items: start; } .apps .card .foot .row.links { justify-self: stretch; }
+  .copy .row.pair + .row.links { margin-top: 12px; }
 
   /* ---- Sections ---- */
   section { padding-block: 32px; }
@@ -316,11 +325,16 @@
           </div>
         </div>
         <p>A fast, private clipboard manager. It remembers what you copy, so you can find it and paste it again. Opens with Ctrl+Alt+V.</p>
-        <div class="row">
-          <a class="btn accent" href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="#clipee">Details</a>
-          <a class="btn" href="clipee-overview.html">&#9654; Overview</a>
-          <span class="tag" data-release="markticulous/Clipee">Windows 10 and 11</span>
+        <div class="foot">
+          <div class="row pair">
+            <a class="btn accent" href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="#clipee">Details</a>
+          </div>
+          <div class="row links">
+            <a class="lnk" href="guides/clipee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+            <a class="lnk" href="clipee-overview.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5 3.2v9.6L13 8z" fill="currentColor"/></svg>Overview</a>
+            <span class="tag" data-release="markticulous/Clipee">Windows 10 and 11</span>
+          </div>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -336,10 +350,15 @@
           </div>
         </div>
         <p>Fast, private backup for Windows. Only what changed is read, and every copy can be encrypted. In beta.</p>
-        <div class="row">
-          <a class="btn accent" href="https://github.com/markticulous/Backee/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="#backee">Details</a>
-          <span class="tag" data-release="markticulous/Backee">Windows 10 and 11</span>
+        <div class="foot">
+          <div class="row pair">
+            <a class="btn accent" href="https://github.com/markticulous/Backee/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="#backee">Details</a>
+          </div>
+          <div class="row links">
+            <a class="lnk" href="guides/backee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+            <span class="tag" data-release="markticulous/Backee">Windows 10 and 11</span>
+          </div>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -348,10 +367,15 @@
           <div><h3><span class="wm wm-deskside">Deskside Radio</span></h3></div>
         </div>
         <p>A desktop internet radio that looks like a radio: search for stations, see the song title and artist, set play schedules and pick a theme.</p>
-        <div class="row">
-          <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="#deskside-radio">Details</a>
-          <span class="tag" data-release="markticulous/deskside-radio">Multi-OS browser based</span>
+        <div class="foot">
+          <div class="row pair">
+            <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="#deskside-radio">Details</a>
+          </div>
+          <div class="row links">
+            <a class="lnk" href="guides/deskside-radio/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+            <span class="tag" data-release="markticulous/deskside-radio">Multi-OS browser based</span>
+          </div>
         </div>
       </article>
       <article class="card" data-scrub>
@@ -390,10 +414,13 @@
           <li data-scrub>Snippets, text transforms and text from images, right in the popup.</li>
           <li data-scrub>Updates itself quietly from GitHub.</li>
         </ul>
-        <div class="row">
+        <div class="row pair">
           <a class="btn accent" href="https://github.com/markticulous/Clipee/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="clipee-overview.html">&#9654; Overview</a>
-          <a class="btn" href="https://github.com/markticulous/Clipee/releases" rel="noopener">Release notes</a>
+          <a class="btn" href="guides/clipee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+        </div>
+        <div class="row links">
+          <a class="lnk" href="clipee-overview.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5 3.2v9.6L13 8z" fill="currentColor"/></svg>Overview</a>
+          <a class="lnk" href="https://github.com/markticulous/Clipee/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
         </div>
       </div>
       <figure data-scrub class="shot window tall">
@@ -425,10 +452,15 @@
           <li data-scrub>A recovery USB restores a whole PC, even one that will not start Windows. A large external drive can be the recovery USB and hold the Windows backup too.</li>
           <li data-scrub>On a new PC, open a backup from before and restore from it, or carry on backing up into it.</li>
         </ul>
-        <div class="row">
+        <div class="row pair">
           <a class="btn accent" href="https://github.com/markticulous/Backee/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="backee-privacy.html">Privacy policy</a>
-          <a class="btn" href="backee-terms.html">Terms</a>
+          <a class="btn" href="guides/backee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+        </div>
+        <div class="row links">
+          <a class="lnk" href="https://github.com/markticulous/Backee/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
+          <span class="dot" aria-hidden="true">&middot;</span>
+          <a class="lnk" href="backee-privacy.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6V4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Privacy policy</a>
+          <a class="lnk" href="backee-terms.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.5v11 M5 13.5h6 M3 5h10 M3 5l-1.5 4h3z M13 5l-1.5 4h3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Terms</a>
         </div>
       </div>
       <figure data-scrub class="shot window">
@@ -455,9 +487,12 @@
           <li data-scrub>A watchdog reconnects a dropped stream on its own.</li>
           <li data-scrub>No account and no server. One double-click installs it and puts it on your desktop.</li>
         </ul>
-        <div class="row">
+        <div class="row pair">
           <a class="btn accent" href="https://github.com/markticulous/deskside-radio/releases/latest" rel="noopener">Download</a>
-          <a class="btn" href="https://github.com/markticulous/deskside-radio" rel="noopener">Read more</a>
+          <a class="btn" href="guides/deskside-radio/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+        </div>
+        <div class="row links">
+          <a class="lnk" href="https://github.com/markticulous/deskside-radio/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
         </div>
       </div>
       <figure data-scrub class="shot">

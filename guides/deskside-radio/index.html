@@ -1,0 +1,1319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deskside Radio — User Reference Guide</title>
+<link rel="icon" href="assets/favicon-dial.ico">
+<meta name="color-scheme" content="light dark">
+<style>
+/* A booklet, not a web page. Everything here is in this one file: no
+   fonts to fetch, no scripts to load, nothing that needs a connection.
+   It has to open from a folder on a disk, on a machine that may never
+   have been online, and look like it was set rather than dumped. */
+
+:root {
+  --paper:  #f6f4ef;
+  --card:   #fffdf9;
+  --ink:    #23211d;
+  --mute:   #6e6960;
+  --line:   #dcd7cc;
+  --rule:   #c9c3b6;
+  --accent: #a9540f;
+  --mark:   #f0842a;
+  --code-bg:#edeae2;
+
+  /* The height of the sticky bar, named once because three other things
+     have to keep out from under it. */
+  --bar-h: 46px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #161513;
+    --card:   #1d1c19;
+    --ink:    #e9e5dc;
+    --mute:   #9a948a;
+    --line:   #33312c;
+    --rule:   #45423b;
+    --accent: #f0a05a;
+    --mark:   #f0842a;
+    --code-bg:#24231f;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  /* Old-style figures where the face has them: dates and times sit in
+     the line rather than shouting over it. */
+  font-variant-numeric: oldstyle-num;
+}
+
+/* ---- the bar that stays --------------------------------------------- */
+
+/* Full width, but its contents line up with the 1180px column the rest of
+   the page uses -- done with padding rather than an inner wrapper, so the
+   element the eye sees and the element that sticks are the same one. */
+.wordmark {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin: 0;
+  min-height: var(--bar-h);
+  padding: 0 max(32px, calc((100% - 1180px) / 2));
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .34em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.wordmark .dot {
+  flex: none;
+  width: 7px; height: 7px;
+  margin-right: -5px;
+  border-radius: 50%;
+  background: var(--mark);
+}
+/* The name can go; the dot, the badge and the number cannot. */
+.wordmark-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Lifted from the app's own lockup, with Rams's palette: hollow plate,
+   hairline edge, top-left and bottom-right cropped square so it reads as a
+   stamped tag rather than a box. Oswald is not fetched here -- the read me
+   asks the network for nothing -- so it falls back the same way the app
+   does offline. */
+.byline {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 1px 6px 1px 6px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  line-height: 1;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.byline-by, .byline-suffix { opacity: .6; }
+
+.ver {
+  flex: none;
+  /* Set off from the badge rather than tucked against it: the byline is
+     a lockup and the number is not part of it. */
+  margin-left: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--mute) 72%, transparent);
+}
+
+/* ---- the plate at the top ------------------------------------------ */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  background: var(--card);
+}
+.masthead-in {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 34px 32px 30px;
+}
+.masthead h1 {
+  margin: 14px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 300;
+  letter-spacing: -.015em;
+  line-height: 1.1;
+}
+.standfirst {
+  max-width: 34em;
+  margin: 16px 0 0;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.standfirst + .standfirst { margin-top: 12px; font-size: 17px; color: var(--mute); }
+
+/* ---- the two columns ------------------------------------------------ */
+
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px 96px;
+  display: grid;
+  gap: 56px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: var(--bar-h);
+  padding: 44px 0 40px;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.45;
+  max-height: calc(100vh - var(--bar-h));
+  overflow: auto;
+}
+.toc h2 {
+  margin: 0 0 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 4px;
+  padding: 5px 0;
+  color: var(--mute);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  margin-left: -12px;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 11px;
+  color: var(--rule);
+  padding-top: 2px;
+}
+.toc a:hover { color: var(--ink); }
+.toc a.is-here { color: var(--ink); font-weight: 600; border-left-color: var(--mark); }
+.toc a.is-here::before { color: var(--mark); }
+
+main { padding: 40px 0 0; max-width: 40em; }
+
+/* ---- sections ------------------------------------------------------- */
+
+/* Clicking a contents entry has to land the heading below the bar, not
+   underneath it. */
+section { padding-top: 26px; scroll-margin-top: calc(var(--bar-h) + 14px); }
+/* A heading can be jumped to as well, and lands under the sticky banner
+   without this -- the app links into the middle of a section rather than
+   the top of one. */
+h3[id] { scroll-margin-top: calc(var(--bar-h) + 14px); }
+section + section { margin-top: 44px; border-top: 1px solid var(--line); }
+
+h2.sec {
+  margin: 0 0 22px;
+  font-family: var(--sans);
+  font-size: 25px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+h2.sec .n {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mark);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.005em;
+}
+h3:first-of-type { margin-top: 26px; }
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+
+strong { font-weight: 700; }
+
+/* ---- the manual furniture ------------------------------------------- */
+
+code, .path, kbd {
+  font-family: var(--mono);
+  font-size: .86em;
+  font-variant-numeric: normal;
+}
+code, .path {
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--code-bg);
+  word-break: break-word;
+}
+kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--rule);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--card);
+  font-size: .82em;
+}
+
+/* Numbered steps, set the way a manual sets them. */
+ol.steps { margin: 0 0 18px; padding: 0; list-style: none; counter-reset: step; }
+ol.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 18px;
+}
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0; top: 2px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mark);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: lining-nums;
+}
+
+ul { margin: 0 0 16px; padding-left: 1.2em; }
+li { margin-bottom: 6px; }
+
+/* A run of terms and what each is: the folder listing, the themes, the
+   troubleshooting. One shape, used three times. */
+dl.defs { margin: 0 0 18px; }
+dl.defs dt {
+  margin-top: 16px;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+dl.defs dt:first-child { margin-top: 0; }
+dl.defs dt .path { font-weight: 400; }
+dl.defs dd { margin: 3px 0 0; color: var(--mute); }
+dl.defs dd p { margin-bottom: 10px; }
+
+/* Set apart, with the orange rule that means "read this bit". */
+.note {
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--mark);
+  background: var(--card);
+  border-radius: 0 var(--r, 5px) var(--r, 5px) 0;
+}
+.note p { margin-bottom: 10px; }
+.note p:last-child { margin-bottom: 0; }
+.note .lede {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mark);
+  margin-bottom: 6px;
+}
+
+/* Something to type, on its own line. */
+.cmd {
+  margin: 0 0 18px;
+  padding: 12px 16px;
+  background: var(--code-bg);
+  border-radius: 5px;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+/* The eight themes. A table, because it is one. */
+table.themes { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15.5px; }
+table.themes th {
+  text-align: left;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+table.themes td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.themes td:first-child { font-family: var(--sans); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+table.themes td:last-child { color: var(--mute); padding-right: 0; }
+
+.lead { font-size: 18px; }
+.mute { color: var(--mute); }
+
+/* ---- the colophon --------------------------------------------------- */
+
+.colophon {
+  border-top: 1px solid var(--rule);
+  background: var(--card);
+  font-family: var(--sans);
+  font-size: 13.5px;
+  color: var(--mute);
+}
+.colophon-in {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 26px 32px 34px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  align-items: baseline;
+}
+.colophon a { color: var(--accent); }
+
+.totop {
+  margin-left: auto;
+  text-decoration: none;
+  color: var(--mute);
+}
+.totop:hover { color: var(--ink); }
+
+/* ---- narrow ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  body { font-size: 16.5px; }
+  .wordmark { padding: 0 20px; gap: 10px; letter-spacing: .2em; font-size: 12px; }
+  .masthead-in { padding: 26px 20px 24px; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 20px 64px; }
+  .toc {
+    position: static;
+    max-height: none;
+    padding: 28px 0 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .toc ol { columns: 2; column-gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .toc ol { columns: 1; }
+  /* The tracking is what costs the room here, and it is decoration. */
+  .wordmark { letter-spacing: .1em; gap: 8px; }
+  .find-input { padding-right: 24px; }
+  /* Below this the three of them cannot share a line honestly. The badge
+     is the one that goes: the name and the version are the information. */
+  .byline { display: none; }
+  .toc a { margin-left: 0; padding-left: 0; border-left: 0; }
+  .toc a.is-here { border-left: 0; }
+  main { padding-top: 12px; }
+  .colophon-in { padding: 22px 20px 28px; }
+  .totop { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+html { scroll-behavior: smooth; }
+
+/* ---- on paper -------------------------------------------------------- */
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --mute: #333; --line: #ccc; --rule: #999; --code-bg: #f0f0f0; }
+  .toc, .totop, .uptop { display: none; }
+  /* Nothing sticks to a sheet of paper. */
+  .wordmark { position: static; padding: 0 0 10px; }
+  section, h3[id] { scroll-margin-top: 0; }
+  .shell { display: block; padding: 0; max-width: none; }
+  main { max-width: none; }
+  .masthead { border-bottom-width: 2px; }
+  section { break-inside: auto; }
+  h2.sec, h3 { break-after: avoid; }
+  .note, .cmd, ol.steps > li, table.themes tr { break-inside: avoid; }
+  a { color: #000; }
+}
+/* The way back up, from wherever you are.
+
+   Bottom right, which is the corner the contents list is not in. It stays
+   out of the way until there is enough behind you to be worth the trip --
+   see the script -- and it is the search box's own orange, because the two
+   of them are the only things on the page you press. */
+.uptop {
+  position: fixed; right: 16px; bottom: 100px; z-index: 25;
+  width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  border-radius: 50%;
+  background: var(--card); color: var(--mark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, background .18s ease;
+}
+/* Drawn, not typed. A text arrow takes its weight from whichever font
+   in the stack carries U+2191, which is usually a fallback with one
+   weight in it -- so asking for bold did nothing. A stroke does what
+   it is told. */
+.uptop svg { width: 20px; height: 20px; }
+.uptop.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.uptop:hover { background: color-mix(in srgb, var(--mark) 12%, var(--card)); }
+.uptop:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .uptop { transition: none; } }
+@media (max-width: 480px) { .uptop { right: 12px; bottom: 78px; } }
+/* Search the manual.
+
+   In the banner rather than the masthead: the banner is sticky, so it is
+   still there when you are eight sections down, which is where you are when
+   you want it. */
+/* Last in the banner and allowed to give ground: the name and the
+   version are the information, and this is a control. The banner does
+   not wrap -- it is sticky, and three other things are spaced off its
+   height -- so everything in it has to fit on one line at 360px, which
+   is as narrow as the window is allowed to be. */
+.find { position: relative; margin-left: auto; display: inline-flex; align-items: center; min-width: 0; }
+.find-input {
+  width: clamp(116px, 32vw, 260px); box-sizing: border-box;
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  padding: 5px 26px 5px 10px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--paper); -webkit-appearance: none; appearance: none;
+}
+.find-input::-webkit-search-cancel-button { display: none; }
+.find-input:focus { outline: 2px solid var(--mark); outline-offset: 1px; border-color: var(--mark); }
+.find-input::placeholder { color: var(--mute); }
+/* Only ever there when there is something to clear. */
+.find-clear {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; padding: 0; border-radius: 50%;
+  /* Pale orange, not grey: it belongs to the search rather than to the
+     page furniture, and it is the one thing in the banner you can press. */
+  background: color-mix(in srgb, var(--mark) 16%, transparent);
+  /* A hairline one shade deeper than its own fill, so the disc has an edge
+     without becoming a second button competing with the box it sits in. */
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  color: var(--mark);
+  cursor: pointer;
+  /* Centred by the box rather than by line-height. A multiplication sign
+     does not sit on the baseline the way a letter does, so a line-height
+     equal to the circle left it low and to the left. */
+  display: grid; place-items: center;
+  font-family: var(--sans); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.find-clear[hidden] { display: none; }
+.find-clear:hover { background: color-mix(in srgb, var(--mark) 30%, transparent); }
+/* Fixed, and placed from the box's own rectangle every time it opens or
+   the page moves under it. As an absolutely-positioned child of the banner
+   it came adrift the moment the banner was scrolled -- the list stayed
+   where the banner had been rather than where it now is. */
+.find-list {
+  position: fixed; z-index: 30;
+  /* No minimum: placeList sets an explicit width from what the window
+     actually has, and a minimum here would only overrule it and hang
+     the list off the edge. */
+  max-width: 360px;
+  margin: 0; padding: 4px; list-style: none;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  max-height: 60vh; overflow-y: auto; text-align: left;
+}
+.find-list[hidden] { display: none; }
+.find-list li { margin: 0; }
+.find-list button {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink);
+  padding: 7px 10px; border: 0; border-radius: 5px; background: none;
+}
+/* Enough to follow, not enough to read as a selection. */
+.find-list button:hover, .find-list button:focus,
+.find-list li.is-on button { background: color-mix(in srgb, var(--mark) 9%, transparent); outline: none; }
+.find-list .hits { float: right; margin-left: 10px; font-size: 11.5px; color: var(--mute); }
+.find-none { padding: 8px 10px; font-size: 13.5px; color: var(--mute); }
+
+/* Every occurrence, marked where it sits. ::highlight paints a range without
+   the document being edited to show it -- which matters in a page whose own
+   script is reading the same text. */
+::highlight(dsr-find) { background: #ffe08a; color: #23211d; }
+</style>
+</head>
+<body id="top">
+
+<p class="wordmark">
+  <span class="dot"></span><span class="wordmark-name">Deskside Radio</span>
+  <!-- The maker byline as the Rams theme wears it: the same stamped plate
+       with two corners cropped square, hollow rather than filled, which is
+       the treatment that suits paper. -->
+  <span class="byline">
+    <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
+  </span>
+  <span class="ver" id="verChip">v1.9.0</span>
+  <span class="find">
+    <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
+           placeholder="Search the manual…" aria-label="Search the manual"
+           aria-controls="findList" aria-expanded="false">
+    <button type="button" class="find-clear" id="findClear" aria-label="Clear the search" hidden>&#10005;</button>
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </span>
+</p>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <h1>User Reference Guide</h1>
+    <p class="standfirst">A radio for the corner of your computer desktop. It plays internet streams from stations you choose, on a schedule if you want one, and it looks like a radio rather than a browser tab.</p>
+    <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more, matched against everything below and not only the headings. It lists the sections your word appears in, with a count, and marks every one of them on the page; the &#10005; clears the search and the marks with it. Once you are well down the page an arrow appears at the bottom right to put you back at the top.</p>
+    <p class="standfirst">Deskside Radio is webpage-based application. There is nothing to install, no account and no server. Nothing about you is sent anywhere; the two things that do leave your machine are the stations you play and, on each launch, a request to Google Fonts for the typefaces. Both are listed under <a href="#data">Your data</a>.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hurry">In a hurry to get started?</a></li>
+      <li><a href="#folder">What is in this folder</a></li>
+      <li><a href="#start">Getting started on Windows</a></li>
+      <li><a href="#shortcut">Why use the shortcut</a></li>
+      <li><a href="#window">That separate window</a></li>
+      <li><a href="#browser">Choosing a browser</a></li>
+      <li><a href="#signin">Starting when you sign in</a></li>
+      <li><a href="#does">What it does</a></li>
+      <li><a href="#recording">Recording</a></li>
+      <li><a href="#streams">Stream types</a></li>
+      <li><a href="#data">Your data</a></li>
+      <li><a href="#wrong">If something goes wrong</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="hurry">
+      <h2 class="sec"><span class="n">01</span>In a hurry to get started?</h2>
+      <ol class="steps">
+        <li>Double-click <span class="path">Win-Install-or-Update-Deskside-Radio.cmd</span>.</li>
+        <li>Press play.</li>
+      </ol>
+      <p>That&rsquo;s all &mdash; it installs the radio, puts a shortcut on your Desktop and opens it.</p>
+      <p>If there is no shortcut on your Desktop yet it asks which browser to open in, listing only the ones on your PC: <strong>C</strong> for Chrome, <strong>E</strong> for Edge, <strong>F</strong> for Firefox, <strong>B</strong> for Brave. Pressing Enter takes the first one listed. With only one browser it does not ask. If shortcuts are already there it asks nothing and repoints the ones you have.</p>
+      <p>It also tells you which version it is putting in, and which one that replaces.</p>
+      <p>If you are reading this inside a folder you unzipped yourself, double-click <span class="path">Win&nbsp;-&nbsp;Create Desktop Shortcut (Chrome).cmd</span> instead and it works the same way from where it stands.</p>
+      <p>Everything below is detail you can come back for. On a Mac or on Linux, see <a href="#browser">Choosing a browser</a>.</p>
+    </section>
+
+    <section id="folder">
+      <h2 class="sec"><span class="n">02</span>What is in this folder</h2>
+      <dl class="defs">
+        <dt><span class="path">index.html</span></dt>
+        <dd>The radio itself. Everything is in here.</dd>
+
+        <dt><span class="path">Win-Install-or-Update-Deskside-Radio.cmd</span></dt>
+        <dd>Installs the radio, and updates it later. The same file does both. You should not need to run it for an update &mdash; the radio does that by itself &mdash; but running it takes one straight away.</dd>
+
+        <dt><span class="path">Win - Create Desktop Shortcut (Chrome).cmd</span></dt>
+        <dd>Makes the Desktop shortcut on its own, for a folder you unzipped by hand.</dd>
+
+        <dt><span class="path">Win - Create Desktop Shortcut (Edge).cmd</span><br><span class="path">Win - Create Desktop Shortcut (Firefox).cmd</span><br><span class="path">Win - Create Desktop Shortcut (Brave).cmd</span></dt>
+        <dd>The same, pinned to one browser on purpose.</dd>
+
+        <dt><span class="path">Win - Start with Windows (On-Off).cmd</span></dt>
+        <dd>Opens the radio when you sign in. It is the switch as well as the installer: run it and it tells you whether it is on, and offers to turn it off again or aim it at this folder.</dd>
+
+        <dt><span class="path">Win - Deskside Radio Protocol.vbs</span></dt>
+        <dd>Not one to double-click. It is what the <strong>Start when you sign in</strong> control in Settings reaches when you use it: Windows hands it the request and it runs the script above. It understands two words and ignores everything else.</dd>
+
+        <dt><span class="path">Win - Automatic Updates.cmd</span></dt>
+        <dd>Controls whether the radio updates itself. Nothing is installed or removed either way: it writes, or deletes, one small file in the app folder that the launcher looks for before it checks for a newer version. Run it with <code>off</code> to stop the updating; run it with no argument to start it again.</dd>
+
+        <dt><span class="path">Win - Uninstall Deskside Radio.cmd</span></dt>
+        <dd>Takes it off again: this folder, the folder it sits in once nothing is left in it, and every shortcut it put on the Desktop, in Startup and in the Start menu. Your stations and settings are kept unless you say otherwise &mdash; it asks about those separately, because that is the one part reinstalling cannot bring back.</dd>
+
+        <dt><span class="path">Linux - Create Desktop Shortcut.sh</span></dt>
+        <dd>Both of those, for Linux. Add <code>--autostart</code> for sign-in.</dd>
+
+        <dt><span class="path">User Reference Guide.html</span></dt>
+        <dd>This file &mdash; a user guide style description of the Deskside Radio app, its features and functions.</dd>
+
+      <h3>The window</h3>
+      <p>The radio sizes its own window to the theme, and the themes are not the same height, so the window changes shape when you change theme. Where it sits is remembered and put back before the page is drawn.</p>
+      <p><strong>On Windows the window cannot be resized by hand.</strong> The Desktop shortcut and the Startup entry point at <span class="path">Win - Open Deskside Radio.cmd</span> rather than at the browser: it starts the browser and then takes the window's resize grip and maximise box away. No dragging the edges, no double-clicking the title bar, no Win+Arrow snapping &mdash; while the radio stays free to size the window itself. It exits as soon as the window is locked, console minimised, and nothing is installed or left running. It will wait up to a minute for the window to appear: at sign-in nothing is warm, and the radio has been seen taking more than a minute to come up after a reboot on a machine where it opens instantly by hand. A folder without that file falls back to a shortcut aimed straight at the browser, and the window stays resizable.</p>
+      <p>There is no way to do this from the page. No web API makes a window non-resizable and no browser switch does either, which is the only reason a launcher script exists.</p>
+      <p><strong>On macOS and Linux the window can still be resized, and a size you set by hand is not kept.</strong> The radio opens where you left it, at the size the theme wants.</p>
+      <p>One position cannot be reproduced: hard into the top-left corner. Windows puts an invisible resize border outside a window's visible frame, so that corner is a negative coordinate, and a page is not allowed to place a window partly off the screen. It comes back inset by a few pixels.</p>
+      <p><strong>Three sizes.</strong> The button beside the pushpin steps the radio through Large, Medium and Small, and the window shrinks to match; <strong>Settings &rarr; Theme &rarr; Window size</strong> offers the same choice. Medium is 85% of the full radio and Small is 70%, the whole set drawn smaller rather than rearranged. Until you pick one, the radio picks for you: the largest size that fits your screen, so on a small laptop screen it opens at Medium or Small rather than running off the bottom. Once you have chosen, your choice stays. The floating mini radio stays the same size whichever you pick.</p>
+
+      <h3>The mini radio</h3>
+      <p>The pushpin in the top bar opens a small strip that floats above every other window &mdash; station, what it is doing, play, volume and a meter &mdash; and tucks the radio&rsquo;s own window out of sight behind it. Its volume slider also answers the mouse wheel, one small step a notch. The expand button on the strip puts the radio back, and so does <strong>Escape</strong>. The strip&rsquo;s close button closes the radio altogether, which is why there is only one of them: Chrome&rsquo;s own back-to-tab button is turned off, so one browser control means one thing.</p>
+      <p>During a slot change the strip says what is about to happen and counts the last thirty seconds down &mdash; <em>Schedule change in 30s</em>, or <em>Schedule play ends in 30s</em>, or <em>Schedule play ends, then freeplay in 30s</em> &mdash; and its fader rides the handover fade exactly as the radio&rsquo;s own does. Double-clicking the fader slides it back to 50. A song title too long for its line scrolls slowly along it, with a gap before it starts again.</p>
+      <p>It is a picture-in-picture window, which is the only kind a browser will float above the others. So: <strong>Chrome, Edge, and Firefox 151 or newer.</strong> Safari has no such window and neither does any mobile browser, and there the pushpin is not shown at all rather than offered and broken.</p>
+
+      <h3>The window nothing can size</h3>
+      <p>A page cannot decide how big one of these windows is. Chrome ignores the size it is given &mdash; 440&times;150, 440&times;240 and 600&times;400 were each measured opening at 1119&times;700, which is simply its default for the display &mdash; and although the window can be resized afterwards, that needs a live user gesture, and the gesture that opened it was spent opening it.</p>
+      <p>So on Windows the opener starts <span class="path">strip-fit.ps1</span> beside the radio. <strong>It is the only thing this project leaves running</strong>, and the only file in the folder nobody is meant to double-click. It waits for the floating window, sets it to the right size, takes its resize grip off so it cannot be dragged to some other shape, and does nothing else. It knows the floating window by its title, or, where a browser captions it with the page&rsquo;s file path instead (some Edge builds do), by the radio&rsquo;s folder in that path. It stops once the radio&rsquo;s window has been gone for three seconds together, with a twelve-hour backstop in case it never sees that happen, and only one ever runs at a time. The uninstaller stops it before removing the folder.</p>
+      <p>It picks the right window by asking Windows which one floats. Both windows answer to the same name &mdash; Windows captions a picture-in-picture window with the title of the page that opened it, not the title of the page inside it &mdash; and only the floating one carries the always-on-top flag.</p>
+      <p><strong>Everywhere else &mdash; macOS and Linux &mdash; nothing is started and nothing runs.</strong> The strip opens at whatever size the browser chose and says so in its top-left corner: <em>Click here to show Deskside Radio Mini</em>. One click sizes it. That prompt is keyed to the window actually being too big rather than to the platform, so it never appears on Windows, and it will stop appearing anywhere a browser begins honouring the size it is asked for.</p>
+
+      <h3>Tooltips</h3>
+      <p>The hints are the app&rsquo;s own rather than the browser&rsquo;s. A native one is a grey rectangle in a system font, after a delay nothing can change, and it says nothing at all if you reached the control with the keyboard &mdash; these appear on focus as well as on hover, after about four hundred milliseconds, and immediately after that while you are moving along a row. Escape dismisses one, and so does pressing the thing it belongs to.</p>
+      <p>They wear the same neutral plate as the Settings drawer and the confirm boxes rather than changing with each of the eight faces &mdash; a face is for looking at, and a tooltip is for reading.</p>
+      <p>One thing about them is genuinely worse than what they replace. <strong>A tooltip drawn by the page cannot leave the window</strong>; the browser&rsquo;s own could, being drawn by the operating system outside the window entirely. So this one opens above the control where there is room, below where there is not, and beside it where there is room for neither &mdash; which in the mini radio, eighty-eight pixels tall, is the ordinary case.</p>
+
+      <h3>Getting the radio&rsquo;s own window out of the way</h3>
+      <p>A page cannot minimise its own window &mdash; there is no API for it &mdash; and a browser will not let one be pushed off the edge of the screen either. So the radio&rsquo;s window is shrunk to a placard and parked inside the floating strip&rsquo;s own rectangle, where an always-on-top window covers it completely. That is as close to hidden as the web gets.</p>
+      <p>It follows the strip if the strip is moved, and it does that on the strip&rsquo;s clock rather than its own: a browser throttles the timers of a window it believes nobody can see, which is precisely what this window is. Run from its own window, the placard lagged far enough behind a drag to show at the edges.</p>
+      <p>If the two ever do come apart, what shows is a small placard reading <strong>Floating</strong>, and clicking it brings the radio back.</p>
+
+        <dt>Settings &rarr; Service, holding Shift</dt>
+        <dd>An <strong>Open app folder</strong> button appears beside Reset. It copies this folder's path and opens it for you. It cannot open File Explorer &mdash; a page is not allowed to start a program &mdash; so what opens is the browser's own listing, and the path is on your clipboard to paste wherever you want it.</dd>
+
+        <dt><span class="path">assets/</span></dt>
+        <dd>Everything the radio needs and nobody opens &mdash; one <span class="path">favicon-*.ico</span> per theme, for the shortcut, and <span class="path">LICENSE.txt</span>. The root of this folder is only the things you double-click; this is where the rest of it went.</dd>
+
+        <dt><span class="path">assets/installed-here.txt</span></dt>
+        <dd>The one file that says this folder is an <em>installed</em> copy rather than an archive somebody unzipped. It is written by the installer and is never inside the zip, which is the whole of what makes it mean anything &mdash; the two kinds of folder hold the same files otherwise, because the installer ships inside the zip. Without it the installer read &ldquo;there is an <span class="path">index.html</span> beside me&rdquo; as &ldquo;I am inside an install&rdquo;, so unzipping the archive into Downloads and running the script in it installed the radio into Downloads, shortcuts and all. Delete it and nothing breaks; the next run in this folder simply installs to <span class="path">%LOCALAPPDATA%\DesksideRadio\app</span> instead of updating here.</dd>
+      </dl>
+      <p>Anything starting <strong>Win -</strong> is for Windows and anything starting <strong>Linux -</strong> is for Linux; on a Mac you make the shortcut from inside the radio instead, with the button in the top bar.</p>
+      <p>Keep the files together in one folder. You can put that folder anywhere: Documents, OneDrive, a USB stick.</p>
+    </section>
+
+    <section id="start">
+      <h2 class="sec"><span class="n">03</span>Getting started on Windows</h2>
+      <ol class="steps">
+        <li>Download <span class="path">Win-Install-or-Update-Deskside-Radio.cmd</span> from the releases page.</li>
+        <li>
+          <p>Double-click it.</p>
+          <p>Windows asks once whether to run a downloaded file &mdash; the script is plain text, so you can open it in Notepad and read it first. It then fetches the radio, unpacks it, puts <strong>Deskside Radio</strong> on your Desktop and opens it.</p>
+        </li>
+      </ol>
+      <p>That is the whole install. It goes in your own account&rsquo;s program folder and needs no administrator, so nothing asks again &mdash; not now, and not when you update.</p>
+      <p class="mute">If you already have the zip, it still works exactly as it did: unzip it anywhere and double-click <span class="path">Win&nbsp;-&nbsp;Create Desktop Shortcut (Chrome).cmd</span> inside it.</p>
+
+      <div class="note">
+        <p class="lede">Use the helper, not the button</p>
+        <p>The shortcut button inside the radio works, but a browser will not save a <span class="path">.url</span> under its own name, so the file arrives called <span class="path">Deskside Radio.download</span> and has to be renamed — and anything a browser downloads is tagged with where it came from. A page opened from your own disk has no address the tagger understands, so the file gets marked <em>restricted</em> and Windows asks “Do you want to open this file?” every single time.</p>
+        <p>If you have already done it that way: right-click the file, <strong>Properties</strong>, tick <strong>Unblock</strong>, <strong>OK</strong>. That clears the mark for good.</p>
+        <p>The helper has neither problem: it builds the shortcut on the spot instead of downloading it.</p>
+        <p>The installer goes one better. Unzipping in Explorer puts that same mark on every script it extracts, which is why they ask before running; the installer unpacks them itself, and files that arrive that way carry no mark at all. The one question on the installer is the only one you ever answer.</p>
+      </div>
+
+      <p>You can also just double-click <span class="path">index.html</span>. It works, but you lose the two things the shortcut adds, described next.</p>
+    </section>
+
+    <section id="shortcut">
+      <h2 class="sec"><span class="n">04</span>Why use the shortcut</h2>
+      <p>The shortcut opens the radio in a browser window of its own, with no tabs, no address bar, and permission to start playing on its own.</p>
+      <p>That second part matters. Browsers refuse to play sound until you click something, which is why a page opened normally always asks for one click first. The shortcut lifts that restriction for this window only, so <strong>Play on launch</strong> genuinely plays on launch.</p>
+      <p>It uses Chrome, or Edge if Chrome is not installed. If you have neither, the shortcut still opens the radio in your normal browser, and you will just click once to start it.</p>
+      <p>The window remembers where you put it. The first time, it sizes itself to the radio; after that it opens at the size and in the place you last closed it, including a size you set yourself by dragging the edge. Move it to the corner of the screen you want it in and it will be there tomorrow.</p>
+      <p>To give the shortcut a different theme’s icon, run the script with that theme’s name:</p>
+      <div class="cmd">"Win - Create Desktop Shortcut (Chrome).cmd" console</div>
+      <p>Settings shows you the exact line to use for whichever theme you are on.</p>
+      <p>The icon has a small logo of the browser it opens in, in its top-left corner, so a Chrome, an Edge, a Firefox and a Brave shortcut side by side are easy to tell apart. The logo comes from the browser installed on your PC. To have the icon without it, add <em>plain</em>:</p>
+      <div class="cmd">"Win - Create Desktop Shortcut (Chrome).cmd" console plain</div>
+      <p>Or right-click the shortcut &rarr; <strong>Properties</strong> &rarr; <strong>Change Icon</strong> and pick any <span class="path">favicon-*.ico</span> in the <span class="path">assets</span> folder. Updates keep whichever icon you chose.</p>
+    </section>
+
+    <section id="window">
+      <h2 class="sec"><span class="n">05</span>That separate window</h2>
+      <p>Because the shortcut uses a browser profile of its own, it starts with no stations of yours in it. To carry your setup across:</p>
+      <ol class="steps">
+        <li>Open the radio the ordinary way and set it up how you like.</li>
+        <li><strong>Settings → Service → Export settings.</strong></li>
+        <li>Leave the downloaded <span class="path">deskside-radio-settings.js</span> beside <span class="path">index.html</span>.</li>
+      </ol>
+      <p>The next launch reads it, and so does every launch after that &mdash; but only when the file has changed since that browser last took it. So settings you change here and do not export are left alone, and exporting again is what tells every other shortcut to catch up. This is also how you set up a second machine.</p>
+      <p>Export now saves the file into the app folder, beside <span class="path">index.html</span>, rather than into your Downloads folder. That is the whole of step 3 done for you.</p>
+    </section>
+
+    <section id="browser">
+      <h2 class="sec"><span class="n">06</span>Choosing a browser</h2>
+      <p>Chrome and Edge behave identically here — Edge is built on the same engine, and everything in this guide was checked on both. If you are on a work machine with only Edge, nothing is missing.</p>
+      <p>The Chrome script takes whichever of the two it finds, so most people need nothing else. The rest are for pinning to one browser on purpose:</p>
+      <dl class="defs">
+        <dt><span class="path">Win - Create Desktop Shortcut (Edge).cmd</span></dt>
+        <dd>Makes <strong>Deskside Radio (Edge)</strong>, pinned to Edge.</dd>
+
+        <dt><span class="path">Win - Create Desktop Shortcut (Brave).cmd</span></dt>
+        <dd>Makes <strong>Deskside Radio (Brave)</strong>, pinned to Brave. Brave is built on the same engine as Chrome, so the radio behaves in it exactly as it does in Chrome and Edge.</dd>
+
+        <dt><span class="path">Win - Create Desktop Shortcut (Firefox).cmd</span></dt>
+        <dd>Makes <strong>Deskside Radio (Firefox)</strong>. It looks like the other browsers&rsquo; radio: its own dark window, no tabs or toolbar, no maximise button, at the radio&rsquo;s size, where you last left it. It plays the stations Firefox cannot play natively through a small library it loads only when it needs to. The size lock and the big window stepping aside when you pin the mini radio are done from outside Firefox, by the same small helper the Chrome radio uses, because Firefox does not let a page move or resize its own window.</dd>
+
+        <dt><span class="path">Linux - Create Desktop Shortcut.sh</span></dt>
+        <dd>
+          <p>Writes a <span class="path">.desktop</span> entry. Add <code>--autostart</code> to start it at login, or <code>--off</code> to remove both. If it will not run:</p>
+          <div class="cmd">chmod +x "Linux - Create Desktop Shortcut.sh"</div>
+        </dd>
+      </dl>
+      <p>Each shortcut has a browser profile of its own, and no profile can read another&rsquo;s storage. The settings file beside <span class="path">index.html</span> is the only thing all of them can see, so that is how a setup moves from one to another: <strong>Export settings</strong> in <strong>Settings → Service</strong> saves it there, and every shortcut reads it the next time it opens.</p>
+      <p>It used to save into your Downloads folder, where nothing ever read it &mdash; which is why settings exported from Chrome never appeared in Edge. Each profile is now told to save into the app folder instead.</p>
+      <p>The file is taken only when it has changed since that browser last took it. <strong>Whoever exported last wins.</strong></p>
+
+      <h3>On a Mac</h3>
+      <p>Open <span class="path">index.html</span> in Chrome, Edge or Safari. There is no script for it; the shortcut button next to Settings hands you a <span class="path">.fileloc</span> file instead, which you drag from Downloads to the Desktop. If Finder refuses to open it, drag the address out of your browser’s address bar onto the Desktop — that always works.</p>
+      <p>Safari plays everything here and handles HLS stations better than most, with two differences. It will not let a page opened from a file on disk remember anything, so stations and settings do not survive a reload; put the folder on a web server, or use Chrome or Edge, if that matters. And the window will not size or place itself, because that is the shortcut’s doing and the shortcut is a Chrome one.</p>
+    </section>
+
+    <section id="signin">
+      <h2 class="sec"><span class="n">07</span>Starting when you sign in</h2>
+
+      <h3>Windows</h3>
+      <p>Double-click <span class="path">Win&nbsp;-&nbsp;Start with Windows (On-Off).cmd</span>. It looks first and tells you where things stand, then asks. If it is off it offers to turn it on, which puts the same shortcut the Desktop one uses into your Startup folder. If it is already on it shows you which folder that entry opens and offers two keys: <kbd>R</kbd> to remove it, or <kbd>P</kbd> to point it at the folder you ran it from. Pressing <kbd>Enter</kbd> on its own changes nothing.</p>
+      <p>That middle line is worth reading rather than skipping. A start-up entry made from a copy you unzipped somewhere temporary keeps opening <em>that</em> copy, and once the folder has gone what greets you at sign-in is the browser&rsquo;s <em>Your file couldn&rsquo;t be accessed</em> rather than a radio. If the folder it names is not the one you are in, press <kbd>P</kbd>.</p>
+      <p>Nothing runs in the background. What this puts down is one file, in a folder you can open yourself: press <kbd>Win</kbd>&nbsp;+&nbsp;<kbd>R</kbd> and enter <code>shell:startup</code>.</p>
+      <h3>Or from Settings</h3>
+      <p>The same thing lives in <strong>Settings &rarr; General &rarr; Start when you sign in</strong>, which shows you how it is set before you touch it.</p>
+      <p>The first time, it is a <strong>button</strong> rather than a switch, and that is deliberate. Turning this on has to leave the page and ask Windows, and your browser asks you before it will let that happen &mdash; so a switch would move the moment you clicked it, while nothing had yet happened and the dialog was still open. A button has nothing to be wrong about. Once it has worked once it becomes an ordinary switch, because by then the asking is over.</p>
+      <p>Press the button and your browser asks for permission. What it names is <strong>Windows Based Script Host</strong> rather than the radio &mdash; that is the part of Windows that runs the small script doing the work, and it is what the browser can see. Two steps, and the order matters: <strong>first</strong> tick <strong><em>Always allow</em></strong>, <strong>then</strong> click <strong><em>Open Microsoft Windows Based Script Host</em></strong>. Clicking Open closes the dialog, so a tick made afterwards is a tick made never, and you will be asked again every time. The radio keeps a browser profile of its own, so that tick applies to the radio and to nothing else you do.</p>
+      <p>The line under the control says <em>Asking Windows&hellip;</em> while it waits, and it does wait: the shortcut can take a few seconds to appear after you answer the dialog. When it does, the line says so and the button becomes a switch.</p>
+      <p>If it does keep asking, that is what happened. Tick the box the next time before you press the button.</p>
+      <p>That question is worth a word, because it is the one surprising thing in the app. A page opened from a disk cannot put a file in your Startup folder &mdash; no browser allows it, and none should. So the control asks Windows to do it, through one small registered handler that accepts two words and ignores everything else. It is the only thing this app puts in the registry, it starts nothing by itself, and uninstalling takes it out again.</p>
+      <p>For the radio to be <em>playing</em> when you sit down rather than just open, turn on <strong>Play on launch</strong> in Settings and choose a station, or set up a schedule.</p>
+
+      <p>On a Mac or on Linux the control in Settings is not offered, and the reason is worth a line: it works by asking Windows to do something, and there is nothing equivalent to ask. What follows is the same job done by hand, once.</p>
+      <h3>macOS</h3>
+      <p>Use the shortcut button next to Settings to save a <span class="path">.fileloc</span> file somewhere you will keep it, then open <strong>System Settings → General → Login Items</strong>, and add that file under <strong>Open at Login</strong>. It opens in your normal browser, so it will ask for one click before it plays — the trick the Windows shortcut uses to skip that click is a Chrome command line, and there is no equivalent to hand a login item.</p>
+      <h3>Linux</h3>
+      <p>Run <span class="path">Linux - Create Desktop Shortcut.sh</span> in the app folder to get a launcher, then add that launcher to whatever your desktop calls its startup applications &mdash; GNOME and KDE both have one, and both read the same <span class="path">~/.config/autostart</span> folder if you would rather put the file there yourself.</p>
+    </section>
+
+    <section id="does">
+      <h2 class="sec"><span class="n">08</span>What it does</h2>
+
+      <h3>Stations</h3>
+      <p>Add any internet radio stream by name, frequency, colour and URL. Or search for one: Settings has a finder that looks up stations by city and name through a free public directory, shows the call sign and whether it is AM, FM or internet-only, and adds it in one click. The <strong>Add station</strong> key on the radio opens the Stations tab for you.</p>
+      <p>The finder matches the words you type rather than the exact phrase, so <em>99.9 Virgin Radio CKFM-FM</em> finds the listing called <em>99.9 Virgin Radio Toronto</em>, and a station whose name says your city counts as nearby even when the directory has no position for it. A station the directory could not check is still listed, marked <em>not verified, may only play in its home country</em>: its checks are made from overseas, and a station that streams only to its own country fails them every time while playing perfectly well at home.</p>
+      <p>A result’s button reads the station list rather than remembering that you pressed it, so a station you add and then delete in the same sitting is offered again straight away — no need to run the search a second time. A station the finder added shows its stream address rather than letting you edit it: that address is the one part of such a station already known to work, and a single changed character is a station that stops playing without saying why. Delete it and search again to replace it. A station you add by hand has an address you type in as before.</p>
+
+      <h3>Schedule</h3>
+      <p>Separate weekday and weekend time slots, each choosing a station. A slot hands over at its end time, so <strong>07:00 to 10:00</strong> runs until exactly 10:00 and the next slot picks up there. Slots may run past midnight, and a slot whose two times are the same plays all day. A slot can also force the volume, bass, treble or theme when it starts.</p>
+      <p>Slots cannot be made to collide. What you have just set stays, and anything it runs into is cut back to make room; a slot with nothing left is removed. A line above the cards says what happened, with an <strong>Undo</strong> beside it that puts the whole change back. Adding a slot puts it where there is room and tells you when the day is full. Deleting a station the schedule uses asks whether its slots move to another station or go with it.</p>
+      <p>A handover is not a cut. Through the last minute of a slot a hairline runs out along the bottom of the Schedule button, so you can see the change coming. Over the last five seconds the station fades down, and the one replacing it comes up over two seconds once it is playing. The volume control slides with it so you can watch the handover happen, but only the control moves: the number beside it stays where it is, and so does your setting.</p>
+      <p>When the last slot of the day ends and nothing follows, the radio either keeps playing or turns itself off — your choice, set under the slots in <strong>Settings → Schedule</strong>, and set separately for weekdays and for the weekend. So the weekdays can stop at bedtime while the weekend carries on.</p>
+      <p class="mute">Adding several slots in one go: Save keeps the drawer open on the Schedule tab with the slots folded shut, ready for the next one. Save on any other tab closes the drawer as usual.</p>
+
+      <h3>Song titles</h3>
+      <p id="songs">While a station plays, the line under its name shows the song that is on &mdash; <em>Charlotte Cardin &mdash; The Way We Touch</em> &mdash; for stations that say what they are playing, and changes with a brief pulse when the song does. A station that does not, and talk stations between songs, keep their tagline as before. The mini radio shows the song too, under the station name, with whether it is live or stopped up in its top-left corner.</p>
+      <p>Where the title comes from depends on the station, and the radio works that out from the station&rsquo;s stream address on its own &mdash; there is nothing to set up:</p>
+      <ul>
+        <li><strong>The broadcasters&rsquo; own feeds.</strong> Stations on StreamTheWorld &mdash; Bell&rsquo;s Virgin Radio and a great many others across North America &mdash; and the Rogers and Corus stations (KiSS, CHFI, Q107, 102.1 The Edge and the rest).</li>
+        <li><strong>The station&rsquo;s own streaming server,</strong> where it publishes what it is playing, as many internet-only stations do.</li>
+        <li><strong>The stream itself, on Windows.</strong> Many more stations put the title inside the stream, where a web page is not allowed to read it. Turn on <strong>Settings &rarr; General &rarr; Read titles from the stream itself</strong> and a small helper reads it for the radio: about once a minute it connects to the station for a second, reads the title and hangs up &mdash; about 16&nbsp;KB each time, only while such a station is playing, and it answers nothing but the radio on this computer. It is off until you turn it on.</li>
+      </ul>
+      <p>When a station repeats part of a title &mdash; <em>Dangerous (feat. Akon) [feat. Akon]</em> &mdash; it is shown once, and a featured artist already named beside the artist is not named again. Labels that only say which release a recording is from, such as <em>[Album Version]</em> or <em>(Explicit)</em>, are left off. A title too long for its line scrolls slowly along it once the new-song pulse has finished, the same way on the main radio and the mini radio. Titles sent all in capitals are shown in ordinary title case; anything else is shown as the station spells it, so a title an artist writes in lower case stays that way. On some stations the next song&rsquo;s title appears while the presenter is still talking &mdash; the station has already moved on to it, and the radio shows what the station says. <strong>Settings &rarr; General &rarr; Show song titles</strong> turns the whole thing off.</p>
+
+      <h3>Play on launch</h3>
+      <p>Turn it on in <strong>Settings &rarr; General</strong>, pick a station, and the radio starts by itself when you open the shortcut. An active schedule slot wins over it.</p>
+
+      <h3>Eight themes</h3>
+      <table class="themes">
+        <thead><tr><th>Theme</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td>Analogue dial</td><td>Walnut, brass, a lit glass scale and a real VU meter</td></tr>
+          <tr><td>Broadcast console</td><td>Matte rack panel, a segment readout, segmented LEDs</td></tr>
+          <tr><td>Rams minimal</td><td>Off-white, hairline rules, one orange marker</td></tr>
+          <tr><td>Editorial</td><td>Type-led, a colour per station, a bank of level bars</td></tr>
+          <tr><td>Retro 8-bit</td><td>Four colours, an 8px grid, a meter built from cells</td></tr>
+          <tr><td>Departures board</td><td>Split-flap, one character per flap. The panels turn when the station changes &mdash; and when you first arrive on the board, because a split-flap sign that turns up already settled is the one thing a split-flap sign should never do. That turn waits for the Settings drawer to finish closing, so none of it happens behind the panel.</td></tr>
+          <tr><td>Marconi deco</td><td>Black lacquer and gold, with a gold VU meter</td></tr>
+          <tr><td>Model One</td><td>A cherry cabinet and one big knob; the speaker is the meter, and the cloth ripples with the level</td></tr>
+        </tbody>
+      </table>
+      <p>Each theme brings its own Desktop icon. And keep an eye on <strong>Settings &rarr; Theme</strong> through the year &mdash; a few surprises turn up there now and then.</p>
+
+      <h3>The clock</h3>
+      <p>The clock in the top bar reads <strong>24-hour</strong> to begin with, which is what the clock on a piece of audio equipment reads. <strong>Click it to switch to 12-hour</strong> &mdash; <em>11:06 pm</em> rather than <em>23:06</em> &mdash; and click it again to switch back. Whichever you pick is remembered, and comes back the next time you open the radio.</p>
+      <p>There is no setting for it in Settings. The control is the clock itself: a preference you set by pressing the thing you are looking at does not need a second place to live. It takes the keyboard too &mdash; tab to it and press Enter or Space.</p>
+
+      <h3>Sound</h3>
+      <p>Volume runs on a proper decibel scale, so the middle of the slider is the middle of the range rather than everything happening at the top, and the last few steps at the bottom fall away steeply, so the lowest settings are properly quiet. Bass and treble are kept per station, since a talk station and a music station rarely want the same settings. Double-click any slider to put it back to the middle.</p>
+
+      <h3>Meters</h3>
+      <p>A real VU meter with the ballistics of the mechanical article, fed from the actual audio rather than faked from the volume setting. Some streams refuse the access it needs, and the app says so rather than showing a meter that is guessing.</p>
+      <p>VU means <em>Volume Unit</em>, and a VU meter measures the level of the programme, not how loudly you are listening to it. The needle therefore does not follow the volume fader — that is deliberate, and it is what the meters on a broadcast console or a tape deck do. Turn the volume down and the needle keeps swinging, because the station is still as loud as it was. The meters that do follow a volume knob are the power meters on a hi-fi receiver, which is a different instrument.</p>
+      <p><strong>The peak lamp.</strong> On the broadcast console theme one segment stays lit at the loudest thing the meter has seen &mdash; up instantly, held for a second and a half, then let down at a rate you can follow. A transient that clips is otherwise a single frame nobody sees. It sits on a whole segment rather than between two, which is why the bar is snapped to whole segments as well, and it goes out with the rest of the meter when the radio stops rather than holding the last loud moment of a station that is no longer playing.</p>
+      <p>For the same reason the meter ignores the bass and treble controls: it is reading the station, not the room.</p>
+
+      <h3>It keeps playing</h3>
+      <p>Streams drop. The radio watches for silence and dropped connections and reconnects on its own, backing off from two seconds to thirty, and returns to whatever the schedule says or the last station that worked.</p>
+
+      <h3>Backup</h3>
+      <p><strong>Settings → Service</strong> exports everything to one file and imports it back. Everything means everything: the stations, the schedule, whether the schedule is switched on, the theme, the volume and the tone. The file is saved beside <span class="path">index.html</span>, which is also how settings move between browsers &mdash; see <a href="#browser">Choosing a browser</a>.</p>
+      <p>Each file records the version that wrote it and the date and time, to the second, so two of them on a desktop can be told apart. Importing says which version it came from. A file written by an older version is read and brought forward without asking.</p>
+    </section>
+
+    <section id="recording">
+      <h2 class="sec"><span class="n">09</span>Recording</h2>
+      <p>Hold either <kbd>Shift</kbd> key and a small red <strong>REC</strong> button appears beside play. Press it to start, press it again to stop. It stays visible while it is recording whether you are holding <kbd>Shift</kbd> or not, and the dot on it blinks so you can see at a glance that it is running. When you stop it, it turns green and reads <strong>SAVED</strong> for a few seconds before it goes, so you know the file was written.</p>
+      <p>The file lands in your Downloads folder, named for when it started and how long it ran:</p>
+      <div class="cmd">DSRadio-260913191404-7.m4a      started 2026-09-13 19:14:04, ran 7 s</div>
+      <p>It is AAC in an <span class="path">.m4a</span> file, about 96 kbps, which is roughly 45 MB an hour and opens by double-click on Windows, macOS, a phone or a car stereo.</p>
+      <p>What is recorded is the broadcast, not what comes out of your speakers. Turning the volume down, or dialling in bass for the room, changes what you hear and not what lands in the file, so a recording made quietly is not a quiet recording.</p>
+      <div class="note">
+        <p class="lede">Two things it will not do</p>
+        <p>A station that cannot drive the meter cannot be recorded either — it is the same permission, and the button says so rather than disappearing.</p>
+        <p>Closing the window while it is still recording loses that recording: press stop first.</p>
+      </div>
+    </section>
+
+    <section id="streams">
+      <h2 class="sec"><span class="n">10</span>Stream types</h2>
+      <p>Paste any of these into a station’s stream URL. The radio works out what to do with it.</p>
+
+      <h3>MP3 and AAC streams</h3>
+      <p>The ordinary kind, and what most Icecast and Shoutcast stations hand out. Everything works: sound, the meter, and the tone controls.</p>
+
+      <h3>Playlist files (<span class="path">.pls</span> and <span class="path">.m3u</span>)</h3>
+      <p>Plenty of stations publish one of these as their “Listen” link. It is not a stream; it is a short text file with the real address inside it. The radio reads the file the first time you play that station, keeps the address it finds, and goes straight to it from then on. If the station’s server refuses the request the file cannot be read, and the station will not play; open the file in a text editor and use the address from inside it instead.</p>
+
+      <h3>HLS streams (<span class="path">.m3u8</span>)</h3>
+      <p>These play, but they carry a longer delay by design, and stopping and starting one rewinds you ten to twenty seconds. The player is handed whole pre-recorded chunks and has to begin at the start of the newest one. There is no way around that from here.</p>
+      <p>What the radio does fix is the other HLS fault, which sounds worse: a few seconds in, the last several seconds play again. A station like CBC Radio 1 publishes a list of the same programme at several bitrates, twice over, on two different delivery networks. Browsers start on the lowest bitrate and step up once they have measured the connection, and the step up can land on the other network, whose copy is a few seconds behind — so you hear those seconds twice. The radio reads that list itself and hands the browser one entry, the best one, so there is nothing for it to switch to. It also means you get the full bitrate from the first second instead of the tenth.</p>
+      <p>If the connection cannot carry that entry, the radio steps down the list a rung at a time as it retries, and goes back to the top once the stream has held for ten seconds.</p>
+
+      <h3><span class="path">.asx</span> and <span class="path">.xspf</span></h3>
+      <p>Not handled. They are Windows Media and XML playlist formats. Open one in a text editor and use the stream address inside it.</p>
+
+      <h3>Anything else</h3>
+      <p>If a link will not play, try it in a browser tab on its own. If the tab cannot play it either, neither can the radio.</p>
+
+      <h3>A note on joining live</h3>
+      <p>A station sends a second or so of audio it has already broadcast the moment you connect, so the player has something to start on. The radio skips past it and joins at the live edge, which is why stopping and starting no longer repeats the last second. HLS stations are the exception, for the reason above.</p>
+    </section>
+
+    <section id="data">
+      <h2 class="sec"><span class="n">11</span>Your data</h2>
+      <p class="lead">Everything lives in your browser’s storage on this machine. No account, no sign-in, nothing uploaded, no analytics.</p>
+      <p>The page asks Google Fonts for its typefaces each time it opens, which tells Google an anonymous request came from your address, the same as any web page using a hosted font. Playing a station tells that station the same, and asking what song is on tells whoever publishes that &mdash; the broadcaster, or the station&rsquo;s own server &mdash; the same again, along with which station it is asking about. Nothing else leaves the machine; <strong>Settings &rarr; General &rarr; Show song titles</strong> turns those questions off.</p>
+      <p>The app checks a single file on GitHub to see whether a newer version has been published — a few seconds after it opens, and every six hours it is left running. A launch that already asked within the last ten minutes does not ask again. When there is one it shows a small <strong>Update available</strong> pill beside the wordmark and a dot on the Settings control — the same mark in the same place whichever theme you are in. The dot at the head of the pill blinks, lit for three quarters of every two seconds and snapping on before fading off in sixty milliseconds. On Windows, until the new version has actually been fetched, it breathes instead &mdash; a slow, even swell &mdash; and switches to the blink once the download is there. The blinking dot is the only thing on the face that moves of its own accord, which is what lets a notice this quiet still be caught out of the corner of the eye. A machine set to reduced motion gets it held lit instead. Both marks are the same alert orange in every theme, deliberately not the cabinet's own colour — news should not be wearing it. It sends nothing about you and downloads nothing; the page installs nothing and cannot. The switch beside it in <strong>Settings → General</strong> turns that check off for good.</p>
+      <p>The pill carries a small &times; in a ring. Press it and the pill goes away until the next time the radio has actually been out to look, so it is a snooze rather than a mute. The dot on the Settings control is not touched by it: that one stays for as long as the update is there and has not been installed.</p>
+      <h3>The shortcut button, and why it disappears</h3>
+      <p>The small icon in the top bar offers to put a shortcut on the Desktop, and on Windows it now hides itself once there is one. The page cannot see your Desktop &mdash; a page opened from a disk cannot see any of that disk &mdash; so it is told: the launcher lists the Desktop at every start and writes the answer into <span class="path">assets/shortcut.js</span>, one line of JavaScript, which the page loads the same way it loads a settings seed.</p>
+      <p><strong>Anything other than a clear yes leaves the button showing.</strong> No file, an unreadable file, an error, or a machine where no launcher runs at all &mdash; which is macOS and Linux, where that file is never written and the top bar stays exactly as it always was. Hiding on not knowing would be the one failure worth avoiding: somebody whose shortcut has just gone is the person who needs the button most.</p>
+      <p>The same action lives permanently in <strong>Settings &rarr; Service</strong>, and that one never hides. The icon is the convenience; the drawer is the guarantee.</p>
+
+      <h3 id="updating">Keeping up to date</h3>
+      <p>What the notice means depends on what you are running it on. The updating is done by a Windows batch file, so saying so on a Mac or on Linux would be a promise that cannot be kept; the radio checks and says the right thing for the machine it is on.</p>
+      <p><strong>On Windows the notice is news, not an instruction.</strong> There is nothing to do with it. Your Desktop shortcut does not point at a browser &mdash; it points at <span class="path">Win - Open Deskside Radio.cmd</span>, which opens the radio and then, once a day, asks the same question the app asks. If a newer version has been published it fetches and unpacks it in the background while you listen. The radio is running it the next time you open it, and the readout says which version that is.</p>
+      <p>Clicking the notice opens a small dialog rather than a releases page, and what it says depends on something only this machine knows: whether the new version has already been fetched. If it has, it offers to close the radio, because reopening is then the whole of the update. If it has not, it says so, shows the two launches &mdash; the next one collects it, the one after runs it &mdash; and offers nothing to press but <strong>Got it</strong>. The page works that out by reading a line the build leaves in the app folder, which is the one thing a page opened from a disk can find out about the disk it was opened from.</p>
+      <p>So the notice you see today is acted on at the next launch and visible at the one after: a radio opened daily is current within a day or two, with nobody doing anything. To take one the moment you hear about it instead, run <span class="path">Win-Install-or-Update-Deskside-Radio.cmd</span> in the app folder &mdash; it carries no Mark of the Web, so it costs none of the prompts a fresh download does, and holding Shift on <strong>Settings &rarr; Service</strong> gives you a button that opens the folder. <strong>Deskside Radio - Update</strong> in the Start menu runs the same file, where the installer made one.</p>
+      <p>To stop the radio updating itself, run <span class="path">Win - Automatic Updates.cmd off</span> in the app folder; with no argument it starts again. It is a script rather than a switch in Settings for a plain reason: the app's settings live in the browser's own storage, which a batch file cannot read, so the answer is kept where the launcher can see it &mdash; one small file in the app folder, the same shape as starting with Windows being one file in the Startup folder. Turning it off does not turn off the notice, which has its own switch.</p>
+      <p><strong>On macOS and Linux</strong> the notice reads <strong>get it from GitHub</strong> and takes you to the releases page. Download <span class="path">deskside-radio.zip</span>, unpack it over your app folder, and reopen the radio. There is no installer to run, nothing to uninstall, and nothing that updates itself: the launcher there is a shell script that opens the browser and stops.</p>
+      <p>The installer checks for a newer copy of <em>itself</em> before it does anything else, and hands the job over if there is one. It ships inside the zip, so the copy in your app folder is always one release behind the version it is about to install &mdash; which would mean a fix to the way installing works could never reach the install that needed it.</p>
+      <p><strong>Nothing is installed to make that happen.</strong> There is no service, no scheduled task, nothing written to the registry for it, and nothing running when the radio is not &mdash; the same promise <span class="path">Win - Start with Windows (On-Off).cmd</span> makes, and it is still kept. The updating is the opener doing one more thing on its way past and then exiting, which is what a scheduled task would have been for, without being one.</p>
+      <p>The page itself still installs nothing, and still cannot: a page opened from a disk has no way to run a program, and one that could would be a hole worth more than the convenience. All of the above is the launcher &mdash; the script the shortcut actually points at, which already ran at every launch.</p>
+      <p>Three things it will not do. It never touches anything outside the folder it was opened from. It checks the archive before it writes a single file, so a truncated download is nothing having happened rather than half an app. And it fails quietly &mdash; offline, behind a proxy, read-only folder &mdash; and tries again tomorrow, because the radio is already open and playing and an update is never worth interrupting that.</p>
+      <p>An update replaces every file in the app folder and loses nothing, because your stations, schedule and settings are not in it &mdash; they are in the browser profile. Anything else you left beside <span class="path">index.html</span>, such as a settings seed, survives as well: the update unpacks over the top rather than clearing the folder out first.</p>
+      <p><strong>Check now</strong>, next to that switch, asks straight away instead of waiting for the day to turn over. It says <em>Up to date</em> when there is nothing new, names the version when there is, and goes quiet while the switch is off.</p>
+    </section>
+
+    <section id="wrong">
+      <h2 class="sec"><span class="n">12</span>If something goes wrong</h2>
+      <dl class="defs">
+        <dt>The meter says a stream blocks it</dt>
+        <dd>Some stations refuse the cross-origin access the meter needs. The audio is fine; only the meter and the tone controls are unavailable for that station.</dd>
+
+        <dt>A station says the stream is gone</dt>
+        <dd>It answered, and there was nothing behind it &mdash; the station has retired that stream, which happens more often than you would think. The radio checks each quality of an HLS stream before playing it, and when none of them are there it says so and stops reconnecting rather than trying all night. Press play to make it look again, or replace the URL from <strong>Find a station</strong>.</dd>
+
+        <dt>A station shows &ldquo;Web stream&rdquo; instead of a frequency</dt>
+        <dd>Its name had no frequency in it, and an internet-only station genuinely has no dial position. If it does broadcast over the air, type the frequency into the station's own field as <strong>99.1 FM</strong> or <strong>1010 AM</strong> and the dial will point at it.</dd>
+
+        <dt>Uninstalling left the folder behind</dt>
+        <dd>Fixed in 1.4.3. Before that it removed the app folder but not <span class="path">%LOCALAPPDATA%\DesksideRadio</span> around it, and in 1.4.0 and 1.4.1 it removed nothing at all and said it had. Run the current uninstaller again &mdash; everything it does is safe to repeat &mdash; or delete that folder by hand, which is all that is left of it.</dd>
+
+        <dt>Long names are cut off instead of scrolling</dt>
+        <dd>Windows is set to reduce animation &mdash; <strong>Settings &rarr; Accessibility &rarr; Visual effects &rarr; Animation effects</strong>, which is often off on a work machine. That setting turns off every animation in this app, and scrolling is one of them. A name you cannot read is information lost rather than motion saved, so <strong>Settings &rarr; General</strong> offers <strong>Scroll long names anyway</strong> whenever it detects that. Nothing else starts moving.</dd>
+
+        <dt>The lamp blinks amber and green, and it says no audio</dt>
+        <dd>The stream is connected and arriving, and carrying silence. That is the station's end, not yours &mdash; a dead encoder or genuine dead air. The radio re-tunes itself after 10 seconds of it, and again after 30, 90 and 120 seconds, which usually lands on a different server and fixes it. After four goes it stops trying and leaves the lamp saying so, rather than interrupting a station that is simply off the air. It can only notice this where the meter works, so a station that blocks the meter will not be caught.</dd>
+
+        <dt>A station will not play</dt>
+        <dd>Check the URL plays in a browser tab on its own. Some directory entries are playlist files rather than streams; the finder flags those before you add them.</dd>
+        <dt>A station’s name is too long for the display</dt>
+        <dd>It scrolls, and its edges fade as it passes them, so a word arrives and leaves rather than being cut against a line. Each edge only softens while the name is actually going past it: standing at the start the first word is sharp, and once it has run to the end the last word is sharp too, so you can read both. The preset keys below do the same when you hover one, and all the time for the station that is playing. A key whose name is only slightly too long keeps its … instead, which tells you there is more to see. The segment, split‑flap and 8‑bit displays keep a hard edge on purpose — those are made of cells, which are either lit or not.</dd>
+
+        <dt>Nothing plays until I click</dt>
+        <dd>You opened <span class="path">index.html</span> directly rather than the shortcut. See <a href="#shortcut">Why use the shortcut</a>.</dd>
+
+        <dt>Start again</dt>
+        <dd><strong>Settings → Service → Reset.</strong> It clears everything and restores the stations and settings a fresh copy starts with.</dd>
+      </dl>
+    </section>
+
+  </main>
+</div>
+
+<footer class="colophon">
+  <div class="colophon-in">
+    <span>Deskside Radio is free and open source.</span>
+    <a href="https://github.com/markticulous/deskside-radio">github.com/markticulous/deskside-radio</a>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<button type="button" class="uptop" id="upTop" aria-label="Back to the top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V6"/><path d="M5.5 12.5 12 6l6.5 6.5"/>
+  </svg>
+</button>
+
+<script>
+/* The only script here, and it does one thing: keep the contents list
+   showing where you are. Everything else on the page is markup and CSS,
+   so the read me still reads with scripting turned off. */
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    map[el.id] = a;
+    targets.push(el);
+  });
+  if (!targets.length || !window.IntersectionObserver) return;
+
+  var here = null;
+  function mark(el) {
+    if (here === el) return;
+    if (here) map[here.id].classList.remove('is-here');
+    here = el;
+    if (here) map[here.id].classList.add('is-here');
+  }
+
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var at = seen.indexOf(e.target);
+      if (e.isIntersecting && at === -1) seen.push(e.target);
+      else if (!e.isIntersecting && at !== -1) seen.splice(at, 1);
+    });
+    // Between two sections, the one you just left stays marked; at the
+    // very top of the page the first is the honest answer.
+    if (!seen.length) {
+      if ((window.scrollY || document.documentElement.scrollTop) < 8) mark(targets[0]);
+      return;
+    }
+    // The highest section still on screen is the one you are reading.
+    mark(seen.slice().sort(function (a, b) {
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    })[0]);
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  mark(targets[0]);
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
+
+<script>
+/* Search the manual.
+
+   The whole text, not the headings: a manual is mostly prose, and a search
+   that only reads the titles answers 'nothing found' to most of the words
+   actually in it. Four characters before it starts, because three still
+   matches half the page.
+
+   Every occurrence is marked where it sits, using the Custom Highlight API,
+   which paints ranges without the document being edited to show them. The
+   usual alternative -- wrapping each match in an element -- rewrites the
+   page to display a search result and then has to put it all back. Where
+   the API is missing the search still works and simply does not mark.
+
+   No build step and no dependencies: this file is opened straight off the
+   disk, and whatever it cannot do by itself it cannot do. */
+(function () {
+  var box = document.getElementById('findInput');
+  var list = document.getElementById('findList');
+  var clear = document.getElementById('findClear');
+  if (!box || !list) return;
+
+  var MIN = 4, MAX = 14;
+  var canMark = typeof Highlight === 'function' && window.CSS && CSS.highlights;
+
+  /* Every section, with its heading and its text folded to lower case once.
+     Searching lower-cases the needle instead of the haystack. */
+  var parts = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (sec) {
+    var h = sec.querySelector('h2.sec');
+    if (!h) return;
+    var n = h.querySelector('.n');
+    var name = (n ? h.textContent.slice(n.textContent.length) : h.textContent).trim();
+    parts.push({ el: sec, head: h, name: name, hay: sec.textContent.toLowerCase() });
+  });
+
+  var shown = [], at = -1;
+
+  /* The one thing that has to work when the reader asks for the marks to go.
+     Wrapped because a registry that has already been emptied, or a browser
+     that never had one, is not a reason to stop. */
+  function unmark() {
+    if (!canMark) return;
+    try { CSS.highlights.delete('dsr-find'); } catch (e) { /* nothing to clear */ }
+  }
+
+  /* Walks the text nodes of the article and hands back a range per match.
+     Script and style are skipped, and so is the banner -- marking the word
+     inside the search box itself would be odd. */
+  function mark(q) {
+    if (!canMark) return;
+    var root = document.querySelector('.shell') || document.body;
+    var walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('script, style, .find')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var ranges = [], node;
+    while ((node = walk.nextNode())) {
+      var hay = node.nodeValue.toLowerCase();
+      var from = 0, hit;
+      while ((hit = hay.indexOf(q, from)) !== -1) {
+        var r = document.createRange();
+        r.setStart(node, hit);
+        r.setEnd(node, hit + q.length);
+        ranges.push(r);
+        from = hit + q.length;
+      }
+    }
+    if (!ranges.length) { unmark(); return; }
+    // Highlight extends Set, so the ranges go in one at a time -- no spread,
+    // and no constructing it from an array it would not take anyway.
+    var hl = new Highlight();
+    ranges.forEach(function (r) { hl.add(r); });
+    CSS.highlights.set('dsr-find', hl);
+  }
+
+  /* Under the box, wherever the box is now. The banner it sits in is sticky,
+     so 'where the box is' changes as the page scrolls -- and an absolutely
+     positioned list simply stayed behind. */
+  function placeList() {
+    if (list.hidden) return;
+    var r = box.getBoundingClientRect();
+    var w = Math.max(200, Math.min(360, window.innerWidth - 16));
+    var left = Math.min(r.right - w, window.innerWidth - w - 8);
+    list.style.left = Math.round(Math.max(8, left)) + 'px';
+    list.style.top = Math.round(r.bottom + 6) + 'px';
+    list.style.width = w + 'px';
+    // Never past the foot of the window.
+    list.style.maxHeight = Math.max(120, window.innerHeight - r.bottom - 20) + 'px';
+  }
+
+  function close() {
+    list.hidden = true;
+    list.innerHTML = '';
+    box.setAttribute('aria-expanded', 'false');
+    shown = []; at = -1;
+  }
+
+  function go(part) {
+    close();
+    box.blur();
+    /* scrollIntoView and not the hash: the banner is sticky, and a hash jump
+       puts the heading underneath it. */
+    part.head.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#' + part.el.id);
+  }
+
+  function pick(i) {
+    var was = list.querySelector('li.is-on');
+    if (was) was.className = '';
+    at = i;
+    if (at < 0) return;
+    var li = list.children[at];
+    if (li) { li.className = 'is-on'; li.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function count(hay, q) {
+    var n = 0, from = 0, hit;
+    while ((hit = hay.indexOf(q, from)) !== -1) { n++; from = hit + q.length; }
+    return n;
+  }
+
+  function draw() {
+    var raw = box.value.trim();
+    if (clear) clear.hidden = raw.length === 0;
+
+    var q = raw.toLowerCase();
+    if (q.length < MIN) { close(); unmark(); return; }
+
+    mark(q);
+
+    shown = [];
+    parts.forEach(function (p) {
+      var n = count(p.hay, q);
+      if (n) shown.push({ part: p, n: n });
+    });
+    shown.sort(function (a, b) { return b.n - a.n; });
+    shown = shown.slice(0, MAX);
+
+    list.innerHTML = '';
+    if (!shown.length) {
+      var none = document.createElement('li');
+      none.className = 'find-none';
+      none.textContent = 'Nothing in the manual says ' + raw;
+      list.appendChild(none);
+      list.hidden = false;
+      box.setAttribute('aria-expanded', 'true');
+      placeList();
+      at = -1;
+      return;
+    }
+
+    shown.forEach(function (row) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var hits = document.createElement('span');
+      hits.className = 'hits';
+      hits.textContent = row.n === 1 ? 'once' : row.n + ' times';
+      b.appendChild(hits);
+      b.appendChild(document.createTextNode(row.part.name));
+      b.addEventListener('click', function () { go(row.part); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    box.setAttribute('aria-expanded', 'true');
+    placeList();
+    pick(0);
+  }
+
+  function wipe() {
+    box.value = '';
+    if (clear) clear.hidden = true;
+    close();
+    unmark();
+    box.focus();
+  }
+
+  box.addEventListener('input', draw);
+  box.addEventListener('focus', draw);
+  if (clear) clear.addEventListener('click', wipe);
+
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { wipe(); return; }
+    if (!shown.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); pick((at + 1) % shown.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pick((at - 1 + shown.length) % shown.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[at]) go(shown[at].part); }
+  });
+
+  /* A click elsewhere puts the list away but leaves the marks up: the words
+     are still in the box, and they are still what you are looking for. */
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.find')) close();
+  });
+
+  /* The banner moves with the page, so the list has to be told. Passive: it
+     only reads and writes its own box. */
+  window.addEventListener('scroll', placeList, { passive: true });
+  window.addEventListener('resize', placeList);
+}());
+</script>
+
+<script>
+/* Back to the top.
+
+   Walked by hand rather than handed to scroll-behavior: smooth. The
+   browser's own easing runs in AND out, and its duration grows with the
+   distance -- so from the foot of a manual this long it is a slow ride
+   past everything you have already read. This is a fixed four hundred
+   milliseconds however far it has to go, eased out, which reads as the
+   page being put back rather than travelled.
+
+   Someone who has asked for less motion gets the jump, which is what the
+   rest of the app does in the same situation. */
+(function () {
+  var btn = document.getElementById('upTop');
+  if (!btn) return;
+
+  var MS = 280;
+  /* Far enough down that the top is out of reach and out of mind. One and
+     a half screens: less and the button is in the way on a short page. */
+  var SHOW_AT = function () { return window.innerHeight * 1.5; };
+
+  var still = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  function sync() {
+    btn.classList.toggle('is-on', window.scrollY > SHOW_AT());
+  }
+
+  var run = null;
+
+  function toTop() {
+    if (run) cancelAnimationFrame(run);
+    var from = window.scrollY;
+    if (from <= 0) return;
+    if (still()) { window.scrollTo({ top: 0, behavior: 'instant' }); return; }
+
+    /* Started now, not on the first frame. Taking it from the first
+       callback spent that frame setting the clock and moving nothing, which
+       is a visible hesitation on a press. */
+    var t0 = (window.performance && performance.now) ? performance.now() : null;
+    var step = function (ts) {
+      /* Null only where there is no performance.now, and then the clock comes
+         off the first frame as it used to. Date.now() is NOT the fallback:
+         rAF counts from the document, Date from 1970, and the difference
+         would send k negative and the page the wrong way. */
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / MS);
+      // Away quickly, settling in.
+      var e = 1 - Math.pow(1 - k, 3);
+      /* instant, and not because it is quicker: the sheet sets
+         scroll-behavior: smooth on html, so a plain scrollTo here hands each
+         frame to the browser's own easing -- which eases IN, and is started
+         again by the next frame before it has finished. Sixty of those a
+         second is the slow ramp this was meant to avoid. */
+      window.scrollTo({ top: Math.round(from * (1 - e)), behavior: 'instant' });
+      if (k < 1) { run = requestAnimationFrame(step); return; }
+      run = null;
+      /* The heading is where the reader is going, not the pixel. Moved
+         after the scroll so nothing fights it on the way. */
+      if (history.replaceState) history.replaceState(null, '', '#top');
+    };
+    run = requestAnimationFrame(step);
+  }
+
+  btn.addEventListener('click', toTop);
+
+  /* The colophon's own link goes the same way, so there are two doors and
+     one behaviour rather than two of each. */
+  var foot = document.querySelector('.totop');
+  if (foot) foot.addEventListener('click', function (e) { e.preventDefault(); toTop(); });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+}());
+</script>
+</body>
+</html>

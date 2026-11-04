@@ -1,0 +1,1289 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backee — User Guide</title>
+<link rel="icon" href="images/backee-32.png">
+<meta name="color-scheme" content="light dark">
+<style>
+/* One file plus its pictures. No fonts to fetch, nothing that needs a
+   connection: it opens from the Backee install folder. Layout and behaviour
+   follow the Deskside Radio guide; the colours are Backee's Midnight to Cyan. */
+
+:root {
+  --paper:  #f4f6f8;
+  --card:   #ffffff;
+  --ink:    #1f2328;
+  --mute:   #5d6570;
+  --line:   #dde1e6;
+  --rule:   #c5cbd3;
+  --accent: #0e7490;
+  --mark:   #06b6d4;
+  --code-bg:#eaedf1;
+  --bar-h: 46px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #121417;
+    --card:   #1a1d21;
+    --ink:    #e6e8eb;
+    --mute:   #9aa1ab;
+    --line:   #2c3036;
+    --rule:   #3d434b;
+    --accent: #22d3ee;
+    --mark:   #67e8f9;
+    --code-bg:#22262b;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-variant-numeric: oldstyle-num;
+}
+
+/* ---- the bar that stays --------------------------------------------- */
+
+.wordmark {
+  position: sticky; top: 0; z-index: 10;
+  margin: 0;
+  min-height: var(--bar-h);
+  padding: 0 max(32px, calc((100% - 1180px) / 2));
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: .34em; text-transform: uppercase;
+  color: var(--mute);
+}
+.wordmark .logo { flex: none; width: 20px; height: 20px; margin-right: -4px; }
+.wordmark-mark { flex: none; height: 17px; width: auto; color: var(--ink); overflow: visible; }
+
+/* The Markticulous byline plate: hollow, hairline edge, two corners cropped square. */
+.byline {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 8px;
+  border-radius: 1px 6px 1px 6px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 9px; font-weight: 500; letter-spacing: .12em; line-height: 1;
+  white-space: nowrap; text-transform: uppercase;
+}
+.byline-by, .byline-suffix { opacity: .6; }
+
+.ver {
+  flex: none;
+  margin-left: 14px;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--mute) 72%, transparent);
+}
+
+/* ---- the plate at the top ------------------------------------------ */
+
+.masthead { border-bottom: 1px solid var(--rule); background: var(--card); }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 34px 32px 30px; }
+.masthead h1 {
+  margin: 14px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(30px, 5vw, 44px); font-weight: 300;
+  letter-spacing: -.015em; line-height: 1.1;
+}
+.standfirst { max-width: 32em; margin: 16px 0 0; font-size: 19px; line-height: 1.55; }
+.standfirst + .standfirst { margin-top: 12px; font-size: 17px; color: var(--mute); }
+
+/* ---- the two columns ------------------------------------------------ */
+
+.shell {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 32px 96px;
+  display: grid; gap: 56px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+}
+
+.toc {
+  position: sticky; top: var(--bar-h);
+  padding: 44px 0 40px;
+  font-family: var(--sans); font-size: 13.5px; line-height: 1.45;
+  max-height: calc(100vh - var(--bar-h));
+  overflow: auto;
+}
+.toc h2 {
+  margin: 0 0 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mute);
+}
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px;
+  padding: 5px 0 5px 10px; margin-left: -12px;
+  color: var(--mute); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 11px; color: var(--rule); padding-top: 2px;
+}
+.toc a:hover { color: var(--ink); }
+.toc a.is-here { color: var(--ink); font-weight: 600; border-left-color: var(--mark); }
+.toc a.is-here::before { color: var(--mark); }
+
+main { padding: 40px 0 0; max-width: 40em; }
+
+/* ---- sections ------------------------------------------------------- */
+
+section { padding-top: 26px; scroll-margin-top: calc(var(--bar-h) + 14px); }
+h3[id] { scroll-margin-top: calc(var(--bar-h) + 14px); }
+section + section { margin-top: 44px; border-top: 1px solid var(--line); }
+
+h2.sec {
+  margin: 0 0 22px;
+  font-family: var(--sans); font-size: 25px; font-weight: 500;
+  letter-spacing: -.01em; line-height: 1.2;
+}
+h2.sec .n {
+  display: block; margin-bottom: 7px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mark);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-family: var(--sans); font-size: 16px; font-weight: 600; letter-spacing: -.005em;
+}
+h3:first-of-type { margin-top: 26px; }
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+strong { font-weight: 700; }
+
+/* ---- the manual furniture ------------------------------------------- */
+
+code, .path, kbd { font-family: var(--mono); font-size: .86em; font-variant-numeric: normal; }
+code, .path { padding: 1px 5px; border-radius: 3px; background: var(--code-bg); word-break: break-word; }
+kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px;
+  background: var(--card); font-size: .82em; white-space: nowrap;
+}
+
+ol.steps { margin: 0 0 18px; padding: 0; list-style: none; counter-reset: step; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 18px; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mark); color: #fff;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; font-variant-numeric: lining-nums;
+}
+
+ul { margin: 0 0 16px; padding-left: 1.2em; }
+li { margin-bottom: 6px; }
+
+dl.defs { margin: 0 0 18px; }
+dl.defs dt { margin-top: 16px; font-family: var(--sans); font-size: 14.5px; font-weight: 600; }
+dl.defs dt:first-child { margin-top: 0; }
+dl.defs dd { margin: 3px 0 0; color: var(--mute); }
+
+.note {
+  margin: 0 0 20px; padding: 14px 18px;
+  border-left: 3px solid var(--mark);
+  background: var(--card);
+  border-radius: 0 5px 5px 0;
+}
+.note p { margin-bottom: 10px; }
+.note p:last-child { margin-bottom: 0; }
+.note .lede {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mark); margin-bottom: 6px;
+}
+
+table.ref { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15.5px; }
+table.ref th {
+  text-align: left;
+  font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+table.ref td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.ref td:first-child { font-family: var(--sans); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+table.ref td:last-child { color: var(--mute); padding-right: 0; }
+
+/* Screenshots: taken at 150% scaling, shown at their real on-screen size. */
+figure { margin: 6px 0 24px; }
+figure img {
+  display: block; max-width: 100%; height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.10);
+}
+figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color: var(--mute); }
+
+.mute { color: var(--mute); }
+
+/* ---- the colophon --------------------------------------------------- */
+
+.colophon { border-top: 1px solid var(--rule); background: var(--card); font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+.colophon-in {
+  max-width: 1180px; margin: 0 auto; padding: 26px 32px 34px;
+  display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+}
+.colophon a { color: var(--accent); }
+.colophon .tm { flex-basis: 100%; font-size: 12px; }
+.totop { margin-left: auto; text-decoration: none; color: var(--mute); }
+.totop:hover { color: var(--ink); }
+
+/* ---- narrow ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  body { font-size: 16.5px; }
+  .wordmark { padding: 0 20px; gap: 10px; letter-spacing: .2em; font-size: 12px; }
+  .masthead-in { padding: 26px 20px 24px; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 20px 64px; }
+  .toc { position: static; max-height: none; padding: 28px 0 8px; border-bottom: 1px solid var(--line); }
+  .toc ol { columns: 2; column-gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .toc ol { columns: 1; }
+  .wordmark { letter-spacing: .1em; gap: 8px; }
+  .find-input { padding-right: 24px; }
+  .byline { display: none; }
+  .toc a { margin-left: 0; padding-left: 0; border-left: 0; }
+  .toc a.is-here { border-left: 0; }
+  main { padding-top: 12px; }
+  .colophon-in { padding: 22px 20px 28px; }
+  .totop { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --mute: #333; --line: #ccc; --rule: #999; --code-bg: #f0f0f0; }
+  .toc, .totop, .uptop, .find { display: none; }
+  .wordmark { position: static; padding: 0 0 10px; }
+  section, h3[id] { scroll-margin-top: 0; }
+  .shell { display: block; padding: 0; max-width: none; }
+  main { max-width: none; }
+  h2.sec, h3 { break-after: avoid; }
+  .note, ol.steps > li, table.ref tr, figure { break-inside: avoid; }
+  a { color: #000; }
+}
+
+/* ---- back to the top ------------------------------------------------- */
+
+.uptop {
+  position: fixed; right: 16px; bottom: 100px; z-index: 25;
+  width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  border-radius: 50%;
+  background: var(--card); color: var(--mark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, background .18s ease;
+}
+.uptop svg { width: 20px; height: 20px; }
+.uptop.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.uptop:hover { background: color-mix(in srgb, var(--mark) 12%, var(--card)); }
+.uptop:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+@media (max-width: 480px) { .uptop { right: 12px; bottom: 78px; } }
+
+/* ---- search the guide ----------------------------------------------- */
+
+.find { position: relative; margin-left: auto; display: inline-flex; align-items: center; min-width: 0; }
+.find-input {
+  width: clamp(116px, 32vw, 260px);
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+  padding: 5px 26px 5px 10px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--paper); -webkit-appearance: none; appearance: none;
+}
+.find-input::-webkit-search-cancel-button { display: none; }
+.find-input:focus { outline: 2px solid var(--mark); outline-offset: 1px; border-color: var(--mark); }
+.find-input::placeholder { color: var(--mute); }
+.find-clear {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; padding: 0; border-radius: 50%;
+  background: color-mix(in srgb, var(--mark) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  color: var(--mark); cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--sans); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.find-clear[hidden] { display: none; }
+.find-clear:hover { background: color-mix(in srgb, var(--mark) 30%, transparent); }
+.find-list {
+  position: fixed; z-index: 30;
+  max-width: 360px;
+  margin: 0; padding: 4px; list-style: none;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  max-height: 60vh; overflow-y: auto; text-align: left;
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+}
+.find-list[hidden] { display: none; }
+.find-list li { margin: 0; }
+.find-list button {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink);
+  padding: 7px 10px; border: 0; border-radius: 5px; background: none;
+}
+.find-list button:hover, .find-list button:focus,
+.find-list li.is-on button { background: color-mix(in srgb, var(--mark) 9%, transparent); outline: none; }
+.find-list .hits { float: right; margin-left: 10px; font-size: 11.5px; color: var(--mute); }
+.find-none { padding: 8px 10px; font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+
+::highlight(backee-find) { background: #ffe08a; color: #1f2328; }
+</style>
+</head>
+<body id="top">
+
+<p class="wordmark">
+  <img class="logo" src="images/backee-32.png" alt="">
+  <!-- The drawn Backee wordmark (assets/logo/backee-wordmark-*.svg), inline so "back" follows the page's light or dark ink;
+       "ee" keeps the brand cyan. Mark, 2026-10-25. -->
+  <svg class="wordmark-mark" viewBox="0 15.9 128.7 31.45" role="img" aria-label="Backee">
+    <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="currentColor"><path d="M2.10 18 V45.25"/><circle cx="9.60" cy="37.75" r="7.5"/><circle cx="32.00" cy="37.75" r="7.5"/><path d="M39.50 30.25 V45.25"/><path d="M61.10 32.45 A7.5 7.5 0 1 0 61.10 43.05"/><path d="M69.90 18 V45.25"/><path d="M79.90 30.25 L69.90 39.75"/><path d="M74.10 35.75 L80.40 45.25"/></g>
+      <g stroke="#06B6D4"><path d="M89.20 37.75 H104.20 A7.5 7.5 0 1 0 102.01 43.05"/><path d="M111.60 37.75 H126.60 A7.5 7.5 0 1 0 124.41 43.05"/></g>
+    </g>
+  </svg>
+  <span class="byline">
+    <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
+  </span>
+  <span class="ver" id="verChip">beta</span>
+  <span class="find">
+    <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
+           placeholder="Search the guide…" aria-label="Search the guide"
+           aria-controls="findList" aria-expanded="false">
+    <button type="button" class="find-clear" id="findClear" aria-label="Clear the search" hidden>&#10005;</button>
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </span>
+</p>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <h1>User Guide</h1>
+    <p class="standfirst">Backee keeps safe copies of your files and brings them back when you need them. It runs quietly in the background, saves only what has changed, and lets you restore any file from any earlier day.</p>
+    <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more. It lists the sections your word appears in and marks each place on the page; the &#10005; clears it. Once you are well down the page, an arrow at the bottom right takes you back to the top.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hurry">In a hurry to get started?</a></li>
+      <li><a href="#glance">Backee at a glance</a></li>
+      <li><a href="#tray">The tray icon</a></li>
+      <li><a href="#making">Making a backup</a></li>
+      <li><a href="#restore">Getting files back</a></li>
+      <li><a href="#images">Disk and partition images</a></li>
+      <li><a href="#recovery">Recovery USB</a></li>
+      <li><a href="#activity">Activity</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#who">Who can change what</a></li>
+      <li><a href="#safe">Keeping your backups safe</a></li>
+      <li><a href="#fast">Why Backee is fast</a></li>
+      <li><a href="#support">Support Markticulous</a></li>
+      <li><a href="#wrong">If something goes wrong</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="hurry">
+      <h2 class="sec"><span class="n">01</span>In a hurry to get started?</h2>
+      <ol class="steps">
+        <li>Open Backee from the tray, next to the clock. Click its icon. If you cannot see it, look under the <strong>^</strong> arrow with the other hidden tray icons.</li>
+        <li>On the Home page, click <strong>＋ New backup</strong>.</li>
+        <li>On the first step, <strong>What</strong>, click <strong>＋ Add folder&hellip;</strong> and pick the folders you want to keep safe. Then click <strong>Next</strong>.</li>
+        <li>On the second step, <strong>Where</strong>, choose <strong>This PC or USB drive</strong>, click <strong>Browse&hellip;</strong> and pick a folder on a different drive from your files. Then click <strong>Next</strong>.</li>
+        <li>Click <strong>Next</strong> on <strong>When</strong>, accept everything on <strong>Options</strong>, and click <strong>Create and run now</strong>. Windows asks once for permission to make the change. Choose <strong>Yes</strong>.</li>
+      </ol>
+      <p>That is all. Your first backup starts at once. To see that it worked, look at the new tile on the Home page. It shows a percentage while it runs, and a green <strong>OK</strong> when it is finished.</p>
+      <figure>
+        <img src="images/home.png" alt="The Backee Home page with a banner saying the files are protected and one backup tile showing a green OK label">
+        <figcaption>The Home page after a first backup. The banner and the green OK label tell you all is well.</figcaption>
+      </figure>
+    </section>
+
+    <section id="glance">
+      <h2 class="sec"><span class="n">02</span>Backee at a glance</h2>
+      <p>Backee has two parts. The <strong>Backee service</strong> does the real work. It runs in the background, starts with Windows, and makes your backups on schedule. The <strong>Backee app</strong> is the window and the tray icon you use to look at them. You can close the window and even the tray icon. The service keeps running, so your backups still happen.</p>
+      <p>The main window has a list on the left:</p>
+      <dl class="defs">
+        <dt>Home</dt>
+        <dd>How your backups are doing, with one tile for each backup.</dd>
+        <dt>Restore</dt>
+        <dd>Get files back from a backup (see <a href="#restore">Getting files back</a>).</dd>
+        <dt>Destinations</dt>
+        <dd>The places your backups go. Each place is listed once, with what kind it is (this PC or a USB drive, a synced folder, or S3-compatible storage) and the backups that use it. If a backup is waiting, for example because its USB drive is not plugged in, the reason shows here too.</dd>
+        <dt>Activity</dt>
+        <dd>A list of every backup that has run (see <a href="#activity">Activity</a>).</dd>
+        <dt>Settings</dt>
+        <dd>Opens the Settings window (see <a href="#settings">Settings</a>).</dd>
+        <dt>User Guide</dt>
+        <dd>Opens this guide in your web browser.</dd>
+      </dl>
+      <h3>The banner on the Home page</h3>
+      <p>The banner at the top is one line about all your backups. A coloured dot shows the mood. The words are one of these:</p>
+      <ul>
+        <li><strong>Your files are protected</strong>. Everything is fine. It also says when the last backup finished.</li>
+        <li><strong>No backups set up yet</strong> or <strong>Not backed up yet</strong>. You have no backup, or none has run.</li>
+        <li><strong>Your backups need attention</strong>. A backup is waiting, finished with warnings or was stopped.</li>
+        <li><strong>A backup failed</strong>. Open Activity to see why.</li>
+        <li><strong>Backups are paused</strong>. You paused them from the tray menu.</li>
+        <li><strong>Backee cannot reach its service</strong>. The service is not running (see <a href="#wrong">If something goes wrong</a>).</li>
+      </ul>
+      <p>The <strong>Back up all now</strong> button on the banner starts every backup that is not already running. It asks first (<strong>Back up all now?</strong>), then the backups run in the background. It is greyed out until you have a backup.</p>
+      <h3>The tiles</h3>
+      <p>Each backup has a tile. It shows the name, the folder the backups go to, the schedule and compression, and a line about the last run. A coloured stripe on the left and a small label at the top right tell you the state:</p>
+      <table class="ref">
+        <thead><tr><th>Label</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>OK</td><td>The last backup worked. Green.</td></tr>
+          <tr><td>Running or a percentage</td><td>A backup is running now. A bar shows how far it has got.</td></tr>
+          <tr><td>New</td><td>The backup has never run. Grey.</td></tr>
+          <tr><td>Waiting</td><td>It cannot start yet, for example because the backup drive is unplugged or the battery is low. The tile says why. Amber. Click the label to open the details in Activity.</td></tr>
+          <tr><td>Warnings</td><td>It finished, but some files were skipped. Amber. Click the label to open the details in Activity.</td></tr>
+          <tr><td>Reviewed</td><td>The last run had warnings and you marked it as reviewed (see <a href="#activity">Activity</a>). Green.</td></tr>
+          <tr><td>Stopped</td><td>It was stopped before it finished. Amber.</td></tr>
+          <tr><td>Failed</td><td>It did not work. The tile says why. Red.</td></tr>
+        </tbody>
+      </table>
+      <p>The button at the bottom right of every tile is <strong>Back up now</strong>, or <strong>Stop</strong> while that backup runs. It asks first (for example <strong>Back up Documents now?</strong>) and then runs in the background. The tiles are wide, three across at most. The <strong>&#8943;</strong> button next to it opens a menu. Items that have nothing to act on are greyed out:</p>
+      <ul>
+        <li><strong>Back up now</strong>. Greyed out while the backup runs.</li>
+        <li><strong>Show details</strong>. Opens Activity with this backup chosen. Greyed out until it has run.</li>
+        <li><strong>Restore files&hellip;</strong>. Opens Restore with this backup chosen. Greyed out until a run has stored a version.</li>
+        <li><strong>Open backup folder</strong>. Opens the folder the backups go to in File Explorer. Greyed out for cloud storage, and when the folder cannot be found, for example because the USB drive is unplugged.</li>
+        <li><strong>Mark as reviewed</strong>. Available when the last run ended with warnings or was stopped (see <a href="#activity">Activity</a>).</li>
+        <li><strong>Edit&hellip;</strong> and <strong>Delete&hellip;</strong>.</li>
+      </ul>
+      <p>While an image of a backup is open as a virtual disk, its tile shows a pill such as <strong>Mounted as G:</strong>. Hover over it to see the file behind the disk (see <a href="#images">Disk and partition images</a>).</p>
+      <p>The dashed <strong>＋ New backup</strong> tile at the end starts a new backup.</p>
+    </section>
+
+    <section id="tray">
+      <h2 class="sec"><span class="n">03</span>The tray icon</h2>
+      <p>The Backee icon sits in the tray, next to the clock. <strong>Left-click</strong> it to open the main window. <strong>Right-click</strong> it to open its menu.</p>
+      <figure>
+        <img src="images/tray-menu.png" alt="The tray menu with Back up all now, Open Backee, Pause all backups, Settings and Close tray icon">
+        <figcaption>The tray menu. The first line says what Backee is doing.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>The first line</dt>
+        <dd>A short status, such as <strong>Your files are protected</strong> or <strong>Backing up Documents</strong>. It is only a label. You cannot click it.</dd>
+        <dt>Back up all now</dt>
+        <dd>Starts every backup that is not already running.</dd>
+        <dt>Open Backee</dt>
+        <dd>Opens the main window.</dd>
+        <dt>Pause all backups</dt>
+        <dd>Opens a small list: <strong>For 1 hour</strong>, <strong>Until tomorrow</strong> or <strong>Until I resume</strong>. Pausing needs an administrator, so Windows asks once for permission.</dd>
+        <dt>Resume backups</dt>
+        <dd>Replaces <strong>Pause all backups</strong> while backups are paused.</dd>
+        <dt>Settings&hellip;</dt>
+        <dd>Opens the Settings window.</dd>
+        <dt>&hearts; Support Markticulous&hellip;</dt>
+        <dd>Appears only after Backee has been useful for a while (see <a href="#support">Support Markticulous</a>).</dd>
+        <dt>Close tray icon</dt>
+        <dd>Closes the icon and the window. Backee asks first. The service keeps running, so your backups still run as scheduled. Start Backee again whenever you want to look at them.</dd>
+      </dl>
+      <h3>What the colours mean</h3>
+      <p>The icon is a tile that changes colour with the state of your backups. Hover over it to see a short sentence.</p>
+      <table class="ref">
+        <thead><tr><th>Icon</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>Dark blue and cyan, steady</td><td>Idle. Your files are protected, or there are no backups yet.</td></tr>
+          <tr><td>Lime green, pulsing</td><td>A backup is running.</td></tr>
+          <tr><td>Amber, pulsing</td><td>Something needs attention: a backup is waiting, finished with warnings or was stopped. Also shown when the service is not running.</td></tr>
+          <tr><td>Red, pulsing</td><td>A backup failed.</td></tr>
+          <tr><td>Grey, blinking</td><td>Backups are paused.</td></tr>
+        </tbody>
+      </table>
+      <p>Amber and red alerts stop pulsing once you have seen them, that is, once you open the menu or the window. They pulse again if something new goes wrong. Green and grey keep moving for as long as they last. If you turned off animation effects in Windows, every state shows as a steady colour instead.</p>
+    </section>
+
+    <section id="making">
+      <h2 class="sec"><span class="n">04</span>Making a backup</h2>
+      <p>Click <strong>＋ New backup</strong> on the Home page. A window with four steps opens: <strong>What</strong>, <strong>Where</strong>, <strong>When</strong> and <strong>Options</strong>. Use <strong>Next</strong> and <strong>Back</strong> to move between them. Every step already has a sensible choice. If something is missing, a red line at the bottom says what. If you cancel after changing things, Backee asks before it throws your choices away.</p>
+      <div class="note">
+        <p class="lede">Every backup stores only what changed, yet each one restores in full on its own.</p>
+        <p>Other backup apps make you choose between full, incremental and differential backups. Backee does not need to. Each run adds only new or changed data, like an incremental backup, but every version is complete, like a full backup. No version depends on a chain of earlier ones, so removing an old version never breaks a newer one.</p>
+      </div>
+
+      <h3>Step 1: What</h3>
+      <figure>
+        <img src="images/new-what.png" alt="The What step of the New backup window with the Files &amp; folders, Partition and Whole disk tiles above a list of chosen folders and their sizes">
+        <figcaption>Step 1. Pick the folders to back up. Each one shows its size.</figcaption>
+      </figure>
+      <p>Click <strong>＋ Add folder&hellip;</strong> and choose one or more folders. Each shows its size once Backee has measured it. The <strong>&#10005;</strong> beside a folder removes it. Backee copies files from a shadow copy, so files that are open or locked are included (see <a href="#safe">Keeping your backups safe</a>).</p>
+      <p>Click <strong>Exclusions&hellip;</strong> to skip some files. Type one name or pattern per line, such as <code>*.iso</code> or <code>node_modules</code>. Backee already skips temporary files, caches, the recycle bin and the system paging and hibernation files.</p>
+      <p><strong>Files that are online-only in OneDrive.</strong> If a folder is inside your Microsoft OneDrive, some of its files may be kept in the cloud only (Windows shows a cloud icon beside them). Backee can only back up files that are on this PC. When it finds such files, a warning under the folder list says how many there are and how large they are. Click <strong>Keep on this device</strong> and OneDrive downloads them, and Backee backs each file up once it is on this PC. The button is greyed out when the drive does not have enough free space. This never stops you from going on to the next step. Other cloud folders, such as Dropbox or Google Drive, can have online-only files too. If a backup finds any, Activity lists them with the same advice.</p>
+      <p>Above the folder list, three tiles choose what kind of backup this is. <strong>Files &amp; folders</strong> is the one described here. <strong>Partition</strong> backs up a drive as an image, and <strong>Whole disk</strong> backs up every partition on one disk as an image. Images are described in <a href="#images">Disk and partition images</a>.</p>
+      <figure>
+        <img src="images/new-what-image.png" alt="The What step of the New backup window with Partition chosen and the Windows system card, showing the disk and its locked start-up partitions">
+        <figcaption>Step 1 with <strong>Partition</strong> chosen. The <strong>Windows system</strong> card holds everything needed to start this PC.</figcaption>
+      </figure>
+
+      <h3>Step 2: Where</h3>
+      <figure>
+        <img src="images/new-where.png" alt="The Where step with the choices This PC or USB drive and Synced folder, and a box for the folder path">
+        <figcaption>Step 2. Choose the place the backups are saved.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>This PC or USB drive</strong>. Another disk or a removable drive. A USB drive is found again even if Windows gives it a different drive letter.</li>
+        <li><strong>Synced folder</strong>. Your OneDrive, Google Drive, Dropbox or Sync.com folder. The sync app uploads the backup for you. Backee lists the ones it finds on this PC.</li>
+        <li><strong>OneDrive account</strong>. Sign in with Microsoft and Backee uploads directly, without the OneDrive app.</li>
+        <li><strong>Google Drive account</strong>. Sign in with Google and Backee uploads directly, without the Google Drive app.</li>
+      </ul>
+      <p>For <strong>This PC or USB drive</strong> or <strong>Synced folder</strong>, click <strong>Browse&hellip;</strong> or type a path. Backee makes a folder called <code>Backee</code> there, and a folder for each backup inside it. A line under the box shows where the backups will go.</p>
+      <p><strong>OneDrive account.</strong></p>
+      <div class="note">
+        <p class="lede">OneDrive support is in beta</p>
+        <p>It may stop working after November 13, 2026, if Backee&rsquo;s Microsoft sign-in needs to move to a different registration.</p>
+      </div>
+      <p>Click <strong>Sign in with Microsoft</strong>. Your browser opens; sign in with your Microsoft account and accept. Backee then shows <strong>Signed in as &hellip;</strong>. Personal Microsoft accounts are what Backee supports; a work or school account is tried, but some organisations turn off the app folder Backee needs (see <a href="#wrong">If something goes wrong</a>). If another OneDrive backup already uses an account, Backee offers <strong>Use</strong> followed by that account, so you do not sign in again; it copies that backup&rsquo;s saved sign-in inside the Backee service, and the app never sees it.</p>
+      <p>Backee sees only its own folder in your OneDrive, inside the <strong>Apps</strong> folder (its name depends on your language), under a folder named after the backup. It cannot see or change anything else in your OneDrive.</p>
+      <p>Click <strong>Test connection</strong> to check the sign-in before you save. Backee says <strong>Connected</strong> or tells you what is wrong.</p>
+      <p>When you save the backup, the sign-in is kept by the Backee service, protected by Windows, so scheduled backups can run without asking you each time. To sign in again later, for example after &ldquo;Backee needs you to sign in to OneDrive again&rdquo;, choose <strong>Sign in again</strong> on the Restore page, or <strong>Sign in again&hellip;</strong> in the backup&rsquo;s <strong>&#8943;</strong> menu on Home. Backee checks that you sign in with the same account the backup already uses.</p>
+      <p><strong>Google Drive account.</strong></p>
+      <p>Click <strong>Sign in with Google</strong>. Your browser opens; sign in with your Google account. When Google asks what Backee can access, <strong>tick the box</strong> &ldquo;See, edit, create, and delete only the specific Google Drive files you use with this app&rdquo;, then choose <strong>Continue</strong>. Google leaves that box unticked, and without it Backee cannot save to your Google Drive. Backee waits up to ten minutes for the sign-in to finish; <strong>Cancel</strong> stops the wait. Backee then shows <strong>Signed in as &hellip;</strong>. If another Google Drive backup already uses an account, Backee offers <strong>Use</strong> followed by that account, so you do not sign in again; it copies that backup&rsquo;s saved sign-in inside the Backee service, and the app never sees it.</p>
+      <p>Backee keeps its backups in a folder called <code>Backee</code> in My Drive, with a folder named after the backup inside it. Do not move or delete files inside that folder, or the backup may stop working. Backee can only see the files it creates itself. It cannot see or change anything else in your Google Drive.</p>
+      <p>Click <strong>Test connection</strong> to check the sign-in before you save. Backee says <strong>Connected</strong> or tells you what is wrong.</p>
+      <p>When you save the backup, the sign-in is kept by the Backee service, protected by Windows, so scheduled backups can run without asking you each time. To sign in again later, for example after &ldquo;Backee needs you to sign in to Google Drive again&rdquo;, choose <strong>Sign in again</strong> on the Restore page, or <strong>Sign in again&hellip;</strong> in the backup&rsquo;s <strong>&#8943;</strong> menu on Home. Backee checks that you sign in with the same account the backup already uses.</p>
+      <p><strong>S3-compatible storage.</strong></p>
+      <p>Create the bucket with your provider first, and a key that is allowed to read, write and delete in it. Then fill in the fields:</p>
+      <ul>
+        <li><strong>Service</strong>. Pick your provider. Backee fills in the endpoint for you where it can. For Cloudflare R2 and for MinIO or another service, type the endpoint yourself.</li>
+        <li><strong>Region</strong>. Pick the bucket&rsquo;s region from the list, or type it if yours is not listed. It must be the region your provider shows for the bucket.</li>
+        <li><strong>Endpoint</strong>. The web address of the storage service.</li>
+        <li><strong>Bucket</strong> and <strong>Folder in the bucket</strong>. Backee keeps the backup in that folder.</li>
+        <li><strong>The key pair</strong>. The two boxes use your provider&rsquo;s own words, for example <strong>keyID</strong> and <strong>applicationKey</strong> for Backblaze B2, and a hint under them says where to find them. A key name, if your provider has one, is only a label and is not needed.</li>
+      </ul>
+      <p>Click <strong>Test connection</strong> to check the details before you save. Backee writes a small test file to the bucket, reads it back and deletes it, then says <strong>Connected</strong> or tells you what is wrong. The test runs on your PC and sends nothing to the Backee service.</p>
+      <p>When you save the backup, the keys are kept by the Backee service, protected by Windows. They are never shown again. To change them later, edit the backup and type a new secret key. Leave the box empty to keep the saved one.</p>
+      <p>For cloud storage, <strong>Encrypt this backup</strong> is ticked for you in step 4, so only you can read what is stored. You can untick it.</p>
+      <p>Backups cannot go inside a folder you are backing up. Pick a place outside your backed-up folders, ideally on a different drive.</p>
+
+      <h3>Step 3: When</h3>
+      <figure>
+        <img src="images/new-when.png" alt="The When step with schedule choices and the Smart versions to keep setting">
+        <figcaption>Step 3. Choose how often to back up and how many old versions to keep.</figcaption>
+      </figure>
+      <p>Pick one schedule:</p>
+      <ul>
+        <li><strong>Every</strong> a number of hours.</li>
+        <li><strong>Daily</strong> at a time you choose. This is the starting choice, at 21:00.</li>
+        <li><strong>Weekly on</strong> the days you tick. The starting day is Sunday.</li>
+        <li><strong>Monthly on day</strong> a day of the month.</li>
+        <li><strong>Only when I click Back up now</strong>. Nothing runs by itself.</li>
+      </ul>
+      <p>Times use the 24-hour clock. If the PC is off at the chosen time, the backup catches up soon after the PC is back on. You can change this in Settings (see <a href="#settings">Settings</a>).</p>
+      <h3>Versions to keep</h3>
+      <p>Every backup adds a new <strong>version</strong>, a snapshot of your folders at that moment. Old versions are removed so the backup does not grow for ever. You choose how many to keep:</p>
+      <ul>
+        <li><strong>Smart (recommended)</strong>. Keeps hourly versions for a day, daily ones for two weeks, weekly ones for two months and monthly ones for a year.</li>
+        <li><strong>Keep the last</strong> a number of versions.</li>
+        <li><strong>Keep for</strong> a number of days.</li>
+        <li><strong>Custom</strong>. Your own counts of hourly, daily, weekly and monthly versions.</li>
+      </ul>
+
+      <h3>Step 4: Options</h3>
+      <figure>
+        <img src="images/new-options.png" alt="The Options step with the backup name, five compression buttons, the encryption box and a password strength meter">
+        <figcaption>Step 4. Name the backup, choose compression and decide on encryption.</figcaption>
+      </figure>
+      <p><strong>Name</strong> starts as the name of your folder or folders. Change it if you like.</p>
+      <p><strong>Compression</strong> makes the backup smaller. A line under the buttons shows the size of your folders and how much of it is photos, video or archives, which will not shrink. The five choices trade speed for size:</p>
+      <table class="ref">
+        <thead><tr><th>Choice</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Store</td><td>No compression. The fastest, and the biggest backup.</td></tr>
+          <tr><td>Fast</td><td>A little compression, still quick.</td></tr>
+          <tr><td>Balanced</td><td>A good mix of speed and size. This is the starting choice, and a good one for most people.</td></tr>
+          <tr><td>High</td><td>Smaller backups, slower to make.</td></tr>
+          <tr><td>Max</td><td>The smallest backups, and slow.</td></tr>
+        </tbody>
+      </table>
+      <p>Tick <strong>Advanced: level</strong> to pick any level on a slider instead. You can change the starting choice for new backups in Settings.</p>
+      <h3>Encryption</h3>
+      <p>Tick <strong>Encrypt this backup (AES-256)</strong> to lock the backup with a password. Type it twice. It needs at least 8 characters. A meter shows how hard it is to guess (<strong>Very weak</strong>, <strong>Weak</strong>, <strong>Fair</strong>, <strong>Good</strong> or <strong>Strong</strong>) and a short hint says how to improve it.</p>
+      <div class="note">
+        <p class="lede">Keep your password safe</p>
+        <p>If you lose this password, the backup cannot be opened by anyone, including Markticulous. Keep it somewhere safe, away from the PC. Encryption cannot be changed after the backup is created.</p>
+      </div>
+      <p>Backee also keeps a copy of the password inside the Backee service, protected by Windows, so scheduled backups can run without asking you each time.</p>
+      <p>Last, <strong>Fail instead of backing up live files if a shadow copy cannot be made</strong> is off by default. Leave it off unless you would rather have no backup than one made from files that were in use.</p>
+      <h3>Finishing</h3>
+      <p>Click <strong>Create</strong> to save the backup, or <strong>Create and run now</strong> to save it and start it at once. Creating a backup needs an administrator, so Windows asks once for permission (see <a href="#who">Who can change what</a>).</p>
+      <h3>Changing or deleting a backup</h3>
+      <p>On the backup tile, click <strong>&#8943;</strong>, then <strong>Edit&hellip;</strong> or <strong>Delete&hellip;</strong>. Editing opens the same window with a <strong>Save</strong> button. You can change the folders, schedule, versions, compression and name. The place the backups go and the encryption cannot be changed after the backup is created. Deleting asks you first. Backee then stops backing it up, but the versions already stored are kept. Delete that folder yourself if you no longer need them.</p>
+    </section>
+
+    <section id="restore">
+      <h2 class="sec"><span class="n">05</span>Getting files back</h2>
+      <p>Open <strong>Restore</strong> in the main window. Restoring needs an administrator, because a backup can hold every user&rsquo;s files. The first time, the page says <strong>Restoring needs administrator rights</strong>. Click <strong>Continue as administrator</strong>. Windows asks once, and Backee opens this page again.</p>
+      <figure>
+        <img src="images/restore.png" alt="The Restore page with a backup and version chosen, a timeline of dots, a folder tree and a file list with ticks">
+        <figcaption>The Restore page. Choose a backup and a version, tick what you want, then restore it.</figcaption>
+      </figure>
+      <ol class="steps">
+        <li>Pick the backup in the list down the left. Each backup shows a coloured dot for how it is doing, where it is kept (OneDrive, Google Drive, a provider such as Backblaze B2, a synced folder, or a folder or drive on this PC) and when its latest version was made. Drag the divider beside the list to make it wider or narrower. The card at the top of the page then names the backup, says exactly where it lives, and counts its files and versions (and says <strong>encrypted</strong> if it is).</li>
+        <li>Pick the <strong>version</strong> in the box under the card. Each version shows its date and how many files it holds. Below it, a timeline has one dot for each version, with the oldest at the left and the newest at the right. Click a dot to pick that version.</li>
+        <li>Pick folders in the tree on the left. The list on the right shows what is inside, with its size and date. Double-click a folder to open it. The up arrow goes back one level. Drag the divider to give either side more room.</li>
+        <li>Tick the files and folders you want. A ticked folder includes everything inside it. A line below the lists says how many items, files and bytes you picked.</li>
+        <li>Choose where they go: <strong>Original location</strong>, or <strong>Another folder</strong> (type a path or click <strong>Browse&hellip;</strong>). Choosing another folder is the safest, because nothing of yours is touched. Each folder you backed up becomes a folder inside the one you pick.</li>
+        <li>Choose what happens if a file already exists, then click <strong>Restore</strong>.</li>
+      </ol>
+      <h3>If a backup cannot be read</h3>
+      <p>When Backee cannot read a backup, the card at the top says why. If the sign-in to OneDrive or Google Drive has expired, the card has a <strong>Sign in again</strong> button. Click it and your browser opens; sign in with the same account the backup uses, and the page reads the backup again. You can also choose <strong>Sign in again&hellip;</strong> in the backup&rsquo;s <strong>&#8943;</strong> menu on Home. If an S3 provider refused the access key, the button is <strong>Edit backup</strong>, so you can enter a new key. For anything else, such as a drive that is not plugged in or no connection, fix the cause and click <strong>Try again</strong>. A backup with no versions says <strong>No versions yet. Back it up first.</strong></p>
+      <h3>If a file exists</h3>
+      <dl class="defs">
+        <dt>Keep both</dt>
+        <dd>The default. The restored copy is saved beside the old one, with <code>(restored)</code> in its name. Nothing is lost.</dd>
+        <dt>Replace</dt>
+        <dd>The restored file takes the place of the one there now. When you restore to the original location, Backee asks you to confirm first, because this cannot be undone.</dd>
+        <dt>Skip</dt>
+        <dd>Files that already exist are left as they are.</dd>
+      </dl>
+      <p>A line under your choice says how many files already exist and what will happen to them. Click <strong>Preview</strong> to see what a restore would change. Nothing is written until you click <strong>Restore</strong>.</p>
+      <p>While it runs, a box shows <strong>Restoring&hellip;</strong> with a progress bar and a <strong>Stop</strong> button. Files restored before you stop are kept. At the end Backee tells you how it went: <strong>Restore finished</strong>, <strong>Restore finished with problems</strong> (some files could not be restored because that part of the backup is damaged, and it names them), <strong>Restore stopped</strong> or <strong>Restore failed</strong>.</p>
+      <h3>Closing the window while it runs</h3>
+      <p>A restore is done by the Backee service, not by the window, so it keeps running if you close the window or the tray icon. Open Backee again and the restore shows up at once: on the <strong>Restore</strong> page with its progress bar and <strong>Stop</strong> button, on <strong>Home</strong> (the top line and the tile of that backup say what it is restoring to and how far it has got), and in the tray icon, which animates while a restore runs. When it ends, the <strong>Restore</strong> page tells you how it went, the same as if you had never closed the window. Every restore that has finished or been stopped is also listed in <strong>Activity</strong>.</p>
+      <p>A restore that is cut off, by <strong>Stop</strong>, a power cut or a crash, never leaves a half-written file behind and never damages the original. Backee writes each file under a temporary name and swaps it into place only when it is complete. A file that was already there stays exactly as it was until its replacement is whole.</p>
+    </section>
+
+    <section id="images">
+      <h2 class="sec"><span class="n">06</span>Disk and partition images</h2>
+      <p>A file backup keeps your files. An <strong>image</strong> keeps a whole drive or disk exactly as it is, with its file system, so it can be put back as it was. Choose <strong>Partition</strong> or <strong>Whole disk</strong> in Step 1 of the New backup window (see <a href="#making">Making a backup</a>). Steps 2 to 4 work as they do for files, and an image can go to the same places.</p>
+
+      <h3>What is imaged</h3>
+      <p>Backee reads only the space that is in use, from a shadow copy, so the drive can stay in use while it is backed up. Parts that are empty are skipped. Parts that did not change since an earlier run, or that appear more than once, are stored once, so a repeat run adds little to the backup. Windows cannot tell Backee which parts changed, so every run still reads all the used space. Step 1 shows about how much used space will be read.</p>
+      <dl class="defs">
+        <dt>Partition</dt>
+        <dd>Two choices. <strong>Windows system</strong> backs up everything needed to start this PC, found for you; its parts are locked together, because an image is only able to start the PC with all of them. <strong>Individual partitions</strong> lists the data drives, and you tick one or more.</dd>
+        <dt>Whole disk</dt>
+        <dd>Every partition on the disk you pick, with the partition table.</dd>
+      </dl>
+      <p>Some rows are greyed out, and each says why. Backee does not image dynamic disks, Storage Spaces or removable drives, and it does not image the drive that holds the backup itself, because the image would try to include its own backup. Nothing is ever written to a disk while it is backed up.</p>
+
+      <h3>BitLocker</h3>
+      <p>If an image includes a drive that uses BitLocker, Backee asks for a password for the image in Step 4, because the files in the image would otherwise be readable by anyone who can reach the backup. If you do not want a password, tick <strong>Store this image unencrypted. Anyone who can reach the backup can read these files.</strong> A line then repeats what that means. Choose this only for a backup in a place that only you can reach.</p>
+
+      <h3>Three ways back</h3>
+      <p>Open <strong>Restore</strong> and pick the image backup and a version. The page lists the partitions in that version. Pick one and choose one of these.</p>
+      <figure>
+        <img src="images/restore-image.png" alt="The Restore page with an image version chosen, a list of its partitions and the buttons Restore partition, Restore disk and Open as virtual disk">
+        <figcaption>The Restore page for an image. Pick a partition, then choose how to bring it back.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>Restore partition&hellip;</dt>
+        <dd>Writes the partition back to its original place or to another partition that is at least as large. Everything on the target is replaced. Backee asks you to confirm, saying what will be replaced, and takes the target offline first, so close every program that is using it. If a restore is stopped or fails, the target is incomplete, and Backee says so and tells you to restore it again.</dd>
+        <dt>Restore disk&hellip;</dt>
+        <dd>Writes a whole-disk image to another disk that is at least as large. Every partition on the target disk is erased. Backee asks twice, and the second question names the disk by its model and size, so the wrong disk is hard to pick. The restored disk gets new disk and partition identifiers.</dd>
+        <dt>Open as virtual disk</dt>
+        <dd>Works for any image and changes nothing on your disks. Choose a folder, or click one of the fixed drives shown, and Backee builds a virtual disk there and opens it read-only with a drive letter, so you can copy files out in File Explorer. A box in the window shows how much space the virtual disk needs and how much is free, green when there is room and red when there is not. While it is open, a green <strong>Mounted</strong> bar at the top of the Restore page names the drive letters, and the backup&rsquo;s tile on Home shows <strong>Mounted as G:</strong>. Click <strong>Detach</strong> on that bar, or eject the drive in File Explorer, and the virtual disk is removed. Detach asks first. Tick <strong>Also delete the restored disk file</strong> to remove the disk file and free its space. Your backup is not touched. If you leave it unticked, the file stays in its folder, so you can open it again from the Restore page.</dd>
+      </dl>
+      <p>Backee never restores over the drive Windows is running from. A restore can be stopped, and the progress box works as it does for files (see <a href="#restore">Getting files back</a>).</p>
+
+      <h3>The Windows drive and the recovery USB</h3>
+      <p>The Windows drive and the partitions that start the PC cannot be put back from inside Windows, because Windows is using them. A <strong>Windows system</strong> image is kept safely, and you can open it as a virtual disk to copy files out, but <strong>Restore partition&hellip;</strong> is not offered for it. To put it back, use the Backee recovery USB, which starts the PC without Windows (see <a href="#recovery">Recovery USB</a>).</p>
+    </section>
+
+    <section id="recovery">
+      <h2 class="sec"><span class="n">07</span>Recovery USB</h2>
+      <p>Windows cannot be put back from inside Windows, because Windows is using its own drive. The <strong>Backee recovery USB</strong> is a USB stick that starts the PC without Windows and opens Backee&rsquo;s restore wizard. Use it when Windows will not start, when the disk has failed, or when you move to a new disk or a new PC. With it you restore a Windows system or whole-disk backup (see <a href="#images">Disk and partition images</a>).</p>
+      <p>Make the stick now, while the PC works, and keep it somewhere safe. It holds the tools to restore, not your backup. Keep a Windows system backup on an external USB drive as well, and keep that drive with the stick.</p>
+
+      <h3>Making a recovery USB</h3>
+      <p>Open <strong>Settings</strong> and choose <strong>Recovery USB</strong>. This page is open to every user. It shows when a stick was last made on this PC, the build of the Windows Recovery Environment that Backee will copy, and a <strong>USB stick</strong> list of the sticks that are plugged in, each with its model and size. While Backee looks, a busy bar and <strong>Looking for USB sticks&hellip;</strong> show. The list updates by itself when you plug a stick in or take one out. <strong>Refresh</strong> looks again.</p>
+      <dl class="defs">
+        <dt>Greyed sticks</dt>
+        <dd>A stick under 2 GB is too small. A &ldquo;removable&rdquo; disk over 256 GB is greyed with <strong>This looks like a backup drive, not a USB stick.</strong> Each greyed row says why.</dd>
+        <dt>One usable stick</dt>
+        <dd>When exactly one usable stick is plugged in, it is selected already.</dd>
+        <dt>A stick that is already a recovery USB</dt>
+        <dd>Its row ends with <strong>&middot; Backee recovery USB</strong> and the date it was made. When you select it, Backee says, for example: <strong>This stick is already a Backee recovery USB, created 25 Oct 2026 (Backee v0.2.1). Making it again replaces it.</strong></dd>
+      </dl>
+      <figure>
+        <img src="images/settings-recovery.png" alt="The Recovery USB page of Settings with one USB stick listed, and the buttons Create recovery USB and Refresh">
+        <figcaption>Settings, Recovery USB page, with one stick listed.</figcaption>
+      </figure>
+      <p>Click <strong>Create recovery USB&hellip;</strong>. Backee asks <strong>Erase this USB stick?</strong> and names the stick. Everything on it will be erased. If you agree, click <strong>Erase and create</strong>, and then Windows asks once for administrator permission at that moment. Backee keeps running (see <a href="#who">Who can change what</a>).</p>
+      <p>One bar shows the whole job, with the step and about how many minutes are left. It takes about 3 to 6 minutes. The stick gets a 4 GB start-up partition. The rest of a larger stick is left free. When it is done, a green tick shows with <strong>A Backee recovery USB was created successfully. Keep it somewhere safe.</strong></p>
+      <h3>Cancelling</h3>
+      <p>While the stick is being made, <strong>Cancel</strong> takes the place of <strong>Refresh</strong>. It asks first: <strong>Stop making it</strong> or <strong>Keep going</strong>. It also says whether the stick has been touched yet. Stopping can take a minute or two.</p>
+      <ul>
+        <li>The first two thirds or so of the job is preparing files on the PC. If you stop then, the stick is as it was, including an earlier Backee recovery USB.</li>
+        <li>After that, the stick has been erased. If you stop then, a red cross shows and the stick cannot start a PC until it is made again.</li>
+      </ul>
+
+      <h3>Starting a PC from the stick</h3>
+      <p>Plug the stick into the PC. Then do one of these.</p>
+      <ul>
+        <li><strong>At power-on:</strong> press the one-time boot menu key, often F12, F11, Esc or Del (the maker&rsquo;s start-up screen names it), and choose the USB stick.</li>
+        <li><strong>From Windows:</strong> open <strong>Settings</strong>, then <strong>System</strong>, then <strong>Recovery</strong>. Next to <strong>Advanced start-up</strong> click <strong>Restart now</strong>, then choose <strong>Use a device</strong>.</li>
+      </ul>
+      <p>The PC&rsquo;s own start-up menu comes first. It looks different on every PC, so it is not shown here. Secure Boot can stay on. The Windows logo and a spinner show while the stick starts. Then Backee&rsquo;s restore wizard opens.</p>
+
+      <h3>Restoring with the stick</h3>
+      <p>This is what you see after the PC starts from the stick. The wizard shows the Backee logo, name, version and build date at the top. Times are shown in the time zone saved with the stick. <strong>Restart PC</strong> is on every screen until the restore starts, and it asks first. While a restore is writing, only <strong>Cancel restore</strong> shows, and when it is finished, only <strong>Restart now</strong>.</p>
+      <ol class="steps">
+        <li><strong>Find your backup.</strong> Backee searches every attached drive. <strong>Refresh</strong> searches again, for example after you plug in the drive. A backup in a OneDrive or other cloud folder is listed in grey: <strong>This is in a OneDrive or cloud folder, which cannot be read here. Copy it to a USB drive first.</strong> Cloud files cannot be read without the cloud app.</li>
+        <li><strong>Password.</strong> Asked only for an encrypted backup. After five wrong tries, Backee makes you wait 5 minutes.</li>
+        <li><strong>Choose a version.</strong> Each version is listed with the date it was made. Only Windows system and whole-disk backups can be restored from the stick. Partition backups are restored from inside Windows.</li>
+        <li><strong>Choose the disk.</strong> The disk Backee started from, the disk that holds the backup, and any disk that is too small are greyed, each with its reason. A tick box, <strong>This is a different PC or a new disk controller</strong>, is ticked for you when the original disk is not found.</li>
+        <li><strong>Drivers.</strong> Shown only for a different PC (see below).</li>
+        <li><strong>Erase and restore?</strong> Tick <strong>I understand that everything on this disk will be erased</strong>. Only then can you click <strong>Restore</strong>. If the original Windows disk is still connected, the restored copy gets new disk IDs so the two never clash, and &ldquo;(restored)&rdquo; is added to its drive name (you can rename it), and the PC starts from the restored disk afterwards; start the original from the PC&rsquo;s start-up menu.</li>
+        <li><strong>Restoring.</strong> One bar covers the whole job. A line names the step, such as <strong>Restoring partition 2 of 3: Windows, drive C: (NTFS)</strong>, and another shows how much is done, the speed and about how many minutes are left. <strong>Cancel restore</strong> stops it, after Backee asks. When the writing ends, Backee checks what it wrote (<strong>Checking partition&hellip;</strong>).</li>
+        <li><strong>Restore finished.</strong> Remove the stick, then click <strong>Restart now</strong>.</li>
+      </ol>
+      <figure>
+        <img src="images/recovery-find.png" alt="Find your backup: the wizard lists the backups found on attached drives, with a Refresh button">
+        <figcaption>Find your backup. Backee lists the backups on every drive that is plugged in.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-password.png" alt="Enter the backup password: a password box and Next">
+        <figcaption>Password, for an encrypted backup.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-versions.png" alt="Choose a version: the versions of the backup, each with the date it was made">
+        <figcaption>Choose a version.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-targets.png" alt="Choose the disk to restore onto: a list of disks, with unusable ones greyed and the new PC box below">
+        <figcaption>Choose the disk to restore onto. Greyed disks say why they cannot be used.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-drivers.png" alt="Drivers for this PC: a button to add drivers from a folder">
+        <figcaption>Drivers for this PC, shown only for a different PC or a new disk controller.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-confirm.png" alt="Erase and restore: the chosen disk is named, with a box to confirm that everything on it will be erased">
+        <figcaption>Erase and restore? The disk is named, and you must tick the box to go on.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-progress.png" alt="Restoring your backup: one progress bar, the partition being restored and the time left, with a Cancel restore button">
+        <figcaption>Restoring. One bar covers the whole restore and the check afterwards.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/recovery-done.png" alt="Restore finished: a message to remove the stick, with a Restart now button">
+        <figcaption>Restore finished. Remove the stick and click Restart now.</figcaption>
+      </figure>
+      <h3>A new PC or a new disk</h3>
+      <p>The target disk must be the same size as the original or larger. If it is larger, the extra space is left unallocated; you can add it in Windows afterwards with Disk Management.</p>
+      <p>Tick <strong>This is a different PC or a new disk controller</strong> when you restore onto another PC. Backee then switches on Windows&rsquo; own storage drivers, so Windows can find its disk. If the PC needs a driver from its maker, click <strong>Add drivers from a folder&hellip;</strong> on the Drivers screen and choose the folder. On a different PC, Windows may ask to be activated again.</p>
+
+      <h3>If the recovery USB cannot be made</h3>
+      <p>If the PC has no Windows Recovery Environment, the Recovery USB page says so. It can be turned back on. Open <strong>Terminal</strong> as administrator and type <code>reagentc /enable</code>, then open the page again. If you choose <strong>No</strong> at the Windows prompt, nothing is changed and the stick is not erased.</p>
+
+      <h3>Limits</h3>
+      <ul>
+        <li>UEFI PCs only. A PC that starts in legacy BIOS mode cannot start from the stick.</li>
+        <li>Only PCs that can run the Windows version the stick was made from. A very old PC, such as a Dell OptiPlex 960 from the Core 2 era, cannot.</li>
+        <li>Backups on local drives only. A backup that is only in OneDrive or other cloud storage cannot be restored from the stick. Keep a Windows system backup on an external USB drive as well.</li>
+        <li>The target disk must be the same size or larger.</li>
+        <li>Make the stick again after a major Windows update.</li>
+      </ul>
+    </section>
+
+    <section id="activity">
+      <h2 class="sec"><span class="n">08</span>Activity</h2>
+      <figure>
+        <img src="images/activity.png" alt="The Activity page with a list of runs on the left and the details of one run on the right">
+        <figcaption>The Activity page. Click a run to see its details.</figcaption>
+      </figure>
+      <p>Activity lists every backup that has run and every restore, newest first, with the backup name, when it started, how long it took and the result. A restore has a small <strong>Restore</strong> tag after its name. A box at the top limits the list to one backup. The <strong>Warnings</strong> and <strong>Waiting</strong> labels on a Home tile, and <strong>Show details</strong> in its <strong>&#8943;</strong> menu, jump here with that backup chosen. If nothing has run yet, the page says <strong>No backups or restores have run yet.</strong></p>
+      <p>Click a run to see its details on the right:</p>
+      <dl class="defs">
+        <dt>Files</dt>
+        <dd>How many files this version holds, and how many of them were new, changed and unchanged since the last backup. Unchanged files are kept from earlier versions without being stored again, so a run where nothing changed reads and stores nothing, yet its version still restores every file.</dd>
+        <dt>Read</dt>
+        <dd>How much data Backee read from your files. Files that did not change are not read again.</dd>
+        <dt>New after dedup</dt>
+        <dd>How much of that was new after duplicates were removed. Data that is already in the backup is never stored twice.</dd>
+        <dt>Stored (compressed)</dt>
+        <dd>How much space the new data takes in the backup after compression.</dd>
+        <dt>Shadow copy</dt>
+        <dd><strong>Used</strong> if Backee copied from a frozen view of the drive, or <strong>Not used</strong>.</dd>
+        <dt>Speed</dt>
+        <dd>How quickly the data was read.</dd>
+      </dl>
+      <p>Under the facts, notes list any warnings and the files that were skipped, usually because they could not be read. Drag the thin handle between the run list and the details to give either one more room. Click <strong>Copy details</strong> to copy all of it as text, for example to send to someone who is helping you. <strong>Stop</strong> shows while a backup is running.</p>
+      <p>A restore shows its own details: the result, when it started, how long it took, how many files and how much data it restored, where the files went (<strong>Original locations</strong> or the folder you chose), and how many files failed or were skipped. A restore that was stopped says <strong>Stopped before it finished.</strong> Activity keeps counts only for restores, not the names of the files.</p>
+      <h3>Mark as reviewed</h3>
+      <p>Some warnings are understood and will not go away, for example files that are online-only in OneDrive. When you have looked at a run that ended with warnings, or was stopped, choose <strong>Mark as reviewed</strong> in the <strong>&#8943;</strong> menu on its Home tile. The tile and the tray icon turn green, the tile says <strong>Reviewed</strong>, and Home no longer counts the backup as needing attention. Nothing is changed in the backup, and Activity still says <strong>Warnings</strong> for that run. The mark applies to that one run: the next run that ends with warnings turns the tile and the tray icon amber again. A run that failed cannot be marked as reviewed.</p>
+      <h3>The four results</h3>
+      <dl class="defs">
+        <dt>OK</dt>
+        <dd>Every file was backed up.</dd>
+        <dt>Warnings</dt>
+        <dd>The backup finished, but some files were skipped or had a problem. The notes name them.</dd>
+        <dt>Failed</dt>
+        <dd>The backup did not work. The notes say why.</dd>
+        <dt>Stopped</dt>
+        <dd>The backup was stopped, by you or by a power cut or crash, before it finished. The earlier versions are safe.</dd>
+      </dl>
+    </section>
+
+    <section id="settings">
+      <h2 class="sec"><span class="n">09</span>Settings</h2>
+      <p>Open Settings from the main window or the tray menu. Changes apply at once. There is no Save button. The list on the left also shows <strong>Backee</strong> with the Markticulous plate and the version at the bottom, on every page. Click the plate to open About.</p>
+      <figure>
+        <img src="images/settings-general.png" alt="The General page of Settings with start at sign-in, missed backups, battery and default compression">
+        <figcaption>Settings, General page.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>General</dt>
+        <dd><strong>Start Backee when I sign in</strong> opens the tray icon when you sign in to Windows. Backups run whether or not Backee is open. <strong>Missed backups</strong> decides what happens when the PC was off at the scheduled time: run it once soon after the PC is back on (recommended), or skip it and wait for the next time. <strong>Battery</strong> lets a backup wait while the battery is below a level you pick, and start as soon as the PC is plugged in. <strong>Default compression</strong> is the starting choice for new backups. <strong>Updates</strong> says whether a newer Backee is available. <strong>Update automatically</strong> installs it only when no backup or restore is running and no Backee window is open, and your backups and settings are kept. <strong>Check now</strong> looks at once, and <strong>Install now</strong> shows when an update is ready.</dd>
+        <dt>Appearance</dt>
+        <dd>Choose <strong>Follow Windows</strong>, <strong>Light</strong> or <strong>Dark</strong>.</dd>
+        <dt>Performance</dt>
+        <dd><strong>Work priority</strong> is Normal, Low (recommended) or Lowest. Low keeps Backee out of the way of your programs. <strong>Worker threads</strong> is how many processor cores Backee uses. Automatic uses all but one. <strong>Backups at the same time</strong> is 1, 2 or 3. Backups that share a place always take turns.</dd>
+        <dt>Recovery USB</dt>
+        <dd>Makes the Backee recovery USB (see <a href="#recovery">Recovery USB</a>).</dd>
+        <dt>Security</dt>
+        <dd>Explains who can manage Backee (see <a href="#who">Who can change what</a>) and lists the saved passwords of encrypted backups, each with a <strong>Remove</strong> button. A backup whose password you remove cannot run until its password is entered again.</dd>
+        <dt>About</dt>
+        <dd>The Backee name drawn as a wordmark beside the app icon, the version, <strong>Open data folder</strong>, <strong>Copy version info</strong> and the support section (see <a href="#support">Support Markticulous</a>).</dd>
+        <dt>User Guide</dt>
+        <dd>Opens this guide in your web browser.</dd>
+      </dl>
+      <figure>
+        <img src="images/settings-performance.png" alt="The Performance page of Settings with work priority, worker threads and backups at the same time">
+        <figcaption>Settings, Performance page.</figcaption>
+      </figure>
+      <p>The settings under <strong>Missed backups</strong>, <strong>Battery</strong>, <strong>Performance</strong> and <strong>Security</strong> belong to the Backee service, so they change things for everyone who uses this PC. They need an administrator. Until then they are greyed out and a note says so. Click <strong>Continue as administrator</strong> and Backee asks Windows once. Start-up, default compression and the theme are only yours and need no permission. On a PC without a battery, the battery options are greyed out, because there is nothing for them to do.</p>
+    </section>
+
+    <section id="who">
+      <h2 class="sec"><span class="n">10</span>Who can change what</h2>
+      <p>Backups can hold the files of everyone who uses the PC, so Backee keeps the important changes for administrators.</p>
+      <table class="ref">
+        <thead><tr><th>Anyone</th><th>Administrators only</th></tr></thead>
+        <tbody>
+          <tr><td>See the status of every backup</td><td>Create, edit and delete a backup</td></tr>
+          <tr><td>See the Activity list</td><td>Restore files</td></tr>
+          <tr><td>Back up now and Stop</td><td>Pause and resume all backups</td></tr>
+          <tr><td>Change their own theme, start-up and default compression</td><td>Change the service settings and remove saved passwords</td></tr>
+          <tr><td>See the USB sticks plugged in and when a recovery USB was last made</td><td>Make a recovery USB (it erases the stick)</td></tr>
+        </tbody>
+      </table>
+      <h3>Why Backee asks</h3>
+      <p>The part of Backee that does the work, the Backee service, runs with full rights on the PC. It has to: it reads every file to back it up, writes files back where they belong, and copies and restores whole disks. If any program could tell it what to do, a program running in another person&rsquo;s account, or harmful software running as you, could use it to restore someone else&rsquo;s files, erase a disk, or send your backups somewhere else. So the service only takes those orders from an administrator who has said yes to Windows&rsquo; prompt.</p>
+      <p>The Backee window itself runs with ordinary rights. It starts with Windows from the tray, and asking for permission at every sign-in would be a nuisance. Windows decides a program&rsquo;s rights when it starts and cannot raise them later, so Backee gets administrator rights in one of two ways.</p>
+      <h3>For one change: a prompt at that moment</h3>
+      <p>Creating, editing or deleting a backup, pausing and resuming, and making a recovery USB each start a small helper with administrator rights for just that change. Windows shows its usual prompt asking whether to allow the app to make changes. Choose <strong>Yes</strong>. The Backee window keeps running as it was. If you choose <strong>No</strong>, nothing changes: no backup is saved, no stick is erased. If you are not an administrator, Windows asks for an administrator&rsquo;s name and password instead.</p>
+      <h3>For a whole page: Backee restarts as administrator</h3>
+      <figure>
+        <img src="images/settings-admin-note.png" alt="The General page of Settings with a yellow note at the top saying the settings need administrator rights, and the Continue as administrator button">
+        <figcaption>The yellow note at the top of General, Performance and Security when Backee is not running as an administrator.</figcaption>
+      </figure>
+      <p>Restoring files, and the service settings in <strong>Settings</strong>, involve many steps on one page (browsing a backup&rsquo;s folders, choosing files, changing several settings), so a prompt for each would be tiring. These pages show a <strong>Continue as administrator</strong> button instead. It asks Windows once, closes Backee and opens it again with administrator rights, back on the same page, with the main window behind any Settings window. Backee keeps those rights until you close it. You do not have to sign out and in as an administrator.</p>
+    </section>
+
+    <section id="safe">
+      <h2 class="sec"><span class="n">11</span>Keeping your backups safe</h2>
+      <h3>Shadow copies</h3>
+      <p>A program that is using a file often stops others from reading it. Backee avoids this with a <strong>shadow copy</strong>, a frozen view of the drive that Windows makes for a moment. Backee copies from that view. Files that are in use, such as an open Outlook file, are still backed up, exactly as they were when the backup began. In the Activity details, <strong>Shadow copy</strong> shows <strong>Used</strong> when this worked.</p>
+      <h3>Never half-written</h3>
+      <p>Backee never overwrites an earlier version. If a power cut, a crash or an error stops a backup in the middle, the earlier versions stay safe and the run shows as <strong>Stopped</strong> or <strong>Failed</strong>. If a folder you are backing up has gone missing, the backup fails rather than saving an empty version, so good versions are never pushed out.</p>
+      <h3>Keep backups on a different drive</h3>
+      <p>A backup on the same drive as your files is lost with them. Save to another disk, a USB drive or a synced folder. If a USB drive is unplugged when a backup is due, the tile shows <strong>Waiting</strong>. The backup runs by itself as soon as the drive is back.</p>
+      <h3>Your password</h3>
+      <p>For an encrypted backup, your password is the only key. If you lose it, nobody can open the backup, including Markticulous.</p>
+    </section>
+
+    <section id="fast">
+      <h2 class="sec"><span class="n">12</span>Why Backee is fast</h2>
+      <ul>
+        <li><strong>Only changes are read.</strong> Files whose size and modified time match the last backup are not opened. They are still part of every new version: each version can restore every file, changed or not.</li>
+        <li><strong>Duplicates are stored once.</strong> Files are split by content, so a chunk already in the backup is never stored or uploaded again, even if it moved or was renamed.</li>
+        <li><strong>No effort wasted on data that will not shrink.</strong> Photos, video and archives skip compression, and anything that does not compress by at least 3% is stored as it is.</li>
+        <li><strong>All cores work in parallel</strong>, at low priority, so the PC stays responsive.</li>
+      </ul>
+      <p>That is why the first backup takes a while, and why the next ones are much quicker.</p>
+    </section>
+
+    <section id="support">
+      <h2 class="sec"><span class="n">13</span>Support Markticulous</h2>
+      <figure>
+        <img src="images/settings-about.png" alt="The About page of Settings with the version, the data folder button and the support section">
+        <figcaption>Settings, About page. The support section is at the bottom.</figcaption>
+      </figure>
+      <p>Backee is made by one person and is free. It has no ads and no tracking. It never sends anything about you anywhere. If it gives you peace of mind, you can help keep it going with a coffee on <a href="https://ko-fi.com/markticulous">Ko-fi</a>.</p>
+      <p>You will always find the support button under <strong>Settings &rarr; About</strong>, next to a link that explains <a href="https://markticulous.com/support/?app=backee">why these apps are made</a>. After Backee has been useful for a while, an extra item also appears in the tray menu.</p>
+      <p>Backee may ask you for support once in a while, after it has made many backups or after you have restored files. It asks at most a few times, a long time apart, and never while a backup or restore is running. If you ask it not to ask again, that is final. It will never ask again, and the tray item goes away.</p>
+      <p>If you have supported Markticulous, you can tell Backee on the About page. You then get a small thank-you picture of your choice, called an adornment, shown beside the version number.</p>
+      <p>When you tell Backee you have supported, it asks for the email you used on Ko-fi. Backee sends only a scrambled version of that email (a hash) to markticulous.com to check it, and only when you click Check. Nothing else is sent. If you would rather not, click <em>Skip the check</em>: Backee takes your word for it, as it always has.</p>
+    </section>
+
+    <section id="wrong">
+      <h2 class="sec"><span class="n">14</span>If something goes wrong</h2>
+      <dl class="defs">
+        <dt>&ldquo;Backee cannot reach its service&rdquo;, or a strip saying the service is not running</dt>
+        <dd>Backups will not happen until the service runs. Restart the PC, or open the Windows Services list and start the service named <strong>BackeeService</strong>. The tray icon is amber while it is down.</dd>
+        <dt>A backup failed</dt>
+        <dd>Open the <strong>&#8943;</strong> menu on its tile and choose <strong>Show details</strong>. In Activity, the notes under the facts say why. A common cause is a drive that is full or a folder that was moved or deleted.</dd>
+        <dt>&ldquo;The bucket refused Backee&#39;s access key&rdquo;</dt>
+        <dd>The storage service did not accept the key, or the key is not allowed to read, write and delete in that bucket. Backee does not keep trying, because trying again cannot help. Check the key and its permissions with your provider. Then click <strong>&#8943;</strong> on the tile, choose <strong>Edit&hellip;</strong>, type the secret key again and save. Run the backup afterwards.</dd>
+        <dt>&ldquo;Backee needs you to sign in to OneDrive again&rdquo;</dt>
+        <dd>The saved sign-in no longer works, usually because it expired or was revoked. Backee does not keep trying, because trying again cannot help. Choose <strong>Sign in again</strong> on the Restore page, or <strong>Sign in again&hellip;</strong> in the backup&rsquo;s <strong>&#8943;</strong> menu on Home, and sign in with the same account. Run the backup afterwards.</dd>
+        <dt>&ldquo;Backee needs you to sign in to Google Drive again&rdquo;</dt>
+        <dd>The saved sign-in no longer works, usually because you removed Backee&rsquo;s access in your Google account, or the sign-in was not used for six months. Backee does not keep trying, because trying again cannot help. Choose <strong>Sign in again</strong> on the Restore page, or <strong>Sign in again&hellip;</strong> in the backup&rsquo;s <strong>&#8943;</strong> menu on Home, and sign in with the same account. Run the backup afterwards.</dd>
+        <dt>&ldquo;The Backee folder in your Google Drive is missing&rdquo;</dt>
+        <dd>The folder was deleted, moved or put in the bin. Look in the bin of your Google Drive and restore the <code>Backee</code> folder to My Drive. If it is gone for good, the backups in it are gone too; create a new backup to start again.</dd>
+        <dt>&ldquo;Your organisation&#39;s OneDrive does not allow Backee&#39;s app folder&rdquo;</dt>
+        <dd>Some work or school Microsoft 365 plans turn off the app folder Backee needs. Personal Microsoft accounts are what Backee supports; use one instead, or choose a synced OneDrive folder as the destination (see <a href="#making">Making a backup</a>, Step 2: Where).</dd>
+        <dt>A tile says Waiting</dt>
+        <dd>The tile gives the reason. A USB drive that is not plugged in, or a low battery, are the usual ones. It starts by itself when the reason goes away.</dd>
+        <dt>Something was skipped</dt>
+        <dd>The backup shows <strong>Warnings</strong>. Click the label to open the run in Activity and see which files were skipped. If you understand the warning and accept it, use <strong>Mark as reviewed</strong> in the tile&#39;s <strong>&#8943;</strong> menu: the tile and the tray icon turn green until the next run with warnings.</dd>
+        <dt>Files are online-only in OneDrive or another cloud folder</dt>
+        <dd>The backup shows <strong>Warnings</strong>. At the start of the notes, Activity says how many files are online-only and lists them. Their content is in the cloud, not on this PC, so Backee cannot read them. In File Explorer, right-click the folder and choose the option that keeps files on this device, such as <strong>Always keep on this device</strong>. Wait for the files to download, then run the backup again. Files that were backed up while they were on this PC stay in the backup.</dd>
+        <dt>A restore did not work</dt>
+        <dd>Backee names the files it could not restore. Everything else is restored.</dd>
+        <dt>Looking for more detail</dt>
+        <dd>Go to <strong>Settings &rarr; About</strong> and click <strong>Open data folder</strong>. It opens <span class="path">%ProgramData%\Backee</span>, where the service keeps its information. Only administrators can open its contents. The service also writes what it is doing to the Windows event log, under the source <strong>Backee.Service</strong>.</dd>
+        <dt>Asking for help</dt>
+        <dd>Click <strong>Copy version info</strong> on the About page and paste it into your message. If a backup is involved, send its <strong>Copy details</strong> text from Activity too.</dd>
+      </dl>
+    </section>
+
+  </main>
+</div>
+
+<footer class="colophon">
+  <div class="colophon-in">
+    <span>Backee, a backup app for Windows.</span>
+    <span class="tm">Microsoft and OneDrive are trademarks of the Microsoft group of companies. Google Drive is a trademark of Google LLC. Other names are trademarks of their owners. Backee is not made, endorsed or supported by Microsoft or Google.</span>
+    <a href="https://markticulous.com/support/?app=backee" target="_blank" rel="noopener">Support Markticulous</a>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<button type="button" class="uptop" id="upTop" aria-label="Back to the top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V6"/><path d="M5.5 12.5 12 6l6.5 6.5"/>
+  </svg>
+</button>
+
+<script src="version.js"></script>
+<script>
+/* The version chip. The app build writes version.js beside this page (it is committed, so the
+   source copy shows it too); if it is missing, the chip stays "beta". */
+(function () {
+  var v = window.BACKEE_VERSION;
+  if (v) document.getElementById('verChip').textContent = 'v' + v + ' beta';
+})();
+</script>
+
+<script>
+/* Keep the contents list showing where you are. */
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    map[el.id] = a;
+    targets.push(el);
+  });
+  if (!targets.length || !window.IntersectionObserver) return;
+
+  var here = null;
+  function mark(el) {
+    if (here === el) return;
+    if (here) map[here.id].classList.remove('is-here');
+    here = el;
+    if (here) map[here.id].classList.add('is-here');
+  }
+
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var at = seen.indexOf(e.target);
+      if (e.isIntersecting && at === -1) seen.push(e.target);
+      else if (!e.isIntersecting && at !== -1) seen.splice(at, 1);
+    });
+    if (!seen.length) {
+      if ((window.scrollY || document.documentElement.scrollTop) < 8) mark(targets[0]);
+      return;
+    }
+    mark(seen.slice().sort(function (a, b) {
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    })[0]);
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  mark(targets[0]);
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
+
+<script>
+/* Search the guide: the whole text, four characters or more. Every match is
+   marked in place with the Custom Highlight API; where that is missing the
+   search still lists sections and simply does not mark. */
+(function () {
+  var box = document.getElementById('findInput');
+  var list = document.getElementById('findList');
+  var clear = document.getElementById('findClear');
+  if (!box || !list) return;
+
+  var MIN = 4, MAX = 14;
+  var canMark = typeof Highlight === 'function' && window.CSS && CSS.highlights;
+
+  var parts = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (sec) {
+    var h = sec.querySelector('h2.sec');
+    if (!h) return;
+    var n = h.querySelector('.n');
+    var name = (n ? h.textContent.slice(n.textContent.length) : h.textContent).trim();
+    parts.push({ el: sec, head: h, name: name, hay: sec.textContent.toLowerCase() });
+  });
+
+  var shown = [], at = -1;
+
+  function unmark() {
+    if (!canMark) return;
+    try { CSS.highlights.delete('backee-find'); } catch (e) { /* nothing to clear */ }
+  }
+
+  function mark(q) {
+    if (!canMark) return;
+    var root = document.querySelector('.shell') || document.body;
+    var walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('script, style, .find')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var ranges = [], node;
+    while ((node = walk.nextNode())) {
+      var hay = node.nodeValue.toLowerCase();
+      var from = 0, hit;
+      while ((hit = hay.indexOf(q, from)) !== -1) {
+        var r = document.createRange();
+        r.setStart(node, hit);
+        r.setEnd(node, hit + q.length);
+        ranges.push(r);
+        from = hit + q.length;
+      }
+    }
+    if (!ranges.length) { unmark(); return; }
+    var hl = new Highlight();
+    ranges.forEach(function (r) { hl.add(r); });
+    CSS.highlights.set('backee-find', hl);
+  }
+
+  /* Under the box, wherever the sticky bar has put it. */
+  function placeList() {
+    if (list.hidden) return;
+    var r = box.getBoundingClientRect();
+    var w = Math.max(200, Math.min(360, window.innerWidth - 16));
+    var left = Math.min(r.right - w, window.innerWidth - w - 8);
+    list.style.left = Math.round(Math.max(8, left)) + 'px';
+    list.style.top = Math.round(r.bottom + 6) + 'px';
+    list.style.width = w + 'px';
+    list.style.maxHeight = Math.max(120, window.innerHeight - r.bottom - 20) + 'px';
+  }
+
+  function close() {
+    list.hidden = true;
+    list.innerHTML = '';
+    box.setAttribute('aria-expanded', 'false');
+    shown = []; at = -1;
+  }
+
+  function go(part) {
+    close();
+    box.blur();
+    part.head.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#' + part.el.id);
+  }
+
+  function pick(i) {
+    var was = list.querySelector('li.is-on');
+    if (was) was.className = '';
+    at = i;
+    if (at < 0) return;
+    var li = list.children[at];
+    if (li) { li.className = 'is-on'; li.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function count(hay, q) {
+    var n = 0, from = 0, hit;
+    while ((hit = hay.indexOf(q, from)) !== -1) { n++; from = hit + q.length; }
+    return n;
+  }
+
+  function draw() {
+    var raw = box.value.trim();
+    if (clear) clear.hidden = raw.length === 0;
+
+    var q = raw.toLowerCase();
+    if (q.length < MIN) { close(); unmark(); return; }
+
+    mark(q);
+
+    shown = [];
+    parts.forEach(function (p) {
+      var n = count(p.hay, q);
+      if (n) shown.push({ part: p, n: n });
+    });
+    shown.sort(function (a, b) { return b.n - a.n; });
+    shown = shown.slice(0, MAX);
+
+    list.innerHTML = '';
+    if (!shown.length) {
+      var none = document.createElement('li');
+      none.className = 'find-none';
+      none.textContent = 'Nothing in the guide says ' + raw;
+      list.appendChild(none);
+      list.hidden = false;
+      box.setAttribute('aria-expanded', 'true');
+      placeList();
+      at = -1;
+      return;
+    }
+
+    shown.forEach(function (row) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var hits = document.createElement('span');
+      hits.className = 'hits';
+      hits.textContent = row.n === 1 ? 'once' : row.n + ' times';
+      b.appendChild(hits);
+      b.appendChild(document.createTextNode(row.part.name));
+      b.addEventListener('click', function () { go(row.part); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    box.setAttribute('aria-expanded', 'true');
+    placeList();
+    pick(0);
+  }
+
+  function wipe() {
+    box.value = '';
+    if (clear) clear.hidden = true;
+    close();
+    unmark();
+    box.focus();
+  }
+
+  box.addEventListener('input', draw);
+  box.addEventListener('focus', draw);
+  if (clear) clear.addEventListener('click', wipe);
+
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { wipe(); return; }
+    if (!shown.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); pick((at + 1) % shown.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pick((at - 1 + shown.length) % shown.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[at]) go(shown[at].part); }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.find')) close();
+  });
+
+  window.addEventListener('scroll', placeList, { passive: true });
+  window.addEventListener('resize', placeList);
+}());
+</script>
+
+<script>
+/* Back to the top: a fixed, eased-out trip however far down you are.
+   Reduced-motion users get the jump. */
+(function () {
+  var btn = document.getElementById('upTop');
+  if (!btn) return;
+
+  // The trip takes longer the further it goes (700 ms to 1.4 s), so the slow-down into the top is always seen (Mark, 2026-10-27).
+  var duration = function (from) { return Math.min(1400, Math.max(700, 500 + from / 10)); };
+  var SHOW_AT = function () { return window.innerHeight * 1.5; };
+  var still = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  // The button never enters the footer: once the footer scrolls into view it rides 24px above it (Mark, 2026-10-27).
+  var footer = document.querySelector('footer.colophon');
+  var GAP = 24, base = null;
+  function measure() { btn.style.bottom = ''; base = parseFloat(getComputedStyle(btn).bottom) || 0; }
+  function sync() {
+    btn.classList.toggle('is-on', window.scrollY > SHOW_AT());
+    if (!footer) return;
+    if (base === null) measure();
+    var above = window.innerHeight - footer.getBoundingClientRect().top + GAP;
+    btn.style.bottom = Math.max(base, above) + 'px';
+  }
+
+  var run = null;
+  function toTop() {
+    if (run) cancelAnimationFrame(run);
+    var from = window.scrollY, MS = duration(from);
+    if (from <= 0) return;
+    if (still()) { window.scrollTo({ top: 0, behavior: 'instant' }); return; }
+    var t0 = (window.performance && performance.now) ? performance.now() : null;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / MS);
+      var e = 1 - Math.pow(1 - k, 5);   // quintic ease-out: fast away, a long soft glide to a stop at the top
+      window.scrollTo({ top: Math.round(from * (1 - e)), behavior: 'instant' });
+      if (k < 1) { run = requestAnimationFrame(step); return; }
+      run = null;
+      if (history.replaceState) history.replaceState(null, '', '#top');
+    };
+    run = requestAnimationFrame(step);
+  }
+
+  btn.addEventListener('click', toTop);
+  var foot = document.querySelector('.totop');
+  if (foot) foot.addEventListener('click', function (e) { e.preventDefault(); toTop(); });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', function () { measure(); sync(); });
+  sync();
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clipee — User Guide</title>
+<link rel="icon" href="images/clipee-32.png">
+<meta name="color-scheme" content="light dark">
+<style>
+/* One file plus its pictures. No fonts to fetch, nothing that needs a
+   connection: it opens from the Clipee install folder. Layout and behaviour
+   follow the Deskside Radio guide; the colours are Clipee's teal and blue. */
+
+:root {
+  --paper:  #f4f6f8;
+  --card:   #ffffff;
+  --ink:    #1f2328;
+  --mute:   #5d6570;
+  --line:   #dde1e6;
+  --rule:   #c5cbd3;
+  --accent: #1d4ed8;
+  --mark:   #0d9488;
+  --code-bg:#eaedf1;
+  --bar-h: 46px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #121417;
+    --card:   #1a1d21;
+    --ink:    #e6e8eb;
+    --mute:   #9aa1ab;
+    --line:   #2c3036;
+    --rule:   #3d434b;
+    --accent: #7aa7ff;
+    --mark:   #2dd4bf;
+    --code-bg:#22262b;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-variant-numeric: oldstyle-num;
+}
+
+/* ---- the bar that stays --------------------------------------------- */
+
+.wordmark {
+  position: sticky; top: 0; z-index: 10;
+  margin: 0;
+  min-height: var(--bar-h);
+  padding: 0 max(32px, calc((100% - 1180px) / 2));
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: .34em; text-transform: uppercase;
+  color: var(--mute);
+}
+.wordmark .logo { flex: none; width: 20px; height: 20px; margin-right: -4px; }
+.wordmark-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* The Markticulous byline plate: hollow, hairline edge, two corners cropped square. */
+.byline {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 8px;
+  border-radius: 1px 6px 1px 6px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 9px; font-weight: 500; letter-spacing: .12em; line-height: 1;
+  white-space: nowrap; text-transform: uppercase;
+}
+.byline-by, .byline-suffix { opacity: .6; }
+
+.ver {
+  flex: none;
+  margin-left: 14px;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--mute) 72%, transparent);
+}
+
+/* ---- the plate at the top ------------------------------------------ */
+
+.masthead { border-bottom: 1px solid var(--rule); background: var(--card); }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 34px 32px 30px; }
+.masthead h1 {
+  margin: 14px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(30px, 5vw, 44px); font-weight: 300;
+  letter-spacing: -.015em; line-height: 1.1;
+}
+.standfirst { max-width: 32em; margin: 16px 0 0; font-size: 19px; line-height: 1.55; }
+.standfirst + .standfirst { margin-top: 12px; font-size: 17px; color: var(--mute); }
+
+/* ---- the two columns ------------------------------------------------ */
+
+.shell {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 32px 96px;
+  display: grid; gap: 56px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+}
+
+.toc {
+  position: sticky; top: var(--bar-h);
+  padding: 44px 0 40px;
+  font-family: var(--sans); font-size: 13.5px; line-height: 1.45;
+  max-height: calc(100vh - var(--bar-h));
+  overflow: auto;
+}
+.toc h2 {
+  margin: 0 0 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mute);
+}
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px;
+  padding: 5px 0 5px 10px; margin-left: -12px;
+  color: var(--mute); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 11px; color: var(--rule); padding-top: 2px;
+}
+.toc a:hover { color: var(--ink); }
+.toc a.is-here { color: var(--ink); font-weight: 600; border-left-color: var(--mark); }
+.toc a.is-here::before { color: var(--mark); }
+
+main { padding: 40px 0 0; max-width: 40em; }
+
+/* ---- sections ------------------------------------------------------- */
+
+section { padding-top: 26px; scroll-margin-top: calc(var(--bar-h) + 14px); }
+h3[id] { scroll-margin-top: calc(var(--bar-h) + 14px); }
+section + section { margin-top: 44px; border-top: 1px solid var(--line); }
+
+h2.sec {
+  margin: 0 0 22px;
+  font-family: var(--sans); font-size: 25px; font-weight: 500;
+  letter-spacing: -.01em; line-height: 1.2;
+}
+h2.sec .n {
+  display: block; margin-bottom: 7px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mark);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-family: var(--sans); font-size: 16px; font-weight: 600; letter-spacing: -.005em;
+}
+h3:first-of-type { margin-top: 26px; }
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+strong { font-weight: 700; }
+
+/* ---- the manual furniture ------------------------------------------- */
+
+code, .path, kbd { font-family: var(--mono); font-size: .86em; font-variant-numeric: normal; }
+code, .path { padding: 1px 5px; border-radius: 3px; background: var(--code-bg); word-break: break-word; }
+kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px;
+  background: var(--card); font-size: .82em; white-space: nowrap;
+}
+
+ol.steps { margin: 0 0 18px; padding: 0; list-style: none; counter-reset: step; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 18px; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mark); color: #fff;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; font-variant-numeric: lining-nums;
+}
+
+ul { margin: 0 0 16px; padding-left: 1.2em; }
+li { margin-bottom: 6px; }
+
+dl.defs { margin: 0 0 18px; }
+dl.defs dt { margin-top: 16px; font-family: var(--sans); font-size: 14.5px; font-weight: 600; }
+dl.defs dt:first-child { margin-top: 0; }
+dl.defs dd { margin: 3px 0 0; color: var(--mute); }
+
+.note {
+  margin: 0 0 20px; padding: 14px 18px;
+  border-left: 3px solid var(--mark);
+  background: var(--card);
+  border-radius: 0 5px 5px 0;
+}
+.note p { margin-bottom: 10px; }
+.note p:last-child { margin-bottom: 0; }
+.note .lede {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mark); margin-bottom: 6px;
+}
+
+table.ref { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15.5px; }
+table.ref th {
+  text-align: left;
+  font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+table.ref td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.ref td:first-child { font-family: var(--sans); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+table.ref td:last-child { color: var(--mute); padding-right: 0; }
+
+/* Screenshots: taken at 150% scaling, shown at their real on-screen size. */
+figure { margin: 6px 0 24px; }
+figure img {
+  display: block; max-width: 100%; height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.10);
+}
+figure.popup img { width: 420px; }
+figure.window img { width: 708px; }
+figure.dialog img { width: 560px; }
+.layouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; max-width: 708px; }
+.layouts figure { margin: 6px 0 16px; }
+.layouts img { width: 315px; }
+.layouts figcaption strong { color: var(--ink, inherit); }
+@media (max-width: 560px) { .layouts { grid-template-columns: 1fr; } }
+figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color: var(--mute); }
+
+.mute { color: var(--mute); }
+
+/* ---- the colophon --------------------------------------------------- */
+
+.colophon { border-top: 1px solid var(--rule); background: var(--card); font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+.colophon-in {
+  max-width: 1180px; margin: 0 auto; padding: 26px 32px 34px;
+  display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+}
+.colophon a { color: var(--accent); }
+.totop { margin-left: auto; text-decoration: none; color: var(--mute); }
+.totop:hover { color: var(--ink); }
+
+/* ---- narrow ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  body { font-size: 16.5px; }
+  .wordmark { padding: 0 20px; gap: 10px; letter-spacing: .2em; font-size: 12px; }
+  .masthead-in { padding: 26px 20px 24px; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 20px 64px; }
+  .toc { position: static; max-height: none; padding: 28px 0 8px; border-bottom: 1px solid var(--line); }
+  .toc ol { columns: 2; column-gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .toc ol { columns: 1; }
+  .wordmark { letter-spacing: .1em; gap: 8px; }
+  .find-input { padding-right: 24px; }
+  .byline { display: none; }
+  .toc a { margin-left: 0; padding-left: 0; border-left: 0; }
+  .toc a.is-here { border-left: 0; }
+  main { padding-top: 12px; }
+  .colophon-in { padding: 22px 20px 28px; }
+  .totop { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --mute: #333; --line: #ccc; --rule: #999; --code-bg: #f0f0f0; }
+  .toc, .totop, .uptop, .find { display: none; }
+  .wordmark { position: static; padding: 0 0 10px; }
+  section, h3[id] { scroll-margin-top: 0; }
+  .shell { display: block; padding: 0; max-width: none; }
+  main { max-width: none; }
+  h2.sec, h3 { break-after: avoid; }
+  .note, ol.steps > li, table.ref tr, figure { break-inside: avoid; }
+  a { color: #000; }
+}
+
+/* ---- back to the top ------------------------------------------------- */
+
+.uptop {
+  position: fixed; right: 16px; bottom: 100px; z-index: 25;
+  width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  border-radius: 50%;
+  background: var(--card); color: var(--mark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, background .18s ease;
+}
+.uptop svg { width: 20px; height: 20px; }
+.uptop.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.uptop:hover { background: color-mix(in srgb, var(--mark) 12%, var(--card)); }
+.uptop:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+@media (max-width: 480px) { .uptop { right: 12px; bottom: 78px; } }
+
+/* ---- search the guide ----------------------------------------------- */
+
+.find { position: relative; margin-left: auto; display: inline-flex; align-items: center; min-width: 0; }
+.find-input {
+  width: clamp(116px, 32vw, 260px);
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+  padding: 5px 26px 5px 10px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--paper); -webkit-appearance: none; appearance: none;
+}
+.find-input::-webkit-search-cancel-button { display: none; }
+.find-input:focus { outline: 2px solid var(--mark); outline-offset: 1px; border-color: var(--mark); }
+.find-input::placeholder { color: var(--mute); }
+.find-clear {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; padding: 0; border-radius: 50%;
+  background: color-mix(in srgb, var(--mark) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  color: var(--mark); cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--sans); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.find-clear[hidden] { display: none; }
+.find-clear:hover { background: color-mix(in srgb, var(--mark) 30%, transparent); }
+.find-list {
+  position: fixed; z-index: 30;
+  max-width: 360px;
+  margin: 0; padding: 4px; list-style: none;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  max-height: 60vh; overflow-y: auto; text-align: left;
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+}
+.find-list[hidden] { display: none; }
+.find-list li { margin: 0; }
+.find-list button {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink);
+  padding: 7px 10px; border: 0; border-radius: 5px; background: none;
+}
+.find-list button:hover, .find-list button:focus,
+.find-list li.is-on button { background: color-mix(in srgb, var(--mark) 9%, transparent); outline: none; }
+.find-list .hits { float: right; margin-left: 10px; font-size: 11.5px; color: var(--mute); }
+.find-none { padding: 8px 10px; font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+
+::highlight(clipee-find) { background: #ffe08a; color: #1f2328; }
+</style>
+</head>
+<body id="top">
+
+<p class="wordmark">
+  <img class="logo" src="images/clipee-32.png" alt=""><span class="wordmark-name">Clipee</span>
+  <span class="byline">
+    <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
+  </span>
+  <span class="ver" id="verChip">beta</span>
+  <span class="find">
+    <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
+           placeholder="Search the guide…" aria-label="Search the guide"
+           aria-controls="findList" aria-expanded="false">
+    <button type="button" class="find-clear" id="findClear" aria-label="Clear the search" hidden>&#10005;</button>
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </span>
+</p>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <h1>User Guide</h1>
+    <p class="standfirst">Clipee remembers everything you copy, so you can paste it again later. It waits in the system tray, opens with one shortcut, and finds any clip as you type.</p>
+    <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more. It lists the sections your word appears in and marks each place on the page; the &#10005; clears it. Once you are well down the page, an arrow at the bottom right takes you back to the top.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hurry">In a hurry to get started?</a></li>
+      <li><a href="#popup">The popup</a></li>
+      <li><a href="#pasting">Pasting</a></li>
+      <li><a href="#search">Searching and filters</a></li>
+      <li><a href="#menu">The right-click menu</a></li>
+      <li><a href="#pinned">Pinned clips and snippets</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#privacy">History and privacy</a></li>
+      <li><a href="#backup">Backup and restore</a></li>
+      <li><a href="#updates">Installing and updating</a></li>
+      <li><a href="#keys">Keyboard shortcuts</a></li>
+      <li><a href="#wrong">If something goes wrong</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="hurry">
+      <h2 class="sec"><span class="n">01</span>In a hurry to get started?</h2>
+      <ol class="steps">
+        <li>Copy things the way you always do, with <kbd>Ctrl</kbd>+<kbd>C</kbd>. Clipee keeps each one.</li>
+        <li>Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd> wherever you want to paste. The Clipee popup opens beside your cursor.</li>
+        <li>Pick a clip with the arrow keys, or start typing to search, then press <kbd>Enter</kbd>. Clipee pastes it into the window you were in.</li>
+      </ol>
+      <p>That is all. Everything below is detail you can come back for.</p>
+      <p>Clipee lives in the system tray, next to the clock. Click its icon to open the popup; right-click it for <strong>Settings</strong>, <strong>Pause capture</strong> and <strong>Exit</strong>. If you cannot see the icon, it may be under the <strong>^</strong> arrow with the other hidden tray icons.</p>
+    </section>
+
+    <section id="popup">
+      <h2 class="sec"><span class="n">02</span>The popup</h2>
+      <figure class="popup">
+        <img src="images/popup.png" alt="The Clipee popup with a search box, filter chips, a pinned clip and a list of today's clips">
+        <figcaption>The popup. Pinned clips sit at the top; everything else is grouped by day, newest first.</figcaption>
+      </figure>
+      <p>Each row is one thing you copied. It shows:</p>
+      <ul>
+        <li><strong>A type icon</strong> and a coloured stripe on the left: text, rich text, image, colour, link, code, file path and so on.</li>
+        <li><strong>A preview</strong> of the clip. Colours show a swatch; images show a thumbnail.</li>
+        <li><strong>The app it came from</strong> and <strong>how long ago</strong> you copied it.</li>
+        <li><strong>A number from 1 to 9</strong> on the first nine rows. Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+ that number to paste it straight away (see <a href="#pasting">Pasting</a>).</li>
+      </ul>
+      <p>Clips are grouped under headings by when you last used them: <strong>This month</strong>, then one heading for each earlier month (<strong>Sep 2026</strong>) and, for anything over a year old, each year (<strong>2025</strong>). The headings stay at the top while you scroll, so you always know how far back you are.</p>
+      <h3>Moving and sizing it</h3>
+      <p>Drag the popup by any empty part: the space around the search box, the filter row or the hint line at the bottom. Drag an edge to resize it; Clipee remembers the size. It always reopens beside your cursor.</p>
+      <p>If you would rather have it in one place, choose <strong>Docked on right edge</strong> in Settings &rarr; General. It then opens as a full-height panel on the right of your screen.</p>
+      <p>Press <kbd>Esc</kbd> or click anywhere else to close it.</p>
+    </section>
+
+    <section id="pasting">
+      <h2 class="sec"><span class="n">03</span>Pasting</h2>
+      <dl class="defs">
+        <dt><kbd>Enter</kbd> or double-click</dt>
+        <dd>Pastes the selected clip into the window you were using, with its formatting.</dd>
+        <dt><kbd>Shift</kbd>+<kbd>Enter</kbd></dt>
+        <dd>Pastes as plain text: no fonts, colours or links. Handy when moving text from a web page into an email.</dd>
+        <dt><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd> &hellip; <kbd>9</kbd></dt>
+        <dd>Quick paste. Pastes your 1st to 9th newest clip without opening the popup at all. While the popup is open, it pastes the row with that number.</dd>
+      </dl>
+      <p>If you would rather paste yourself, choose <strong>Copy only</strong> under Settings &rarr; General &rarr; Paste mode. Then picking a clip just puts it on the clipboard, ready for your own <kbd>Ctrl</kbd>+<kbd>V</kbd>.</p>
+      <h3>Pasting several clips in a row</h3>
+      <p>The paste stack lines up clips to paste one after another, for example filling in a form.</p>
+      <ol class="steps">
+        <li>Open the popup. With the search box empty, press <kbd>Space</kbd> on each clip you want, in order. Each one gets a number.</li>
+        <li>Press <kbd>Enter</kbd> to load them.</li>
+        <li>Click into the first field and press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd>. The first clip goes in. Move to the next field and press it again for the next clip.</li>
+      </ol>
+      <p>The tray icon&rsquo;s tooltip shows how many are left. To abandon the stack, right-click the tray icon and choose <strong>Clear paste stack</strong>.</p>
+      <div class="note">
+        <p class="lede">Good to know</p>
+        <p>Clipee waits until you let go of <kbd>Ctrl</kbd> and <kbd>Alt</kbd> before pasting, so nothing gets mixed up with the keys you are holding.</p>
+        <p>Some apps run as administrator, and Windows does not let other apps type into them. There Clipee leaves the clip on the clipboard and tells you to press <kbd>Ctrl</kbd>+<kbd>V</kbd> yourself.</p>
+      </div>
+    </section>
+
+    <section id="search">
+      <h2 class="sec"><span class="n">04</span>Searching and filters</h2>
+      <figure class="popup">
+        <img src="images/popup-search.png" alt="The popup filtered to the one clip containing the word quick">
+        <figcaption>Typing &ldquo;quick&rdquo; leaves only the clips that contain it.</figcaption>
+      </figure>
+      <p>Just start typing when the popup opens. The list narrows with every letter, and the match can be anywhere in the clip, not only at the start.</p>
+      <h3>Filter chips</h3>
+      <p>The row of chips under the search box shows one kind of clip at a time: <strong>Pinned</strong>, <strong>Text</strong>, <strong>Rich</strong> (formatted text), <strong>Images</strong>, <strong>Colours</strong>, <strong>Links</strong>, <strong>Code</strong> or <strong>Snippets</strong>. <strong>All</strong> shows everything.</p>
+      <h3>Typed filters</h3>
+      <p>You can also type a filter into the search box, alone or together with words:</p>
+      <table class="ref">
+        <thead><tr><th>Type this</th><th>To see</th></tr></thead>
+        <tbody>
+          <tr><td><code>type:link</code></td><td>One kind of clip. Also <code>colour</code>, <code>email</code>, <code>path</code>, <code>code</code>, <code>number</code>, <code>text</code>, <code>rich</code> and <code>image</code>.</td></tr>
+          <tr><td><code>app:excel</code></td><td>Clips copied from one app.</td></tr>
+          <tr><td><code>is:pinned</code></td><td>Only pinned clips.</td></tr>
+          <tr><td><code>is:today</code></td><td>Only today&rsquo;s clips.</td></tr>
+        </tbody>
+      </table>
+      <p>For example, <code>app:chrome invoice</code> finds clips from Chrome that mention &ldquo;invoice&rdquo;. A typed filter takes over from the chip.</p>
+    </section>
+
+    <section id="menu">
+      <h2 class="sec"><span class="n">05</span>The right-click menu</h2>
+      <figure class="popup">
+        <img src="images/popup-menu.png" alt="Right-click menu on a text clip: Paste, Edit, Paste as plain text, Paste as, Save as snippet, Pin, Delete, Ignore copies from PowerShell 7">
+        <figcaption>Right-click any clip for more. The choices change with the kind of clip.</figcaption>
+      </figure>
+      <p>The menu comes in groups divided by thin lines: the ways to paste first, then anything special to that kind of clip (colours, links and file paths), and <strong>Pin</strong>, <strong>Delete</strong> and <strong>Ignore copies from&hellip;</strong> always at the bottom.</p>
+      <dl class="defs">
+        <dt>Paste as &#9656;</dt>
+        <dd>Changes text on the way in: <strong>UPPERCASE</strong>, <strong>lowercase</strong>, <strong>Title Case</strong>, <strong>Trim spaces</strong>, <strong>Join lines</strong>, <strong>Pretty JSON</strong>, <strong>URL decode</strong> and <strong>URL encode</strong>. The changed text is pasted; your saved clip stays as it was.</dd>
+        <dt>Save as snippet</dt>
+        <dd>Keeps the clip as a snippet so it never expires (see <a href="#pinned">Pinned clips and snippets</a>).</dd>
+        <dt>Pin / Unpin</dt>
+        <dd>Pinned clips stay at the top and are never removed. Shortcut: <kbd>Ctrl</kbd>+<kbd>P</kbd>.</dd>
+        <dt>Edit&hellip;</dt>
+        <dd>On a snippet: opens it for changes.</dd>
+        <dt>Editing a clip</dt>
+        <dd>On any text clip, <strong>Edit&hellip;</strong> opens its text for changes. <strong>Paste</strong> (the default button) pastes your edited text as plain text and leaves your history as it was. <strong>Save</strong> replaces the clip in history, keeping its pin and date. Formatting is dropped, because it no longer matches the text. Images cannot be edited.</dd>
+        <dt>Delete</dt>
+        <dd>Removes the clip. Shortcut: hold <kbd>Del</kbd> for about a second (1.1 s). A red bar sweeps across the clip, marked "Hold to delete", as you hold; let go early and nothing is deleted.</dd>
+        <dt>Undoing a delete</dt>
+        <dd>After you delete a clip or snippet, a notice at the bottom of the popup offers <strong>Undo</strong> for 5 seconds. Click it, or press <kbd>Ctrl</kbd>+<kbd>Z</kbd>, and the clip comes back just as it was, pin included. Only the last delete can be undone. <strong>Delete history</strong> cannot be undone.</dd>
+        <dt>Ignore copies from &hellip;</dt>
+        <dd>Stops Clipee saving anything you copy in the app this clip came from, for example a remote desktop or a work chat app. Clipee asks first and can also delete that app&rsquo;s clips already in your history (pinned clips are kept). Undo it under Settings &rarr; Privacy.</dd>
+        <dt>Copy text (OCR)</dt>
+        <dd>On an image: reads the words in the picture and saves them as a new text clip. Great for screenshots of error messages.</dd>
+        <dt>Copy as HEX / RGB / HSL</dt>
+        <dd>On a colour: copies it in another format, for example <code>#0D9488</code> as <code>rgb(13, 148, 136)</code>.</dd>
+        <dt>Open link / Open containing folder</dt>
+        <dd>On a web address or a file path: opens it in your browser or in File Explorer.</dd>
+      </dl>
+    </section>
+
+    <section id="pinned">
+      <h2 class="sec"><span class="n">06</span>Pinned clips and snippets</h2>
+      <p><strong>Pin</strong> a clip you use often and it stays at the top of the popup for good. Pinned clips are never removed by the history limits. Click the arrow beside the <strong>Pinned</strong> heading to fold them away.</p>
+      <p><strong>Snippets</strong> are text you write once and paste often: a signature, an address, a standard reply. Find them under the <strong>Snippets</strong> chip in the popup, and manage them in Settings &rarr; Snippets.</p>
+      <figure class="window">
+        <img src="images/settings-snippets.png" alt="Settings, Snippets page listing four snippets, two with shortcuts, with Add, Edit and Delete buttons">
+        <figcaption>Settings &rarr; Snippets. Add, edit or delete them here.</figcaption>
+      </figure>
+      <h3>Placeholders</h3>
+      <p>A snippet can contain these, which are filled in when you paste it. In the snippet editor, <strong>Insert</strong> adds them for you, and the preview shows what will be pasted.</p>
+      <figure class="window">
+        <img src="images/snippet-editor.png" alt="The snippet editor for a snippet named Today's date, with the Insert menu open showing Date, Time, Fill-in, Latest clip and Cursor position, a preview of the pasted text below the body, a Shortcut row holding Ctrl+Alt+Shift+D, and a When pressed choice of Paste it or Copy it to the clipboard">
+        <figcaption>The snippet editor. Insert adds placeholders, the preview shows what will be pasted, Shortcut gives the snippet its own keys, and When pressed chooses whether they paste it or copy it.</figcaption>
+      </figure>
+      <table class="ref">
+        <thead><tr><th>Placeholder</th><th>Becomes</th></tr></thead>
+        <tbody>
+          <tr><td><code>{date}</code></td><td>Today&rsquo;s date, like 2026-10-05.</td></tr>
+          <tr><td><code>{time}</code></td><td>The time now, like 14:30.</td></tr>
+          <tr><td><code>{date:dddd d MMMM}</code></td><td>The date in your own format, like Monday 5 October.</td></tr>
+          <tr><td><code>{date+7d}</code></td><td>A week from today. Also <code>-1w</code>, <code>+1M</code> (months), <code>+1y</code>, and for times <code>+90m</code> or <code>+2h</code>.</td></tr>
+          <tr><td><code>{ask:Client}</code></td><td>Asks you for a value when you paste.</td></tr>
+          <tr><td><code>{ask:Tone=Formal|Casual}</code></td><td>Asks you to pick from a list. <code>{ask:Client=Acme}</code> fills in a value you can change.</td></tr>
+          <tr><td><code>{clipboard}</code></td><td>Your newest clip.</td></tr>
+          <tr><td><code>{cursor}</code></td><td>Where the text cursor ends up after pasting, so you can carry on typing in the middle. Clipee pastes the whole snippet, then moves the cursor back to this spot. For example, <code>Hi {cursor},</code> followed by the rest of a message leaves the cursor right after &ldquo;Hi &rdquo;, ready for you to type a name. Without it, the cursor stays at the end of the pasted text, as with any paste. Only the first <code>{cursor}</code> in a snippet counts. If more than 2,000 characters follow it, the cursor stays at the end. When a snippet shortcut is set to copy instead of paste, the marker is left out and the cursor does not move.</td></tr>
+        </tbody>
+      </table>
+      <h3>Your own date and time formats</h3>
+      <p>In the editor, choose <strong>Insert &rsaquo; Date&hellip;</strong> or <strong>Time&hellip;</strong>. Pick a format or type your own, add an offset if you want one, and check the preview before you insert it. To change one later, click inside it and choose Date&hellip; or Time&hellip; again. Month and day names follow your Windows language.</p>
+      <h3>Fill-ins</h3>
+      <p>When a snippet has fill-ins, Clipee asks for them before pasting. Press <kbd>Enter</kbd> to paste, or <kbd>Esc</kbd> to cancel without pasting anything. A label used twice is asked once.</p>
+      <h3>Snippet shortcuts</h3>
+      <p>Give a snippet its own shortcut and it pastes straight into the app you are using, without opening Clipee. In the snippet editor, click <strong>Shortcut</strong> and press the keys you want, such as <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd> or <kbd>Win</kbd> in it. Clipee&rsquo;s own shortcuts, and ones another snippet already uses, are refused with a short reason. Press <strong>Clear</strong> to remove a shortcut. Under <strong>When pressed</strong>, choose <strong>Paste it</strong> to paste the snippet, or <strong>Copy it to the clipboard</strong> to only copy it, ready for you to paste with <kbd>Ctrl</kbd>+<kbd>V</kbd>; Settings &rarr; Snippets shows &ldquo;copies&rdquo; next to those shortcuts. If another app takes a shortcut, Settings &rarr; Snippets marks it &ldquo;unavailable&rdquo; so you can pick a new one.</p>
+    </section>
+
+    <section id="settings">
+      <h2 class="sec"><span class="n">07</span>Settings</h2>
+      <p>Open Settings from the tray icon&rsquo;s menu, or press <kbd>Ctrl</kbd>+<kbd>,</kbd> in the popup. Changes take effect straight away; there is no Save button. This guide opens from <strong>User Guide</strong> at the bottom of the Settings list.</p>
+      <figure class="window">
+        <img src="images/settings-general.png" alt="Settings, General page">
+        <figcaption>Settings &rarr; General.</figcaption>
+      </figure>
+      <h3>General</h3>
+      <dl class="defs">
+        <dt>Open Clipee shortcut</dt>
+        <dd>Click the box and press the keys you want instead of <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>. Clipee warns you if another app already uses them. <strong>Show all shortcuts&hellip;</strong> below it lists every Clipee shortcut, your snippet shortcuts included (see <a href="#keys">Keyboard shortcuts</a>).</dd>
+        <dt>Quick paste</dt>
+        <dd>Turns <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>&ndash;<kbd>9</kbd> on or off. If another app already uses one of those keys, a &#9888; line here says which; the other numbers still work. Clipee also tells you once by the clock, and again only if that changes.</dd>
+        <dt>Paste mode</dt>
+        <dd><strong>Auto-paste</strong> types the clip in for you; <strong>Copy only</strong> leaves the pasting to you.</dd>
+        <dt>Popup position</dt>
+        <dd>Beside your cursor, or docked on the right edge of the screen.</dd>
+        <dt>Start with Windows</dt>
+        <dd>Starts Clipee when you sign in, so it is always collecting.</dd>
+        <dt>Updates</dt>
+        <dd>See <a href="#updates">Installing and updating</a>.</dd>
+      </dl>
+      <h3>Appearance</h3>
+      <figure class="window">
+        <img src="images/settings-appearance.png" alt="Settings, Appearance page with theme and layout choices">
+        <figcaption>Settings &rarr; Appearance.</figcaption>
+      </figure>
+      <p><strong>Theme</strong> follows Windows by default, or stays Light or Dark. <strong>Layout</strong> sets how much each row shows. You can also switch layouts straight from the popup: click the list button next to its close button. Here is the same history in each layout, with a code clip selected; in every layout the selected clip sits on a light amber band.</p>
+      <div class="layouts">
+        <figure>
+          <img src="images/popup-layout-compact.png" alt="The popup in the Compact layout: one line per clip in alternating shades under tinted month headings, the selected clip on an amber band with a gold bar">
+          <figcaption><strong>Compact</strong>. One line per clip, set out like a table: tinted month headings and rows in alternating shades, so the most fits on screen. Every clip stays on one line, the selected one too. Rest the pointer on a clip to see the whole clip with its type, app, time and length.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/popup-layout-comfortable.png" alt="The popup in the Comfortable layout: each clip on up to two lines">
+          <figcaption><strong>Comfortable</strong> (the default). Up to two lines per clip, so most short text shows in full. The selected clip adds a line with its type, app and length. Rest the pointer on a longer clip to read more of it.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/popup-layout-detailed.png" alt="The popup in the Detailed layout: each clip with a second line giving its type, app, the time it was copied and its characters and words, and a foldable This month group">
+          <figcaption><strong>Detailed</strong>. Every clip has a second line with its type, the app it came from, when you copied it, and its characters, words and lines; images show their file size. Month groups can be folded.</figcaption>
+        </figure>
+        <figure>
+          <img src="images/popup-layout-preview.png" alt="The popup in the Preview layout: one line per clip, with the selected code clip shown in full in a panel at the bottom">
+          <figcaption><strong>Preview</strong>. One line per clip, with the selected clip shown in full in a panel at the bottom, headed with its type, app, age and length.</figcaption>
+        </figure>
+      </div>
+      <p><strong>Show details on hover</strong> turns the detail tooltip on or off: resting the pointer on a clip, in any layout, shows the whole clip with its type, app, time and length. <strong>Type stripes</strong> turns the coloured stripe on the left of each row on or off. Compact never shows them. <strong>Month and year section dividers</strong> turns the headings that group the list (This month, Sep 2026, 2025) on or off; off gives one plain list, with only Pinned keeping its heading.</p>
+      <h3>Sounds</h3>
+      <figure class="window">
+        <img src="images/settings-sounds.png" alt="Settings, Sounds page">
+        <figcaption>Settings &rarr; Sounds.</figcaption>
+      </figure>
+      <p>Off to begin with. Turn them on for a small sound when Clipee saves a copy and when it pastes. There are three of each to choose from; the play buttons let you hear them first. The slider under each sets its volume; it plays the sound when you let go, so you can hear the new level.</p>
+      <p>To use your own sound, choose <strong>Custom&hellip;</strong> and pick a WAV file; <strong>Choose&hellip;</strong> swaps it later. Clipee keeps its own copy, so you can move or delete the original. Custom sounds must be uncompressed WAV files of up to 2 seconds and 512&nbsp;KB. Short sounds work best: 16-bit, mono, 48&nbsp;kHz and under half a second, like the built-in ones. Clipee tells you what to change if a file does not fit.</p>
+      <h3>About</h3>
+      <p>Shows your version, links to the release notes, and has a button that opens Clipee&rsquo;s data folder.</p>
+    </section>
+
+    <section id="privacy">
+      <h2 class="sec"><span class="n">08</span>History and privacy</h2>
+      <figure class="window">
+        <img src="images/settings-history.png" alt="Settings, History page with days to keep, maximum clips and Delete history">
+        <figcaption>Settings &rarr; History.</figcaption>
+      </figure>
+      <h3>How long clips are kept</h3>
+      <p>Clipee keeps clips for <strong>30 days</strong> and up to <strong>5,000 clips</strong>; change either in Settings &rarr; History (1 to 365 days, 100 to 50,000 clips). Older clips are removed automatically. Pinned clips and snippets are never removed.</p>
+      <h3>Deleting your history</h3>
+      <p><strong>Delete history&hellip;</strong> clears your clips for good. You will be asked to type <code>DELETE</code> to confirm, and you can choose to keep your pinned clips. Snippets are never touched.</p>
+      <h3>What Clipee does not keep</h3>
+      <figure class="window">
+        <img src="images/settings-privacy.png" alt="Settings, Privacy page with Pause capture, the password and API key options, and ignored apps with a Choose apps button">
+        <figcaption>Settings &rarr; Privacy.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Passwords from password managers.</strong> Most password managers (KeePassXC, 1Password, Enpass and others) mark what they copy as private, and Clipee skips it. If yours does not, add it to the ignored apps. You can turn this off under Settings &rarr; Privacy, but then those passwords are saved in your history. Turning it back on deletes them.</li>
+        <li><strong>API keys, access tokens and private keys</strong> such as GitHub, OpenAI, AWS or Google keys, which web pages copy as ordinary text. You can still paste them; they just are not saved. Turn this off under Settings &rarr; Privacy if you want them kept.</li>
+        <li><strong>Anything from apps you ignore.</strong> Under Settings &rarr; Privacy, click <strong>Choose apps&hellip;</strong> and tick the apps you do not want saved; the list shows the apps that have copied into your history. You can also type an app&rsquo;s process name (for example <code>mstsc</code> for Remote Desktop), or right-click a clip in the popup and choose <strong>Ignore copies from &hellip;</strong>. Either way, you can delete that app&rsquo;s clips already saved too (pinned clips are kept).</li>
+        <li><strong>Anything while capture is paused.</strong> Use <strong>Pause capture</strong> in the tray menu or in Settings before copying something sensitive. Remember to turn it back on.</li>
+        <li><strong>Very large images</strong> (over 10&nbsp;MB) are skipped.</li>
+      </ul>
+      <h3>Your data stays on your PC</h3>
+      <p>Your clips are stored only on this computer, in <span class="path">%AppData%\Clipee</span>, and they are <strong>encrypted</strong>. The key is locked to your Windows account, so the history file is unreadable if it is copied anywhere else. Clipee has no account and sends nothing about you anywhere. The only time it goes online is to check for updates, and to check a supporter email if you choose to (see below).</p>
+      <p>If you tell Clipee you have supported Markticulous, it asks for the email you used on Ko-fi. Clipee sends only a scrambled version of that email (a hash) to markticulous.com to check it, and only when you click Check. Nothing else is sent. If you would rather not, click <em>Skip the check</em>: Clipee takes your word for it.</p>
+      <div class="note">
+        <p class="lede">New PC?</p>
+        <p>Because the key belongs to this Windows account, your history cannot simply be copied to another computer. Make a backup (next section) and restore it there.</p>
+      </div>
+    </section>
+
+    <section id="backup">
+      <h2 class="sec"><span class="n">09</span>Backup and restore</h2>
+      <figure class="window">
+        <img src="images/settings-backup.png" alt="Settings, Backup page with password, folder, automatic backups, Back up now and Restore">
+        <figcaption>Settings &rarr; Backup.</figcaption>
+      </figure>
+      <p>A backup is one file holding all your clips, snippets and settings, locked with a password you choose.</p>
+      <ol class="steps">
+        <li>Click <strong>Set password&hellip;</strong> and type a password twice. <strong>Write it down somewhere safe</strong>: Clipee cannot recover it, and without it the backup cannot be opened.</li>
+        <li>Choose a <strong>Backup folder</strong>. A folder in OneDrive also gives you a copy away from this PC.</li>
+        <li>Turn on <strong>Automatic daily backups</strong>. Clipee then makes one a day and keeps the last 7. Or click <strong>Back up now</strong> whenever you like.</li>
+      </ol>
+      <h3>Restoring</h3>
+      <p>Click <strong>Restore&hellip;</strong>, pick a backup file (they end in <span class="path">.clipeebak</span>) and enter its password. Clipee replaces your current history with the one in the backup. Just in case, it keeps a copy of what you had before.</p>
+    </section>
+
+    <section id="updates">
+      <h2 class="sec"><span class="n">10</span>Installing and updating</h2>
+      <h3>Installing</h3>
+      <ol class="steps">
+        <li>Download <span class="path">Clipee-win-Setup.exe</span> from the <a href="https://github.com/markticulous/Clipee/releases/latest">Clipee releases page</a>.</li>
+        <li>Double-click it. If Windows shows &ldquo;Windows protected your PC&rdquo;, click <strong>More info</strong>, then <strong>Run anyway</strong>. This appears because Clipee is new and not yet signed with a publisher certificate.</li>
+        <li>If double-clicking does nothing, Windows has blocked the downloaded file. Right-click <span class="path">Clipee-win-Setup.exe</span> &rarr; <strong>Properties</strong>, tick <strong>Unblock</strong> at the bottom of the General tab, click <strong>OK</strong>, then double-click it again.</li>
+        <li>Clipee installs for your account only (no administrator password needed) and starts. If your PC needs the .NET&nbsp;10 runtime, the installer fetches it first.</li>
+      </ol>
+      <p>You will find Clipee in the Start menu and on your desktop.</p>
+      <h3>Updates</h3>
+      <p>Clipee checks for a new version once a day and downloads it quietly in the background. When it is ready, a notice appears by the clock: click it to restart into the new version. If you do not, the update is applied the next time Clipee closes.</p>
+      <p>You can also check yourself in Settings &rarr; General &rarr; Updates with <strong>Check now</strong>, or turn off <strong>Update automatically</strong>. When an update is waiting, the tray menu shows <strong>Restart to update</strong>. An orange dot on the tray icon, and beside General and Updates in Settings, fades in and out while an update downloads and blinks once it is ready.</p>
+      <h3>Uninstalling</h3>
+      <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Clipee and choose <strong>Uninstall</strong>. Your clips stay in <span class="path">%AppData%\Clipee</span> in case you reinstall; delete that folder if you want them gone too.</p>
+    </section>
+
+    <section id="keys">
+      <h2 class="sec"><span class="n">11</span>Keyboard shortcuts</h2>
+      <p>To see the shortcuts as they are set on your PC, including your snippet shortcuts, open Settings &rarr; General and click <strong>Show all shortcuts&hellip;</strong>. <strong>Save as text file&hellip;</strong> saves the list, with Clipee&rsquo;s version and the date, to print or keep.</p>
+      <figure class="dialog">
+        <img src="images/shortcuts-dialog.png" alt="The Clipee shortcuts dialog listing the shortcuts anywhere in Windows, the snippet shortcuts (none set yet) and every key in the popup, with a note that the list was saved as a text file, and Save as text file and Close buttons">
+        <figcaption>Settings &rarr; General &rarr; Show all shortcuts&hellip;</figcaption>
+      </figure>
+      <h3>Anywhere in Windows</h3>
+      <table class="ref">
+        <thead><tr><th>Keys</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd></td><td>Open the popup (you can change this).</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>&ndash;<kbd>9</kbd></td><td>Paste your 1st&ndash;9th newest clip.</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd></td><td>Paste the next clip in the paste stack.</td></tr>
+          <tr><td>A snippet&rsquo;s own shortcut</td><td>Paste that snippet, or copy it if you chose that. You set both in the snippet editor.</td></tr>
+        </tbody>
+      </table>
+      <h3>In the popup</h3>
+      <table class="ref">
+        <thead><tr><th>Keys</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><kbd>&uarr;</kbd> <kbd>&darr;</kbd></td><td>Move through the list.</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+mouse wheel</td><td>Move through the list.</td></tr>
+          <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>Jump to the first or last clip, when the search box is empty. <kbd>Ctrl</kbd>+<kbd>Home</kbd> and <kbd>Ctrl</kbd>+<kbd>End</kbd> jump even while you search.</td></tr>
+          <tr><td><kbd>Page Up</kbd> <kbd>Page Down</kbd></td><td>Move one screenful up or down the list.</td></tr>
+          <tr><td><kbd>Enter</kbd></td><td>Paste the selected clip.</td></tr>
+          <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Paste as plain text.</td></tr>
+          <tr><td><kbd>Space</kbd></td><td>Add to the paste stack (search box empty).</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Pin or unpin.</td></tr>
+          <tr><td>Hold <kbd>Del</kbd></td><td>Delete the clip (1.1 seconds; let go to cancel).</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Undo a delete, while the Undo notice is showing.</td></tr>
+          <tr><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Open Settings.</td></tr>
+          <tr><td><kbd>Esc</kbd></td><td>Close the popup.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="wrong">
+      <h2 class="sec"><span class="n">12</span>If something goes wrong</h2>
+      <dl class="defs">
+        <dt>The shortcut does not open Clipee</dt>
+        <dd>Another app may own <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>; Clipee shows a notice by the clock when this happens. Pick different keys in Settings &rarr; General. Until then, click the tray icon.</dd>
+        <dt>Stray characters appear when I type</dt>
+        <dd>On some keyboard layouts the <kbd>AltGr</kbd> key counts as <kbd>Ctrl</kbd>+<kbd>Alt</kbd>, so <kbd>AltGr</kbd>+number triggers quick paste. Turn off <strong>Quick paste</strong> in Settings &rarr; General.</dd>
+        <dt>Something I copied is not in the list</dt>
+        <dd>Check that capture is not paused (tray menu), that the app is not on the ignored list, and that it was not a password manager or a very large image.</dd>
+        <dt>A paste did not go in</dt>
+        <dd>The app is probably running as administrator. The clip is on the clipboard: press <kbd>Ctrl</kbd>+<kbd>V</kbd>.</dd>
+        <dt>&ldquo;Clipee history was reset&rdquo;</dt>
+        <dd>The history could not be opened, usually after a Windows password reset or on a new PC. Clipee started a fresh one and kept the old file. Restore your latest backup from Settings &rarr; Backup.</dd>
+        <dt>Updates say &ldquo;Could not reach the update server&rdquo;</dt>
+        <dd>Check your internet connection and try <strong>Check now</strong> later. Nothing is lost; Clipee keeps working on the version you have.</dd>
+        <dt>Anything else</dt>
+        <dd>Problems are written to <span class="path">%AppData%\Clipee\error.log</span>. Settings &rarr; About has a button that opens that folder. The log never contains your clips.</dd>
+      </dl>
+    </section>
+
+  </main>
+</div>
+
+<footer class="colophon">
+  <div class="colophon-in">
+    <span>Clipee, a clipboard manager for Windows.</span>
+    <a href="https://github.com/markticulous/Clipee/releases">Releases and release notes</a>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<button type="button" class="uptop" id="upTop" aria-label="Back to the top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V6"/><path d="M5.5 12.5 12 6l6.5 6.5"/>
+  </svg>
+</button>
+
+<script src="version.js"></script>
+<script>
+/* The version chip. The app build writes version.js beside this page (it is committed, so the
+   source copy shows it too); if it is missing, the chip stays "beta". */
+(function () {
+  var v = window.CLIPEE_VERSION;
+  if (v) document.getElementById('verChip').textContent = 'v' + v + ' beta';
+})();
+</script>
+
+<script>
+/* Keep the contents list showing where you are. */
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    map[el.id] = a;
+    targets.push(el);
+  });
+  if (!targets.length || !window.IntersectionObserver) return;
+
+  var here = null;
+  function mark(el) {
+    if (here === el) return;
+    if (here) map[here.id].classList.remove('is-here');
+    here = el;
+    if (here) map[here.id].classList.add('is-here');
+  }
+
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var at = seen.indexOf(e.target);
+      if (e.isIntersecting && at === -1) seen.push(e.target);
+      else if (!e.isIntersecting && at !== -1) seen.splice(at, 1);
+    });
+    if (!seen.length) {
+      if ((window.scrollY || document.documentElement.scrollTop) < 8) mark(targets[0]);
+      return;
+    }
+    mark(seen.slice().sort(function (a, b) {
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    })[0]);
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  mark(targets[0]);
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
+
+<script>
+/* Search the guide: the whole text, four characters or more. Every match is
+   marked in place with the Custom Highlight API; where that is missing the
+   search still lists sections and simply doesn't mark. */
+(function () {
+  var box = document.getElementById('findInput');
+  var list = document.getElementById('findList');
+  var clear = document.getElementById('findClear');
+  if (!box || !list) return;
+
+  var MIN = 4, MAX = 14;
+  var canMark = typeof Highlight === 'function' && window.CSS && CSS.highlights;
+
+  var parts = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (sec) {
+    var h = sec.querySelector('h2.sec');
+    if (!h) return;
+    var n = h.querySelector('.n');
+    var name = (n ? h.textContent.slice(n.textContent.length) : h.textContent).trim();
+    parts.push({ el: sec, head: h, name: name, hay: sec.textContent.toLowerCase() });
+  });
+
+  var shown = [], at = -1;
+
+  function unmark() {
+    if (!canMark) return;
+    try { CSS.highlights.delete('clipee-find'); } catch (e) { /* nothing to clear */ }
+  }
+
+  function mark(q) {
+    if (!canMark) return;
+    var root = document.querySelector('.shell') || document.body;
+    var walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('script, style, .find')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var ranges = [], node;
+    while ((node = walk.nextNode())) {
+      var hay = node.nodeValue.toLowerCase();
+      var from = 0, hit;
+      while ((hit = hay.indexOf(q, from)) !== -1) {
+        var r = document.createRange();
+        r.setStart(node, hit);
+        r.setEnd(node, hit + q.length);
+        ranges.push(r);
+        from = hit + q.length;
+      }
+    }
+    if (!ranges.length) { unmark(); return; }
+    var hl = new Highlight();
+    ranges.forEach(function (r) { hl.add(r); });
+    CSS.highlights.set('clipee-find', hl);
+  }
+
+  /* Under the box, wherever the sticky bar has put it. */
+  function placeList() {
+    if (list.hidden) return;
+    var r = box.getBoundingClientRect();
+    var w = Math.max(200, Math.min(360, window.innerWidth - 16));
+    var left = Math.min(r.right - w, window.innerWidth - w - 8);
+    list.style.left = Math.round(Math.max(8, left)) + 'px';
+    list.style.top = Math.round(r.bottom + 6) + 'px';
+    list.style.width = w + 'px';
+    list.style.maxHeight = Math.max(120, window.innerHeight - r.bottom - 20) + 'px';
+  }
+
+  function close() {
+    list.hidden = true;
+    list.innerHTML = '';
+    box.setAttribute('aria-expanded', 'false');
+    shown = []; at = -1;
+  }
+
+  function go(part) {
+    close();
+    box.blur();
+    part.head.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#' + part.el.id);
+  }
+
+  function pick(i) {
+    var was = list.querySelector('li.is-on');
+    if (was) was.className = '';
+    at = i;
+    if (at < 0) return;
+    var li = list.children[at];
+    if (li) { li.className = 'is-on'; li.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function count(hay, q) {
+    var n = 0, from = 0, hit;
+    while ((hit = hay.indexOf(q, from)) !== -1) { n++; from = hit + q.length; }
+    return n;
+  }
+
+  function draw() {
+    var raw = box.value.trim();
+    if (clear) clear.hidden = raw.length === 0;
+
+    var q = raw.toLowerCase();
+    if (q.length < MIN) { close(); unmark(); return; }
+
+    mark(q);
+
+    shown = [];
+    parts.forEach(function (p) {
+      var n = count(p.hay, q);
+      if (n) shown.push({ part: p, n: n });
+    });
+    shown.sort(function (a, b) { return b.n - a.n; });
+    shown = shown.slice(0, MAX);
+
+    list.innerHTML = '';
+    if (!shown.length) {
+      var none = document.createElement('li');
+      none.className = 'find-none';
+      none.textContent = 'Nothing in the guide says ' + raw;
+      list.appendChild(none);
+      list.hidden = false;
+      box.setAttribute('aria-expanded', 'true');
+      placeList();
+      at = -1;
+      return;
+    }
+
+    shown.forEach(function (row) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var hits = document.createElement('span');
+      hits.className = 'hits';
+      hits.textContent = row.n === 1 ? 'once' : row.n + ' times';
+      b.appendChild(hits);
+      b.appendChild(document.createTextNode(row.part.name));
+      b.addEventListener('click', function () { go(row.part); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    box.setAttribute('aria-expanded', 'true');
+    placeList();
+    pick(0);
+  }
+
+  function wipe() {
+    box.value = '';
+    if (clear) clear.hidden = true;
+    close();
+    unmark();
+    box.focus();
+  }
+
+  box.addEventListener('input', draw);
+  box.addEventListener('focus', draw);
+  if (clear) clear.addEventListener('click', wipe);
+
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { wipe(); return; }
+    if (!shown.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); pick((at + 1) % shown.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pick((at - 1 + shown.length) % shown.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[at]) go(shown[at].part); }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.find')) close();
+  });
+
+  window.addEventListener('scroll', placeList, { passive: true });
+  window.addEventListener('resize', placeList);
+}());
+</script>
+
+<script>
+/* Back to the top: a fixed, eased-out trip however far down you are.
+   Reduced-motion users get the jump. */
+(function () {
+  var btn = document.getElementById('upTop');
+  if (!btn) return;
+
+  // The trip takes longer the further it goes (700 ms to 1.4 s), so the slow-down into the top is always seen (Mark, 2026-10-27).
+  var duration = function (from) { return Math.min(1400, Math.max(700, 500 + from / 10)); };
+  var SHOW_AT = function () { return window.innerHeight * 1.5; };
+  var still = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  function sync() { btn.classList.toggle('is-on', window.scrollY > SHOW_AT()); }
+
+  var run = null;
+  function toTop() {
+    if (run) cancelAnimationFrame(run);
+    var from = window.scrollY, MS = duration(from);
+    if (from <= 0) return;
+    if (still()) { window.scrollTo({ top: 0, behavior: 'instant' }); return; }
+    var t0 = (window.performance && performance.now) ? performance.now() : null;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / MS);
+      var e = 1 - Math.pow(1 - k, 5);   // quintic ease-out: fast away, a long soft glide to a stop at the top
+      window.scrollTo({ top: Math.round(from * (1 - e)), behavior: 'instant' });
+      if (k < 1) { run = requestAnimationFrame(step); return; }
+      run = null;
+      if (history.replaceState) history.replaceState(null, '', '#top');
+    };
+    run = requestAnimationFrame(step);
+  }
+
+  btn.addEventListener('click', toTop);
+  var foot = document.querySelector('.totop');
+  if (foot) foot.addEventListener('click', function (e) { e.preventDefault(); toTop(); });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+}());
+</script>
+</body>
+</html>
