@@ -1,7 +1,7 @@
 name: Sync User Guides
 
 # Keeps guides/<app>/ the same as the User Guide inside each app's latest release, so the hub never shows a guide that
-# differs from the one people have installed. Backee and Clipee attach user-guide.zip to every release; Deskside Radio's
+# differs from the one people have installed. Backee, Clipee and Peekee attach user-guide.zip to every release; Deskside Radio's
 # guide is read from its repo at the latest release tag. Runs daily and on demand (Actions > Sync User Guides > Run).
 on:
   schedule:
@@ -26,7 +26,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          for app in Backee Clipee; do
+          for app in Backee Clipee Peekee; do
             dir="guides/${app,,}"
             tmp="$(mktemp -d)"
             if gh release download --repo "markticulous/$app" --pattern user-guide.zip --dir "$tmp"; then

@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peekee — User Guide</title>
+<link rel="icon" href="images/peekee-32.png">
+<meta name="color-scheme" content="light dark">
+<style>
+/* One file plus its pictures. No fonts to fetch, nothing that needs a
+   connection: it opens from the Peekee install folder. Layout and behaviour
+   follow the Backee guide (itself after the Deskside Radio guide); the colours are Midnight to Cyan. */
+
+:root {
+  --paper:  #f4f6f8;
+  --card:   #ffffff;
+  --ink:    #1f2328;
+  --mute:   #5d6570;
+  --line:   #dde1e6;
+  --rule:   #c5cbd3;
+  --accent: #0e7490;
+  --mark:   #06b6d4;
+  --code-bg:#eaedf1;
+  --bar-h: 46px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #121417;
+    --card:   #1a1d21;
+    --ink:    #e6e8eb;
+    --mute:   #9aa1ab;
+    --line:   #2c3036;
+    --rule:   #3d434b;
+    --accent: #22d3ee;
+    --mark:   #67e8f9;
+    --code-bg:#22262b;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-variant-numeric: oldstyle-num;
+}
+
+/* ---- the bar that stays --------------------------------------------- */
+
+.wordmark {
+  position: sticky; top: 0; z-index: 10;
+  margin: 0;
+  min-height: var(--bar-h);
+  padding: 0 max(32px, calc((100% - 1180px) / 2));
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: .34em; text-transform: uppercase;
+  color: var(--mute);
+}
+.wordmark .logo { flex: none; width: 20px; height: 20px; margin-right: -4px; }
+.wordmark-mark { flex: none; height: 24px; margin-top: 7px; width: auto; color: var(--ink); overflow: visible; }
+
+/* The Markticulous byline plate: hollow, hairline edge, two corners cropped square. */
+.byline {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 8px;
+  border-radius: 1px 6px 1px 6px;
+  box-shadow: inset 0 0 0 1px var(--rule);
+  font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 9px; font-weight: 500; letter-spacing: .12em; line-height: 1;
+  white-space: nowrap; text-transform: uppercase;
+}
+.byline-by, .byline-suffix { opacity: .6; }
+
+.ver {
+  flex: none;
+  margin-left: 14px;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--mute) 72%, transparent);
+}
+
+/* ---- the plate at the top ------------------------------------------ */
+
+.masthead { border-bottom: 1px solid var(--rule); background: var(--card); }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 34px 32px 30px; }
+.masthead h1 {
+  margin: 14px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(30px, 5vw, 44px); font-weight: 300;
+  letter-spacing: -.015em; line-height: 1.1;
+}
+.standfirst { max-width: 32em; margin: 16px 0 0; font-size: 19px; line-height: 1.55; }
+.standfirst + .standfirst { margin-top: 12px; font-size: 17px; color: var(--mute); }
+
+/* ---- the two columns ------------------------------------------------ */
+
+.shell {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 32px 96px;
+  display: grid; gap: 56px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+}
+
+.toc {
+  position: sticky; top: var(--bar-h);
+  padding: 44px 0 40px;
+  font-family: var(--sans); font-size: 13.5px; line-height: 1.45;
+  max-height: calc(100vh - var(--bar-h));
+  overflow: auto;
+}
+.toc h2 {
+  margin: 0 0 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mute);
+}
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px;
+  padding: 5px 0 5px 10px; margin-left: -12px;
+  color: var(--mute); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 11px; color: var(--rule); padding-top: 2px;
+}
+.toc a:hover { color: var(--ink); }
+.toc a.is-here { color: var(--ink); font-weight: 600; border-left-color: var(--mark); }
+.toc a.is-here::before { color: var(--mark); }
+
+main { padding: 40px 0 0; max-width: 40em; }
+
+/* ---- sections ------------------------------------------------------- */
+
+section { padding-top: 26px; scroll-margin-top: calc(var(--bar-h) + 14px); }
+h3[id] { scroll-margin-top: calc(var(--bar-h) + 14px); }
+section + section { margin-top: 44px; border-top: 1px solid var(--line); }
+
+h2.sec {
+  margin: 0 0 22px;
+  font-family: var(--sans); font-size: 25px; font-weight: 500;
+  letter-spacing: -.01em; line-height: 1.2;
+}
+h2.sec .n {
+  display: block; margin-bottom: 7px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mark);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-family: var(--sans); font-size: 16px; font-weight: 600; letter-spacing: -.005em;
+}
+h3:first-of-type { margin-top: 26px; }
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+strong { font-weight: 700; }
+
+/* ---- the manual furniture ------------------------------------------- */
+
+code, .path, kbd { font-family: var(--mono); font-size: .86em; font-variant-numeric: normal; }
+code, .path { padding: 1px 5px; border-radius: 3px; background: var(--code-bg); word-break: break-word; }
+kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px;
+  background: var(--card); font-size: .82em; white-space: nowrap;
+}
+
+ol.steps { margin: 0 0 18px; padding: 0; list-style: none; counter-reset: step; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 18px; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mark); color: #fff;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; font-variant-numeric: lining-nums;
+}
+
+ul { margin: 0 0 16px; padding-left: 1.2em; }
+li { margin-bottom: 6px; }
+
+dl.defs { margin: 0 0 18px; }
+dl.defs dt { margin-top: 16px; font-family: var(--sans); font-size: 14.5px; font-weight: 600; }
+dl.defs dt:first-child { margin-top: 0; }
+dl.defs dd { margin: 3px 0 0; color: var(--mute); }
+
+.note {
+  margin: 0 0 20px; padding: 14px 18px;
+  border-left: 3px solid var(--mark);
+  background: var(--card);
+  border-radius: 0 5px 5px 0;
+}
+.note p { margin-bottom: 10px; }
+.note p:last-child { margin-bottom: 0; }
+.note .lede {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mark); margin-bottom: 6px;
+}
+
+table.ref { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15.5px; }
+table.ref th {
+  text-align: left;
+  font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+table.ref td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.ref td:first-child { font-family: var(--sans); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+table.ref td:last-child { color: var(--mute); padding-right: 0; }
+
+/* Screenshots: taken at 150% scaling, shown at their real on-screen size. */
+figure { margin: 6px 0 24px; }
+figure img {
+  display: block; max-width: 100%; height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.10);
+}
+figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color: var(--mute); }
+
+.mute { color: var(--mute); }
+
+/* ---- the colophon --------------------------------------------------- */
+
+.colophon { border-top: 1px solid var(--rule); background: var(--card); font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+.colophon-in {
+  max-width: 1180px; margin: 0 auto; padding: 26px 32px 34px;
+  display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+}
+.colophon a { color: var(--accent); }
+.colophon .tm { flex-basis: 100%; font-size: 12px; }
+.totop { margin-left: auto; text-decoration: none; color: var(--mute); }
+.totop:hover { color: var(--ink); }
+
+/* ---- narrow ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  body { font-size: 16.5px; }
+  .wordmark { padding: 0 20px; gap: 10px; letter-spacing: .2em; font-size: 12px; }
+  .masthead-in { padding: 26px 20px 24px; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 20px 64px; }
+  .toc { position: static; max-height: none; padding: 28px 0 8px; border-bottom: 1px solid var(--line); }
+  .toc ol { columns: 2; column-gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .toc ol { columns: 1; }
+  .wordmark { letter-spacing: .1em; gap: 8px; }
+  .find-input { padding-right: 24px; }
+  .byline { display: none; }
+  .toc a { margin-left: 0; padding-left: 0; border-left: 0; }
+  .toc a.is-here { border-left: 0; }
+  main { padding-top: 12px; }
+  .colophon-in { padding: 22px 20px 28px; }
+  .totop { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --mute: #333; --line: #ccc; --rule: #999; --code-bg: #f0f0f0; }
+  .toc, .totop, .uptop, .find { display: none; }
+  .wordmark { position: static; padding: 0 0 10px; }
+  section, h3[id] { scroll-margin-top: 0; }
+  .shell { display: block; padding: 0; max-width: none; }
+  main { max-width: none; }
+  h2.sec, h3 { break-after: avoid; }
+  .note, ol.steps > li, table.ref tr, figure { break-inside: avoid; }
+  a { color: #000; }
+}
+
+/* ---- back to the top ------------------------------------------------- */
+
+.uptop {
+  position: fixed; right: 16px; bottom: 100px; z-index: 25;
+  width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  border-radius: 50%;
+  background: var(--card); color: var(--mark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, background .18s ease;
+}
+.uptop svg { width: 20px; height: 20px; }
+.uptop.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.uptop:hover { background: color-mix(in srgb, var(--mark) 12%, var(--card)); }
+.uptop:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+@media (max-width: 480px) { .uptop { right: 12px; bottom: 78px; } }
+
+/* ---- search the guide ----------------------------------------------- */
+
+.find { position: relative; margin-left: auto; display: inline-flex; align-items: center; min-width: 0; }
+.find-input {
+  width: clamp(116px, 32vw, 260px);
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+  padding: 5px 26px 5px 10px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--paper); -webkit-appearance: none; appearance: none;
+}
+.find-input::-webkit-search-cancel-button { display: none; }
+.find-input:focus { outline: 2px solid var(--mark); outline-offset: 1px; border-color: var(--mark); }
+.find-input::placeholder { color: var(--mute); }
+.find-clear {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; padding: 0; border-radius: 50%;
+  background: color-mix(in srgb, var(--mark) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  color: var(--mark); cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--sans); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.find-clear[hidden] { display: none; }
+.find-clear:hover { background: color-mix(in srgb, var(--mark) 30%, transparent); }
+.find-list {
+  position: fixed; z-index: 30;
+  max-width: 360px;
+  margin: 0; padding: 4px; list-style: none;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  max-height: 60vh; overflow-y: auto; text-align: left;
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+}
+.find-list[hidden] { display: none; }
+.find-list li { margin: 0; }
+.find-list button {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink);
+  padding: 7px 10px; border: 0; border-radius: 5px; background: none;
+}
+.find-list button:hover, .find-list button:focus,
+.find-list li.is-on button { background: color-mix(in srgb, var(--mark) 9%, transparent); outline: none; }
+.find-list .hits { float: right; margin-left: 10px; font-size: 11.5px; color: var(--mute); }
+.find-none { padding: 8px 10px; font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+
+::highlight(peekee-find) { background: #ffe08a; color: #1f2328; }
+</style>
+</head>
+<body id="top">
+
+<p class="wordmark">
+  <img class="logo" src="images/peekee-32.png" alt="">
+  <!-- The drawn Peekee wordmark (assets/logo/peekee-wordmark-*.svg), inline so "peek" follows the page's light or dark ink;
+       "ee" keeps the brand cyan. The viewBox keeps the tail of the p; the margin keeps the letters where Backee's sit. -->
+  <svg class="wordmark-mark" viewBox="0 15.9 129.5 44.2" role="img" aria-label="Peekee">
+    <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="currentColor"><path d="M2.10 30.25 V57.50"/><circle cx="9.60" cy="37.75" r="7.5"/><path d="M24.5 37.75 H39.5 A7.5 7.5 0 1 0 37.31 43.05"/><path d="M46.9 37.75 H61.9 A7.5 7.5 0 1 0 59.71 43.05"/><path d="M70.70 18 V45.25"/><path d="M80.70 30.25 L70.70 39.75"/><path d="M74.90 35.75 L81.20 45.25"/></g>
+      <g stroke="#06B6D4"><path d="M90 37.75 H105 A7.5 7.5 0 1 0 102.81 43.05"/><path d="M112.4 37.75 H127.4 A7.5 7.5 0 1 0 125.21 43.05"/></g>
+    </g>
+  </svg>
+  <span class="byline">
+    <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
+  </span>
+  <span class="ver" id="verChip">beta</span>
+  <span class="find">
+    <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
+           placeholder="Search the guide…" aria-label="Search the guide"
+           aria-controls="findList" aria-expanded="false">
+    <button type="button" class="find-clear" id="findClear" aria-label="Clear the search" hidden>&#10005;</button>
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </span>
+</p>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <h1>User Guide</h1>
+    <p class="standfirst">Peekee shows you what is inside a file before you open it. Select a file, press Space, and a preview appears beside your work. Press Space again and it is gone.</p>
+    <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more. It lists the sections your word appears in and marks each place on the page; the &#10005; clears it. Once you are well down the page, an arrow at the bottom right takes you back to the top.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hurry">In a hurry to get started?</a></li>
+      <li><a href="#keys">Keys and mouse</a></li>
+      <li><a href="#where">Where Peekee works</a></li>
+      <li><a href="#show">What Peekee can show</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#tray">The tray icon</a></li>
+      <li><a href="#others">Other file managers</a></li>
+      <li><a href="#privacy">Your privacy</a></li>
+      <li><a href="#support">Support Markticulous</a></li>
+      <li><a href="#install">Installing and updating</a></li>
+      <li><a href="#wrong">If something goes wrong</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="hurry">
+      <h2 class="sec"><span class="n">01</span>In a hurry to get started?</h2>
+      <ol class="steps">
+        <li>Install Peekee and start it. Its icon appears in the tray, next to the clock. If you cannot see it, look under the <strong>^</strong> arrow with the other hidden tray icons.</li>
+        <li>Open a folder in File Explorer, or look at your Desktop, and click a file once to select it.</li>
+        <li>Press <kbd>Space</kbd>. The preview opens beside your work. Your keyboard stays in the window you were in.</li>
+        <li>Press <kbd>Space</kbd> or <kbd>Esc</kbd> to close it.</li>
+      </ol>
+      <p>That is all. There is nothing to set up. To use another key than <kbd>Space</kbd>, or to change how big the preview is, see <a href="#settings">Settings</a>.</p>
+    </section>
+
+    <section id="keys">
+      <h2 class="sec"><span class="n">02</span>Keys and mouse</h2>
+      <p>Peekee watches the window you are working in. It only reacts when a file list has the keyboard focus, so typing in a search box or renaming a file works as usual.</p>
+      <dl class="defs">
+        <dt>Space</dt>
+        <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
+        <dt>Esc</dt>
+        <dd>Closes the preview. This works whichever key you chose to open it.</dd>
+        <dt>Arrow keys, Home, End, Page Up and Page Down</dt>
+        <dd>Move the selection in the window behind, as they always do, and the preview follows to the new file. You do not have to close it first.</dd>
+        <dt>Several files selected</dt>
+        <dd>The preview shows the focused file, and the header says how many are selected.</dd>
+        <dt>Dragging an edge</dt>
+        <dd>Drag any edge of the preview to resize it. Peekee remembers the size unless you turn that off in <a href="#settings">Settings</a>.</dd>
+        <dt>Mouse wheel</dt>
+        <dd>Scrolls text and tables. On an image it zooms. On a PDF it turns the page.</dd>
+      </dl>
+      <h3>The header buttons</h3>
+      <p>The name of the file is on the left of the header, with the buttons on the right. Hover over a button to see its name.</p>
+      <table class="ref">
+        <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Open</td><td>Opens the file in the program Windows uses for it.</td></tr>
+          <tr><td>Pin</td><td>Not available yet. It is greyed out.</td></tr>
+          <tr><td>Copy path</td><td>Copies the full path of the file to the clipboard.</td></tr>
+          <tr><td>Close</td><td>Closes the preview.</td></tr>
+          <tr><td>Previous page and Next page</td><td>Appear only for files with pages, such as a PDF.</td></tr>
+        </tbody>
+      </table>
+      <p>Open and Copy path are greyed out when no file is showing.</p>
+    </section>
+
+    <section id="where">
+      <h2 class="sec"><span class="n">03</span>Where Peekee works</h2>
+      <dl class="defs">
+        <dt>File Explorer</dt>
+        <dd>Every view: details, list, icons and tiles. Peekee reads the selection from Explorer and never changes anything.</dd>
+        <dt>The Desktop</dt>
+        <dd>Select an icon on the Desktop and press the key.</dd>
+        <dt>Open and Save dialogs</dt>
+        <dd>Peekee also works inside the Open and Save dialogs of other programs, so you can check a file before you pick it. Turn this off in <a href="#settings">Settings</a> if a program does not like it.</dd>
+      </dl>
+      <div class="note">
+        <p class="lede">Some older programs use an old style of file dialog.</p>
+        <p>Peekee cannot see which file is selected in those, so it shows nothing there, and the key goes back to the dialog as usual. Most current programs use the standard dialog, which works.</p>
+      </div>
+    </section>
+
+    <section id="show">
+      <h2 class="sec"><span class="n">04</span>What Peekee can show</h2>
+      <p>A preview opens at once and reads the file without changing it.</p>
+      <dl class="defs">
+        <dt>Images</dt>
+        <dd>PNG, JPG, GIF, BMP, WebP, TIFF and ICO, plus HEIC and AVIF where Windows has the codec installed. Amiga IFF pictures (<code>.iff</code>, <code>.ilbm</code>, <code>.lbm</code>, <code>.ham6</code>, <code>.ham8</code>, <code>.acbm</code>, <code>.rgb8</code>, <code>.rgbn</code>, including HAM and EHB, pictures with a palette for every line, Atari ST pictures, the true-colour RGB8 and RGBN kinds, and the PC <code>PBM</code> kind; a file that is cut short shows the part that is there) are drawn by Peekee itself; the footer says how many colours they use. Their pixel shape is not corrected, so a low-resolution Amiga picture can look narrower than it did on the Amiga. A GIF plays. The wheel zooms, dragging pans, and a double click fits the image to the window again. In <a href="#settings">Settings</a> you choose whether images open fitted to the window or at 100 percent, and what shows behind them.</dd>
+        <dt>Text and code</dt>
+        <dd>Plain text, logs, configuration files and source code, in a monospace font with line numbers. Long lines scroll sideways instead of wrapping. A file larger than the limit in Settings (2 MB to start with) shows its first part, with a note in the footer.</dd>
+        <dt>CSV and TSV</dt>
+        <dd>A table of the first 5,000 rows. The first row becomes the column headers when the file seems to have one. Otherwise the columns are lettered.</dd>
+        <dt>JSON</dt>
+        <dd>Laid out with indents so it is easy to read. A file that is not valid JSON shows as plain text.</dd>
+        <dt>Markdown</dt>
+        <dd>Shown as a formatted document with headings, lists, tables, code and the images that sit beside the file. Links are drawn as links but cannot be clicked.</dd>
+        <dt>SVG</dt>
+        <dd>Drawn and fitted to the window. It does not zoom or pan, and a drawing that uses features Peekee does not support, such as CSS classes, may look different from the way a browser shows it.</dd>
+        <dt>Fonts</dt>
+        <dd>TTF, OTF and TTC files show as a type specimen: the family and style name, the alphabet, the digits and a sentence at three sizes. The font is not installed.</dd>
+        <dt>Folders</dt>
+        <dd>How many items are inside and how big they are in all (counted in the background), with the five newest items.</dd>
+        <dt>Archives</dt>
+        <dd>The contents are listed without unpacking anything: zip, RAR, 7z, ISO, tar (also tar.gz, tgz, tar.bz2, tbz2, tar.xz and txz), gz, bz2, xz, CAB and LHA (lzh, lha). Folders inside show as a tree: click a folder row to open or close it. Name, Size and Modified have their own columns. An archive with a password, or one that is damaged, shows the information card instead.</dd>
+        <dt>PDF</dt>
+        <dd>One page at a time. Use the mouse wheel or the arrow buttons in the header to change page. With the default setting, <strong>Interactive</strong>, Peekee tries three ways in this order: the Microsoft Edge PDF previewer, another PDF previewer you have installed, and the PDF renderer built into Windows. With <strong>As images</strong> it uses the Windows renderer at once, which is faster and lighter but has no links, forms or text selection. Hold <kbd>Ctrl</kbd> and turn the wheel to zoom the built-in renderer, and double-click to return to the whole page.</dd>
+        <dt>Word, Excel, PowerPoint and email</dt>
+        <dd>These show through the preview component that Windows or Office installs, the same one File Explorer uses in its preview pane. Peekee bundles nothing for them. If no component is installed for a type, you get the information card.</dd>
+        <dt>Anything else</dt>
+        <dd>The information card: the name, type, size and date of the file.</dd>
+      </dl>
+    </section>
+
+    <section id="settings">
+      <h2 class="sec"><span class="n">05</span>Settings</h2>
+      <p>Open Settings from the tray menu. Changes apply at once. There is no Save button. The list on the left shows <strong>Peekee</strong> with the Markticulous plate and the version at the bottom, on every page. Click the plate to open the About page.</p>
+      <dl class="defs">
+        <dt>General</dt>
+        <dd><strong>Open the preview with</strong> is <strong>Space</strong>, <strong>Ctrl + Space</strong> or <strong>Shift + Space</strong>. Space also closes the preview, and Esc always does. <strong>Work in Open and Save dialogs</strong> lets Peekee preview inside the file dialogs of other programs. <strong>Start with Windows</strong> opens Peekee in the tray when you sign in. <strong>Check for updates automatically</strong> lets Peekee look for a newer version (see <a href="#privacy">Your privacy</a>), and <strong>Check now</strong> looks straight away. <strong>Restart to update</strong> is greyed out until an update has been downloaded.</dd>
+        <dt>Preview</dt>
+        <dd><strong>Window size</strong> sets how much of the screen a preview takes at first, from 30 to 90 percent. <strong>Remember the size I drag the window to</strong> keeps the size you chose by dragging an edge, and <strong>Forget the remembered size</strong> goes back to the setting above. <strong>Show the line at the bottom</strong> turns the footer (type, size, date) on or off. <strong>Images open</strong> is <strong>Fitted to the window</strong> or <strong>At 100 percent</strong>. <strong>Background behind images with transparency</strong> is what shows behind images, SVG files and the pages drawn by the Windows PDF renderer: a checkerboard (the only choice that shows transparent areas, and the default), neutral grey (18 percent), white, black, or the window colour. With the checkerboard, an SVG keeps its automatic light or dark card. <strong>PDF files</strong> is <strong>Interactive</strong> (Edge or an installed previewer first) or <strong>As images</strong> (pages drawn by Windows). Under <strong>Text</strong>, <strong>Font size</strong> and <strong>Largest file shown</strong> (1, 2, 5, 10 or 20 MB) control text and code files. Larger files show their first part only.</dd>
+        <dt>About</dt>
+        <dd>The Peekee name drawn as a wordmark beside the app icon, the version, <strong>Open data folder</strong> (where Peekee keeps its settings), the support section (see <a href="#support">Support Markticulous</a>) and the credits.</dd>
+        <dt>User Guide</dt>
+        <dd>Opens this guide in your web browser. It is always the last item in the list.</dd>
+      </dl>
+    </section>
+
+    <section id="tray">
+      <h2 class="sec"><span class="n">06</span>The tray icon</h2>
+      <p>Peekee lives in the notification area, next to the clock. <strong>Right-click</strong> its icon to open the menu.</p>
+      <dl class="defs">
+        <dt>Restart to update</dt>
+        <dd>Appears at the top once an update has been downloaded. Choosing it restarts Peekee on the new version.</dd>
+        <dt>Settings&hellip;</dt>
+        <dd>Opens the Settings window.</dd>
+        <dt>Start with Windows</dt>
+        <dd>A tick means Peekee starts when you sign in. Click it to turn this on or off. It is the same setting as on the General page.</dd>
+        <dt>&hearts; Support Markticulous</dt>
+        <dd>Appears only after you have used Peekee for a while (see <a href="#support">Support Markticulous</a>).</dd>
+        <dt>Quit</dt>
+        <dd>Closes Peekee. Start it again from the Start menu.</dd>
+      </dl>
+      <p>Peekee follows the Windows light or dark setting.</p>
+    </section>
+
+    <section id="others">
+      <h2 class="sec"><span class="n">07</span>Other file managers</h2>
+      <p>Peekee can watch File Explorer and the Desktop by itself. A file manager it cannot watch can ask the running Peekee for a preview in one of two ways.</p>
+      <h3>From the command line</h3>
+      <p>Run <code>Peekee.exe</code> with the path of a file. The Peekee that is already running shows it:</p>
+      <p><code>Peekee.exe "C:\Pictures\holiday.jpg"</code></p>
+      <h3>Through the named pipe</h3>
+      <p>Write one line to the named pipe <code>\\.\pipe\Peekee</code>. The commands are:</p>
+      <dl class="defs">
+        <dt><code>preview &lt;path&gt;</code></dt>
+        <dd>Shows the file.</dd>
+        <dt><code>toggle &lt;path&gt;</code></dt>
+        <dd>Shows the file, or closes the preview if it is already open.</dd>
+        <dt><code>close</code></dt>
+        <dd>Closes the preview.</dd>
+      </dl>
+      <p>For example, from PowerShell:</p>
+      <p><code>$pipe = New-Object System.IO.Pipes.NamedPipeClientStream('.', 'Peekee', 'Out'); $pipe.Connect(1000); $w = New-Object System.IO.StreamWriter($pipe); $w.WriteLine('preview C:\Pictures\holiday.jpg'); $w.Dispose()</code></p>
+    </section>
+
+    <section id="privacy">
+      <h2 class="sec"><span class="n">08</span>Your privacy</h2>
+      <p>Peekee works only on your PC. It reads the file you select, shows it, and sends nothing about it anywhere. It has no ads and no tracking.</p>
+      <p>The only things that use the internet are ones you start or turn on: the update check, which asks GitHub whether a newer version exists when <strong>Check for updates automatically</strong> is on, and the links to Ko-fi and the support page, which open in your browser only when you click them. If you tell Peekee you have supported Markticulous and use the check, it sends a scrambled version of your email (a hash), and nothing else (see <a href="#support">Support Markticulous</a>).</p>
+    </section>
+
+    <section id="support">
+      <h2 class="sec"><span class="n">09</span>Support Markticulous</h2>
+      <p>Peekee is made by one person who cares about the details. It will always be free. It has no ads and no tracking. If it saves you time, you can help keep it going with a coffee on <a href="https://ko-fi.com/markticulous">Ko-fi</a>.</p>
+      <p>You will always find the support button under <strong>Settings &rarr; About</strong>, next to a link that explains <a href="https://markticulous.github.io/support/?app=peekee">why these apps are made</a>. After you have used Peekee for a while, an extra item also appears in the tray menu.</p>
+      <p>Peekee may ask you for support once in a while, after you have peeked at many files. It asks at most a few times, a long time apart, and never while a preview is open. If you ask it not to ask again, that is final. It will never ask again, and the tray item goes away.</p>
+      <p>If you have supported Markticulous, you can tell Peekee on the About page. You then get a small thank-you picture of your choice, called an adornment, shown beside the version number.</p>
+      <p>When you tell Peekee you have supported, it asks for the email you used on Ko-fi. Peekee sends only a scrambled version of that email (a hash) to check it, and only when you click Check. Nothing else is sent. If you would rather not, click <em>Skip the check</em>: Peekee takes your word for it.</p>
+    </section>
+
+    <section id="install">
+      <h2 class="sec"><span class="n">10</span>Installing and updating</h2>
+      <h3>Installing</h3>
+      <p>Run the Peekee setup. It installs for your own account and does not need an administrator. Peekee then starts and puts its icon in the tray. Turn on <strong>Start with Windows</strong> in Settings if you want it ready every time.</p>
+      <h3>Updates</h3>
+      <p>When <strong>Check for updates automatically</strong> is on, Peekee checks about half a minute after it starts, and then once a day. A newer version downloads in the background, and <strong>Restart to update</strong> appears in the tray menu and on the General page. Nothing restarts until you choose it. <strong>Check now</strong> looks straight away. The version you have is on the About page.</p>
+      <h3>Uninstalling</h3>
+      <p>Remove Peekee under <strong>Settings &rarr; Apps &rarr; Installed apps</strong> in Windows, the same as any other program.</p>
+    </section>
+
+    <section id="wrong">
+      <h2 class="sec"><span class="n">11</span>If something goes wrong</h2>
+      <dl class="defs">
+        <dt>Space does nothing</dt>
+        <dd>Check that a file, not empty space, is selected, and that the file list has the keyboard focus: click the file once. Check that Peekee is running (look for its icon in the tray) and that the key in Settings is the one you are pressing. In an Open or Save dialog, make sure <strong>Work in Open and Save dialogs</strong> is on, and see <a href="#where">Where Peekee works</a> about older dialogs.</dd>
+        <dt>I see a card with the name, type and size instead of the file</dt>
+        <dd>Peekee has no way to draw that kind of file. For Word, Excel, PowerPoint and email files it means no preview component is installed for that type. Press the Open button in the header to open the file in its own program.</dd>
+        <dt>A PDF looks different from one in Edge</dt>
+        <dd>If neither the Edge previewer nor another PDF previewer is available, Peekee falls back to the renderer built into Windows. It shows the pages as pictures, one at a time.</dd>
+        <dt>A text file is cut short</dt>
+        <dd>The file is larger than <strong>Largest file shown</strong> on the Preview page of Settings. The footer says so. Raise the limit if you want to see more.</dd>
+        <dt>The preview is the wrong size</dt>
+        <dd>Drag an edge to resize it, or use <strong>Forget the remembered size</strong> on the Preview page to go back to the size set there.</dd>
+        <dt>Something else</dt>
+        <dd>Quit Peekee from the tray menu and start it again. If the problem stays, tell Mark through the support page linked above.</dd>
+      </dl>
+    </section>
+
+  </main>
+
+</div>
+
+<footer class="colophon">
+  <div class="colophon-in">
+    <span>Peekee, a file preview for Windows.</span>
+    <span class="tm">Microsoft, Windows, Office and Edge are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Peekee is not made, endorsed or supported by Microsoft.</span>
+    <a href="https://markticulous.github.io/support/?app=peekee" target="_blank" rel="noopener">Support Markticulous</a>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<button type="button" class="uptop" id="upTop" aria-label="Back to the top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V6"/><path d="M5.5 12.5 12 6l6.5 6.5"/>
+  </svg>
+</button>
+
+<script src="version.js"></script>
+<script>
+/* The version chip. The app build writes version.js beside this page (it is committed, so the
+   source copy shows it too); if it is missing, the chip stays "beta". */
+(function () {
+  var v = window.PEEKEE_VERSION;
+  if (v) document.getElementById('verChip').textContent = 'v' + v + ' beta';
+})();
+</script>
+
+<script>
+/* Keep the contents list showing where you are. */
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    map[el.id] = a;
+    targets.push(el);
+  });
+  if (!targets.length || !window.IntersectionObserver) return;
+
+  var here = null;
+  function mark(el) {
+    if (here === el) return;
+    if (here) map[here.id].classList.remove('is-here');
+    here = el;
+    if (here) map[here.id].classList.add('is-here');
+  }
+
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var at = seen.indexOf(e.target);
+      if (e.isIntersecting && at === -1) seen.push(e.target);
+      else if (!e.isIntersecting && at !== -1) seen.splice(at, 1);
+    });
+    if (!seen.length) {
+      if ((window.scrollY || document.documentElement.scrollTop) < 8) mark(targets[0]);
+      return;
+    }
+    mark(seen.slice().sort(function (a, b) {
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    })[0]);
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  mark(targets[0]);
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
+
+<script>
+/* Search the guide: the whole text, four characters or more. Every match is
+   marked in place with the Custom Highlight API; where that is missing the
+   search still lists sections and simply does not mark. */
+(function () {
+  var box = document.getElementById('findInput');
+  var list = document.getElementById('findList');
+  var clear = document.getElementById('findClear');
+  if (!box || !list) return;
+
+  var MIN = 4, MAX = 14;
+  var canMark = typeof Highlight === 'function' && window.CSS && CSS.highlights;
+
+  var parts = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (sec) {
+    var h = sec.querySelector('h2.sec');
+    if (!h) return;
+    var n = h.querySelector('.n');
+    var name = (n ? h.textContent.slice(n.textContent.length) : h.textContent).trim();
+    parts.push({ el: sec, head: h, name: name, hay: sec.textContent.toLowerCase() });
+  });
+
+  var shown = [], at = -1;
+
+  function unmark() {
+    if (!canMark) return;
+    try { CSS.highlights.delete('peekee-find'); } catch (e) { /* nothing to clear */ }
+  }
+
+  function mark(q) {
+    if (!canMark) return;
+    var root = document.querySelector('.shell') || document.body;
+    var walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('script, style, .find')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var ranges = [], node;
+    while ((node = walk.nextNode())) {
+      var hay = node.nodeValue.toLowerCase();
+      var from = 0, hit;
+      while ((hit = hay.indexOf(q, from)) !== -1) {
+        var r = document.createRange();
+        r.setStart(node, hit);
+        r.setEnd(node, hit + q.length);
+        ranges.push(r);
+        from = hit + q.length;
+      }
+    }
+    if (!ranges.length) { unmark(); return; }
+    var hl = new Highlight();
+    ranges.forEach(function (r) { hl.add(r); });
+    CSS.highlights.set('peekee-find', hl);
+  }
+
+  /* Under the box, wherever the sticky bar has put it. */
+  function placeList() {
+    if (list.hidden) return;
+    var r = box.getBoundingClientRect();
+    var w = Math.max(200, Math.min(360, window.innerWidth - 16));
+    var left = Math.min(r.right - w, window.innerWidth - w - 8);
+    list.style.left = Math.round(Math.max(8, left)) + 'px';
+    list.style.top = Math.round(r.bottom + 6) + 'px';
+    list.style.width = w + 'px';
+    list.style.maxHeight = Math.max(120, window.innerHeight - r.bottom - 20) + 'px';
+  }
+
+  function close() {
+    list.hidden = true;
+    list.innerHTML = '';
+    box.setAttribute('aria-expanded', 'false');
+    shown = []; at = -1;
+  }
+
+  function go(part) {
+    close();
+    box.blur();
+    part.head.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#' + part.el.id);
+  }
+
+  function pick(i) {
+    var was = list.querySelector('li.is-on');
+    if (was) was.className = '';
+    at = i;
+    if (at < 0) return;
+    var li = list.children[at];
+    if (li) { li.className = 'is-on'; li.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function count(hay, q) {
+    var n = 0, from = 0, hit;
+    while ((hit = hay.indexOf(q, from)) !== -1) { n++; from = hit + q.length; }
+    return n;
+  }
+
+  function draw() {
+    var raw = box.value.trim();
+    if (clear) clear.hidden = raw.length === 0;
+
+    var q = raw.toLowerCase();
+    if (q.length < MIN) { close(); unmark(); return; }
+
+    mark(q);
+
+    shown = [];
+    parts.forEach(function (p) {
+      var n = count(p.hay, q);
+      if (n) shown.push({ part: p, n: n });
+    });
+    shown.sort(function (a, b) { return b.n - a.n; });
+    shown = shown.slice(0, MAX);
+
+    list.innerHTML = '';
+    if (!shown.length) {
+      var none = document.createElement('li');
+      none.className = 'find-none';
+      none.textContent = 'Nothing in the guide says ' + raw;
+      list.appendChild(none);
+      list.hidden = false;
+      box.setAttribute('aria-expanded', 'true');
+      placeList();
+      at = -1;
+      return;
+    }
+
+    shown.forEach(function (row) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var hits = document.createElement('span');
+      hits.className = 'hits';
+      hits.textContent = row.n === 1 ? 'once' : row.n + ' times';
+      b.appendChild(hits);
+      b.appendChild(document.createTextNode(row.part.name));
+      b.addEventListener('click', function () { go(row.part); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    box.setAttribute('aria-expanded', 'true');
+    placeList();
+    pick(0);
+  }
+
+  function wipe() {
+    box.value = '';
+    if (clear) clear.hidden = true;
+    close();
+    unmark();
+    box.focus();
+  }
+
+  box.addEventListener('input', draw);
+  box.addEventListener('focus', draw);
+  if (clear) clear.addEventListener('click', wipe);
+
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { wipe(); return; }
+    if (!shown.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); pick((at + 1) % shown.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pick((at - 1 + shown.length) % shown.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[at]) go(shown[at].part); }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.find')) close();
+  });
+
+  window.addEventListener('scroll', placeList, { passive: true });
+  window.addEventListener('resize', placeList);
+}());
+</script>
+
+<script>
+/* Back to the top: a fixed, eased-out trip however far down you are.
+   Reduced-motion users get the jump. */
+(function () {
+  var btn = document.getElementById('upTop');
+  if (!btn) return;
+
+  // The trip takes longer the further it goes (700 ms to 1.4 s), so the slow-down into the top is always seen (Mark, 2026-10-27).
+  var duration = function (from) { return Math.min(1400, Math.max(700, 500 + from / 10)); };
+  var SHOW_AT = function () { return window.innerHeight * 1.5; };
+  var still = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  // The button never enters the footer: once the footer scrolls into view it rides 24px above it (Mark, 2026-10-27).
+  var footer = document.querySelector('footer.colophon');
+  var GAP = 24, base = null;
+  function measure() { btn.style.bottom = ''; base = parseFloat(getComputedStyle(btn).bottom) || 0; }
+  function sync() {
+    btn.classList.toggle('is-on', window.scrollY > SHOW_AT());
+    if (!footer) return;
+    if (base === null) measure();
+    var above = window.innerHeight - footer.getBoundingClientRect().top + GAP;
+    btn.style.bottom = Math.max(base, above) + 'px';
+  }
+
+  var run = null;
+  function toTop() {
+    if (run) cancelAnimationFrame(run);
+    var from = window.scrollY, MS = duration(from);
+    if (from <= 0) return;
+    if (still()) { window.scrollTo({ top: 0, behavior: 'instant' }); return; }
+    var t0 = (window.performance && performance.now) ? performance.now() : null;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / MS);
+      var e = 1 - Math.pow(1 - k, 5);   // quintic ease-out: fast away, a long soft glide to a stop at the top
+      window.scrollTo({ top: Math.round(from * (1 - e)), behavior: 'instant' });
+      if (k < 1) { run = requestAnimationFrame(step); return; }
+      run = null;
+      if (history.replaceState) history.replaceState(null, '', '#top');
+    };
+    run = requestAnimationFrame(step);
+  }
+
+  btn.addEventListener('click', toTop);
+  var foot = document.querySelector('.totop');
+  if (foot) foot.addEventListener('click', function (e) { e.preventDefault(); toTop(); });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', function () { measure(); sync(); });
+  sync();
+}());
+</script>
+</body>
+</html>
