@@ -160,7 +160,7 @@
 
   /* One wordmark per app, each in its own brand's style. */
   .wm { display: inline-block; vertical-align: middle; }
-  .wm-clipee { display: block; height: 33px; width: auto; margin-bottom: -9px; } /* same letter scale as Backee: its box is 44.70 units tall (the p descends) against Backee's 32.45, so 24px x 44.70 / 32.45; the -9px leaves the descender out when centring on the icon */
+  .wm-clipee, .wm-peekee { display: block; height: 33px; width: auto; margin-bottom: -9px; } /* same letter scale as Backee: its box is 44.70 units tall (the p descends) against Backee's 32.45, so 24px x 44.70 / 32.45; the -9px leaves the descender out when centring on the icon */
   .wm-tagee { font: 600 29px/1 "Fraunces", Georgia, "Times New Roman", serif; letter-spacing: -.02em; color: var(--text); margin-left: -.75px; } /* the T's side bearing */
   .wm-tagee b { font-weight: inherit; color: var(--tagee-ee); }
   .wm-deskside {
@@ -380,6 +380,25 @@
       </article>
       <article class="card" data-scrub>
         <div class="app-head">
+          <img class="inset" src="assets/peekee.svg" alt="" width="56" height="56">
+          <div>
+            <h3>
+              <picture>
+              <source srcset="assets/peekee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wm wm-peekee" src="assets/peekee-wordmark-light.svg" alt="Peekee" height="24">
+            </picture>
+            </h3>
+          </div>
+        </div>
+        <p>Select a file and press Space to see it, in Explorer, on the Desktop or in an Open or Save dialog. The arrow keys move on and the preview follows.</p>
+        <div class="row">
+          <span class="soon">In development</span>
+          <a class="btn" href="#peekee">Details</a>
+          <span class="tag">Windows 10 and 11</span>
+        </div>
+      </article>
+      <article class="card" data-scrub>
+        <div class="app-head">
           <img src="assets/tagee.svg" alt="" width="56" height="56">
           <div><h3><span class="wm wm-tagee">Tag<b>ee</b></span></h3></div>
         </div>
@@ -501,6 +520,38 @@
       </figure>
     </section>
 
+    <section class="profile" id="peekee" aria-labelledby="peekee-h">
+      <div class="copy" data-scrub>
+        <p class="eyebrow">In development<span class="sep">/</span>Windows 10 and 11</p>
+        <div class="app-head">
+          <img class="inset" src="assets/peekee.svg" alt="" width="56" height="56">
+          <h3 id="peekee-h">
+            <picture>
+              <source srcset="assets/peekee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wm wm-peekee" src="assets/peekee-wordmark-light.svg" alt="Peekee" height="24">
+            </picture>
+          </h3>
+        </div>
+        <p class="pitch">Quick Look for Windows: select a file, press Space, and see it.</p>
+        <ul class="feats">
+          <li data-scrub>Works in Explorer, on the Desktop and inside Open and Save dialogs, where other previewers stop.</li>
+          <li data-scrub>The preview never takes the keyboard. The arrow keys move through the folder, and the preview follows.</li>
+          <li data-scrub>Images, text and code, CSV, JSON, Markdown, SVG, fonts, folders, and archives from zip to RAR, 7z, ISO and LHA.</li>
+          <li data-scrub>PDF and Office files through the previewers already on the PC, with Windows itself drawing PDFs when none is there.</li>
+          <li data-scrub>Small and light: when nothing is open, it waits quietly in the tray.</li>
+        </ul>
+        <div class="row">
+          <span class="soon">In development</span>
+        </div>
+      </div>
+      <figure data-scrub class="shot">
+        <picture class="watermark" aria-hidden="true">
+          <source srcset="assets/peekee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+          <img class="wm wm-peekee" src="assets/peekee-wordmark-light.svg" alt="" height="24">
+        </picture>
+      </figure>
+    </section>
+
     <section class="profile" id="tagee" aria-labelledby="tagee-h">
       <div class="copy" data-scrub>
         <p class="eyebrow">In development<span class="sep">/</span>Web service</p>
@@ -555,7 +606,7 @@
 
 <script>
   // ?app=clipee -> "Thanks for using Clipee." Only known slugs are used; nothing from the address is inserted as HTML.
-  const APPS = { clipee: 'Clipee', 'deskside-radio': 'Deskside Radio', backee: 'Backee' };
+  const APPS = { clipee: 'Clipee', 'deskside-radio': 'Deskside Radio', backee: 'Backee', peekee: 'Peekee' };
   const slug = new URLSearchParams(location.search).get('app');
   if (slug && Object.prototype.hasOwnProperty.call(APPS, slug)) {
     document.getElementById('from-text').textContent = 'Thanks for using ' + APPS[slug] + '.';

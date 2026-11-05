@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 15.40 129.50 44.70" width="518" height="179">
+  <!-- Peekee wordmark: monoline lowercase on the shared grid (stroke 4.2, bowl r 7.5); p from Clipee, k and e from Backee; trailing "ee" in brand cyan. For light backgrounds. -->
+  <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#0F172A"><path d="M2.10 30.25 V57.50"/><circle cx="9.60" cy="37.75" r="7.5"/><path d="M24.5 37.75 H39.5 A7.5 7.5 0 1 0 37.31 43.05"/><path d="M46.9 37.75 H61.9 A7.5 7.5 0 1 0 59.71 43.05"/><path d="M70.70 18 V45.25"/><path d="M80.70 30.25 L70.70 39.75"/><path d="M74.90 35.75 L81.20 45.25"/></g>
+    <g stroke="#06B6D4"><path d="M90 37.75 H105 A7.5 7.5 0 1 0 102.81 43.05"/><path d="M112.4 37.75 H127.4 A7.5 7.5 0 1 0 125.21 43.05"/></g>
+  </g>
+</svg>
