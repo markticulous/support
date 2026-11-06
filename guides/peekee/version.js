@@ -1,1 +1,1 @@
-window.PEEKEE_VERSION = '0.1.0';
+window.PEEKEE_VERSION = '0.1.1';
