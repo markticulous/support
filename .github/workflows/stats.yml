@@ -24,7 +24,8 @@ jobs:
           out="{"
           sep=""
           for repo in Clipee Backee Peekee deskside-radio; do
-            v=$(gh api "repos/markticulous/$repo/traffic/views" -q .uniques 2>/dev/null || echo null)
+            if v=$(gh api "repos/markticulous/$repo/traffic/views" -q .uniques 2>err.txt) && [[ "$v" =~ ^[0-9]+$ ]]; then :; else
+              echo "::warning::$repo traffic not read: $(head -c 200 err.txt) $v"; v=null; fi
             key=$(echo "$repo" | tr '[:upper:]' '[:lower:]')
             out="$out$sep\"$key\":{\"visitors\":$v}"
             sep=","
