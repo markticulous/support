@@ -1,0 +1,41 @@
+# Writes stats.json once a day: unique visitors to each app's GitHub repo over the last 14 days.
+# The hub shows it only when opened with ?n (a private view for the maker). Repo traffic needs a token:
+# the HUB_STATS_TOKEN secret is a fine-grained token with read-only "Administration" on the app repos.
+name: Hub stats
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read repo traffic
+        env:
+          GH_TOKEN: ${{ secrets.HUB_STATS_TOKEN }}
+        run: |
+          set -euo pipefail
+          out="{"
+          sep=""
+          for repo in Clipee Backee Peekee deskside-radio; do
+            v=$(gh api "repos/markticulous/$repo/traffic/views" -q .uniques 2>/dev/null || echo null)
+            key=$(echo "$repo" | tr '[:upper:]' '[:lower:]')
+            out="$out$sep\"$key\":{\"visitors\":$v}"
+            sep=","
+          done
+          out="$out,\"updated\":\"$(date -u +%Y-%m-%d)\"}"
+          echo "$out" | jq . > stats.json
+          cat stats.json
+      - name: Commit when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats.json
+          git diff --cached --quiet || git commit -m "chore(stats): daily repo visitors"
+          git push

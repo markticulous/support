@@ -120,6 +120,9 @@
   .row { display: flex; flex-wrap: wrap; gap: 8px; }
   .row.pair { display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; } /* the two main buttons share one width */
   .row.pair .btn { justify-content: center; gap: 6px; }
+  /* Maker stats, shown only when the page is opened with ?n (see the script): downloads, updates and repo visitors, dim, to the right of the second button. Outside the button, so the layout never moves. */
+  .btn.has-stats { position: relative; overflow: visible; }
+  .dl-stats { position: absolute; left: 100%; top: 50%; translate: 16px -50%; font-size: 12px; font-weight: 400; color: var(--text4); opacity: .8; font-variant-numeric: tabular-nums; pointer-events: none; white-space: nowrap; }
   .row.links { gap: 6px 18px; align-items: center; }
   .lnk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); text-decoration: none; }
   .lnk:hover { color: var(--accent); text-decoration: underline; }
@@ -658,6 +661,36 @@
         show(rel.tag_name);
       })
       .catch(() => {});
+  }
+
+  // Maker stats to the right of each app's second button, only when the page is opened with ?n (a private view; ordinary visits fetch nothing).
+  // dl: installer and portable downloads, all versions. upd: update packages fetched (existing installs updating).
+  // vis: unique visitors to the GitHub repo in the last 14 days, from stats.json, which a daily workflow writes (traffic needs a token).
+  if (new URLSearchParams(location.search).has('n')) {
+    const stats = fetch('stats.json?' + Date.now()).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+    for (const dl of document.querySelectorAll('a.btn.accent[href*="github.com/markticulous/"][href$="/releases/latest"]')) {
+      const repo = dl.getAttribute('href').split('github.com/')[1].replace('/releases/latest', '');
+      const second = dl.parentElement.lastElementChild;
+      if (!second || second === dl) continue;
+      const releases = fetch('https://api.github.com/repos/' + repo + '/releases?per_page=100').then((r) => (r.ok ? r.json() : null)).catch(() => null);
+      Promise.all([releases, stats]).then(([rels, st]) => {
+        const parts = [];
+        if (Array.isArray(rels)) {
+          let n = 0, u = 0;
+          for (const rel of rels) for (const a of rel.assets || []) {
+            if (/\.nupkg$/i.test(a.name)) u += a.download_count || 0;
+            else if (!/^RELEASES$|^releases\..*\.json$|user-guide|-module-/i.test(a.name)) n += a.download_count || 0;
+          }
+          parts.push(n.toLocaleString() + ' dl', u.toLocaleString() + ' upd');
+        }
+        const v = st && st[repo.split('/')[1].toLowerCase()];
+        if (v && typeof v.visitors === 'number') parts.push(v.visitors.toLocaleString() + ' vis');
+        if (!parts.length) return;
+        const tag = document.createElement('span');
+        tag.className = 'dl-stats'; tag.textContent = parts.join(' · ');
+        second.classList.add('has-stats'); second.append(tag);
+      });
+    }
   }
 
   // Back to top: shows after 400px, holds 24px above the footer, jumps under reduced motion.
