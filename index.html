@@ -88,7 +88,7 @@
   /* The buttons and their small print fade out faster than the text above them (on top of the hero's own fade). */
   .hero > .cta, .hero > .fine { opacity: max(0, calc(1 - var(--hf, 0) * 2.5)); }
   h1 { font: 500 clamp(2.4rem, 7vw, 4.4rem)/1.02 var(--display); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 24px; text-wrap: balance; }
-  h1::after { content: ""; display: block; width: 72px; height: 2px; background: var(--cyan); margin-top: 24px; transform-origin: left; animation: draw .7s cubic-bezier(.6, 0, .2, 1) .35s both; }
+  h1::after { content: ""; display: block; width: 185px; height: 2px; background: var(--cyan); margin-top: 24px; transform-origin: left; animation: draw .85s cubic-bezier(.6, 0, .2, 1) .69s both; } /* as wide as the Ko-fi button; starts as the second .why block finishes rising in (240ms delay + 450ms) */
   .lede { font-size: 1.12rem; color: rgba(248, 250, 252, .8); margin: 0 0 28px; max-width: 56ch; }
   /* The design philosophy, under the lede: an eyebrow, one short paragraph, three points. */
   .why { margin: 0 0 32px; padding-left: 18px; border-left: 2px solid rgba(6, 182, 212, .5); }
@@ -98,9 +98,18 @@
   .why-points li { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: rgba(248, 250, 252, .7); }
   .why-points b { color: var(--band-text); font-weight: 600; font-size: 15px; }
   @media (max-width: 640px) { .why-points { grid-template-columns: 1fr; } }
+  /* On load, the text slides out from behind the cyan line: the block clips at its padding edge, right beside the line. */
+  .why { overflow: clip; --wd: 250ms; }
+  .why + .why { --wd: 550ms; }
+  .why-eyebrow, .why-lede, .why-points li { animation: emerge .6s cubic-bezier(.2, .8, .2, 1) backwards; }
+  .why-eyebrow { animation-delay: var(--wd); }
+  .why-lede { animation-delay: calc(var(--wd) + 80ms); }
+  .why-points li:nth-child(1) { animation-delay: calc(var(--wd) + 160ms); }
+  .why-points li:nth-child(2) { animation-delay: calc(var(--wd) + 220ms); }
+  .why-points li:nth-child(3) { animation-delay: calc(var(--wd) + 280ms); }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
   .kofi { display: inline-flex; min-height: 40px; align-items: center; transform: translateY(-2px); } /* Ko-fi's own button sits a touch low beside ours */
-  .fine { margin: 16px 0 0; color: rgba(248, 250, 252, .30); font-size: 13px; }
+  .fine { margin: 16px 0 0; color: rgba(248, 250, 252, .30); font-size: 12px; }
 
   /* Staggered rise on load */
   .hero > * { animation: rise .45s cubic-bezier(.1, .9, .2, 1) backwards; } /* backwards, not both: once it ends, the scroll fade owns opacity */
@@ -247,7 +256,7 @@
   #supporters ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   #supporters li { padding: 5px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--stroke); font-size: 14px; }
 
-  .compliance { margin: 40px 0 0; color: var(--text4); font-size: 12px; line-height: 1.5; opacity: .85; text-align: justify; hyphens: auto; }
+  .compliance { margin: 40px 0 0; color: #a2a2a2; font-size: 12px; line-height: 1.5; text-align: justify; hyphens: auto; }
   .compliance a { color: inherit; text-decoration: underline; }
   footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
   /* The maker plate: Rams variant, the one the apps wear. It is never altered. */
@@ -269,11 +278,12 @@
   #top svg { width: 16px; height: 16px; }
 
   @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes emerge { from { opacity: 0; transform: translateX(-48px); } to { opacity: 1; transform: none; } }
   @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
   @keyframes drift-a { from { translate: 0 0; } to { translate: -140px -60px; } }
   @keyframes drift-b { from { translate: 0 0; } to { translate: 160px 70px; } }
   @media (prefers-reduced-motion: reduce) {
-    .hero > *, h1::after, .apps .card, .band::before, .band::after { animation: none; }
+    .hero > *, h1::after, .why-eyebrow, .why-lede, .why-points li, .apps .card, .band::before, .band::after { animation: none; }
     .apps .card:hover { transform: none; }
     .dock { transition: none; }
     html { scroll-behavior: auto; } #top { transition: none; transform: none; }
@@ -309,14 +319,14 @@
 
     <div class="hero">
       <h1>Free apps, made meticulously.</h1>
-      <p class="lede">Every app here is free, with no ads, no tracking and no catch. I spend a long time on the small details. If one of them earns a place on your computer, you can chip in.</p>
+      <p class="lede">I built every app here for myself first, and I still use each one every day, so I find the rough edges before you do. They are free, with no ads, no tracking and no catch. If one earns a place on your computer, you can chip in.</p>
       <div class="why">
         <p class="why-eyebrow">Small but mighty</p>
         <p class="why-lede">Most utilities grow until they get in the way: a service that never stops running, an account to sign in to, a subscription for the one feature you came for. Markticulous apps go the other way. Each one does its job properly, then gets out of your way.</p>
         <ul class="why-points">
-          <li><b>Small</b><span>Light installs, little memory, quick to open. Nothing runs in the background unless it has to.</span></li>
-          <li><b>Mighty</b><span>Small does not mean basic. Each app goes the extra mile where the usual tools stop.</span></li>
-          <li><b>Meticulous</b><span>Every word, button and tooltip is considered. A button that cannot act is greyed out, and nothing nags you.</span></li>
+          <li><b>Small</b><span>Light installs, respectful of memory, quick to open. Nothing runs in the background unless it has to.</span></li>
+          <li><b>Mighty</b><span>Small does not mean ordinary. Each app goes the extra mile where the usual tools stop.</span></li>
+          <li><b>Meticulous</b><span>Every detail is considered. Everything works the way you expect, and in clever ways you might not expect.</span></li>
         </ul>
       </div>
       <div class="why">
@@ -541,7 +551,7 @@
             </picture>
           </h3>
         </div>
-        <p class="pitch">Quick Look for Windows: select a file, press Space, and see it.</p>
+        <p class="pitch">Peek into files as you work: select a file, press Space, and have a peek.</p>
         <ul class="feats">
           <li data-scrub>Works in Explorer, on the Desktop and inside Open and Save dialogs, where other previewers stop.</li>
           <li data-scrub>The preview never takes the keyboard. The arrow keys move through the folder, and the preview follows.</li>
@@ -635,7 +645,7 @@
 </main>
 
 <div class="wrap">
-  <p class="compliance">This page is in compliance with GitHub&rsquo;s Terms of Service. It is a static page, which is what GitHub Pages is intended to host (<a href="https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#github-pages" rel="noopener">Additional Products and Features, GitHub Pages</a>). The Support link goes to Ko-fi, a voluntary donation page: GitHub Pages allows &ldquo;donation buttons and crowdfunding links&rdquo; (same section), nothing is sold here, and nothing is locked behind a donation. The page is mainly about the free apps it lists, not advertising (<a href="https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies#10-advertising-on-github" rel="noopener">Acceptable Use Policies, section 10</a>). The pictures of the apps are the maker&rsquo;s own. The linked Clipee overview video is hosted on this site as one 16 MB file, with no third-party player and no tracking. Pages has no rule against video and publishes sites up to 1 GB with a soft bandwidth limit of 100 GB a month, far above this use (<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits" rel="noopener">GitHub Pages limits</a>; <a href="https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies#9-excessive-bandwidth-use" rel="noopener">Acceptable Use Policies, section 9</a>). Links to the apps&rsquo; GitHub release pages and the video are plain links, with no automated or bulk activity. Checked 29 October 2026.</p>
+  <p class="compliance">This page complies with GitHub&rsquo;s Terms of Service. It is a static page, which GitHub Pages is meant to host (<a href="https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#github-pages" rel="noopener">Additional Products and Features, GitHub Pages</a>). The Ko-fi button leads to a voluntary donation page, which Pages allows (&ldquo;donation buttons and crowdfunding links&rdquo;, same section); nothing is sold or locked behind a donation, and Ko-fi&rsquo;s script is the only one loaded from another site. The page is mainly about the free apps, not advertising (<a href="https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies#10-advertising-on-github" rel="noopener">Acceptable Use Policies, section 10</a>), and its pictures are the maker&rsquo;s own. The whole site, including the 16 MB Clipee video (no third-party player, no tracking), is about 27 MB, far below the Pages limits of 1 GB and 100 GB a month (<a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits" rel="noopener">GitHub Pages limits</a>; <a href="https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies#9-excessive-bandwidth-use" rel="noopener">Acceptable Use Policies, section 9</a>). Links are plain, with no automated or bulk activity; version numbers come from GitHub&rsquo;s public API, once per app per visit. Checked 7 November 2026 against GitHub&rsquo;s current terms.</p>
 
   <footer id="foot">
     <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
