@@ -82,18 +82,27 @@
   .hero { padding-block: 56px 0; max-width: 760px; opacity: max(0, calc(1 - var(--bp, 0) * 1.5)); }
   .hero > h1 { translate: 0 calc(var(--bp, 0) * 110px); }
   .hero > .lede { translate: 0 calc(var(--bp, 0) * 170px); }
+  .hero > .why { translate: 0 calc(var(--bp, 0) * 200px); }
   .hero > .cta { translate: 0 calc(var(--bp, 0) * 230px); }
   .hero > .fine { translate: 0 calc(var(--bp, 0) * 270px); }
   h1 { font: 500 clamp(2.4rem, 7vw, 4.4rem)/1.02 var(--display); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 24px; text-wrap: balance; }
   h1::after { content: ""; display: block; width: 72px; height: 2px; background: var(--cyan); margin-top: 24px; transform-origin: left; animation: draw .7s cubic-bezier(.6, 0, .2, 1) .35s both; }
   .lede { font-size: 1.12rem; color: rgba(248, 250, 252, .8); margin: 0 0 28px; max-width: 56ch; }
+  /* The design philosophy, under the lede: an eyebrow, one short paragraph, three points. */
+  .why { margin: 0 0 32px; padding-left: 18px; border-left: 2px solid rgba(6, 182, 212, .5); }
+  .why-eyebrow { margin: 0 0 6px; font: 500 15px/1.2 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); }
+  .why-lede { margin: 0 0 16px; color: rgba(248, 250, 252, .78); max-width: 60ch; }
+  .why-points { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 24px; }
+  .why-points li { display: flex; flex-direction: column; gap: 4px; font-size: 14px; color: rgba(248, 250, 252, .7); }
+  .why-points b { color: var(--band-text); font-weight: 600; font-size: 15px; }
+  @media (max-width: 640px) { .why-points { grid-template-columns: 1fr; } }
   .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
   .kofi { display: inline-flex; min-height: 40px; align-items: center; transform: translateY(-2px); } /* Ko-fi's own button sits a touch low beside ours */
-  .fine { margin: 16px 0 0; color: rgba(248, 250, 252, .6); font-size: 13px; }
+  .fine { margin: 16px 0 0; color: rgba(248, 250, 252, .30); font-size: 13px; }
 
   /* Staggered rise on load */
   .hero > * { animation: rise .45s cubic-bezier(.1, .9, .2, 1) both; }
-  .hero > :nth-child(2) { animation-delay: 80ms; } .hero > :nth-child(3) { animation-delay: 160ms; } .hero > :nth-child(4) { animation-delay: 240ms; }
+  .hero > :nth-child(2) { animation-delay: 80ms; } .hero > :nth-child(3) { animation-delay: 160ms; } .hero > :nth-child(4) { animation-delay: 240ms; } .hero > :nth-child(5) { animation-delay: 320ms; } .hero > :nth-child(6) { animation-delay: 400ms; }
 
   /* InfoBar (shown when someone arrives from an app) */
   .info { display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 8px 0 0; border-radius: 4px; background: rgba(248, 250, 252, .08); border: 1px solid rgba(6, 182, 212, .4); font-size: 14px; }
@@ -299,6 +308,24 @@
     <div class="hero">
       <h1>Free apps, made meticulously.</h1>
       <p class="lede">Every app here is free, with no ads, no tracking and no catch. I spend a long time on the small details. If one of them earns a place on your computer, you can chip in.</p>
+      <div class="why">
+        <p class="why-eyebrow">Small but mighty</p>
+        <p class="why-lede">Most utilities grow until they get in the way: a service that never stops running, an account to sign in to, a subscription for the one feature you came for. Markticulous apps go the other way. Each one does its job properly, then gets out of your way.</p>
+        <ul class="why-points">
+          <li><b>Small</b><span>Light installs, little memory, quick to open. Nothing runs in the background unless it has to.</span></li>
+          <li><b>Mighty</b><span>Small does not mean basic. Each app goes the extra mile where the usual tools stop.</span></li>
+          <li><b>Meticulous</b><span>Every word, button and tooltip is considered. A button that cannot act is greyed out, and nothing nags you.</span></li>
+        </ul>
+      </div>
+      <div class="why">
+        <p class="why-eyebrow">Worth a coffee?</p>
+        <p class="why-lede">Many extra hours go into what you never notice: the bug you never run into, the update that simply works. Your support pays for that effort.</p>
+        <ul class="why-points">
+          <li><b>Keeps it free</b><span>Every feature, for everyone, with no ads, no tracking and no paywall.</span></li>
+          <li><b>Funds what is next</b><span>New apps, plus the fixes and features you ask for.</span></li>
+          <li><b>No pressure</b><span>Any amount, any time, or not at all. It's up to you.</span></li>
+        </ul>
+      </div>
       <div class="cta">
         <span class="kofi">
           <script src="https://storage.ko-fi.com/cdn/widget/Widget_2.js"></script>
