@@ -441,8 +441,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </figure>
       <p>Each row is one thing you copied. It shows:</p>
       <ul>
-        <li><strong>A type icon</strong> and a coloured stripe on the left: text, rich text, image, colour, link, code, file path and so on.</li>
-        <li><strong>A preview</strong> of the clip. Colours show a swatch; images show a thumbnail.</li>
+        <li><strong>A type icon</strong> and a <span data-sp="colored">coloured</span> stripe on the left: text, rich text, image, <span data-sp="color">colour</span>, link, code, file path and so on.</li>
+        <li><strong>A preview</strong> of the clip. <span data-sp="colors">Colours</span> show a swatch; images show a thumbnail.</li>
         <li><strong>The app it came from</strong> and <strong>how long ago</strong> you copied it.</li>
         <li><strong>A number from 1 to 9</strong> on the first nine rows. Press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+ that number to paste it straight away (see <a href="#pasting">Pasting</a>).</li>
       </ul>
@@ -459,7 +459,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dt><kbd>Enter</kbd> or double-click</dt>
         <dd>Pastes the selected clip into the window you were using, with its formatting.</dd>
         <dt><kbd>Shift</kbd>+<kbd>Enter</kbd></dt>
-        <dd>Pastes as plain text: no fonts, colours or links. Handy when moving text from a web page into an email.</dd>
+        <dd>Pastes as plain text: no fonts, <span data-sp="colors">colours</span> or links. Handy when moving text from a web page into an email.</dd>
         <dt><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd> &hellip; <kbd>9</kbd></dt>
         <dd>Quick paste. Pastes your 1st to 9th newest clip without opening the popup at all. While the popup is open, it pastes the row with that number.</dd>
       </dl>
@@ -490,13 +490,13 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </figure>
       <p>Just start typing when the popup opens. The list narrows with every letter, and the match can be anywhere in the clip, not only at the start.</p>
       <h3>Filter chips</h3>
-      <p>The row of chips under the search box shows one kind of clip at a time: <strong>Pinned</strong>, <strong>Text</strong>, <strong>Rich</strong> (formatted text), <strong>Images</strong>, <strong>Colours</strong>, <strong>Links</strong>, <strong>Code</strong> or <strong>Snippets</strong>. <strong>All</strong> shows everything.</p>
+      <p>The row of chips under the search box shows one kind of clip at a time: <strong>Pinned</strong>, <strong>Text</strong>, <strong>Rich</strong> (formatted text), <strong>Images</strong>, <strong><span data-sp="colors">Colours</span></strong>, <strong>Links</strong>, <strong>Code</strong> or <strong>Snippets</strong>. <strong>All</strong> shows everything.</p>
       <h3>Typed filters</h3>
       <p>You can also type a filter into the search box, alone or together with words:</p>
       <table class="ref">
         <thead><tr><th>Type this</th><th>To see</th></tr></thead>
         <tbody>
-          <tr><td><code>type:link</code></td><td>One kind of clip. Also <code>colour</code>, <code>email</code>, <code>path</code>, <code>code</code>, <code>number</code>, <code>text</code>, <code>rich</code> and <code>image</code>.</td></tr>
+          <tr><td><code>type:link</code></td><td>One kind of clip. Also <code><span data-sp="color">colour</span></code>, <code>email</code>, <code>path</code>, <code>code</code>, <code>number</code>, <code>text</code>, <code>rich</code> and <code>image</code>.</td></tr>
           <tr><td><code>app:excel</code></td><td>Clips copied from one app.</td></tr>
           <tr><td><code>is:pinned</code></td><td>Only pinned clips.</td></tr>
           <tr><td><code>is:today</code></td><td>Only today&rsquo;s clips.</td></tr>
@@ -514,7 +514,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         </picture>
         <figcaption>Right-click any clip for more. The choices change with the kind of clip.</figcaption>
       </figure>
-      <p>The menu comes in groups divided by thin lines: the ways to paste first, then anything special to that kind of clip (colours, links and file paths), and <strong>Pin</strong>, <strong>Delete</strong> and <strong>Ignore copies from&hellip;</strong> always at the bottom.</p>
+      <p>The menu comes in groups divided by thin lines: the ways to paste first, then anything special to that kind of clip (<span data-sp="colors">colours</span>, links and file paths), and <strong>Pin</strong>, <strong>Delete</strong> and <strong>Ignore copies from&hellip;</strong> always at the bottom.</p>
       <dl class="defs">
         <dt>Paste as &#9656;</dt>
         <dd>Changes text on the way in: <strong>UPPERCASE</strong>, <strong>lowercase</strong>, <strong>Title Case</strong>, <strong>Trim spaces</strong>, <strong>Join lines</strong>, <strong>Pretty JSON</strong>, <strong>URL decode</strong> and <strong>URL encode</strong>. The changed text is pasted; your saved clip stays as it was.</dd>
@@ -579,7 +579,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h3>Fill-ins</h3>
       <p>When a snippet has fill-ins, Clipee asks for them before pasting. Press <kbd>Enter</kbd> to paste, or <kbd>Esc</kbd> to cancel without pasting anything. A label used twice is asked once.</p>
       <h3>Snippet shortcuts</h3>
-      <p>Give a snippet its own shortcut and it pastes straight into the app you are using, without opening Clipee. In the snippet editor, click <strong>Shortcut</strong> and press the keys you want, such as <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd> or <kbd>Win</kbd> in it. Clipee&rsquo;s own shortcuts, and ones another snippet already uses, are refused with a short reason. Press <strong>Clear</strong> to remove a shortcut. Under <strong>When pressed</strong>, choose <strong>Paste it</strong> to paste the snippet, or <strong>Copy it to the clipboard</strong> to only copy it, ready for you to paste with <kbd>Ctrl</kbd>+<kbd>V</kbd>; Settings &rarr; Snippets shows &ldquo;copies&rdquo; next to those shortcuts. If another app takes a shortcut, Settings &rarr; Snippets marks it &ldquo;unavailable&rdquo; so you can pick a new one.</p>
+      <p>Give a snippet its own shortcut and it pastes straight into the app you are using, without opening Clipee. In the snippet editor, click <strong>Shortcut</strong> and press the keys you want, such as <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd>. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd> or <kbd>Win</kbd> in it. Clipee&rsquo;s own shortcuts, and ones another snippet already uses, are refused with a short reason. If another Markticulous app already uses the shortcut, a caution line under the box says so, and you can still keep it. Press <strong>Clear</strong> to remove a shortcut. Under <strong>When pressed</strong>, choose <strong>Paste it</strong> to paste the snippet, or <strong>Copy it to the clipboard</strong> to only copy it, ready for you to paste with <kbd>Ctrl</kbd>+<kbd>V</kbd>; Settings &rarr; Snippets shows &ldquo;copies&rdquo; next to those shortcuts. If another app takes a shortcut, Settings &rarr; Snippets marks it &ldquo;unavailable&rdquo; so you can pick a new one.</p>
     </section>
 
     <section id="settings">
@@ -595,7 +595,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h3>General</h3>
       <dl class="defs">
         <dt>Open Clipee shortcut</dt>
-        <dd>Click the box and press the keys you want instead of <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>. Clipee warns you if another app already uses them. <strong>Show all shortcuts&hellip;</strong> below it lists every Clipee shortcut, your snippet shortcuts included (see <a href="#keys">Keyboard shortcuts</a>).</dd>
+        <dd>Click the box and press the keys you want instead of <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd>. Clipee warns you if another app already uses them. If another Markticulous app, such as Peekee, already uses the keys, a caution line under the box says which app and what it uses them for; you can still keep your choice. <strong>Show all shortcuts&hellip;</strong> below it lists every Clipee shortcut, your snippet shortcuts included (see <a href="#keys">Keyboard shortcuts</a>).</dd>
         <dt>Quick paste</dt>
         <dd>Turns <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>1</kbd>&ndash;<kbd>9</kbd> on or off. If another app already uses one of those keys, a &#9888; line here says which; the other numbers still work. Clipee also tells you once by the clock, and again only if that changes.</dd>
         <dt>Paste mode</dt>
@@ -646,7 +646,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <figcaption><strong>Preview</strong>. One line per clip, with the selected clip shown in full in a panel at the bottom, headed with its type, app, age and length.</figcaption>
         </figure>
       </div>
-      <p><strong>Show details on hover</strong> turns the detail tooltip on or off: resting the pointer on a clip, in any layout, shows the whole clip with its type, app, time and length. <strong>Type stripes</strong> turns the coloured stripe on the left of each row on or off. Compact never shows them. <strong>Month and year section dividers</strong> turns the headings that group the list (This month, Sep 2026, 2025) on or off; off gives one plain list, with only Pinned keeping its heading.</p>
+      <p><strong>Show details on hover</strong> turns the detail tooltip on or off: resting the pointer on a clip, in any layout, shows the whole clip with its type, app, time and length. <strong>Type stripes</strong> turns the <span data-sp="colored">coloured</span> stripe on the left of each row on or off. Compact never shows them. <strong>Month and year section dividers</strong> turns the headings that group the list (This month, Sep 2026, 2025) on or off; off gives one plain list, with only Pinned keeping its heading.</p>
       <h3>Sounds</h3>
       <figure class="window">
         <picture>
@@ -812,6 +812,20 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
   </svg>
 </button>
 
+<script>
+/* Regional spelling (brand bible rule 17). Clipee opens this page with ?region=CA, UK or US; the words
+   marked data-sp are swapped to that region's spelling. With no region (or no script) the text stays as written. */
+(function () {
+  var m = /[?&]region=(CA|UK|US)/i.exec(location.search);
+  if (!m || m[1].toUpperCase() !== 'US') return; /* the page is written in the UK and Canada spelling */
+  var us = { color: 'color', colors: 'colors', colored: 'colored' };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sp]'), function (el) {
+    var w = us[el.getAttribute('data-sp')];
+    if (!w) return;
+    el.textContent = /^[A-Z]/.test(el.textContent) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  });
+})();
+</script>
 <script src="version.js"></script>
 <script>
 /* The version chip. The app build writes version.js beside this page (it is committed, so the
