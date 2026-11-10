@@ -732,11 +732,13 @@
     }
   }
 
-  // Back to top: shows after 400px, holds 24px above the footer, jumps under reduced motion.
+  // Back to top: shows once the band's text has faded out (HERO_FADE, the same distance as --hf below),
+  // holds 24px above the footer, jumps under reduced motion.
+  const HERO_FADE = 820;
   const toTop = document.getElementById('top'), foot = document.getElementById('foot');
   const quiet = matchMedia('(prefers-reduced-motion: reduce)');
   function placeTop() {
-    toTop.classList.toggle('show', scrollY > 400);
+    toTop.classList.toggle('show', scrollY >= HERO_FADE);
     const overlap = innerHeight - foot.getBoundingClientRect().top;
     toTop.style.bottom = (overlap > 0 ? overlap + 24 : 24) + 'px';
   }
@@ -757,7 +759,7 @@
       ticking = false;
       const y = scrollY, vh = innerHeight;
       band.style.setProperty('--bp', Math.min(1, y / 520).toFixed(3));
-      band.style.setProperty('--hf', Math.min(1, y / 820).toFixed(3)); // the hero's fade, slower than --bp because the hero is tall
+      band.style.setProperty('--hf', Math.min(1, y / HERO_FADE).toFixed(3)); // the hero's fade, slower than --bp because the hero is tall
       for (const el of scrubs) {
         const top = el.getBoundingClientRect().top;
         const span = el.classList.contains('card') ? vh * .3 : vh * .55;
