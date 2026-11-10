@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
   <!-- Peekee logo (Z8, 2026-11-04): the Backee wordmark b flipped top to bottom into a p, its bowl a lens (glint arc upper left, pupil glancing right). Ring and stem stroke 6.4; glint 5.6; pupil dot 10.36. Bowl r 15 at 34,30; stem x 19 from the bowl top, running out of the tile's bottom edge and clipped by the tile. 32 px and up. -->
-  <defs><linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172554"/><stop offset="1" stop-color="#06B6D4"/></linearGradient><clipPath id="t"><rect x="4" y="4" width="56" height="56" rx="14"/></clipPath></defs>
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#tile)"/>
+  <defs><linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172554"/><stop offset="1" stop-color="#06B6D4"/></linearGradient><clipPath id="t"><path d="M7,4 H48 A12,12 0 0 1 60,16 V57 A3,3 0 0 1 57,60 H16 A12,12 0 0 1 4,48 V7 A3,3 0 0 1 7,4 Z"/></clipPath></defs>
+  <path d="M7,4 H48 A12,12 0 0 1 60,16 V57 A3,3 0 0 1 57,60 H16 A12,12 0 0 1 4,48 V7 A3,3 0 0 1 7,4 Z" fill="url(#tile)"/>
   <g clip-path="url(#t)"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"><path d="M19 15 V68" stroke-width="6.4"/><circle cx="34" cy="30" r="15" stroke-width="6.4"/><path d="M26.48 28.67 A7.64 7.64 0 0 1 32.41 22.53" stroke-width="5.6"/><path d="M36.05 31.09 h0" stroke-width="10.36"/></g></g>
 </svg>
