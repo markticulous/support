@@ -176,6 +176,8 @@
   .apps .card .row { align-self: end; align-items: baseline; margin-top: 2px; }
   .app-head { display: flex; align-items: center; gap: 14px; }
   .app-head > img { width: 56px; height: 56px; border-radius: 12px; flex: none; display: block; }
+  .app-head .seal { margin-left: auto; flex: none; display: block; line-height: 0; }
+  .app-head .seal img { width: 72px; height: 72px; display: block; }
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
   .app-head h3 { margin: 0; font-weight: 400; line-height: 1; }
   .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
@@ -324,8 +326,8 @@
         <p class="why-eyebrow">Modest and mighty</p>
         <p class="why-lede">Most utilities grow until they get in the way: a service that never stops running, an account to sign in to, a subscription for the one feature you came for. Markticulous apps go the other way. Each one does its job properly, then gets out of your way.</p>
         <ul class="why-points">
-          <li><b>Small</b><span>Light installs, respectful of memory, quick to open. Nothing runs in the background unless it has to.</span></li>
-          <li><b>Mighty</b><span>Small does not mean ordinary. Each app goes the extra mile where the usual tools stop.</span></li>
+          <li><b>Modest</b><span>Light installs, respectful of memory, quick to open. Nothing runs in the background unless it has to.</span></li>
+          <li><b>Mighty</b><span>Modest does not mean ordinary. Each app goes the extra mile where the usual tools stop.</span></li>
           <li><b>Meticulous</b><span>Every detail is considered. Everything works the way you expect, and in clever ways you might not expect.</span></li>
         </ul>
       </div>
@@ -472,6 +474,10 @@
               <img class="wm wm-clipee" src="assets/clipee-wordmark-light.svg" alt="Clipee" height="33">
             </picture>
           </h3>
+          <picture class="seal" title="Modest and Mighty: measured on every release">
+            <source srcset="assets/modest-and-mighty-small-dark.png" media="(prefers-color-scheme: dark)">
+            <img src="assets/modest-and-mighty-small-light.png" alt="Modest and Mighty, a Markticulous standard" width="72" height="72">
+          </picture>
         </div>
         <p class="pitch">A fast, private clipboard manager. Everything you copy, found again in a keystroke.</p>
         <ul class="feats">
