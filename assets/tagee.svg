@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="Tagee">
-  <rect width="32" height="32" rx="8" fill="#c2410c"/>
+  <path d="M2,0 H24 A8,8 0 0 1 32,8 V30 A2,2 0 0 1 30,32 H8 A8,8 0 0 1 0,24 V2 A2,2 0 0 1 2,0 Z" fill="#c2410c"/>
   <g transform="translate(16 16) scale(1.2) translate(-16.5 -17)">
     <path d="M11 8h9l4 4v12a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2z" fill="#faf6ee"/>
     <circle cx="14.3" cy="13" r="2" fill="#c2410c"/>

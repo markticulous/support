@@ -175,7 +175,7 @@
   .apps .card { grid-template-rows: auto 1fr auto; align-content: stretch; gap: 12px; padding-block: 18px; }
   .apps .card .row { align-self: end; align-items: baseline; margin-top: 2px; }
   .app-head { display: flex; align-items: center; gap: 14px; }
-  .app-head > img { width: 56px; height: 56px; border-radius: 12px; flex: none; display: block; }
+  .app-head > img { width: 56px; height: 56px; flex: none; display: block; } /* no CSS rounding: each icon draws its own plate shape */
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
   .app-head h3 { margin: 0; font-weight: 400; line-height: 1; }
   .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
