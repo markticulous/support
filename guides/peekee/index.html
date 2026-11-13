@@ -382,7 +382,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
   <span class="byline">
     <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
   </span>
-  <span class="ver" id="verChip">beta</span>
+  <span class="ver" id="verChip"></span>
   <span class="find">
     <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
            placeholder="Search the guide…" aria-label="Search the guide"
@@ -668,10 +668,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 <script src="version.js"></script>
 <script>
 /* The version chip. The app build writes version.js beside this page (it is committed, so the
-   source copy shows it too); if it is missing, the chip stays "beta". */
+   source copy shows it too); if it is missing, the chip stays empty. */
 (function () {
   var v = window.PEEKEE_VERSION;
-  if (v) document.getElementById('verChip').textContent = 'v' + v + ' beta';
+  if (v) document.getElementById('verChip').textContent = 'v' + v + (v.indexOf('0.') === 0 ? ' beta' : '');
 })();
 </script>
 
