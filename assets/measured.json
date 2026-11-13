@@ -121,8 +121,8 @@
     {
       "id": "backee",
       "name": "Backee",
-      "version": "1.0.0",
-      "measuredUtc": "2026-11-13T04:05:25Z",
+      "version": "1.0.1",
+      "measuredUtc": "2026-11-13T22:57:43Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
@@ -134,37 +134,37 @@
         },
         {
           "row": "R1",
-          "value": "UI 0 ms (runs: 0, 0, 8); service 0 ms (runs: 0, 0, 0)",
+          "value": "UI 0 ms (runs: 0, 0, 0); service 0 ms (runs: 0, 0, 0)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "UI 43.6 MB (runs: 60.3, 43.4, 43.6); service 44.6 MB (runs: 44.9, 37.6, 44.6)",
+          "value": "UI 43.8 MB (runs: 44.4, 43.8, 43.5); service 41.9 MB (runs: 41.8, 48.7, 41.9)",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "119.7 ms (visible 113.6 ms) (runs: 119.7, 167, 116)",
+          "value": "124.2 ms (visible 121.6 ms) (runs: 131.2, 120.5, 124.2)",
           "target": "150 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "17.9 ms (visible 16.8 ms)",
+          "value": "26.95 ms (visible 18.75 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "74.4 MB (at rest before the opens 43.2 MB, diff 31.2 MB)",
+          "value": "74 MB (at rest before the opens 59.2 MB, diff 14.8 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "0.2 MB (runs: -1.9, 0.2, 3.9)",
+          "value": "1.9 MB (runs: 0.4, 1.9, 2.3)",
           "target": "2 MB or less",
           "pass": true
         }
