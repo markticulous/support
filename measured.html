@@ -79,6 +79,7 @@
   h1 { font: 500 clamp(2.4rem, 7vw, 4.4rem)/1.02 var(--display); letter-spacing: .04em; text-transform: uppercase; margin: 40px 0 24px; text-wrap: balance; }
   h1::after { content: ""; display: block; width: 185px; height: 2px; background: var(--cyan); margin-top: 24px; }
   .lede { margin: 0 0 12px; max-width: 62ch; color: rgba(248, 250, 252, .78); font-size: 1.08rem; text-wrap: pretty; }
+  .lede strong { font-weight: 600; }
   @keyframes drift-a { from { translate: 0 0; } to { translate: -140px -60px; } }
   @keyframes drift-b { from { translate: 0 0; } to { translate: 160px 70px; } }
 
@@ -104,6 +105,7 @@
   .pass.ok { color: var(--ok); }
   .pass.bad { color: var(--bad); }
   .back { margin: 16px 0 0; font-size: 14px; }
+  .hub-back { margin: 0 0 24px; font-size: 14px; }
   .cap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   #status { color: var(--text2); }
   .note { color: var(--text3); font-size: 13px; margin: 0 0 24px; max-width: 70ch; }
@@ -130,12 +132,13 @@
       </nav>
     </header>
     <h1>Measured</h1>
-    <p class="lede">Modest and Mighty is a Markticulous promise that an app stays out of your PC&rsquo;s way: small to install, quiet while it waits, quick when you call it, and tidy when you are done. An app wears the seal only when every row of its bench run is within the limit.</p>
+    <p class="lede"><strong>Modest and Mighty</strong> is a Markticulous promise that an app stays out of your PC&rsquo;s way: small to install, quiet while it waits, quick when you call it, and tidy when you are done. An app wears the seal only when every row of its bench run is within the limit.</p>
     <p class="lede">Every number below comes from the app&rsquo;s own bench run, on the release and the PC named in its section. Nothing here is estimated.</p>
   </div>
 </div>
 
 <main class="wrap">
+  <p class="hub-back"><a href="./#apps">&larr; Back to Apps Hub</a></p>
   <p id="status" role="status">Loading the figures&hellip;</p>
   <div id="apps"></div>
   <p class="note">Memory is counted as reserved memory, the amount the app has asked Windows for, because a trim cannot flatter that figure. A row that failed stays on this page, marked as failed.</p>
