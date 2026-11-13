@@ -178,7 +178,7 @@
       table.append(el('caption', 'What ' + app.name + ' was measured on, the result, and the limit.', 'cap'));
       const hr = el('tr');
       for (const t of ['What was measured', 'Result', 'Limit', 'Mark']) { const th = el('th', t); th.scope = 'col'; hr.append(th); }
-      table.append(el('thead')).append(hr);
+      const thead = el('thead'); thead.append(hr); table.append(thead);
       const tb = el('tbody');
       for (const r of app.rows) {
         const tr = el('tr');
