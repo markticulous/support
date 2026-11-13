@@ -102,6 +102,7 @@
   .cap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
   #status { color: var(--text2); }
   .note { color: var(--text3); font-size: 13px; margin: 0 0 24px; max-width: 70ch; }
+  .rownote { display: block; margin-top: 4px; color: var(--text3); font-size: 12px; font-weight: 400; line-height: 1.4; max-width: 46ch; }
   footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
   /* The maker plate: Rams variant, the one the apps wear. It is never altered. */
   .plate {
@@ -183,6 +184,7 @@
       for (const r of app.rows) {
         const tr = el('tr');
         const name = el('th', NAMES[r.row] || r.row); name.scope = 'row';
+        if (app.rowNotes && app.rowNotes[r.row]) name.append(el('span', app.rowNotes[r.row], 'rownote'));
         tr.append(name, el('td', r.value, 'val'), el('td', r.target));
         const td = el('td'); td.append(el('span', r.pass ? '✓ Pass' : '✗ Fail', 'pass ' + (r.pass ? 'ok' : 'bad')));
         tr.append(td); tb.append(tr);

@@ -56,7 +56,8 @@
           "target": "2 MB or less",
           "pass": true
         }
-      ]
+      ],
+      "rowNotes": {}
     },
     {
       "id": "peekee",
@@ -114,7 +115,8 @@
           "target": "2 MB or less",
           "pass": false
         }
-      ]
+      ],
+      "rowNotes": {}
     },
     {
       "id": "backee",
@@ -166,7 +168,10 @@
           "target": "2 MB or less",
           "pass": true
         }
-      ]
+      ],
+      "rowNotes": {
+        "S1": "Backee's own files. The installer also carries the .NET runtime Backee needs, so that it and its recovery USB work on a PC with nothing else installed; with it, the installed folder is 157 MB."
+      }
     }
   ]
 }
