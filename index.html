@@ -248,7 +248,7 @@
   }
 
   /* The dock: a compact glass bar that slides down once the panel has scrolled away. */
-  .dock { position: fixed; top: 10px; left: 50%; z-index: 20; width: min(980px, 100% - 24px); translate: -50% 0;
+  .dock { position: fixed; top: 10px; left: 50%; z-index: 20; width: min(1040px, 100% - 32px); /* same as .profile, the widest section */ translate: -50% 0;
     display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 12px; color: var(--band-text);
     background: rgba(11, 20, 48, .74); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
     border: 1px solid rgba(255, 255, 255, .09); border-radius: 16px; box-shadow: 0 12px 32px -12px rgba(11, 20, 48, .5);
