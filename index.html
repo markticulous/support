@@ -23,7 +23,7 @@
     --tagee-ee: #c2410c;
     --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
     --card-index: rgba(255, 255, 255, .94);
-    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --band-text: #f8fafc;
+    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --seal-hover: #3fd0e4; --band-text: #f8fafc;
     --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
     --display: "Oswald", "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif;
   }
@@ -37,7 +37,7 @@
       --tagee-ee: #ee6a2c;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
       --card-index: rgba(32, 35, 38, .94);
-      --cyan-ink: #22d3ee;
+      --cyan-ink: #22d3ee; --seal-hover: #8aeaf5;
       color-scheme: dark;
     }
   }
@@ -176,6 +176,15 @@
   .apps .card .row { align-self: end; align-items: baseline; margin-top: 2px; }
   .app-head { display: flex; align-items: center; gap: 14px; }
   .app-head > img { width: 56px; height: 56px; flex: none; display: block; } /* no CSS rounding: each icon draws its own plate shape */
+  .app-head { flex-wrap: wrap; }
+  .app-head .seal { margin-left: auto; flex: none; display: block; line-height: 0; position: relative; width: 72px; height: 72px; border-radius: 4px; transition: translate .14s ease-out; }
+  .app-head .seal img { width: 72px; height: 72px; display: block; transition: none; }
+  /* The seal is a link. On hover or keyboard focus the whole seal turns light aqua (its PNG, used as a mask over --seal-hover) and lifts 3px. */
+  .app-head .seal::after { content: ""; position: absolute; inset: 0; background: var(--seal-hover); -webkit-mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; opacity: 0; transition: opacity .14s ease-out; pointer-events: none; }
+  .app-head .seal:hover, .app-head .seal:focus-visible { translate: 0 -3px; text-decoration: none; }
+  .app-head .seal:hover::after, .app-head .seal:focus-visible::after { opacity: 1; }
+  .app-head .seal:hover img, .app-head .seal:focus-visible img { opacity: 0; transition: opacity 0s .14s; } /* the original steps out only once the aqua copy is fully in, so no dark fringe shows */
+  .app-head .bench { flex: 0 0 100%; margin: 10px 0 0; font-size: 14px; color: var(--text2); }
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
   .app-head h3 { margin: 0; font-weight: 400; line-height: 1; }
   .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
@@ -245,12 +254,12 @@
   .dock :focus-visible { outline-color: var(--cyan); }
 
   /* ---- The deal: three facts in one frame ---- */
-  .deal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--stroke); border-radius: 8px; background: var(--surface); overflow: hidden; }
-  .deal > div { padding: 22px 24px; }
+  .deal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; align-items: stretch; border: 1px solid var(--stroke); border-radius: 8px; background: var(--surface); overflow: hidden; }
+  .deal > div { padding: 22px 24px; display: flex; flex-direction: column; height: 100%; }
   .deal > div + div { border-left: 1px solid var(--stroke); }
   .deal b { display: block; font: 500 13px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-ink); margin-bottom: 10px; }
   .deal span { color: var(--text2); font-size: 14px; }
-  @media (max-width: 720px) { .deal { grid-template-columns: minmax(0, 1fr); } .deal > div + div { border-left: 0; border-top: 1px solid var(--stroke); } }
+  @media (max-width: 560px) { .deal { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; } .deal > div + div { border-left: 0; border-top: 1px solid var(--stroke); } }
 
   #supporters { display: none; }
   #supporters ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -286,6 +295,7 @@
     .hero > *, h1::after, .why-eyebrow, .why-lede, .why-points li, .apps .card, .band::before, .band::after { animation: none; }
     .apps .card:hover { transform: none; }
     .dock { transition: none; }
+    .app-head .seal:hover, .app-head .seal:focus-visible { translate: none; }
     html { scroll-behavior: auto; } #top { transition: none; transform: none; }
   }
 </style>
@@ -472,6 +482,15 @@
               <img class="wm wm-clipee" src="assets/clipee-wordmark-light.svg" alt="Clipee" height="33">
             </picture>
           </h3>
+          <!-- seal:clipee -->
+          <a class="seal" href="measured.html#clipee" aria-label="Modest and Mighty: see the measurements for Clipee" title="Modest and Mighty: measured on every release">
+            <picture>
+              <source srcset="assets/modest-and-mighty-small-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="assets/modest-and-mighty-small-light.png" alt="" width="72" height="72">
+            </picture>
+          </a>
+          <p class="bench">Modest and mighty: about 6 MB installed, almost no processor time while it waits, and your clips on screen in under a tenth of a second.</p>
+          <!-- /seal:clipee -->
         </div>
         <p class="pitch">A fast, private clipboard manager. Everything you copy, found again in a keystroke.</p>
         <ul class="feats">
@@ -510,6 +529,15 @@
               <img class="wm wm-backee" src="assets/backee-wordmark-light.svg" alt="Backee" height="24">
             </picture>
           </h3>
+          <!-- seal:backee -->
+          <a class="seal" href="measured.html#backee" aria-label="Modest and Mighty: see the measurements for Backee" title="Modest and Mighty: measured on every release">
+            <picture>
+              <source srcset="assets/modest-and-mighty-small-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="assets/modest-and-mighty-small-light.png" alt="" width="72" height="72">
+            </picture>
+          </a>
+          <p class="bench">Modest and mighty: about 10 MB installed, no processor time while it waits, its window open in about an eighth of a second the first time and a blink after that, about 43 MB of memory reserved at rest for the app and for its service, and no growth after 20 opens.</p>
+          <!-- /seal:backee -->
         </div>
         <p class="pitch">Fast, private backup for Windows. Set it up once and it looks after your files.</p>
         <ul class="feats">
@@ -550,6 +578,15 @@
               <img class="wm wm-peekee" src="assets/peekee-wordmark-light.svg" alt="Peekee" height="24">
             </picture>
           </h3>
+          <!-- seal:peekee -->
+          <a class="seal" href="measured.html#peekee" aria-label="Modest and Mighty: see the measurements for Peekee" title="Modest and Mighty: measured on every release">
+            <picture>
+              <source srcset="assets/modest-and-mighty-small-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="assets/modest-and-mighty-small-light.png" alt="" width="72" height="72">
+            </picture>
+          </a>
+          <p class="bench">Modest and mighty: 3.4 MB installed, about 20 MB of memory at rest, and a preview on screen in under a tenth of a second.</p>
+          <!-- /seal:peekee -->
         </div>
         <p class="pitch">Peek into files as you work: select a file, press Space, and have a peek.</p>
         <ul class="feats">
@@ -557,7 +594,7 @@
           <li data-scrub>The preview never takes the keyboard. The arrow keys move through the folder, and the preview follows.</li>
           <li data-scrub>Images, Photoshop and Illustrator files, text and code, CSV, JSON, Markdown, SVG, fonts, folders, the text of WordPerfect documents, and archives from zip to RAR, 7z, ISO and LHA.</li>
           <li data-scrub>PDF and Office files through the previewers already on the PC, with Windows itself drawing PDFs when none is there.</li>
-          <li data-scrub>Light on your PC: 3.4 MB installed, about 30 MB of memory at rest, and a preview window that appears in milliseconds. Nothing runs until you press Space, and each preview is unloaded from memory the moment it closes.</li>
+          <li data-scrub>Nothing runs until you press Space, and each preview is unloaded from memory the moment it closes.</li>
         </ul>
         <div class="row pair">
           <a class="btn accent" href="https://github.com/markticulous/Peekee/releases/latest" rel="noopener">Download</a>
