@@ -101,6 +101,7 @@
   thead th { font: 500 12px/1.3 var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--cyan-ink); border-top: 0; }
   tbody th { font-weight: 400; }
   td.val { font-variant-numeric: tabular-nums; }
+  td.lim { white-space: nowrap; } /* the limit never wraps; the Result column takes up the difference */
   .pass { font-weight: 600; white-space: nowrap; }
   .pass.ok { color: var(--ok); }
   .pass.bad { color: var(--bad); }
@@ -125,9 +126,9 @@
 <div class="band">
   <div class="wrap">
     <header class="bar">
-      <a class="brand" href="./" aria-label="Markticulous, back to the hub"><img src="assets/markticulous.jpg" alt="" width="64" height="64"><span class="brand-plate">Markticulous</span></a>
+      <a class="brand" href="/" aria-label="Markticulous, back to the hub"><img src="assets/markticulous.jpg" alt="" width="64" height="64"><span class="brand-plate">Markticulous</span></a>
       <nav class="nav" aria-label="Page">
-        <a href="./#apps">Apps</a>
+        <a href="/#apps">Apps</a>
         <a href="https://github.com/markticulous" rel="noopener">GitHub</a>
       </nav>
     </header>
@@ -138,7 +139,7 @@
 </div>
 
 <main class="wrap">
-  <p class="hub-back"><a href="./#apps">&larr; Back to Apps Hub</a></p>
+  <p class="hub-back"><a id="hub-back" href="/">&larr; Back to Apps Hub</a></p>
   <p id="status" role="status">Loading the figures&hellip;</p>
   <div id="apps"></div>
   <p class="note">Memory is counted as reserved memory, the amount the app has asked Windows for, because a trim cannot flatter that figure. A row that failed stays on this page, marked as failed.</p>
@@ -164,6 +165,8 @@
     G2: 'Memory reserved after you have used it',
     G3: 'Memory growth after opening it 20 times'
   };
+  // Seals link to measured.html#<app>, so arriving with a hash means the Apps section; the hub's Modest and Mighty link has none, so it goes back to the top.
+  if (location.hash) document.getElementById('hub-back').href = '/#apps';
   const status = document.getElementById('status'), host = document.getElementById('apps');
   const el = (tag, text, cls) => { const e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; };
 
@@ -201,7 +204,7 @@
         const tr = el('tr');
         const name = el('th', NAMES[r.row] || r.row); name.scope = 'row';
         if (app.rowNotes && app.rowNotes[r.row]) name.append(el('span', app.rowNotes[r.row], 'rownote'));
-        tr.append(name, el('td', r.value, 'val'), el('td', r.target));
+        tr.append(name, el('td', r.value, 'val'), el('td', r.target, 'lim'));
         const td = el('td'); td.append(el('span', r.pass ? '✓ Pass' : '✗ Fail', 'pass ' + (r.pass ? 'ok' : 'bad')));
         tr.append(td); tb.append(tr);
       }
