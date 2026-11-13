@@ -23,7 +23,7 @@
     --tagee-ee: #c2410c;
     --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
     --card-index: rgba(255, 255, 255, .94);
-    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --seal-hover: #3fd0e4; --band-text: #f8fafc;
+    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --seal-hover: var(--cyan); --band-text: #f8fafc;
     --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
     --display: "Oswald", "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif;
   }
@@ -37,7 +37,7 @@
       --tagee-ee: #ee6a2c;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
       --card-index: rgba(32, 35, 38, .94);
-      --cyan-ink: #22d3ee; --seal-hover: #8aeaf5;
+      --cyan-ink: #22d3ee;
       color-scheme: dark;
     }
   }
@@ -179,7 +179,7 @@
   .app-head { flex-wrap: wrap; }
   .app-head .seal { margin-left: auto; flex: none; display: block; line-height: 0; position: relative; width: 72px; height: 72px; border-radius: 4px; transition: translate .14s ease-out; }
   .app-head .seal img { width: 72px; height: 72px; display: block; transition: none; }
-  /* The seal is a link. On hover or keyboard focus the whole seal turns light aqua (its PNG, used as a mask over --seal-hover) and lifts 3px. */
+  /* The seal is a link. On hover or keyboard focus the whole seal turns the brand Cyan (its PNG, used as a mask over --seal-hover) and lifts 3px. */
   .app-head .seal::after { content: ""; position: absolute; inset: 0; background: var(--seal-hover); -webkit-mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; opacity: 0; transition: opacity .14s ease-out; pointer-events: none; }
   .app-head .seal:hover, .app-head .seal:focus-visible { translate: 0 -3px; text-decoration: none; }
   .app-head .seal:hover::after, .app-head .seal:focus-visible::after { opacity: 1; }
@@ -274,6 +274,7 @@
     padding: 4.25px 6px 2.25px 6.75px; font: 500 9.5px/1 "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--plate-ink);
   }
   .plate .dim { opacity: .75; }
+  footer .legal { display: flex; flex-wrap: wrap; gap: 4px 16px; } footer .legal a { color: inherit; text-decoration: none; } footer .legal a:hover { text-decoration: underline; }
 
   /* Back to top (brand bible rule 14): a 40px circle, 24px from the edges, that never enters the footer. */
   #top {
@@ -507,6 +508,9 @@
         <div class="row links">
           <a class="lnk" href="clipee-overview.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M5 3.2v9.6L13 8z" fill="currentColor"/></svg>Overview</a>
           <a class="lnk" href="https://github.com/markticulous/Clipee/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
+          <span class="dot" aria-hidden="true">&middot;</span>
+          <a class="lnk" href="clipee-privacy.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6V4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Privacy policy</a>
+          <a class="lnk" href="site-terms.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.5v11 M5 13.5h6 M3 5h10 M3 5l-1.5 4h3z M13 5l-1.5 4h3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Terms</a>
         </div>
       </div>
       <figure data-scrub class="shot window tall">
@@ -602,6 +606,9 @@
         </div>
         <div class="row links">
           <a class="lnk" href="https://github.com/markticulous/Peekee/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
+          <span class="dot" aria-hidden="true">&middot;</span>
+          <a class="lnk" href="peekee-privacy.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6V4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Privacy policy</a>
+          <a class="lnk" href="site-terms.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.5v11 M5 13.5h6 M3 5h10 M3 5l-1.5 4h3z M13 5l-1.5 4h3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Terms</a>
         </div>
       </div>
       <figure data-scrub class="shot window wide">
@@ -687,6 +694,7 @@
   <footer id="foot">
     <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
     <span>&copy; <span data-year>2026</span> Markticulous</span>
+    <span class="legal"><a href="site-privacy.html">Privacy Policy</a><a href="site-terms.html">Terms of Use</a></span>
   </footer>
 </div>
 

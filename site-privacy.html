@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Privacy Policy</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<meta name="description" content="How the Markticulous website handles visitor information: no cookies, no analytics, and the few outside services the home page contacts.">
+<style>
+  /* Same Windows Fluent look as the Support Markticulous page (index.html): light and dark follow the system. */
+  :root {
+    --bg: #f3f3f3; --surface: rgba(255, 255, 255, .78); --stroke: rgba(0, 0, 0, .07);
+    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a; --accent: #0067c0;
+    --info-bg: #e6f0fa; --info-stroke: rgba(0, 103, 192, .22);
+    --plate-line: #c4c1b8; --plate-ink: #42403b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1f1f1f; --surface: rgba(255, 255, 255, .045); --stroke: rgba(255, 255, 255, .08);
+      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d; --accent: #60cdff;
+      --info-bg: rgba(96, 205, 255, .1); --info-stroke: rgba(96, 205, 255, .28);
+      --plate-line: #4b4944; --plate-ink: #d2cfc6;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 15px/1.6 var(--font); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .wrap { width: min(760px, 100% - 32px); margin-inline: auto; }
+  .bar { display: flex; align-items: center; gap: 12px; padding-block: 18px; }
+  .bar > img { width: 40px; height: 40px; display: block; }
+  .bar a { display: block; line-height: 0; }
+  .bar .wm { height: 24px; width: auto; display: block; } /* the drawn wordmark beside the icon, as on the hub cards */
+  h1 { font: 600 clamp(1.8rem, 5vw, 2.5rem)/1.15 var(--font-display); letter-spacing: -.02em; margin: 32px 0 8px; }
+  .updated { color: var(--text3); font-size: 13px; margin: 0 0 24px; }
+  .card { padding: 20px 24px; border-radius: 8px; background: var(--surface); border: 1px solid var(--stroke); box-shadow: var(--shadow); margin-bottom: 16px; }
+  .short { background: var(--info-bg); border: 1px solid var(--info-stroke); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .short p { margin: 0; font-size: 1.02rem; }
+  h2 { font: 600 1.15rem/1.3 var(--font-display); margin: 0 0 10px; }
+  p, ul { margin: 0 0 10px; }
+  p:last-child, ul:last-child { margin-bottom: 0; }
+  li { margin-bottom: 6px; }
+  code { font: 13px/1.4 "Cascadia Mono", Consolas, monospace; }
+  footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
+  footer nav { display: flex; gap: 16px; }
+  .plate {
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; border: 1px solid var(--plate-line); border-radius: 1px 6px 1px 6px;
+    padding: 4.25px 6px 2.25px 6.75px; font: 500 9.5px/1 "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--plate-ink);
+  }
+  .plate .dim { opacity: .75; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <img src="assets/favicon.png" alt=""><a href="./" style="font:600 20px/1 var(--font-display);color:var(--text)">Markticulous</a>
+  </header>
+
+  <main>
+    <h1>Website Privacy Policy</h1>
+    <p class="updated">Last updated: November 13, 2026</p>
+
+    <div class="short">
+      <p><strong>In short:</strong> This website has no accounts, no ads, no analytics and no cookies of its own. When you open the home page, your browser also asks GitHub for the current version numbers and asks Ko-fi for the donation button. Those companies see your address when that happens. We do not collect anything about you.</p>
+    </div>
+
+    <div class="card">
+      <h2>Who runs this website</h2>
+      <p>This website is run by one person under the name Markticulous. In this policy, "we" means Markticulous. It is the home page for our free apps. This policy covers the website only. Each Windows app has its own privacy policy.</p>
+    </div>
+
+    <div class="card">
+      <h2>What we collect</h2>
+      <p>Nothing. The pages have no sign-up, no forms, no analytics script and no advertising. We do not keep a log of who visits. We do not know who you are or which pages you read.</p>
+      <p>The one thing we can see is a count of how many people visited each app's page on GitHub, described below under "Visitor counts". It is a total, not a list of people.</p>
+    </div>
+
+    <div class="card">
+      <h2>Where the website is hosted</h2>
+      <p>The website is hosted by GitHub Pages, a service of GitHub, Inc. When you open a page, GitHub receives your IP address and the usual details a browser sends, such as the page you asked for and the type of browser. GitHub may keep these in its own logs, under its own privacy statement: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub General Privacy Statement</a>. We do not receive those logs.</p>
+    </div>
+
+    <div class="card">
+      <h2>Other sites your browser contacts</h2>
+      <p>These are every request the home page makes to another address. Everything else on our pages, including the fonts, pictures, the Clipee overview video and the User Guides, is served from this website itself.</p>
+      <ul>
+        <li><strong>GitHub, for version numbers.</strong> Next to each live app, the home page shows its current version. To get it, your browser asks <code>api.github.com</code> for the latest release of that app, once per app (Clipee, Backee, Peekee and Deskside Radio). Your browser keeps the answer for the rest of that visit in its session storage, so it does not ask again until you close the tab. GitHub sees your IP address, as with any request.</li>
+        <li><strong>Ko-fi, for the donation button.</strong> The "Support me on Ko-fi" button is drawn by a script that your browser loads from <code>storage.ko-fi.com</code>. That script and its pictures come from Ko-fi. The script also asks Google (<code>fonts.googleapis.com</code>) for a font stylesheet. Ko-fi and Google therefore see your IP address when the home page loads, before you click anything. They handle that under their own policies: <a href="https://more.ko-fi.com/privacy">Ko-fi</a> and <a href="https://policies.google.com/privacy">Google</a>. If your browser does not run scripts, the page shows a plain link instead and makes none of these requests.</li>
+        <li><strong>Links you click.</strong> The download buttons, the Ko-fi link and the other links on a page go to GitHub, Ko-fi or other sites only when you click them. After that you are on their site, under their rules.</li>
+      </ul>
+      <p>We do not use a cookie or tracking service to follow you from one of these sites to another.</p>
+    </div>
+
+    <div class="card">
+      <h2>Cookies and stored data</h2>
+      <p>Our pages do not set any cookies and do not use local storage. The only thing they keep in your browser is the version numbers described above, in session storage, which your browser clears when you close the tab.</p>
+      <p>The sites listed above, GitHub, Ko-fi and Google, may set their own cookies or store data in your browser under their own policies. We do not control that.</p>
+    </div>
+
+    <div class="card">
+      <h2>Thank you list</h2>
+      <p>The home page can show a list of supporters who chose to be named. The names are kept in a file on this website (<code>supporters.json</code>) and are read from there when the page opens. Each name is added by hand, only for a supporter who chose to be listed on Ko-fi. The list holds names only: no emails, amounts or messages. If you are on it and want to be removed, write to us and we will remove you.</p>
+    </div>
+
+    <div class="card">
+      <h2>Visitor counts</h2>
+      <p>Once a day, an automatic job on GitHub asks GitHub for the number of unique visitors to each app's page on GitHub over the last 14 days, and saves those four numbers in a file on this website (<code>stats.json</code>). These are totals about the apps' GitHub pages, not about this website, and they hold no names, addresses or other personal data. GitHub collects the underlying figures itself.</p>
+      <p>The home page shows these numbers, together with the download counts GitHub publishes, only when it is opened with <code>?n</code> added to the address. That view is meant for us. The file is part of the public website, so anyone can read the same totals.</p>
+    </div>
+
+    <div class="card">
+      <h2>Google site verification</h2>
+      <p>The website contains one small file, <code>googled89d387025f2d5b4.html</code>, with a single line of text. It lets Google confirm that we own the site. It collects nothing from visitors.</p>
+    </div>
+
+    <div class="card">
+      <h2>The supporter check</h2>
+      <p>This website does not use it. Some of our Windows apps can check whether you supported us on Ko-fi, only when you type your email and click Check. What is sent and kept is described in each app's privacy policy.</p>
+    </div>
+
+    <div class="card">
+      <h2>If you email us</h2>
+      <p>If you write to the address below, we receive your email address and what you send, and we use them only to reply. We do not add you to any list.</p>
+    </div>
+
+    <div class="card">
+      <h2>Children</h2>
+      <p>This website is not aimed at children, and since it collects nothing, it collects nothing from children either.</p>
+    </div>
+
+    <div class="card">
+      <h2>Changes and contact</h2>
+      <p>If this policy changes, the new version will be posted on this page with a new date at the top.</p>
+      <p>Questions: <a class="mail" data-m="moc.liamg|suolucitkram">markticulous [at] gmail [dot] com</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
+    <nav><a href="site-privacy.html">Privacy</a><a href="site-terms.html">Terms</a></nav>
+    <span>&copy; <span data-year>2026</span> Markticulous</span>
+  </footer>
+</div>
+<script>document.querySelectorAll("[data-year]").forEach(function (e) { e.textContent = new Date().getFullYear(); });</script>
+<script>
+/* The address is written in reversed parts and put together here, so crawlers that read the HTML do not find it (Mark, 2026-10-27). Without JavaScript the "[at] [dot]" text still shows it to people. */
+document.querySelectorAll("a.mail[data-m]").forEach(function (a) {
+  var p = a.getAttribute("data-m").split("|").map(function (s) { return s.split("").reverse().join(""); });
+  var addr = p[1] + String.fromCharCode(64) + p[0];
+  a.href = "mailto:" + addr; a.textContent = addr;
+});
+</script>
+</body>
+</html>

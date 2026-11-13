@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clipee Privacy Policy</title>
+<link rel="icon" type="image/svg+xml" href="assets/clipee-v1.svg">
+<meta name="description" content="Clipee keeps your clipboard history on your PC, encrypted. It collects nothing about you.">
+<style>
+  /* Same Windows Fluent look as the Support Markticulous page (index.html): light and dark follow the system. */
+  :root {
+    --bg: #f3f3f3; --surface: rgba(255, 255, 255, .78); --stroke: rgba(0, 0, 0, .07);
+    --text: #1a1a1a; --text2: #5c5c5c; --text3: #7a7a7a; --accent: #0067c0;
+    --info-bg: #e6f0fa; --info-stroke: rgba(0, 103, 192, .22);
+    --plate-line: #c4c1b8; --plate-ink: #42403b;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
+    --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+    --font-display: "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1f1f1f; --surface: rgba(255, 255, 255, .045); --stroke: rgba(255, 255, 255, .08);
+      --text: #ffffff; --text2: #c8c8c8; --text3: #9d9d9d; --accent: #60cdff;
+      --info-bg: rgba(96, 205, 255, .1); --info-stroke: rgba(96, 205, 255, .28);
+      --plate-line: #4b4944; --plate-ink: #d2cfc6;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 15px/1.6 var(--font); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+  .wrap { width: min(760px, 100% - 32px); margin-inline: auto; }
+  .bar { display: flex; align-items: center; gap: 12px; padding-block: 18px; }
+  .bar > img { width: 40px; height: 40px; display: block; }
+  .bar a { display: block; line-height: 0; }
+  .bar .wm { height: 24px; width: auto; display: block; } /* the drawn wordmark beside the icon, as on the hub cards */
+  h1 { font: 600 clamp(1.8rem, 5vw, 2.5rem)/1.15 var(--font-display); letter-spacing: -.02em; margin: 32px 0 8px; }
+  .updated { color: var(--text3); font-size: 13px; margin: 0 0 24px; }
+  .card { padding: 20px 24px; border-radius: 8px; background: var(--surface); border: 1px solid var(--stroke); box-shadow: var(--shadow); margin-bottom: 16px; }
+  .short { background: var(--info-bg); border: 1px solid var(--info-stroke); border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+  .short p { margin: 0; font-size: 1.02rem; }
+  h2 { font: 600 1.15rem/1.3 var(--font-display); margin: 0 0 10px; }
+  p, ul { margin: 0 0 10px; }
+  p:last-child, ul:last-child { margin-bottom: 0; }
+  li { margin-bottom: 6px; }
+  code { font: 13px/1.4 "Cascadia Mono", Consolas, monospace; }
+  footer { padding-block: 32px 48px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; color: var(--text3); font-size: 13px; }
+  footer nav { display: flex; gap: 16px; }
+  .plate {
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; border: 1px solid var(--plate-line); border-radius: 1px 6px 1px 6px;
+    padding: 4.25px 6px 2.25px 6.75px; font: 500 9.5px/1 "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--plate-ink);
+  }
+  .plate .dim { opacity: .75; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="bar">
+    <img src="assets/clipee-v1.svg" alt=""><a href="./?app=clipee"><picture><source srcset="assets/clipee-wordmark-dark.svg" media="(prefers-color-scheme: dark)"><img class="wm" src="assets/clipee-wordmark-light.svg" alt="Clipee"></picture></a>
+  </header>
+
+  <main>
+    <h1>Clipee Privacy Policy</h1>
+    <p class="updated">Last updated: November 13, 2026</p>
+
+    <div class="short">
+      <p><strong>In short:</strong> Clipee collects nothing about you. It has no accounts, no analytics, no crash reports and no ads. Your clipboard history stays on your PC, in an encrypted file. The only things Clipee ever sends over the internet are a check for new versions of Clipee and, if you ask for it, the supporter check.</p>
+    </div>
+
+    <div class="card">
+      <h2>Who makes Clipee</h2>
+      <p>Clipee is a free clipboard manager for Windows, made by one person under the name Markticulous. In this policy, "we" means Markticulous.</p>
+    </div>
+
+    <div class="card">
+      <h2>What we collect</h2>
+      <p>Nothing. Clipee does not send us your clipboard history, your snippets, your settings, your usage or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the two described below: the update check, and the supporter check, which runs only if you click Check.</p>
+    </div>
+
+    <div class="card">
+      <h2>What Clipee keeps on your PC</h2>
+      <p>Clipee watches the Windows clipboard and saves what you copy, so that you can find and paste it again. By default that is everything you copy, except the items listed under "What Clipee does not save". For each item it keeps:</p>
+      <ul>
+        <li>the text, or the picture (and a small preview of it), and any formatting that came with it (rich text or HTML);</li>
+        <li>the name of the program you copied it from, such as <code>chrome</code>;</li>
+        <li>when you copied and last used it, and whether you pinned it.</li>
+      </ul>
+      <p>Your snippets, the text shortcuts you write yourself, are kept in the same place. If you choose to read the text in a picture (OCR), the text it finds is copied to your clipboard and then saved as a new item like any other copy.</p>
+      <p>Everything lives in the folder <code>%AppData%\Clipee</code>:</p>
+      <ul>
+        <li><code>clipee.db</code>, your history and snippets;</li>
+        <li><code>key.bin</code>, the key that unlocks the history, protected by Windows (DPAPI) so that it can be read only by your Windows account;</li>
+        <li><code>settings.json</code>, your settings, such as your shortcut keys, the apps you told Clipee to ignore and the backup folder. It is a plain file and is not encrypted;</li>
+        <li><code>error.log</code>, technical details of any problem Clipee ran into, kept on your PC and never sent anywhere. It is replaced by a fresh file once it grows past 1 MB;</li>
+        <li>your own sound files, if you picked custom sounds, and the backup password (<code>backup.key</code>), also protected by Windows.</li>
+      </ul>
+      <p>Clipee also writes the shortcut keys it uses to a small shared file in <code>%LocalAppData%\Markticulous</code>, which the Markticulous apps read so that they can warn you when two of them want the same keys.</p>
+    </div>
+
+    <div class="card">
+      <h2>How the history is protected</h2>
+      <p>The history file is encrypted with a random key that Clipee makes on your PC the first time it runs (SQLite3 Multiple Ciphers, in the SQLCipher 4 format). That key is stored protected by Windows for your account. This keeps the history unreadable if someone copies the file to another PC or account. It does not hide it from programs that are already running as you on your PC, because those can ask Windows for the same key.</p>
+    </div>
+
+    <div class="card">
+      <h2>What Clipee does not save</h2>
+      <ul>
+        <li><strong>Copies marked private.</strong> Most password managers mark what they copy as private. Clipee skips those. This is on by default and is a switch in Settings, under Privacy.</li>
+        <li><strong>Things that look like keys and tokens.</strong> Clipee skips text that looks like an API key, an access token or a private key. This is on by default and is a switch in Settings, under Privacy. It works by pattern, so it can miss some.</li>
+        <li><strong>Apps you ignore.</strong> In Settings, under Privacy, you choose programs whose copies are never saved.</li>
+        <li><strong>Everything, while paused.</strong> You can pause capture at any time.</li>
+        <li><strong>Very large copies.</strong> Text over about 4 million characters and pictures over about 10 MB are not kept.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>How long it is kept, and how to delete it</h2>
+      <ul>
+        <li><strong>Automatic clean-up.</strong> Unpinned items older than the number of days you set (30 by default, from 1 to 365) are deleted, and so are the oldest ones beyond the number of items you set (1,000 by default, from 100 to 5,000). This runs when Clipee starts and every six hours. Items you pinned are never removed by the clean-up.</li>
+        <li><strong>Delete one item.</strong> You can delete any single item from the popup.</li>
+        <li><strong>Delete history.</strong> Settings, under History, has a Delete history button. It deletes the unpinned items, or the pinned ones too if you choose, and then compacts the file so that the deleted text is not left behind inside it. Your snippets are not deleted by this.</li>
+        <li><strong>Remove everything.</strong> Close Clipee and delete the folder <code>%AppData%\Clipee</code>. Uninstalling Clipee may leave that folder in place.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Backups</h2>
+      <p>Backups are off until you turn them on. When on, Clipee saves a copy of your history and settings as a <code>.clipeebak</code> file, encrypted with a backup password that you choose, in the folder you pick (by default <code>Documents\Clipee Backups</code>). If that folder is inside a folder that another program syncs, such as OneDrive, that program will copy the backup file too. Clipee itself never uploads it. If you lose the backup password, the backup cannot be opened.</p>
+    </div>
+
+    <div class="card">
+      <h2>Reading text in pictures (OCR)</h2>
+      <p>When you ask Clipee to read the text in a picture, it uses the text recognition built into Windows, on your PC. The picture is not sent to us or to anyone else.</p>
+    </div>
+
+    <div class="card">
+      <h2>Update checks</h2>
+      <p>If you installed Clipee with its installer, it checks for a newer version by contacting GitHub, at <code>github.com/markticulous/Clipee</code>, where the updates are published. It checks about 30 seconds after Clipee starts and then at most once every 24 hours. The "Update automatically" switch in Settings turns this off, and the Check now button still works when you press it. If a newer version is found, Clipee downloads it from GitHub and installs it when you restart.</p>
+      <p>The check is a normal web request made by the Velopack update library, so GitHub sees your IP address, as with any visit to a web page. Clipee adds nothing about you, your clipboard or your settings to it. GitHub handles that under its own privacy statement.</p>
+    </div>
+
+    <div class="card">
+      <h2>Other connections</h2>
+      <p>Apart from the update check and the supporter check below, Clipee makes no network connections. It opens a web page, such as the User Guide, Ko-fi or a web address you copied, only when you click a link or choose to open it, and then your browser loads it as usual. A copied address is opened only if it is a plain web address.</p>
+    </div>
+
+    <div class="card">
+      <h2>Supporter check</h2>
+      <p>If you have supported Markticulous on Ko-fi, you can tell Clipee so by typing the email you used there and clicking Check. Clipee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your clipboard, and it does not keep the email you typed. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
+      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
+    </div>
+
+    <div class="card">
+      <h2>Children</h2>
+      <p>Clipee is not aimed at children, and since it collects nothing, it collects nothing from children either.</p>
+    </div>
+
+    <div class="card">
+      <h2>Changes and contact</h2>
+      <p>If this policy changes, the new version will be posted on this page with a new date at the top. The <a href="site-terms.html">Terms of Use</a> apply to Clipee.</p>
+      <p>Questions: <a class="mail" data-m="moc.liamg|suolucitkram">markticulous [at] gmail [dot] com</a>.</p>
+    </div>
+  </main>
+
+  <footer>
+    <span class="plate" aria-label="A Markticulous Build"><span class="dim">A</span><span>MARKTICULOUS</span><span class="dim">BUILD</span></span>
+    <nav><a href="clipee-privacy.html">Privacy</a><a href="site-terms.html">Terms</a></nav>
+    <span>&copy; <span data-year>2026</span> Markticulous</span>
+  </footer>
+</div>
+<script>document.querySelectorAll("[data-year]").forEach(function (e) { e.textContent = new Date().getFullYear(); });</script>
+<script>
+/* The address is written in reversed parts and put together here, so crawlers that read the HTML do not find it (Mark, 2026-10-27). Without JavaScript the "[at] [dot]" text still shows it to people. */
+document.querySelectorAll("a.mail[data-m]").forEach(function (a) {
+  var p = a.getAttribute("data-m").split("|").map(function (s) { return s.split("").reverse().join(""); });
+  var addr = p[1] + String.fromCharCode(64) + p[0];
+  a.href = "mailto:" + addr; a.textContent = addr;
+});
+</script>
+</body>
+</html>
