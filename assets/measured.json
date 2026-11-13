@@ -3,56 +3,56 @@
     {
       "id": "clipee",
       "name": "Clipee",
-      "version": "1.1.0",
-      "measuredUtc": "2026-11-11T12:55:47Z",
+      "version": "1.2.0",
+      "measuredUtc": "2026-11-13T05:17:13Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "6.22 MB",
+          "value": "4.91 MB",
           "target": "10 MB or less",
           "pass": true
         },
         {
           "row": "R1",
-          "value": "8 ms (runs: 8, 0, 8)",
+          "value": "0 ms (runs: 8, 0, 0)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "56.8 MB",
+          "value": "55.8 MB",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "84.3 ms (visible 60.8 ms) (runs: 84.3, 63, 84.9)",
+          "value": "80 ms (visible 58 ms) (runs: 80.4, 80, 80)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "32.15 ms (visible 27.5 ms)",
+          "value": "31.55 ms (visible 27.3 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "U3",
-          "value": "2.68 ms",
+          "value": "2.34 ms",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "83.9 MB (at rest before the opens 65.2 MB, diff 18.7 MB)",
+          "value": "86.6 MB (at rest before the opens 65.6 MB, diff 21 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "0 MB (runs: -0.2, 0, 2.9)",
+          "value": "0.3 MB (runs: -1.5, 4, 0.3)",
           "target": "2 MB or less",
           "pass": true
         }
@@ -62,14 +62,14 @@
     {
       "id": "peekee",
       "name": "Peekee",
-      "version": "unreleased build after 0.3.0",
-      "measuredUtc": "2026-11-13T00:19:53Z",
+      "version": "1.0.0",
+      "measuredUtc": "2026-11-13T04:51:53Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "3.4 MB",
+          "value": "4.6 MB",
           "target": "10 MB or less",
           "pass": true
         },
@@ -81,39 +81,39 @@
         },
         {
           "row": "R3",
-          "value": "57.8 MB",
+          "value": "57.6 MB",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "82.3 ms (visible 41.6 ms) (runs: 2 MB source text 83.3/82.3/81.6; small PNG 71.3/75/70.1)",
+          "value": "69.9 ms (visible 44 ms) (runs: 2 MB source text 70/69.9/68.7; small PNG 67.4/67/66.6)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "9.2 ms (visible 2.4 ms)",
+          "value": "8.7 ms (visible 2.3 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "U3",
-          "value": "not measured",
+          "value": "0 of 1000",
           "target": "all under 0.05 ms",
-          "pass": false
+          "pass": true
         },
         {
           "row": "G2",
-          "value": "83 MB (at rest 58.1 MB, diff 24.9 MB)",
+          "value": "58.3 MB (at rest 57.4 MB, diff 0.9 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "10.7 MB (runs: 10.7, 10.7, 10.7)",
+          "value": "-3.8 MB (runs: -3.8, -4.3, -2.8)",
           "target": "2 MB or less",
-          "pass": false
+          "pass": true
         }
       ],
       "rowNotes": {}
@@ -121,50 +121,50 @@
     {
       "id": "backee",
       "name": "Backee",
-      "version": "0.7.0",
-      "measuredUtc": "2026-11-12T21:51:24Z",
+      "version": "1.0.0",
+      "measuredUtc": "2026-11-13T04:05:25Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "9.97 MB",
+          "value": "9.96 MB",
           "target": "10 MB or less",
           "pass": true
         },
         {
           "row": "R1",
-          "value": "UI 0 ms (runs: 0, 0, 0); service 0 ms (runs: 0, 0, 0)",
+          "value": "UI 0 ms (runs: 0, 0, 8); service 0 ms (runs: 0, 0, 0)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "UI 43.4 MB (runs: 43.4, 60.2, 43.4); service 42.9 MB (runs: 43, 35.4, 42.9)",
+          "value": "UI 43.6 MB (runs: 60.3, 43.4, 43.6); service 44.6 MB (runs: 44.9, 37.6, 44.6)",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "127.6 ms (visible 113.8 ms) (runs: 141.1, 127.6, 119.2)",
+          "value": "119.7 ms (visible 113.6 ms) (runs: 119.7, 167, 116)",
           "target": "150 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "21.15 ms (visible 17.75 ms)",
+          "value": "17.9 ms (visible 16.8 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "72.5 MB (at rest before the opens 43.8 MB, diff 28.7 MB)",
+          "value": "74.4 MB (at rest before the opens 43.2 MB, diff 31.2 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "1.1 MB (runs: -0.5, 1.1, 2.5)",
+          "value": "0.2 MB (runs: -1.9, 0.2, 3.9)",
           "target": "2 MB or less",
           "pass": true
         }
