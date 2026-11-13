@@ -69,7 +69,7 @@
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px; }
   .brand { color: inherit; display: inline-flex; align-items: center; gap: 12px; }
   .brand:hover { text-decoration: none; }
-  .brand img { width: 40px; height: 40px; border-radius: 9px; display: block; flex: none; object-fit: cover; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); } /* the Markticulous logo, mildly rounded corners */
+  .brand img { width: 64px; height: 64px; border-radius: 14px; display: block; flex: none; object-fit: cover; box-shadow: 0 0 0 1px rgba(255, 255, 255, .14); } /* the Markticulous logo, mildly rounded corners */
   /* The wordmark: Oswald in the plate shape (hairline ring, top-left and bottom-right corners cropped), a touch shorter than the logo (36 px against 40 px), centred on it so the text does not move. */
   .brand-plate { display: inline-flex; align-items: center; height: 36px; padding: 0 calc(18px - .16em) 0 18px; font: 500 17px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; border-radius: 2px 12px 2px 12px; box-shadow: inset 0 0 0 2px currentColor; }
   .nav { display: flex; gap: 4px; }
@@ -85,8 +85,13 @@
   main { padding-block: 40px 8px; }
   .app { margin: 0 0 40px; padding: 24px; border: 1px solid var(--stroke); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 24px; }
   .app-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
-  .app-head img { width: 56px; height: 56px; flex: none; display: block; }
-  .app-head h2 { margin: 0; font: 500 1.5rem/1.2 var(--display); letter-spacing: .06em; text-transform: uppercase; }
+  .app-head > img { width: 56px; height: 56px; flex: none; display: block; }
+  .app-head h2 { margin: 0; font-weight: 400; line-height: 1; }
+  /* The app's drawn wordmark, never typed text (brand bible, Wordmark), at the same sizes as the hub cards. */
+  .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; 14px from tile edge to wordmark, as on the hub */
+  .wm { display: block; width: auto; }
+  .wm-clipee, .wm-peekee { height: 33px; margin-bottom: -9px; } /* same letter scale as Backee; the -9px leaves the p's descender out when centring on the icon */
+  .wm-backee { height: 24px; }
   .facts { margin: 0 0 16px; color: var(--text2); font-size: 14px; }
   .facts b { color: var(--text); font-weight: 600; }
   .tablewrap { overflow-x: auto; }
@@ -118,7 +123,7 @@
 <div class="band">
   <div class="wrap">
     <header class="bar">
-      <a class="brand" href="./" aria-label="Markticulous, back to the hub"><img src="assets/markticulous.jpg" alt="" width="40" height="40"><span class="brand-plate">Markticulous</span></a>
+      <a class="brand" href="./" aria-label="Markticulous, back to the hub"><img src="assets/markticulous.jpg" alt="" width="64" height="64"><span class="brand-plate">Markticulous</span></a>
       <nav class="nav" aria-label="Page">
         <a href="./#apps">Apps</a>
         <a href="https://github.com/markticulous" rel="noopener">GitHub</a>
@@ -145,6 +150,7 @@
 
 <script>
   const ICONS = { clipee: 'assets/clipee-v1.svg', peekee: 'assets/peekee.svg', backee: 'assets/backee-v1.svg' };
+  const WORDMARKS = { clipee: 33, peekee: 33, backee: 24 }; // drawn wordmark height in px, as on the hub cards
   const NAMES = {
     S1: 'Size on your disk once installed',
     R1: 'Processor time while it waits (per quiet minute)',
@@ -167,8 +173,15 @@
     for (const app of data.apps) {
       const sec = el('section', null, 'app'); sec.id = app.id; sec.setAttribute('aria-labelledby', app.id + '-h');
       const head = el('div', null, 'app-head');
-      if (ICONS[app.id]) { const img = el('img'); img.src = ICONS[app.id]; img.alt = ''; img.width = 56; img.height = 56; head.append(img); }
-      const h = el('h2', app.name); h.id = app.id + '-h'; head.append(h); sec.append(head);
+      if (ICONS[app.id]) { const img = el('img', null, 'inset'); img.src = ICONS[app.id]; img.alt = ''; img.width = 56; img.height = 56; head.append(img); }
+      const h = el('h2'); h.id = app.id + '-h';
+      if (WORDMARKS[app.id]) {
+        const pic = el('picture'), src = el('source'), wm = el('img', null, 'wm wm-' + app.id);
+        src.srcset = 'assets/' + app.id + '-wordmark-dark.svg'; src.media = '(prefers-color-scheme: dark)';
+        wm.src = 'assets/' + app.id + '-wordmark-light.svg'; wm.alt = app.name; wm.height = WORDMARKS[app.id];
+        pic.append(src, wm); h.append(pic);
+      } else h.textContent = app.name;
+      head.append(h); sec.append(head);
 
       const facts = el('p', null, 'facts');
       const bit = (label, value) => { facts.append(el('b', label + ' '), document.createTextNode(value + '. ')); };
