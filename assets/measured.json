@@ -62,8 +62,8 @@
     {
       "id": "peekee",
       "name": "Peekee",
-      "version": "1.0.0",
-      "measuredUtc": "2026-11-13T04:51:53Z",
+      "version": "1.1.0",
+      "measuredUtc": "2026-11-14T16:59:41Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
@@ -81,19 +81,19 @@
         },
         {
           "row": "R3",
-          "value": "57.6 MB",
+          "value": "57.5 MB",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "69.9 ms (visible 44 ms) (runs: 2 MB source text 70/69.9/68.7; small PNG 67.4/67/66.6)",
+          "value": "69.3 ms (visible 45 ms) (runs: 2 MB source text 69.8/69.2/69.3; small PNG 68.2/64.9/69.7)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "8.7 ms (visible 2.3 ms)",
+          "value": "8.15 ms (visible 2.1 ms)",
           "target": "50 ms or less",
           "pass": true
         },
@@ -105,13 +105,13 @@
         },
         {
           "row": "G2",
-          "value": "58.3 MB (at rest 57.4 MB, diff 0.9 MB)",
+          "value": "60.1 MB (at rest 57.5 MB, diff 2.6 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "-3.8 MB (runs: -3.8, -4.3, -2.8)",
+          "value": "-4.1 MB (runs: -4.7, 1.5, -4.1)",
           "target": "2 MB or less",
           "pass": true
         }
