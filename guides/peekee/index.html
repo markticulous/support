@@ -438,7 +438,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Peekee watches the window you are working in. It only reacts when a file list has the keyboard focus, so typing in a search box or renaming a file works as usual.</p>
       <dl class="defs">
         <dt>Space</dt>
-        <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
+        <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. On a shortcut (<code>.lnk</code>) it shows the file or folder the shortcut points to. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
         <dt>Esc</dt>
         <dd>Closes the preview. This works whichever key you chose to open it.</dd>
         <dt>Arrow keys, Home, End, Page Up and Page Down</dt>
@@ -529,7 +529,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dt>Preview</dt>
         <dd><strong>Window size</strong> sets how much of the screen a preview takes at first, from 30 to 90 percent. <strong>Remember the size I drag the window to</strong> keeps the size you chose by dragging an edge, and <strong>Forget the remembered size</strong> goes back to the setting above. <strong>Show the line at the bottom</strong> turns the footer (type, size, date) on or off. <strong>Images open</strong> is <strong>Fitted to the window</strong> or <strong>At 100 percent</strong>. <strong>Background behind pictures</strong> is the colour that fills the preview behind pictures, SVG files and the pages drawn by the Windows PDF renderer. Choose the window colour (light or dark with the theme, and the default), white, light grey, neutral grey (18 percent), dark grey or black. <strong>Show a checkerboard behind transparent parts</strong> (on by default) puts a checkerboard under the picture itself, so transparent areas show; with it off they show the background colour. An SVG with the checkerboard off and the window colour chosen keeps an automatic light or dark card. <strong>PDF files</strong> is <strong>Interactive</strong> (Edge or an installed previewer first) or <strong>As images</strong> (pages drawn by Windows). Under <strong>Text</strong>, <strong>Font size</strong> and <strong>Largest file shown</strong> (1, 2, 5, 10 or 20 MB) control text and code files. Larger files show their first part only. <strong>Extra picture formats</strong> adds Peekee's own reader for JPEG XL and AVIF pictures, which Windows cannot open without an extension from the Microsoft Store. Click <strong>Add</strong> to download it (1.4 MB); nothing is downloaded until you do. <strong>Remove</strong> deletes it again. Peekee checks the download against a fingerprint it carries and does not use a file that does not match.</dd>
         <dt>About</dt>
-        <dd>The Peekee name drawn as a wordmark beside the app icon, the version, <strong>Open data folder</strong> (where Peekee keeps its settings), the support section (see <a href="#support">Support Markticulous</a>) and the credits.</dd>
+        <dd>The Peekee name drawn as a wordmark beside the app icon, the version, <strong>Open data folder</strong> (where Peekee keeps its settings and downloaded extras, <code>%APPDATA%\Peekee</code>), the support section (see <a href="#support">Support Markticulous</a>) and the credits.</dd>
         <dt>User Guide</dt>
         <dd>Opens this guide in your web browser. It is always the last item in the list.</dd>
       </dl>
@@ -595,7 +595,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h3>Updates</h3>
       <p>When <strong>Check for updates automatically</strong> is on, Peekee checks about half a minute after it starts, and then once a day. A newer version downloads in the background, and <strong>Restart to update</strong> appears in the tray menu and on the General page. Nothing restarts until you choose it. <strong>Check now</strong> looks straight away. The version you have is on the About page.</p>
       <h3>Uninstalling</h3>
-      <p>Remove Peekee under <strong>Settings &rarr; Apps &rarr; Installed apps</strong> in Windows, the same as any other program.</p>
+      <p>Remove Peekee under <strong>Settings &rarr; Apps &rarr; Installed apps</strong> in Windows, the same as any other program. Your settings stay in <code>%APPDATA%\Peekee</code>, so a later install picks them up again; delete that folder if you want them gone.</p>
     </section>
 
     <section id="wrong">
@@ -632,11 +632,14 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>PDF</td><td><code>.pdf</code></td><td>Edge's previewer or your PDF previewer first, or the pages drawn by Windows, with zoom and page buttons.</td></tr>
           <tr><td>Office</td><td>.docx .xlsx .pptx and older Office files</td><td>Through the previewers Office installs. Without Office, the information card.</td></tr>
           <tr><td>Email</td><td><code>.eml .msg</code></td><td>Through the previewer Outlook or Windows installs, when there is one.</td></tr>
+          <tr><td>OpenDocument text</td><td><code>.odt</code></td><td>The text, headings and lists with a word count, read by Peekee, when no other previewer is installed for it.</td></tr>
+          <tr><td>Shortcuts</td><td><code>.lnk</code></td><td>The file or folder the shortcut points to, shown as if you had selected it. A shortcut to a web address shows its own card.</td></tr>
+          <tr><td>Web links</td><td><code>.url</code></td><td>The address the link opens, large, with its host name. Nothing is opened or fetched.</td></tr>
           <tr><td>WordPerfect</td><td><code>.wpd .wp .wp5 .wp6 .wp7</code></td><td>The text only, read by Peekee, for WordPerfect 5 and 6 onwards.</td></tr>
           <tr><td>Rich Text</td><td><code>.rtf</code></td><td>Shown as a formatted page, read by Windows' own RTF reader.</td></tr>
           <tr><td>Markdown</td><td><code>.md .markdown</code></td><td>Shown as a formatted page, with pictures from the same folder.</td></tr>
           <tr><td>Data</td><td><code>.csv .tsv .json .ipynb</code></td><td>CSV and TSV as a table; JSON laid out with indents.</td></tr>
-          <tr><td>Text and code</td><td><code>.txt .log .ini .cfg .conf .config .xml .yaml .yml .toml .html .htm .css .scss .js .ts .tsx .jsx .vue .py .ps1 .psm1 .bat .cmd .sh .sql .cs .vb .xaml .razor .cshtml .c .h .cpp .hpp .java .kt .swift .go .rs .rb .php .lua .tex .reg .srt .nfo .diff .patch .csproj .sln .slnx .props .targets .resx .editorconfig .gitignore .jsonc .json5 .ndjson .jsonl .env</code>, and files named Makefile or Dockerfile</td><td>With line numbers. Any other file that turns out to be text is shown the same way.</td></tr>
+          <tr><td>Text and code</td><td><code>.txt .log .ini .cfg .conf .config .xml .yaml .yml .toml .html .htm .css .scss .js .ts .tsx .jsx .vue .py .ps1 .psm1 .bat .cmd .sh .sql .cs .vb .xaml .razor .cshtml .c .h .cpp .hpp .java .kt .swift .go .rs .rb .php .lua .tex .reg .srt .nfo .diff .patch .csproj .sln .slnx .props .targets .resx .editorconfig .gitignore .jsonc .json5 .ndjson .jsonl .env .psd1 .vbs .ahk .inf .properties .gradle .dart .r .pl .scala .clj .ex .exs .hs .fs .fsx .asm .bib .ass .sub</code>, and files named Makefile or Dockerfile</td><td>With line numbers. Any other file that turns out to be text is shown the same way.</td></tr>
           <tr><td>Archives</td><td><code>.zip .7z .rar .tar .tar.gz .tgz .tar.bz2 .tar.xz .gz .bz2 .xz .iso .cab .lzh .lha .jar .nupkg .vsix .epub .apk .appx .msix .whl .xpi</code></td><td>The list of what is inside, with sizes and dates. Nothing is unpacked.</td></tr>
           <tr><td>Fonts</td><td><code>.ttf .otf .ttc</code></td><td>A sample of the font at three sizes.</td></tr>
           <tr><td>Folders</td><td>any folder</td><td>How many items it holds, its total size and the five newest items.</td></tr>
