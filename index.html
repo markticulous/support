@@ -181,7 +181,7 @@
   .app-head { display: flex; align-items: center; gap: 14px; }
   .app-head > img { width: 56px; height: 56px; flex: none; display: block; } /* no CSS rounding: each icon draws its own plate shape */
   .app-head { flex-wrap: wrap; }
-  .app-head .seal { margin-left: auto; flex: none; display: block; line-height: 0; position: relative; width: 72px; height: 72px; border-radius: 4px; transition: translate .14s ease-out; }
+  .app-head .seal { margin-left: auto; flex: none; display: block; line-height: 0; position: relative; width: 72px; height: 72px; border-radius: 4px; transition: translate .14s ease-out; will-change: translate; } /* own layer: moving it never repaints, so the lifted aqua copy leaves no trace above it */
   .app-head .seal img { width: 72px; height: 72px; display: block; transition: none; }
   /* The seal is a link. On hover or keyboard focus the whole seal turns the brand Cyan (its PNG, used as a mask over --seal-hover) and lifts 3px. */
   .app-head .seal::after { content: ""; position: absolute; inset: 0; background: var(--seal-hover); -webkit-mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; mask: url(assets/modest-and-mighty-small-light.png) center / 100% 100% no-repeat; opacity: 0; transition: opacity .14s ease-out; pointer-events: none; }
