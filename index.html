@@ -44,7 +44,7 @@
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 16px; overflow-x: clip; }   /* phones pan sideways if anything pokes out; body alone does not stop it */
   body { margin: 0; color: var(--text); font: 15px/1.55 var(--font); background: var(--bg); -webkit-font-smoothing: antialiased; overflow-x: clip; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -249,6 +249,7 @@
   @media (max-width: 820px) {
     .profile .shot { translate: 0 calc((1 - var(--t, 1)) * 60px); }
     .profile .copy > * { translate: 0 calc((1 - var(--t, 1)) * 30px); }
+    .feats li { translate: 0 calc((1 - var(--t, 1)) * 20px); }   /* sideways, the waiting points stuck out past a phone screen and let the page pan */
   }
 
   /* The dock: a compact glass bar that slides down once the panel has scrolled away. */
