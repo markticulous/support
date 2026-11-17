@@ -473,12 +473,13 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </ul>
       <p>The <strong>Back up all now</strong> button on the banner starts every backup that is not already running. It asks first (<strong>Back up all now?</strong>), then the backups run in the background. It is <span data-sp="grayed">greyed</span> out until you have a backup.</p>
       <h3>The tiles</h3>
-      <p>Each backup has a tile. It shows the name, the folder the backups go to, the schedule and compression (for example <strong>Monthly on day 1 at 21:00 &middot; Max compression (LVL 19)</strong>), and a line about the last run. A weekly schedule on Monday to Friday reads <strong>Weekdays</strong>, on Saturday and Sunday <strong>Weekends</strong>, and on every day <strong>Every day</strong>; four to six other days read, for example, <strong>4 days a week</strong>, and pointing at the line shows the days. The level number is always shown, as in <strong>Balanced compression (LVL 3)</strong>; only <strong>No compression</strong> has none. A <span data-sp="colored">coloured</span> stripe on the left and a small label at the top right tell you the state:</p>
+      <p>Each backup has a tile. It shows the name, the folder the backups go to, the schedule and compression (for example <strong>Monthly on day 1 at 21:00 &middot; Max compression (LVL 19)</strong>), and a line about the last run, with the next run on the line below it. A weekly schedule on Monday to Friday reads <strong>Weekdays</strong>, on Saturday and Sunday <strong>Weekends</strong>, and on every day <strong>Every day</strong>; four to six other days read, for example, <strong>4 days a week</strong>, and pointing at the line shows the days. The level number is always shown, as in <strong>Balanced compression (LVL 3)</strong>; only <strong>No compression</strong> has none. A <span data-sp="colored">coloured</span> stripe on the left and a small label at the top right tell you the state:</p>
       <table class="ref">
         <thead><tr><th>Label</th><th>Meaning</th></tr></thead>
         <tbody>
           <tr><td>OK</td><td>The last backup worked. Green.</td></tr>
           <tr><td>Running or a percentage</td><td>A backup is running now. A bar shows how far it has got.</td></tr>
+          <tr><td>Finishing</td><td>Every file has been read. Backee is saving the new version, then cleaning up old versions; the tile says which. On a cloud destination this can take a few minutes, and the bar keeps moving until it is done.</td></tr>
           <tr><td>New</td><td>The backup has never run. <span data-sp="gray">Grey</span>.</td></tr>
           <tr><td>Waiting</td><td>It cannot start yet, for example because the backup drive is unplugged or the battery is low. The tile says why. Amber. Click the label to open the details in Activity.</td></tr>
           <tr><td>Warnings</td><td>It finished, but some files were skipped. Amber. Click the label to open the details in Activity.</td></tr>
@@ -1057,7 +1058,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <figure>
         <picture>
           <source srcset="images/settings-about-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/settings-about.webp" alt="The About page of Settings with the version, the data folder button, and the support section with the supporter adornments">
+          <img src="images/settings-about.webp" alt="The About page of Settings with the Backee logo, the data folder and version info buttons, and the support section with the supporter adornments">
         </picture>
         <figcaption>Settings, About page. The support section is at the bottom.</figcaption>
       </figure>
