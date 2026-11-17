@@ -438,7 +438,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Peekee watches the window you are working in. It only reacts when a file list has the keyboard focus, so typing in a search box or renaming a file works as usual.</p>
       <dl class="defs">
         <dt>Space</dt>
-        <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. On a shortcut (<code>.lnk</code>) it shows the file or folder the shortcut points to. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
+        <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. On a shortcut (<code>.lnk</code>) it shows the file or folder the shortcut points to; a shortcut to a program shows its own card instead. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
         <dt>Esc</dt>
         <dd>Closes the preview. This works whichever key you chose to open it.</dd>
         <dt>Arrow keys, Home, End, Page Up and Page Down</dt>
@@ -633,8 +633,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>Office</td><td>.docx .xlsx .pptx and older Office files</td><td>Through the previewers Office installs. Without Office, the information card.</td></tr>
           <tr><td>Email</td><td><code>.eml .msg</code></td><td>Through the previewer Outlook or Windows installs, when there is one.</td></tr>
           <tr><td>OpenDocument text</td><td><code>.odt</code></td><td>The text, headings and lists with a word count, read by Peekee, when no other previewer is installed for it.</td></tr>
-          <tr><td>Shortcuts</td><td><code>.lnk</code></td><td>The file or folder the shortcut points to, shown as if you had selected it. A shortcut to a web address shows its own card.</td></tr>
-          <tr><td>Web links</td><td><code>.url</code></td><td>The address the link opens, large, with its host name. Nothing is opened or fetched.</td></tr>
+          <tr><td>Shortcuts</td><td><code>.lnk</code></td><td>The file or folder the shortcut points to, shown as if you had selected it. A shortcut to a program or a web address shows its own card, with its own icon and what it starts: the target, its arguments, and for a Chrome or Edge web app (such as Google Keep) that it opens through the browser.</td></tr>
+          <tr><td>Web links</td><td><code>.url .website</code></td><td>The address the link opens, large, with its host name. Nothing is opened or fetched.</td></tr>
           <tr><td>WordPerfect</td><td><code>.wpd .wp .wp5 .wp6 .wp7</code></td><td>The text only, read by Peekee, for WordPerfect 5 and 6 onwards.</td></tr>
           <tr><td>Rich Text</td><td><code>.rtf</code></td><td>Shown as a formatted page, read by Windows' own RTF reader.</td></tr>
           <tr><td>Markdown</td><td><code>.md .markdown</code></td><td>Shown as a formatted page, with pictures from the same folder.</td></tr>
