@@ -500,7 +500,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dt>Markdown</dt>
         <dd>Shown as a formatted document with headings, lists, tables, code and the images that sit beside the file. Links are drawn as links but cannot be clicked.</dd>
         <dt>SVG</dt>
-        <dd>Drawn and fitted to the window. It does not zoom or pan, and a drawing that uses features Peekee does not support, such as CSS classes, may look different from the way a browser shows it.</dd>
+        <dd>Drawn and fitted to the window. Turn the mouse wheel to zoom about the pointer, drag to move around when zoomed in, and double click or press 0 to fit the window again. A drawing that uses features Peekee does not support, such as CSS classes, may look different from the way a browser shows it.</dd>
         <dt>Fonts</dt>
         <dd>TTF, OTF and TTC files show as a type specimen: the family and style name, the alphabet, the digits and a sentence at three sizes. The font is not installed.</dd>
         <dt>Folders</dt>
@@ -593,7 +593,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h3>Installing</h3>
       <p>Run the Peekee setup. It installs for your own account and does not need an administrator. Peekee then starts and puts its icon in the tray. Turn on <strong>Start with Windows</strong> in Settings if you want it ready every time.</p>
       <h3>Updates</h3>
-      <p>When <strong>Check for updates automatically</strong> is on, Peekee checks about half a minute after it starts, and then once a day. A newer version downloads in the background, and <strong>Restart to update</strong> appears in the tray menu and on the General page. Nothing restarts until you choose it. <strong>Check now</strong> looks straight away. The version you have is on the About page.</p>
+      <p>When <strong>Check for updates automatically</strong> is on, Peekee checks about half a minute after it starts, and then once a day. A newer version downloads in the background, and <strong>Restart to update</strong> appears in the tray menu and on the General page. An orange dot shows on the tray icon and beside the button: it breathes while the update downloads and blinks once it is ready. Nothing restarts until you choose it. <strong>Check now</strong> looks straight away. The version you have is on the About page.</p>
       <h3>Uninstalling</h3>
       <p>Remove Peekee under <strong>Settings &rarr; Apps &rarr; Installed apps</strong> in Windows, the same as any other program. Your settings stay in <code>%APPDATA%\Peekee</code>, so a later install picks them up again; delete that folder if you want them gone.</p>
     </section>
@@ -628,7 +628,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>Photoshop</td><td><code>.psd .psb</code></td><td>The flattened image Photoshop stores in the file; RGB, grey, CMYK, indexed and 1-bit, 8 and 16 bits. No layers.</td></tr>
           <tr><td>Illustrator</td><td><code>.ai .ait</code></td><td>Files saved with PDF compatibility (the default since Illustrator CS) open in the PDF view.</td></tr>
           <tr><td>Amiga and Atari pictures</td><td><code>.iff .ilbm .lbm .ham6 .ham8 .acbm .rgb8 .rgbn</code></td><td>Drawn by Peekee itself, including HAM, half-brite and pictures that change palette line by line.</td></tr>
-          <tr><td>SVG</td><td><code>.svg .svgz</code></td><td>Drawn by Peekee: shapes, paths, fills, strokes and gradients. Text and filters are left out.</td></tr>
+          <tr><td>SVG</td><td><code>.svg .svgz</code></td><td>Drawn by Peekee: shapes, paths, fills, strokes and gradients. Text and filters are left out. Zoom with the wheel and drag to pan.</td></tr>
           <tr><td>PDF</td><td><code>.pdf</code></td><td>Edge's previewer or your PDF previewer first, or the pages drawn by Windows, with zoom and page buttons.</td></tr>
           <tr><td>Office</td><td>.docx .xlsx .pptx and older Office files</td><td>Through the previewers Office installs. Without Office, the information card.</td></tr>
           <tr><td>Email</td><td><code>.eml .msg</code></td><td>Through the previewer Outlook or Windows installs, when there is one.</td></tr>
@@ -638,8 +638,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>WordPerfect</td><td><code>.wpd .wp .wp5 .wp6 .wp7</code></td><td>The text only, read by Peekee, for WordPerfect 5 and 6 onwards.</td></tr>
           <tr><td>Rich Text</td><td><code>.rtf</code></td><td>Shown as a formatted page, read by Windows' own RTF reader.</td></tr>
           <tr><td>Markdown</td><td><code>.md .markdown</code></td><td>Shown as a formatted page, with pictures from the same folder.</td></tr>
-          <tr><td>Data</td><td><code>.csv .tsv .json .ipynb</code></td><td>CSV and TSV as a table; JSON laid out with indents.</td></tr>
-          <tr><td>Text and code</td><td><code>.txt .log .ini .cfg .conf .config .xml .yaml .yml .toml .html .htm .css .scss .js .ts .tsx .jsx .vue .py .ps1 .psm1 .bat .cmd .sh .sql .cs .vb .xaml .razor .cshtml .c .h .cpp .hpp .java .kt .swift .go .rs .rb .php .lua .tex .reg .srt .nfo .diff .patch .csproj .sln .slnx .props .targets .resx .editorconfig .gitignore .jsonc .json5 .ndjson .jsonl .env .psd1 .vbs .ahk .inf .properties .gradle .dart .r .pl .scala .clj .ex .exs .hs .fs .fsx .asm .bib .ass .sub</code>, and files named Makefile or Dockerfile</td><td>With line numbers. Any other file that turns out to be text is shown the same way.</td></tr>
+          <tr><td>Data</td><td><code>.csv .tsv .json .har .webmanifest .ipynb</code></td><td>CSV and TSV as a table; JSON laid out with indents.</td></tr>
+          <tr><td>Text and code</td><td><code>.txt .log .ini .cfg .conf .config .xml .yaml .yml .toml .html .htm .css .scss .js .ts .tsx .jsx .vue .py .ps1 .psm1 .bat .cmd .sh .sql .cs .vb .xaml .razor .cshtml .c .h .cpp .hpp .java .kt .swift .go .rs .rb .php .lua .tex .reg .srt .nfo .diff .patch .csproj .sln .slnx .props .targets .resx .editorconfig .gitignore .jsonc .json5 .ndjson .jsonl .env .psd1 .vbs .ahk .inf .properties .gradle .dart .r .pl .scala .clj .ex .exs .hs .fs .fsx .asm .bib .ass .sub .vtt .ics .vcf .m3u .m3u8 .cue .cmake</code>, and files named Makefile or Dockerfile</td><td>With line numbers. Any other file that turns out to be text is shown the same way.</td></tr>
           <tr><td>Archives</td><td><code>.zip .7z .rar .tar .tar.gz .tgz .tar.bz2 .tar.xz .gz .bz2 .xz .iso .cab .lzh .lha .jar .nupkg .vsix .epub .apk .appx .msix .whl .xpi</code></td><td>The list of what is inside, with sizes and dates. Nothing is unpacked.</td></tr>
           <tr><td>Fonts</td><td><code>.ttf .otf .ttc</code></td><td>A sample of the font at three sizes.</td></tr>
           <tr><td>Folders</td><td>any folder</td><td>How many items it holds, its total size and the five newest items.</td></tr>
