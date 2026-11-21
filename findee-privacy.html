@@ -67,7 +67,7 @@
     <p class="updated">Last updated: November 20, 2026</p>
 
     <div class="short">
-      <p><strong>In short:</strong> Findee collects nothing about you. It has no accounts, no analytics, no crash reports and no ads. Its index of your files (names, folders, sizes and dates, never what is inside the files) stays on your PC, in a folder that only your account and Windows can open. The only things Findee ever sends over the internet are a once-a-day check for new versions of Findee and, if you ask for it, the supporter check.</p>
+      <p><strong>In short:</strong> Findee collects nothing about you. It has no accounts, no analytics, no crash reports, and no ads. Its index of your files (names, folders, sizes, and dates, never what is inside the files) stays on your PC, in a folder that only your account and Windows can open. The only things Findee ever sends over the internet are a once-a-day check for new versions of Findee and, if you ask for it, the supporter check.</p>
     </div>
 
     <div class="card">
@@ -77,7 +77,7 @@
 
     <div class="card">
       <h2>What we collect</h2>
-      <p>Nothing. Findee does not send us your files, your file names, what you search for, what you open, your settings, your usage or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the two described below: the update check, and the supporter check, which runs only if you click Check.</p>
+      <p>Nothing. Findee does not send us your files, your file names, what you search for, what you open, your settings, your usage, or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the two described below: the update check, and the supporter check, which runs only if you click Check.</p>
     </div>
 
     <div class="card">
@@ -94,23 +94,23 @@
         <li>whether it is a folder, and whether it is hidden or a system item.</li>
       </ul>
       <p>It never reads what is inside your files. Findee finds words inside files and emails only by asking Windows Search, as described further down.</p>
-      <p>The index leaves out the Windows folder, Program Files, ProgramData, the Recycle Bin, your own AppData folder and the profile folders of the other people on the PC. Hidden and system files are left out too, unless you turn on "Include hidden and system files" in Settings, under Index. Each person who uses Findee on the PC has a separate index, built for that person only.</p>
+      <p>The index leaves out the Windows folder, Program Files, ProgramData, the Recycle Bin, your own AppData folder, and the profile folders of the other people on the PC. Hidden and system files are left out too, unless you turn on "Include hidden and system files" in Settings, under Index. Each person who uses Findee on the PC has a separate index, built for that person only.</p>
     </div>
 
     <div class="card">
       <h2>Where the index lives, and who can read it</h2>
-      <p>Each person who uses Findee gets an index folder of their own, <code>%ProgramData%\Findee\users\&lt;your account number&gt;</code> (usually under <code>C:\ProgramData</code>). Only your account can read it and only the Windows system account has full control of it. It does not take over the rights of the folders above it, so other standard accounts on the PC cannot open it. It holds, for each drive, a snapshot and a short list of recent changes (<code>.fdx</code> and <code>.fdd</code> files) and a small <code>state.json</code>. If you changed the hidden files choice, it also holds a <code>settings.json</code> that records it. The files are not encrypted. Windows permissions protect them, which does not stop a program that is running as you, as an administrator or as the system from reading them.</p>
+      <p>Each person who uses Findee gets an index folder of their own, <code>%ProgramData%\Findee\users\&lt;your account number&gt;</code> (usually under <code>C:\ProgramData</code>). Only your account can read it and only the Windows system account has full control of it. It does not take over the rights of the folders above it, so other standard accounts on the PC cannot open it. It holds, for each drive, a snapshot and a short list of recent changes (<code>.fdx</code> and <code>.fdd</code> files) and a small <code>state.json</code>. If you changed the hidden files choice, it also holds a <code>settings.json</code> that records it. The files are not encrypted. Windows permissions protect them, which does not stop a program that is running as you, as an administrator, or as the system from reading them.</p>
       <p>Your index holds only the names you could see in File Explorer. The service sees the whole drive, but when it builds your index it leaves out every folder your account cannot open (as you are signed in, without "Run as administrator"), together with everything inside it. It decides this with Windows' own permission check for your account. If Windows cannot tell whether you may open a folder, the folder is left out. When a folder's permissions change, your index follows the next time Findee catches up; until then, Findee still shows a result only when your account can open the folder that holds it.</p>
-      <p>The service also keeps, in the same ProgramData folder, a log (<code>logs\service.log</code>) and the update files. Only administrators and the system can open these. The log is short lines about each build of the index (the drive letter, counts and times) and about faults, and a fault line can include the text of an error message from Windows. It rolls over at 1 MB and keeps one older file, so it never holds more than 2 MB.</p>
+      <p>The service also keeps, in the same ProgramData folder, a log (<code>logs\service.log</code>) and the update files. Only administrators and the system can open these. The log is short lines about each build of the index (the drive letter, counts, and times) and about faults, and a fault line can include the text of an error message from Windows. It rolls over at 1 MB and keeps one older file, so it never holds more than 2 MB.</p>
     </div>
 
     <div class="card">
       <h2>What Findee keeps for you, on your PC</h2>
       <p>The app keeps these in <code>%LocalAppData%\Findee</code>, which by default only your Windows account can open. None of it is encrypted:</p>
       <ul>
-        <li><code>opened.dat</code>, a list of up to 2,000 things you opened from Findee (files, folders and apps): the full path or the app's name, how many times you opened it, and when you last did. It makes the things you use most come first and fills the Recent list. Findee does not keep what you type into the search box. A path is dropped from the list when its file no longer exists;</li>
-        <li><code>apps.json</code>, a copy of the list of apps that Windows gives Findee (name, program path and start-up options), refreshed at most every 10 minutes while the search window is used, so that apps can be found at once;</li>
-        <li><code>settings.json</code>, your settings: your shortcut keys, whether you are a supporter and which small supporter mark you chose, when the support prompts were last shown, how many results you have opened (a count, used for the support prompt) and when updates were last checked.</li>
+        <li><code>opened.dat</code>, a list of up to 2,000 things you opened from Findee (files, folders, and apps): the full path or the app's name, how many times you opened it, and when you last did. It makes the things you use most come first and fills the Recent list. Findee does not keep what you type into the search box. A path is dropped from the list when its file no longer exists;</li>
+        <li><code>apps.json</code>, a copy of the list of apps that Windows gives Findee (name, program path, and start-up options), refreshed at most every 10 minutes while the search window is used, so that apps can be found at once;</li>
+        <li><code>settings.json</code>, your settings: your shortcut keys, whether you are a supporter, and which small supporter mark you chose, when the support prompts were last shown, how many results you have opened (a count, used for the support prompt) and when updates were last checked.</li>
       </ul>
       <p>Findee also writes its shortcut key to a small shared file, <code>%LocalAppData%\Markticulous\hotkeys.json</code>. For Findee it holds the name Findee, the path of Findee's program, the keys and what they do ("opening the search"). The Markticulous apps read this file so that they can warn you when two of them want the same keys. If you turn on "Start with Windows", Findee adds one value to your Windows Run key (<code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run</code>).</p>
     </div>
@@ -122,7 +122,7 @@
 
     <div class="card">
       <h2>Inside files and emails (Windows Search)</h2>
-      <p>When your search has words that could be inside files or emails, Findee asks the Windows Search index on your PC, with your own rights. This is the same index that File Explorer uses. Findee shows the matching file names and folders and, for emails, the subject, the sender and the date. These results are read when you search and are not stored by Findee. Nothing you type is sent to us or anywhere else. If the Windows Search service is off, Findee says so and shows nothing from inside files.</p>
+      <p>When your search has words that could be inside files or emails, Findee asks the Windows Search index on your PC, with your own rights. This is the same index that File Explorer uses. Findee shows the matching file names and folders and, for emails, the subject, the sender, and the date. These results are read when you search and are not stored by Findee. Nothing you type is sent to us or anywhere else. If the Windows Search service is off, Findee says so and shows nothing from inside files.</p>
     </div>
 
     <div class="card">
@@ -135,7 +135,7 @@
       <ul>
         <li><strong>The index.</strong> It follows your drives, so a file you delete or rename is removed or renamed in it. Rebuild index in Settings, under Index, makes it again from your drives.</li>
         <li><strong>The things you opened.</strong> The list keeps at most 2,000 entries. When it is full, the entry that counts least is dropped first.</li>
-        <li><strong>Uninstalling Findee</strong> (from Windows Settings, under Apps, or with the setup file) stops and removes the service and deletes <code>%ProgramData%\Findee</code>, with every person's index, the log and the update files. For the person who runs the uninstall, it also removes the "Start with Windows" value, Findee's entry in the shared shortcut list and the folder <code>%LocalAppData%\Findee</code> (the things you opened, the app list and the settings). An update does none of this, so your history and settings are kept when Findee updates.</li>
+        <li><strong>Uninstalling Findee</strong> (from Windows Settings, under Apps, or with the setup file) stops and removes the service and deletes <code>%ProgramData%\Findee</code>, with every person's index, the log, and the update files. For the person who runs the uninstall, it also removes the "Start with Windows" value, Findee's entry in the shared shortcut list, and the folder <code>%LocalAppData%\Findee</code> (the things you opened, the app list, and the settings). An update does none of this, so your history and settings are kept when Findee updates.</li>
         <li><strong>Other accounts.</strong> If other people on the PC used Findee, their own <code>%LocalAppData%\Findee</code> folders stay after the uninstall, because the person uninstalling cannot clean up for them. They can delete the folder themselves, or an administrator can.</li>
         <li><strong>By hand.</strong> To forget your history and settings, close Findee and delete <code>%LocalAppData%\Findee</code>. Settings has an Open data folder button that opens it. To remove the indexes, uninstall Findee.</li>
         <li>The setup file never removes the Microsoft .NET runtime that it may have installed for Findee, because other programs can use it.</li>
@@ -146,7 +146,7 @@
       <h2>Update checks</h2>
       <p>The Findee service checks for a newer version by asking GitHub, at <code>api.github.com</code>, for the latest release of <code>github.com/markticulous/Findee</code>, where the updates are published. It checks about two minutes after the service starts, then once every 24 hours, and when you press Check now in Settings (at most once a minute). If a newer version is found, the service downloads the update from GitHub, checks that it is signed by Markticulous and that its size and fingerprint match, and installs it only when you are not using Findee. If a check fails, the service waits longer each time before it tries again.</p>
       <p>The "Update automatically" switch in Settings decides whether a downloaded update is installed by itself. It does not stop the checks or the download. With the switch off, Findee still installs a downloaded update after 14 days (when you are not using it), and the Restart to update button in Settings installs it sooner. Your settings and history are kept.</p>
-      <p>The check is a normal web request, so GitHub sees your IP address, as with any visit to a web page. The request carries only the name and version of the program (such as <code>Findee/1.0.0</code>) and a note that it wants GitHub's release information. It adds nothing about you, your files or your settings, and it sends no sign-in or token. GitHub sends the update file itself from its download server, <code>release-assets.githubusercontent.com</code>. GitHub handles all of this under its own privacy statement.</p>
+      <p>The check is a normal web request, so GitHub sees your IP address, as with any visit to a web page. The request carries only the name and version of the program (such as <code>Findee/1.0.0</code>) and a note that it wants GitHub's release information. It adds nothing about you, your files, or your settings, and it sends no sign-in or token. GitHub sends the update file itself from its download server, <code>release-assets.githubusercontent.com</code>. GitHub handles all of this under its own privacy statement.</p>
       <p>If you run the Findee setup file on a PC that does not have the Microsoft .NET 10 Desktop Runtime, the setup downloads it from Microsoft (<code>builds.dotnet.microsoft.com</code>) and checks its size and fingerprint before it runs it. That is the setup, not Findee itself.</p>
     </div>
 
@@ -158,7 +158,7 @@
     <div class="card">
       <h2>Supporter check</h2>
       <p>If you have supported Markticulous on Ko-fi, you can tell Findee so (with the already-supported button, in Settings under About or from the support card) by typing the email you used there and clicking Check. Findee then sends a scrambled version of that email (a SHA-256 hash of the trimmed, lower-case address) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your files. It does not keep the email you typed; it keeps only the answer in your settings. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
-      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute. The server runs on Cloudflare, which keeps its own network logs under its own privacy policy.</p>
+      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment, and a count. It keeps no names, amounts, messages, or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute. The server runs on Cloudflare, which keeps its own network logs under its own privacy policy.</p>
     </div>
 
     <div class="card">
