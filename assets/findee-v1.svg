@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Findee logo (viewfinder f, V1, chosen 2026-11-18): a lowercase f inside four corner brackets, as a camera locks on. 32 px and up.
+       Brackets: corners at 10 and 54, arms 8, stroke 5.6, round caps. f: stem x29 from y53 to y23, hook r10 to (39,13) then to x43, crossbar y31 from 21 to 39; stroke 7.4, scaled 0.86 about the centre (6.4 after). -->
+  <defs><linearGradient id="tile" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#172554"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs>
+  <path d="M7,4 H48 A12,12 0 0 1 60,16 V57 A3,3 0 0 1 57,60 H16 A12,12 0 0 1 4,48 V7 A3,3 0 0 1 7,4 Z" fill="url(#tile)"/>
+  <g transform="translate(32 32) scale(0.86) translate(-32 -32)" fill="none" stroke="#fff" stroke-width="7.4" stroke-linecap="round" stroke-linejoin="round"><path d="M29 53 V23 A10 10 0 0 1 39 13 H43"/><path d="M21 31 H39"/></g>
+  <g fill="none" stroke="#fff" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18 V10 H18"/><path d="M46 10 H54 V18"/><path d="M54 46 V54 H46"/><path d="M18 54 H10 V46"/></g>
+</svg>

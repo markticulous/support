@@ -199,7 +199,7 @@
 
   /* One wordmark per app, each in its own brand's style. */
   .wm { display: inline-block; vertical-align: middle; }
-  .wm-clipee, .wm-peekee { display: block; height: 33px; width: auto; margin-bottom: -9px; } /* same letter scale as Backee: its box is 44.70 units tall (the p descends) against Backee's 32.45, so 24px x 44.70 / 32.45; the -9px leaves the descender out when centring on the icon */
+  .wm-clipee, .wm-peekee, .wm-findee { display: block; height: 33px; width: auto; margin-bottom: -9px; } /* same letter scale as Backee: its box is 44.70 units tall (the p descends) against Backee's 32.45, so 24px x 44.70 / 32.45; the -9px leaves the descender out when centring on the icon */
   .wm-tagee { font: 600 29px/1 "Fraunces", Georgia, "Times New Roman", serif; letter-spacing: -.02em; color: var(--text); margin-left: -.75px; } /* the T's side bearing */
   .wm-tagee b { font-weight: inherit; color: var(--tagee-ee); }
   .wm-deskside {
@@ -225,12 +225,13 @@
   /* The picture frame: 16:10, a hairline, the brand gradient faint as its empty ground, with the app's wordmark as a watermark until a screenshot is dropped in. */
   .shot { margin: 0; min-width: 0; aspect-ratio: 16 / 10; border-radius: 8px; border: 1px solid var(--stroke); box-shadow: var(--shadow); overflow: hidden; position: relative;
     display: grid; place-items: center; background: linear-gradient(135deg, color-mix(in srgb, var(--midnight) 14%, var(--surface-solid)), color-mix(in srgb, var(--cyan) 14%, var(--surface-solid))); }
-  .shot > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shot > img, .shot > picture.pic > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   /* A whole app window on the frame's ground: kept entire, centred, with its own rounded corners and a soft shadow. */
-  .shot.window > img { inset: 7%; width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 6px 18px rgba(15, 23, 42, .22)) drop-shadow(0 1px 3px rgba(15, 23, 42, .18)); }
+  .shot.window > img, .shot.window > picture.pic > img { inset: 7%; width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 6px 18px rgba(15, 23, 42, .22)) drop-shadow(0 1px 3px rgba(15, 23, 42, .18)); }
   .shot.window.tall { aspect-ratio: 1 / 1; } /* a portrait window, such as a popup, gets a square frame so it is not shrunk to a sliver */
   .shot.window.tall > img { inset: 6%; width: 88%; height: 88%; }
-  .shot.window.wide > img { inset: 3%; width: 94%; height: 94%; } /* a wide composite (Peekee over File Explorer) fills more of its frame */
+  .shot.window.wide > img, .shot.window.wide > picture.pic > img { inset: 3%; width: 94%; height: 94%; } /* a wide composite (Peekee over File Explorer) fills more of its frame */
+  .shot > picture.pic { display: contents; } /* a light and dark pair of pictures: the frame treats the picture's img as its own */
   .shot .watermark { opacity: .32; transform: scale(1.6); filter: grayscale(1); }
   .shot:has(> img) .watermark { display: none; }
   @media (max-width: 820px) {
@@ -451,6 +452,30 @@
       </article>
       <article class="card" data-scrub>
         <div class="app-head">
+          <img class="inset" src="assets/findee-v1.svg" alt="" width="56" height="56">
+          <div>
+            <h3>
+              <picture>
+              <source srcset="assets/findee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wm wm-findee" src="assets/findee-wordmark-light.svg" alt="Findee" height="24">
+            </picture>
+            </h3>
+          </div>
+        </div>
+        <p>Press Alt+Space, type a few letters and press Enter to open a file, a folder or an app. The results appear as you type, and the things you use most come first.</p>
+        <div class="foot">
+          <div class="row pair">
+            <a class="btn accent" href="https://github.com/markticulous/Findee/releases/latest" rel="noopener">Download</a>
+            <a class="btn" href="#findee">Details</a>
+          </div>
+          <div class="row links">
+            <a class="lnk" href="guides/findee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+            <span class="tag" data-release="markticulous/Findee">Windows 10 and 11</span>
+          </div>
+        </div>
+      </article>
+      <article class="card" data-scrub>
+        <div class="app-head">
           <img src="assets/deskside-radio.png" alt="" width="56" height="56">
           <div><h3><span class="wm wm-deskside">Deskside Radio</span></h3></div>
         </div>
@@ -630,6 +655,53 @@
       </figure>
     </section>
 
+    <section class="profile" id="findee" aria-labelledby="findee-h">
+      <div class="copy" data-scrub>
+        <p class="eyebrow">Available<span class="sep">/</span>Windows 10 and 11</p>
+        <div class="app-head">
+          <img class="inset" src="assets/findee-v1.svg" alt="" width="56" height="56">
+          <h3 id="findee-h">
+            <picture>
+              <source srcset="assets/findee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wm wm-findee" src="assets/findee-wordmark-light.svg" alt="Findee" height="24">
+            </picture>
+          </h3>
+          <!-- seal:findee -->
+          <a class="seal" href="/measured.html#findee" aria-label="Modest and Mighty: see the measurements for Findee" title="Modest and Mighty: measured on every release">
+            <picture>
+              <source srcset="assets/modest-and-mighty-small-dark.png" media="(prefers-color-scheme: dark)">
+              <img src="assets/modest-and-mighty-small-light.png" alt="" width="72" height="72">
+            </picture>
+          </a>
+          <p class="bench">Modest and mighty: about 3.8 MB installed, about 59 MB of memory at rest, and the search box on screen in under a tenth of a second.</p>
+          <!-- /seal:findee -->
+        </div>
+        <p class="pitch">Press Alt+Space, type a few letters, and open it.</p>
+        <ul class="feats">
+          <li data-scrub>Finds files and folders on your fixed NTFS drives, and the programs in your Start menu, including Microsoft Store apps, as you type.</li>
+          <li data-scrub>Learns what you open: the files, folders and apps you use most come first, and they are what you see before you type anything.</li>
+          <li data-scrub>Filters when you want them: add ext:, kind:, in:, size: or modified: to narrow what you find, alone or together.</li>
+          <li data-scrub>Open the result, open its folder, run a program as administrator, copy its path, or drag it into another program. With Peekee installed, Space previews a file.</li>
+          <li data-scrub>A small Windows service follows every change on your drives, so a file you saved a moment ago is already there. Each person sees only what that person can open.</li>
+        </ul>
+        <div class="row pair">
+          <a class="btn accent" href="https://github.com/markticulous/Findee/releases/latest" rel="noopener">Download</a>
+          <a class="btn" href="guides/findee/"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M2.5 2.5h4a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7h4v10h-4a1.5 1.5 0 0 0-1.5 1.5A1.5 1.5 0 0 0 6.5 12.5h-4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 3.2V14" stroke="currentColor" stroke-width="1.2"/></svg>User Guide</a>
+        </div>
+        <div class="row links">
+          <a class="lnk" href="https://github.com/markticulous/Findee/releases" rel="noopener"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2.5h6l2.5 2.5v8.5h-8.5z M6 7h4.5 M6 9.5h4.5" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Release notes</a>
+          <a class="lnk" href="findee-privacy.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6V4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Privacy policy</a>
+          <a class="lnk" href="/site-terms.html"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.5v11 M5 13.5h6 M3 5h10 M3 5l-1.5 4h3z M13 5l-1.5 4h3z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>Terms</a>
+        </div>
+      </div>
+      <figure data-scrub class="shot window wide">
+        <picture class="pic">
+          <source srcset="assets/findee-screenshot-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="assets/findee-screenshot.webp" alt="The Findee search box with an empty search, showing the recent files, folders and apps, with Quarterly report Q3.docx selected and the key hints for open, open folder and copy path along the bottom" loading="lazy" width="1020" height="700">
+        </picture>
+      </figure>
+    </section>
+
     <section class="profile" id="deskside-radio" aria-labelledby="deskside-h">
       <div class="copy" data-scrub>
         <p class="eyebrow">Available<span class="sep">/</span>Runs in your browser</p>
@@ -715,7 +787,7 @@
 
 <script>
   // ?app=clipee -> "Thanks for using Clipee." Only known slugs are used; nothing from the address is inserted as HTML.
-  const APPS = { clipee: 'Clipee', 'deskside-radio': 'Deskside Radio', backee: 'Backee', peekee: 'Peekee' };
+  const APPS = { clipee: 'Clipee', 'deskside-radio': 'Deskside Radio', backee: 'Backee', peekee: 'Peekee', findee: 'Findee' };
   const slug = new URLSearchParams(location.search).get('app');
   if (slug && Object.prototype.hasOwnProperty.call(APPS, slug)) {
     document.getElementById('from-text').textContent = 'Thanks for using ' + APPS[slug] + '.';
