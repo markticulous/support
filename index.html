@@ -24,7 +24,7 @@
     --tagee-ee: #c2410c;
     --shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 4px 12px rgba(0, 0, 0, .05);
     --card-index: rgba(255, 255, 255, .94);
-    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --seal-hover: var(--cyan); --band-text: #f8fafc;
+    --midnight: #172554; --midnight-deep: #0b1430; --cyan: #06b6d4; --cyan-ink: #0e7490; --seal-hover: var(--cyan); --band-text: #f8fafc; --on-cyan: #fff;
     --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
     --display: "Oswald", "Bahnschrift SemiCondensed", "Arial Narrow", sans-serif;
   }
@@ -38,7 +38,7 @@
       --tagee-ee: #ee6a2c;
       --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 16px rgba(0, 0, 0, .25);
       --card-index: rgba(32, 35, 38, .94);
-      --cyan-ink: #22d3ee;
+      --cyan-ink: #22d3ee; --on-cyan: #06323a;
       color-scheme: dark;
     }
   }
@@ -194,6 +194,13 @@
   .app-head .bench { flex: 0 0 100%; margin: 10px 0 0; font-size: 14px; color: var(--text2); }
   .app-head > img.inset { margin-right: -3.5px; } /* the v1 SVG icons draw their tile 3.5px inside the box; every card shows 14px from tile edge to wordmark */
   .app-head h3 { margin: 0; font-weight: 400; line-height: 1; }
+  /* "New" corner ribbon: any card with data-new-since gets it; the script below sets data-new="on" for 45 days from that date. */
+  .nf { display: none; }
+  .card[data-new="on"] .nf { display: inline-flex; }
+  .card[data-new-since] { position: relative; overflow: hidden; }
+  .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 4px 0 2px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); pointer-events: none; }
+  @media (prefers-color-scheme: dark) { .card .nf { background: var(--cyan-ink); } }
+
   .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
   .card p { margin: 0; color: var(--text2); }
 
@@ -450,7 +457,8 @@
           </div>
         </div>
       </article>
-      <article class="card" data-scrub>
+      <article class="card" data-scrub data-new-since="2026-12-01"> <!-- set to the release day at go-live -->
+        <span class="nf">New</span>
         <div class="app-head">
           <img class="inset" src="assets/findee-v1.svg" alt="" width="56" height="56">
           <div>
@@ -903,6 +911,16 @@
   }
 
   document.querySelectorAll('[data-year]').forEach((e) => { e.textContent = new Date().getFullYear(); });
+</script>
+<script>
+  // "New" ribbon: on for 45 days from data-new-since (day 1 is the release day, gone on day 46).
+  (function () {
+    var DAY = 864e5, now = new Date(), today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    document.querySelectorAll('[data-new-since]').forEach(function (c) {
+      var p = c.dataset.newSince.split('-'), since = Date.UTC(+p[0], p[1] - 1, +p[2]);
+      if (today < since + 45 * DAY) c.dataset.new = 'on'; else c.removeAttribute('data-new');
+    });
+  })();
 </script>
 </body>
 </html>
