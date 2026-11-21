@@ -67,7 +67,7 @@
     <p class="updated">Last updated: November 13, 2026</p>
 
     <div class="short">
-      <p><strong>In short:</strong> Peekee collects nothing about you. It has no accounts, no analytics, no crash reports and no ads. It reads the file you select on your PC to show you a preview, and that stays on your PC. The only things Peekee ever sends over the internet are a check for new versions, a download of the extra picture formats if you click Add, and the supporter check if you ask for it. Peekee does not record or send anything you type.</p>
+      <p><strong>In short:</strong> Peekee collects nothing about you. It has no accounts, no analytics, no crash reports, and no ads. It reads the file you select on your PC to show you a preview, and that stays on your PC. The only things Peekee ever sends over the internet are a check for new versions, a download of the extra picture formats if you click Add, and the supporter check if you ask for it. Peekee does not record or send anything you type.</p>
     </div>
 
     <div class="card">
@@ -77,12 +77,12 @@
 
     <div class="card">
       <h2>What we collect</h2>
-      <p>Nothing. Peekee does not send us your files, your file names, your settings, your usage or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the ones described below, and each of them is either an update check or something you clicked.</p>
+      <p>Nothing. Peekee does not send us your files, your file names, your settings, your usage, or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the ones described below, and each of them is either an update check or something you clicked.</p>
     </div>
 
     <div class="card">
       <h2>What Peekee reads, and where it stays</h2>
-      <p>When you select a file in Explorer, on the Desktop or in an Open or Save window and press the preview key, Peekee asks Windows which file is selected and then reads that file on your PC to draw the preview. While the preview is open it keeps following your selection, so the preview changes when you select another file. Nothing about the file is uploaded or sent anywhere. Peekee does not keep a list of the files you have previewed. It only keeps a count of how many previews it has shown, for a milestone message.</p>
+      <p>When you select a file in Explorer, on the Desktop, or in an Open or Save window and press the preview key, Peekee asks Windows which file is selected and then reads that file on your PC to draw the preview. While the preview is open it keeps following your selection, so the preview changes when you select another file. Nothing about the file is uploaded or sent anywhere. Peekee does not keep a list of the files you have previewed. It only keeps a count of how many previews it has shown, for a milestone message.</p>
       <p>To check whether a file came from the internet, Peekee also reads the file's download mark, which Windows stores with it. That stays on your PC too.</p>
       <p>For some file types, Peekee asks Windows to use the preview component already installed for that type, for example the one that shows PDF files. Those components are made by Microsoft or by other companies and follow their own rules. For archive files, Peekee lists what is inside on your PC, using the tar program that comes with Windows and a library built into Peekee.</p>
       <p>For a few file types Peekee makes a temporary copy of the file in <code>%Temp%\Peekee</code> so that Windows can load it (fonts). Peekee removes these copies after about an hour.</p>
@@ -91,7 +91,7 @@
     <div class="card">
       <h2>The Space key</h2>
       <p>To open the preview when you press Space (or Ctrl+Space or Shift+Space, whichever you choose), Peekee uses a Windows feature called a low-level keyboard hook. Windows tells Peekee about every key press on your PC so that Peekee can look at it, and Peekee passes every key on to the program you are using, except the ones it acts on.</p>
-      <p>Here is what it looks at. Only a few keys matter: the one you chose to open the preview, Esc to close it, and Left and Right to turn pages of a multi-page preview. For each key press, Peekee compares the key's code with these. Keys that are not these are passed on at once, without being looked at any further. It also checks whether Ctrl, Shift, Alt or the Windows key are held down, to tell Space from Ctrl+Space, and which kind of window is in front, so that it only acts in Explorer, on the Desktop and in file windows.</p>
+      <p>Here is what it looks at. Only a few keys matter: the one you chose to open the preview, Esc to close it, and Left and Right to turn pages of a multi-page preview. For each key press, Peekee compares the key's code with these. Keys that are not these are passed on at once, without being looked at any further. It also checks whether Ctrl, Shift, Alt, or the Windows key are held down, to tell Space from Ctrl+Space, and which kind of window is in front, so that it only acts in Explorer, on the Desktop, and in file windows.</p>
       <p>Peekee does not record what you type. It does not keep a list of keys, write keys to a file, or send them anywhere. A key press is looked at in memory for an instant and then forgotten. The part of Peekee that watches keys has no network code at all.</p>
     </div>
 
@@ -118,13 +118,13 @@
 
     <div class="card">
       <h2>Other connections</h2>
-      <p>Apart from the update check, the optional picture download and the supporter check below, Peekee makes no network connections. It opens a web page, such as the User Guide, Ko-fi or this page, only when you click a link, and then your browser loads it as usual. It talks to other programs on your PC, such as a file manager that asks it to preview a file, through a connection that stays inside your PC and is open to your Windows account only.</p>
+      <p>Apart from the update check, the optional picture download, and the supporter check below, Peekee makes no network connections. It opens a web page, such as the User Guide, Ko-fi, or this page, only when you click a link, and then your browser loads it as usual. It talks to other programs on your PC, such as a file manager that asks it to preview a file, through a connection that stays inside your PC and is open to your Windows account only.</p>
     </div>
 
     <div class="card">
       <h2>Supporter check</h2>
       <p>If you have supported Markticulous on Ko-fi, you can tell Peekee so by typing the email you used there and clicking Check. Peekee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your files, and it does not keep the email you typed. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
-      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
+      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages, or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
     </div>
 
     <div class="card">

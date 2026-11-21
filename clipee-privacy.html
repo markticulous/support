@@ -67,7 +67,7 @@
     <p class="updated">Last updated: November 13, 2026</p>
 
     <div class="short">
-      <p><strong>In short:</strong> Clipee collects nothing about you. It has no accounts, no analytics, no crash reports and no ads. Your clipboard history stays on your PC, in an encrypted file. The only things Clipee ever sends over the internet are a check for new versions of Clipee and, if you ask for it, the supporter check.</p>
+      <p><strong>In short:</strong> Clipee collects nothing about you. It has no accounts, no analytics, no crash reports, and no ads. Your clipboard history stays on your PC, in an encrypted file. The only things Clipee ever sends over the internet are a check for new versions of Clipee and, if you ask for it, the supporter check.</p>
     </div>
 
     <div class="card">
@@ -77,7 +77,7 @@
 
     <div class="card">
       <h2>What we collect</h2>
-      <p>Nothing. Clipee does not send us your clipboard history, your snippets, your settings, your usage or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the two described below: the update check, and the supporter check, which runs only if you click Check.</p>
+      <p>Nothing. Clipee does not send us your clipboard history, your snippets, your settings, your usage, or any information about your PC. It has no telemetry and no crash reporting. The only network connections it makes are the two described below: the update check, and the supporter check, which runs only if you click Check.</p>
     </div>
 
     <div class="card">
@@ -93,7 +93,7 @@
       <ul>
         <li><code>clipee.db</code>, your history and snippets;</li>
         <li><code>key.bin</code>, the key that unlocks the history, protected by Windows (DPAPI) so that it can be read only by your Windows account;</li>
-        <li><code>settings.json</code>, your settings, such as your shortcut keys, the apps you told Clipee to ignore and the backup folder. It is a plain file and is not encrypted;</li>
+        <li><code>settings.json</code>, your settings, such as your shortcut keys, the apps you told Clipee to ignore, and the backup folder. It is a plain file and is not encrypted;</li>
         <li><code>error.log</code>, technical details of any problem Clipee ran into, kept on your PC and never sent anywhere. It is replaced by a fresh file once it grows past 1 MB;</li>
         <li>your own sound files, if you picked custom sounds, and the backup password (<code>backup.key</code>), also protected by Windows.</li>
       </ul>
@@ -109,7 +109,7 @@
       <h2>What Clipee does not save</h2>
       <ul>
         <li><strong>Copies marked private.</strong> Most password managers mark what they copy as private. Clipee skips those. This is on by default and is a switch in Settings, under Privacy.</li>
-        <li><strong>Things that look like keys and tokens.</strong> Clipee skips text that looks like an API key, an access token or a private key. This is on by default and is a switch in Settings, under Privacy. It works by pattern, so it can miss some.</li>
+        <li><strong>Things that look like keys and tokens.</strong> Clipee skips text that looks like an API key, an access token, or a private key. This is on by default and is a switch in Settings, under Privacy. It works by pattern, so it can miss some.</li>
         <li><strong>Apps you ignore.</strong> In Settings, under Privacy, you choose programs whose copies are never saved.</li>
         <li><strong>Everything, while paused.</strong> You can pause capture at any time.</li>
         <li><strong>Very large copies.</strong> Text over about 4 million characters and pictures over about 10 MB are not kept.</li>
@@ -144,13 +144,13 @@
 
     <div class="card">
       <h2>Other connections</h2>
-      <p>Apart from the update check and the supporter check below, Clipee makes no network connections. It opens a web page, such as the User Guide, Ko-fi or a web address you copied, only when you click a link or choose to open it, and then your browser loads it as usual. A copied address is opened only if it is a plain web address.</p>
+      <p>Apart from the update check and the supporter check below, Clipee makes no network connections. It opens a web page, such as the User Guide, Ko-fi, or a web address you copied, only when you click a link or choose to open it, and then your browser loads it as usual. A copied address is opened only if it is a plain web address.</p>
     </div>
 
     <div class="card">
       <h2>Supporter check</h2>
       <p>If you have supported Markticulous on Ko-fi, you can tell Clipee so by typing the email you used there and clicking Check. Clipee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your clipboard, and it does not keep the email you typed. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
-      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
+      <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages, or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
     </div>
 
     <div class="card">
