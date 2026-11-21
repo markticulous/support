@@ -124,7 +124,7 @@
 
     <div class="card">
       <h2>Supporter check</h2>
-      <p>If you have supported Backee on Ko-fi, you can tell Backee so by typing the email you used there and clicking Check. Backee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your backups.</p>
+      <p>If you have supported Backee on Ko-fi, you can tell Backee so by typing the email you used there and clicking Check. Backee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your backups. When the check finds your email, Backee also writes a small shared file, <code>%LocalAppData%\Markticulous\supporter.json</code>, that holds only that you are a supporter, the date of the check, and the supporter mark you chose (never your email), so that the other Markticulous apps on your PC can thank you without asking again.</p>
       <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages, or payment numbers. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
     </div>
 
