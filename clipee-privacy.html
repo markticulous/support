@@ -149,7 +149,7 @@
 
     <div class="card">
       <h2>Supporter check</h2>
-      <p>If you have supported Markticulous on Ko-fi, you can tell Clipee so by typing the email you used there and clicking Check. Clipee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your clipboard, and it does not keep the email you typed. Nothing is sent unless you click Check, and you can skip the check entirely.</p>
+      <p>If you have supported Markticulous on Ko-fi, you can tell Clipee so by typing the email you used there and clicking Check. Clipee then sends a scrambled version of that email (a SHA-256 hash) to support.markticulous.com and receives a yes or no. It never sends the email itself, your name, or anything about your clipboard, and it does not keep the email you typed. Nothing is sent unless you click Check, and you can skip the check entirely. When the check finds your email, Clipee also writes a small shared file, <code>%LocalAppData%\Markticulous\supporter.json</code>, that holds only that you are a supporter, the date of the check, and the supporter mark you chose (never your email), so that the other Markticulous apps on your PC can thank you without asking again.</p>
       <p>That server receives a notice from Ko-fi for each payment and keeps only the same kind of hash, the date of the first payment and a count. It keeps no names, amounts, messages, or payment numbers. It sees your IP address when you click Check, and uses it only to limit how many checks one address can make in a minute.</p>
     </div>
 
