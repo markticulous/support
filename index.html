@@ -843,7 +843,8 @@
   }
 
   // Maker stats to the right of each app's second button, only when the page is opened with ?n (a private view; ordinary visits fetch nothing).
-  // dl: installer and portable downloads, all versions. upd: update packages fetched (existing installs updating).
+  // dl: installer and portable downloads, all versions. upd: update packages fetched (existing installs updating). chk: update checks,
+  // for apps that update through a signed update.json (Backee, Findee): each installed copy fetches it once a day, so it is not a download.
   // vis: unique visitors to the GitHub repo in the last 14 days, from stats.json, which a daily workflow writes (traffic needs a token).
   if (new URLSearchParams(location.search).has('n')) {
     const stats = fetch('stats.json?' + Date.now()).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
@@ -855,12 +856,14 @@
       Promise.all([releases, stats]).then(([rels, st]) => {
         const parts = [];
         if (Array.isArray(rels)) {
-          let n = 0, u = 0;
+          let n = 0, u = 0, c = 0;
           for (const rel of rels) for (const a of rel.assets || []) {
             if (/\.nupkg$/i.test(a.name)) u += a.download_count || 0;
-            else if (!/^RELEASES$|^releases\..*\.json$|user-guide|-module-/i.test(a.name)) n += a.download_count || 0;
+            else if (/^update\.json$/i.test(a.name)) c += a.download_count || 0;   // its .sig comes with every check: counted by neither
+            else if (!/^RELEASES$|^releases\..*\.json$|^update\.json\.sig$|user-guide|-module-/i.test(a.name)) n += a.download_count || 0;
           }
           parts.push(n.toLocaleString() + ' dl', u.toLocaleString() + ' upd');
+          if (c) parts.push(c.toLocaleString() + ' chk');
         }
         const v = st && st[repo.split('/')[1].toLowerCase()];
         if (v && typeof v.visitors === 'number') parts.push(v.visitors.toLocaleString() + ' vis');
