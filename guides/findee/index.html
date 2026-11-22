@@ -402,7 +402,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 <header class="masthead">
   <div class="masthead-in">
     <h1>User Guide</h1>
-    <p class="standfirst">Findee finds your files, folders and apps as you type. Press <kbd>Alt</kbd>+<kbd>Space</kbd>, type a few letters, and press <kbd>Enter</kbd>. It learns what you open, so the things you use most come first.</p>
+    <p class="standfirst">Findee finds your files, folders, and apps instantly, as you type &ndash; no waiting for a search to complete. Press <kbd>Alt</kbd>+<kbd>Space</kbd>, type a few letters, and press <kbd>Enter</kbd>. It learns what you open, so the things you use most come first.</p>
     <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more. It lists the sections your word appears in and marks each place on the page; the &#10005; clears it. Once you are well down the page, an arrow at the bottom right takes you back to the top.</p>
   </div>
 </header>
@@ -436,14 +436,14 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <ol class="steps">
         <li>Run the Findee setup. At the end, leave <strong>Open Findee</strong> ticked. Findee waits in the tray, next to the clock. If you cannot see its icon, look under the <strong>^</strong> arrow with the other hidden tray icons.</li>
         <li>Press <kbd>Alt</kbd>+<kbd>Space</kbd>. A search box opens in the upper part of your screen.</li>
-        <li>Type a few letters of a file, a folder or an app. The results appear as you type.</li>
+        <li>Type a few letters of a file, a folder, or an app. The results appear as you type.</li>
         <li>Press <kbd>Enter</kbd> to open the first result, or use <kbd>&darr;</kbd> and <kbd>&uarr;</kbd> to pick another one.</li>
       </ol>
       <p>That is all. The first time, Findee needs a short while to list the files on your drives. The search box says so while it works, and it can be used as soon as the list is ready. To have Findee ready every time you sign in, open <strong>Settings</strong> and tick <strong>Start with Windows</strong> (see <a href="#settings">Settings</a>).</p>
       <figure>
         <picture>
           <source srcset="images/popup-recent-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/popup-recent.webp" alt="The Findee search box with nothing typed, and under it a list headed Recent with a Word document, Notepad, a spreadsheet, a folder, Calculator, another document and a PDF">
+          <img src="images/popup-recent.webp" alt="The Findee search box with nothing typed, and under it a list headed Recent with a Word document, Notepad, a spreadsheet, a folder, Calculator, another document, and a PDF">
         </picture>
         <figcaption>The search box before you type anything. It shows what you opened most, under <strong>Recent</strong>.</figcaption>
       </figure>
@@ -468,8 +468,12 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="opening">
       <h2 class="sec"><span class="n">03</span>Opening Findee</h2>
       <h3>The shortcut</h3>
-      <p>Press <kbd>Alt</kbd>+<kbd>Space</kbd> from anywhere. The search box opens with the cursor ready, so you can type at once. Press the same shortcut again, or <kbd>Esc</kbd>, to close it. It also closes when you click on something else.</p>
-      <p>If another program already uses <kbd>Alt</kbd>+<kbd>Space</kbd> (PowerToys Run does), choose a different shortcut in <strong>Settings &rarr; General</strong>. Findee warns you about clashes it knows of, but never stops you from choosing.</p>
+      <p>Press <kbd>Alt</kbd>+<kbd>Space</kbd> from anywhere. The search box opens with the cursor ready, so you can type at once. Press the same shortcut again, or <kbd>Esc</kbd>, to close it. It also closes when you click on something else. It stays open while Clipee or the Windows clipboard history (<kbd>Win</kbd>+<kbd>V</kbd>) is in front, so you can pick something to paste into it.</p>
+      <p>If another program already uses <kbd>Alt</kbd>+<kbd>Space</kbd> (PowerToys Run does), choose a different shortcut in <strong>Settings &rarr; General</strong>. A shortcut that another Markticulous app already uses is not saved, and Findee says which app uses it.</p>
+      <h3>Size and place</h3>
+      <p>The search box opens showing up to 8 whole results. To make it bigger or smaller, drag the small grip of three lines in its lower-right corner. It can be any width and any height, and Findee remembers the size. The edges do not resize it. While you drag the grip, the grip and the line of keys under the results are hidden.</p>
+      <p>To move the search box, drag any empty part of it. Findee remembers the place for each monitor, and opens the search box on the monitor where the pointer is.</p>
+      <p>The <strong>Best size</strong> button, at the top right beside the search box, puts things back. <strong>Click</strong> it for the best size and the usual place, centred a quarter of the way down the screen. <strong>Right-click</strong> it to centre the search box only, keeping its size. It is dimmed while the search box already has its best size and place.</p>
       <h3>The tray icon</h3>
       <p>The Findee icon sits in the tray, next to the clock. <strong>Left-click</strong> it to open the search box. <strong>Right-click</strong> it to open its menu:</p>
       <dl class="defs">
@@ -507,14 +511,14 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <table class="ref">
         <thead><tr><th>Filter</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td>kind:image</td><td>Only one kind of item. The kinds are <strong>image</strong>, <strong>document</strong>, <strong>audio</strong>, <strong>video</strong>, <strong>archive</strong>, <strong>email</strong>, <strong>code</strong>, <strong>folder</strong> and <strong>app</strong>. For example, <span class="path">kind:document</span> finds PDF, Word, Excel, PowerPoint, text and similar files.</td></tr>
+          <tr><td>kind:image</td><td>Only one kind of item. The kinds are <strong>image</strong>, <strong>document</strong>, <strong>audio</strong>, <strong>video</strong>, <strong>archive</strong>, <strong>email</strong>, <strong>code</strong>, <strong>folder</strong>, and <strong>app</strong>. For example, <span class="path">kind:document</span> finds PDF, Word, Excel, PowerPoint, text, and similar files.</td></tr>
           <tr><td>ext:pdf or *.pdf</td><td>Only files that end in <span class="path">.pdf</span>. Use it more than once to allow several endings: <span class="path">ext:jpg ext:png</span>.</td></tr>
           <tr><td>in:projects</td><td>Only items whose folder path contains the text, such as <span class="path">C:\Users\Sam\Projects</span>. The text cannot contain a space.</td></tr>
           <tr><td>modified:week</td><td>Only items changed in that time: <strong>today</strong>, <strong>yesterday</strong>, <strong>week</strong> (the last 7 days), <strong>month</strong> (the last 30 days), <strong>year</strong> (the last 365 days), a year such as <span class="path">modified:2025</span>, or a month such as <span class="path">modified:2025-10</span>.</td></tr>
-          <tr><td>size:&gt;10mb</td><td>Only files bigger (<span class="path">&gt;</span>) or smaller (<span class="path">&lt;</span>) than a size. The units are <strong>b</strong>, <strong>kb</strong>, <strong>mb</strong> and <strong>gb</strong>. For example, <span class="path">size:&lt;500kb</span>.</td></tr>
+          <tr><td>size:&gt;10mb</td><td>Only files bigger (<span class="path">&gt;</span>) or smaller (<span class="path">&lt;</span>) than a size. The units are <strong>b</strong>, <strong>kb</strong>, <strong>mb</strong>, and <strong>gb</strong>. For example, <span class="path">size:&lt;500kb</span>.</td></tr>
         </tbody>
       </table>
-      <p>You can use filters on their own, with no words, as long as one of them is <span class="path">ext:</span>, <span class="path">kind:</span> or <span class="path">in:</span>. For example, <span class="path">kind:image modified:week</span> lists the pictures from the last week. Something that looks like a filter but is not one Findee knows, such as <span class="path">author:sam</span>, is searched for as an ordinary word.</p>
+      <p>You can use filters on their own, with no words, as long as one of them is <span class="path">ext:</span>, <span class="path">kind:</span>, or <span class="path">in:</span>. For example, <span class="path">kind:image modified:week</span> lists the pictures from the last week. Something that looks like a filter but is not one Findee knows, such as <span class="path">author:sam</span>, is searched for as an ordinary word.</p>
       <figure>
         <picture>
           <source srcset="images/popup-filter-dark.webp" media="(prefers-color-scheme: dark)">
@@ -522,9 +526,9 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         </picture>
         <figcaption><span class="path">ext:pdf report</span> lists only the PDF files with <strong>report</strong> in their name.</figcaption>
       </figure>
-      <p>Filters also decide which groups show. <span class="path">kind:app</span> shows only apps, and <span class="path">kind:email</span> shows only emails. Filters that apply only to files and folders (<span class="path">ext:</span>, <span class="path">in:</span>, <span class="path">size:</span>, <span class="path">modified:</span> and the file kinds) hide the Apps group. Because Windows Search cannot apply them, they also hide the Inside files and emails group, with two exceptions: <span class="path">kind:document</span> and <span class="path">kind:email</span> keep it.</p>
+      <p>Filters also decide which groups show. <span class="path">kind:app</span> shows only apps, and <span class="path">kind:email</span> shows only emails. Filters that apply only to files and folders (<span class="path">ext:</span>, <span class="path">in:</span>, <span class="path">size:</span>, <span class="path">modified:</span>, and the file kinds) hide the Apps group. Because Windows Search cannot apply them, they also hide the Inside files and emails group, with two exceptions: <span class="path">kind:document</span> and <span class="path">kind:email</span> keep it.</p>
       <h3>Small typing mistakes</h3>
-      <p>When you type <strong>one word of 4 to 12 letters</strong> and Findee finds <strong>fewer than 5</strong> results, it also tries the word with <strong>one letter missing</strong> or <strong>two neighbouring letters swapped</strong>. So <span class="path">reprot</span> finds <span class="path">report</span>. In other words, it puts right a letter typed twice by mistake (<span class="path">reeport</span>) and two letters typed in the wrong order. The extra matches are shown below the better ones.</p>
+      <p>When you type <strong>one word of 4 to 12 letters</strong> and Findee finds <strong>fewer than 5</strong> results, it also tries the word with <strong>one letter missing</strong> or <strong>two <span data-sp="neighboring">neighbouring</span> letters swapped</strong>. So <span class="path">reprot</span> finds <span class="path">report</span>. In other words, it puts right a letter typed twice by mistake (<span class="path">reeport</span>) and two letters typed in the wrong order. The extra matches are shown below the better ones.</p>
       <figure>
         <picture>
           <source srcset="images/popup-typo-dark.webp" media="(prefers-color-scheme: dark)">
@@ -544,7 +548,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Results come in up to three groups, each with a heading. A group with nothing to show is left out.</p>
       <ol class="steps">
         <li><strong>Apps</strong> (up to 5). An app that matches ranks above a file with the same kind of match.</li>
-        <li><strong>Files and folders</strong> (the best 50). Each row shows the name, with the matching part in bold, and the folder it is in underneath. Files in dependency and build folders, such as <span class="path">node_modules</span>, <span class="path">site-packages</span>, <span class="path">.git</span>, <span class="path">bin</span> and <span class="path">obj</span>, are ranked lower, so your own files come first. They can still be found.</li>
+        <li><strong>Files and folders</strong> (the best 50). Each row shows the name, with the matching part in bold, and the folder it is in underneath. Files in dependency and build folders, such as <span class="path">node_modules</span>, <span class="path">site-packages</span>, <span class="path">.git</span>, <span class="path">bin</span>, and <span class="path">obj</span>, are ranked lower, so your own files come first. They can still be found.</li>
         <li><strong>Inside files and emails</strong> (up to 20). It appears a moment after the others, below them, without moving your selection.</li>
       </ol>
       <figure>
@@ -562,14 +566,15 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>&darr; and &uarr;</td><td>Move one result. The group headings are skipped.</td></tr>
           <tr><td>Page Down and Page Up</td><td>Move eight results.</td></tr>
           <tr><td>Enter or double-click</td><td>Open the result.</td></tr>
-          <tr><td>Ctrl+Enter or right-click</td><td>Open the folder it is in, with the item selected in File Explorer.</td></tr>
+          <tr><td>Ctrl+Enter</td><td>Open the folder it is in, with the item selected in File Explorer.</td></tr>
+          <tr><td>Right-click, Shift+F10, or the Menu key</td><td>Open a menu of what you can do with the result (see <a href="#actions">Quick actions and preview</a>).</td></tr>
           <tr><td>Esc</td><td>Close the search box.</td></tr>
         </tbody>
       </table>
-      <p>Typing always goes to the search box, whichever result is selected. If something you open has gone, the row says <strong>This file is no longer there.</strong> (or <strong>This folder is no longer there.</strong>) and stays where it is, and Findee forgets it.</p>
+      <p>Typing always goes to the search box, whichever result is selected. If something you open has gone, the line under its name says, in cyan, <strong>This file is no longer there.</strong> (or <strong>This folder is no longer there.</strong>). The row stays where it is, and Findee forgets it.</p>
       <p>Under the results, a line of small, softer text lists the keys that work on the selected result (see <a href="#actions">Quick actions and preview</a>). It changes with the result, since not every action fits every kind of result.</p>
       <h3>Recent</h3>
-      <p>With nothing typed in the search box, Findee shows your 8 strongest items, with the heading <strong>Recent</strong>: the files, folders and apps you open most (see the first picture in this guide). Before you have opened anything, the box says <strong>Type to find files, folders and apps.</strong></p>
+      <p>With nothing typed in the search box, Findee shows your 8 strongest items, with the heading <strong>Recent</strong>: the files, folders, and apps you open most (see the first picture in this guide). Before you have opened anything, the box says <strong>Type to find files, folders, and apps.</strong></p>
     </section>
 
     <section id="learning">
@@ -592,31 +597,39 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <tbody>
           <tr><td>Enter</td><td>Opens the result.</td></tr>
           <tr><td>Ctrl+Enter</td><td>Opens its folder in File Explorer with the item selected. For an app, it opens the folder the program is in (not available for Microsoft Store apps).</td></tr>
-          <tr><td>Ctrl+C</td><td>Copies the file, so you can paste it in File Explorer, an email or a chat. If you have selected some of the text in the search box, <kbd>Ctrl</kbd>+<kbd>C</kbd> copies that text instead.</td></tr>
+          <tr><td>Ctrl+C</td><td>Copies the file, so you can paste it in File Explorer, an email, or a chat. If you have selected some of the text in the search box, <kbd>Ctrl</kbd>+<kbd>C</kbd> copies that text instead.</td></tr>
           <tr><td>Ctrl+Shift+C</td><td>Copies the full path of the file or folder.</td></tr>
           <tr><td>Ctrl+O</td><td>Opens the Windows <strong>Open with</strong> list for a file.</td></tr>
-          <tr><td>Ctrl+Shift+Enter</td><td>Runs a program as administrator (for apps from the Start menu, and for <span class="path">.exe</span>, <span class="path">.bat</span>, <span class="path">.cmd</span> and <span class="path">.ps1</span> files). Windows asks for permission first.</td></tr>
-          <tr><td>Space</td><td>Previews the file with Peekee (see below).</td></tr>
-          <tr><td>Shift+F10 or the Menu key</td><td>Opens a small menu with the same actions. Those that do not fit the result are dimmed.</td></tr>
+          <tr><td>Ctrl+Shift+Enter</td><td>Runs a program as administrator (for apps from the Start menu, and for <span class="path">.exe</span>, <span class="path">.bat</span>, <span class="path">.cmd</span>, and <span class="path">.ps1</span> files). Windows asks for permission first.</td></tr>
+          <tr><td>Space</td><td>Previews the file with Peekee, while Peekee is running (see below).</td></tr>
+          <tr><td>Right-click, Shift+F10, or the Menu key</td><td>Opens a small menu with the same actions: <strong>Open</strong>, <strong>Open folder</strong>, <strong>Copy</strong>, <strong>Copy path</strong>, <strong>Open with</strong>, <strong>Run as administrator</strong>, and <strong>Preview with Peekee</strong>. Those that do not fit the result are greyed.</td></tr>
         </tbody>
       </table>
-      <p>You can also <strong>drag</strong> a file or folder from the list into File Explorer or another program, to copy it there. Apps cannot be dragged.</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-menu-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-menu.webp" alt="The search box with results for report and, open over the list, the menu of the selected result: Open, Open folder, Copy, Copy path, Open with, Run as administrator greyed, and Preview with Peekee, each with its key">
+        </picture>
+        <figcaption>The menu of a result. Run as administrator is greyed, because it does not fit a document.</figcaption>
+      </figure>
+      <p>You can also <strong>drag</strong> a file or folder from the list into File Explorer, onto the desktop, or into another program. A drag always makes a <strong>shortcut</strong> to the item there. Findee never moves or changes your files. To copy the file itself, press <kbd>Ctrl</kbd>+<kbd>C</kbd> and paste it. Apps cannot be dragged.</p>
       <figure>
         <picture>
           <source srcset="images/popup-actions-dark.webp" media="(prefers-color-scheme: dark)">
           <img src="images/popup-actions.webp" alt="The search box with results for report, and under the list a line of keys that ends with Space preview">
         </picture>
-        <figcaption>When Peekee is installed, the line under the results ends with <strong>Space preview</strong>.</figcaption>
+        <figcaption>When Peekee is running and you have moved through the results, the line under the results ends with <strong>Space preview</strong>.</figcaption>
       </figure>
       <h3>Previewing with Peekee</h3>
-      <p><strong>Peekee</strong> is a free Markticulous app that shows a quick look at a file without opening it. Findee uses it for previews. If Peekee is not running, Findee starts it.</p>
+      <p><strong>Peekee</strong> is a free Markticulous app that shows a quick look at a file without opening it. Findee uses it for previews while Peekee is running. If Peekee is installed but not running, <kbd>Space</kbd> does nothing and <strong>Preview with Peekee</strong> is greyed in the menu. Start Peekee, and previews work.</p>
       <p>Space is also a letter in the search box, so Findee only treats it as &ldquo;preview&rdquo; once you have started moving through the results. The rule is simple:</p>
       <ul>
-        <li>After you move the selection with <kbd>&darr;</kbd>, <kbd>&uarr;</kbd>, <kbd>Page Up</kbd>, <kbd>Page Down</kbd> or a click, and have not typed since, <kbd>Space</kbd> previews the selected file.</li>
+        <li>After you move the selection with <kbd>&darr;</kbd>, <kbd>&uarr;</kbd>, <kbd>Page Up</kbd>, <kbd>Page Down</kbd>, or a click, and have not typed since, <kbd>Space</kbd> previews the selected file.</li>
         <li>While you are typing, <kbd>Space</kbd> types a space, as you would expect. Typing anything puts you back in typing mode.</li>
         <li>For an app, or for an email, <kbd>Space</kbd> always types a space.</li>
       </ul>
-      <p>If Peekee is not installed, <kbd>Space</kbd> shows a short line once each time you open the search box: <strong>Install Peekee, a free Markticulous app, to preview files with Space.</strong> The word Peekee is a link to its page. Until Peekee is installed, <span class="mute">Space preview</span> is also left out of the key line under the results.</p>
+      <p>While the preview shows, Findee keeps the keyboard, so you can go on moving through the results and the preview follows. The search box slides aside, or narrows, to sit beside the preview, and goes back to its place when the preview closes. Press <kbd>Space</kbd> again to close the preview.</p>
+      <p>If Peekee is not installed, <kbd>Space</kbd> shows a short line once each time you open the search box: <strong>Install Peekee, a free Markticulous app, to preview files with Space.</strong> The word Peekee is a link to its page. Until Peekee is running, <span class="mute">Space preview</span> is also left out of the key line under the results.</p>
       <figure>
         <picture>
           <source srcset="images/popup-peekee-hint-dark.webp" media="(prefers-color-scheme: dark)">
@@ -646,15 +659,16 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <figure>
         <picture>
           <source srcset="images/settings-general-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/settings-general.webp" alt="The General page of Settings with the shortcut box, Start with Windows, and the Updates section">
+          <img src="images/settings-general.webp" alt="The General page of Settings with Start with Windows, the Shortcut section with a box showing Alt+Space, and the Updates section with the Check now button and the text Findee is up to date">
         </picture>
         <figcaption>Settings, General page.</figcaption>
       </figure>
       <dl class="defs">
-        <dt>Open Findee with</dt>
-        <dd>The shortcut that opens the search box. Click the box and press the keys you want, for example <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd>, <kbd>Shift</kbd> or <kbd>Win</kbd> with a letter, a digit, <kbd>Space</kbd> or a function key. Findee warns you when another program, including the other Markticulous apps, already uses the same shortcut, and leaves the choice to you. The standard shortcut is <kbd>Alt</kbd>+<kbd>Space</kbd>.</dd>
         <dt>Start with Windows</dt>
         <dd>Opens the tray icon when you sign in to Windows, so the shortcut is ready. The index is kept up to date by the service whether or not Findee is open.</dd>
+        <dt>Shortcut</dt>
+        <dd>The keys that open the search box, under <strong>Open the search</strong>. Click the box and press the keys you want, for example <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>. <kbd>Esc</kbd> stops without a change and keeps the old keys. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd>, <kbd>Shift</kbd>, or <kbd>Win</kbd> with a letter, a digit, <kbd>Space</kbd>, or a function key. The standard shortcut is <kbd>Alt</kbd>+<kbd>Space</kbd>. Press it again to close the search; <kbd>Esc</kbd> always does.</dd>
+        <dd>A message to the right of the box says what happened. <strong>&#10003; Saved</strong> shows in cyan. These show in red, and the old keys stay: <strong>&#9888; Use Ctrl, Alt, Shift, or Win with a letter, digit, Space, or F-key</strong>; <strong>&#9888; Already used by another app</strong> (Windows refused the keys); and <strong>&#9888; {App} already uses {keys} for {action}. Not saved.</strong> when another Markticulous app has those keys. If another Markticulous app takes the same keys later, the page says <strong>{App} also uses {keys} for {action}.</strong> in amber when you open it, until one of them changes.</dd>
         <dt>Updates</dt>
         <dd>The same block in every Markticulous app. See below.</dd>
       </dl>
@@ -662,58 +676,73 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <figure>
         <picture>
           <source srcset="images/settings-updates-ready-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/settings-updates-ready.webp" alt="The Updates section of the General page with Update automatically ticked, an orange dot and the button Restart to update, and the text that a version is ready">
+          <img src="images/settings-updates-ready.webp" alt="The Updates section of the General page with Update automatically ticked, an orange dot, and the button Restart to update, and the text that a version is ready">
         </picture>
         <figcaption>Settings, General page, with an update ready to install.</figcaption>
       </figure>
       <ul>
         <li><strong>Update automatically</strong> is ticked unless you change it. Findee installs an update only when its search and Settings windows are closed, and within 14 days even when this is off. Your settings and history are kept.</li>
         <li>One button, whose words follow the state: <strong>Check now</strong>; <strong>Checking&hellip;</strong>; <strong>Downloading&hellip;</strong> with a breathing orange dot; and <strong>Restart to update</strong> with a blinking dot, which installs the ready update at once. A button that has nothing to do is dimmed.</li>
-        <li>Beside the button, the status: <strong>Checking for updates&hellip;</strong>, <strong>Downloading {version}&hellip;</strong>, <strong>Version {version} is ready.</strong> or <strong>Findee is up to date.</strong> (in cyan); <strong>Update check failed.</strong> (in red); or <strong>Updates work in the installed app.</strong> in a copy of Findee that was not installed with the setup.</li>
+        <li>Beside the button, the status: <strong>Checking for updates&hellip;</strong>, <strong>Downloading {version}&hellip;</strong>, <strong>Version {version} is ready.</strong> or <strong>Findee is up to date.</strong> (in cyan); <strong>Update check failed.</strong> or <strong>The Findee service is not running, so updates are not checked.</strong> (in red); or <strong>Updates work in the installed app.</strong> in a copy of Findee that was not installed with the setup.</li>
         <li>Under it, <strong>Last checked</strong> says when the last check was made, for example <strong>Last checked today at 16:15.</strong> It stays hidden until the first check.</li>
       </ul>
+      <h3>Appearance</h3>
+      <figure>
+        <picture>
+          <source srcset="images/settings-appearance-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-appearance.webp" alt="The Appearance page of Settings with Theme set to Follow Windows, the search window set to Custom with the cyan swatch chosen, the box showing #06B6D4 beside the eyedropper button, and below them a small preview of the search window in cyan">
+        </picture>
+        <figcaption>Settings, Appearance page, with a custom search window <span data-sp="color">colour</span> and its preview.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>Theme</dt>
+        <dd><strong>Follow Windows</strong> (the standard), <strong>Light</strong>, or <strong>Dark</strong>. It applies at once to the search box, Settings, the tray menu, and dialogs, and is remembered. With Follow Windows, Findee changes when Windows changes between light and dark.</dd>
+        <dt>Search window <span data-sp="color">colour</span></dt>
+        <dd>The <span data-sp="color">colour</span> of the search window only: the line under the search box, the selected result, and the matched letters in result names. Settings, the tray menu, and dialogs always keep the Windows accent <span data-sp="color">colour</span>. <strong>Follow Windows</strong> (the standard) uses the accent <span data-sp="color">colour</span> set in Windows and changes when you change it there. <strong>Custom</strong> lets you click one of the eight <span data-sp="colors">colours</span>, take a <span data-sp="color">colour</span> from anywhere on the screen with the eyedropper button beside the box, or type any <span data-sp="color">colour</span> as six hex digits, for example <strong>#06B6D4</strong>; Findee uses it as soon as it is complete. Something that is not a <span data-sp="color">colour</span> is not used, and a red note beside the box says so. With the eyedropper, a magnifier follows the pointer and shows the <span data-sp="color">colour</span> under it; click to take it, or press Esc or right-click to stop without a change. Findee keeps the search window readable: the selected row is made a little lighter or darker where needed so its text reads clearly, and the matched letters take a shade of the <span data-sp="color">colour</span> that reads on the list and on the selected row, in light and dark. The <strong>Preview</strong> under the <span data-sp="color">colour</span> choice shows a small search window with the <span data-sp="color">colour</span> and the theme you have now, and changes as you pick. The <span data-sp="color">colour</span> you pick is remembered when you go back to Follow Windows.</dd>
+      </dl>
       <h3>Index</h3>
       <figure>
         <picture>
           <source srcset="images/settings-index-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/settings-index.webp" alt="The Index page of Settings with a row for each drive showing how many files and folders are indexed and that it is ready, then Include hidden and system files, Rebuild index and the list of folders left out of the index">
+          <img src="images/settings-index.webp" alt="The Index page of Settings with a row for each drive showing how many files and folders are indexed and that it is ready, then Include hidden and system files, Rebuild index, and the list of folders left out of the index">
         </picture>
         <figcaption>Settings, Index page.</figcaption>
       </figure>
       <dl class="defs">
         <dt>Drives</dt>
-        <dd>One row for each fixed NTFS drive: its letter, how many files and folders are in the index, when it was last updated (for example <strong>just now</strong> or <strong>3 minutes ago</strong>) and its state: <strong>Ready</strong>, <strong>Building&hellip;</strong> or <strong>Waiting to retry</strong>. If the Findee service is not running, a line says so in place of the rows.</dd>
+        <dd>One row for each fixed NTFS drive: its letter, how many files and folders are in the index, when it was last updated (for example <strong>just now</strong> or <strong>3 minutes ago</strong>), and its state: <strong>Ready</strong>, <strong>Building&hellip;</strong>, or <strong>Waiting to retry</strong>. If the Findee service is not running, the line <strong>The Findee service is not running, so the index is not being updated.</strong> takes the place of the rows.</dd>
         <dt>Include hidden and system files</dt>
         <dd>Off by default. Turning it on or off rebuilds your index. It applies to your index only.</dd>
         <dt>Rebuild index</dt>
         <dd>Makes the list again from scratch. Searches keep working while it is built. The button is dimmed while a build is already under way, and when the service is not running.</dd>
         <dt>Left out of the index</dt>
-        <dd>The folders Findee never lists: the Windows folder, Program Files, ProgramData, the recycle bin, System Volume Information, Windows.old, other people&rsquo;s profile folders and your own AppData folder. They hold system files, installed programs and other people&rsquo;s data, and leaving them out keeps the index small and the results about your own files. The &#9432; beside the heading says the same.</dd>
+        <dd>The folders Findee never lists: the Windows folder, Program Files, ProgramData, the recycle bin, System Volume Information, Windows.old, other people&rsquo;s profile folders, and your own AppData folder. They hold system files, installed programs, and other people&rsquo;s data, and leaving them out keeps the index small and the results about your own files. The &#9432; beside the heading says the same.</dd>
       </dl>
       <h3>About</h3>
       <figure>
         <picture>
           <source srcset="images/settings-about-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="images/settings-about.webp" alt="The About page of Settings with the Findee icon and name, the Open data folder button, and the support section with the Support Markticulous button">
+          <img src="images/settings-about.webp" alt="The About page of Settings with the Findee icon and wordmark, the Releases on GitHub link, the Open data folder button, the Support section with the Support Markticulous button, the Why I build these link, and the already supported button, and the Credits section">
         </picture>
-        <figcaption>Settings, About page. The support section is at the bottom (see <a href="#support">Support Markticulous</a>).</figcaption>
+        <figcaption>Settings, About page. The Support section is near the bottom (see <a href="#support">Support Markticulous</a>).</figcaption>
       </figure>
-      <p>The Findee name drawn as a wordmark beside the app icon, with the version. <strong>Open data folder</strong> opens <span class="path">%LocalAppData%\Findee</span>, where your settings and your history are kept. Below are the support section and the credits.</p>
+      <p>The Findee name drawn as a wordmark beside the app icon, with the version. <strong>Releases on GitHub</strong> opens the list of Findee versions and their release notes in your web browser. <strong>Open data folder</strong> opens <span class="path">%LocalAppData%\Findee</span>, where your settings and your history are kept. Below are <strong>Support</strong> (see <a href="#support">Support Markticulous</a>) and <strong>Credits</strong>: Findee bundles no third-party fonts, icons, or libraries.</p>
       <h3>User Guide</h3>
       <p>The last entry in the list opens this guide in your web browser.</p>
     </section>
 
     <section id="privacy">
       <h2 class="sec"><span class="n">10</span>Privacy: what Findee can see</h2>
-      <p>Findee collects <strong>nothing about you</strong>. It has no telemetry, no ads and no account. Everything it knows stays on your PC.</p>
+      <p>Findee collects <strong>nothing about you</strong>. It has no telemetry, no ads, and no account. Everything it knows stays on your PC.</p>
       <h3>What the index holds</h3>
-      <p>For every file and folder, the index holds four things: its <strong>name</strong>, the <strong>folder</strong> it is in, its <strong>size</strong> and the <strong>date</strong> it was last changed. It <strong>never holds what is inside a file</strong>: no text, no pictures, no mail.</p>
+      <p>For every file and folder, the index holds four things: its <strong>name</strong>, the <strong>folder</strong> it is in, its <strong>size</strong>, and the <strong>date</strong> it was last changed. It <strong>never holds what is inside a file</strong>: no text, no pictures, no mail.</p>
       <h3>One index for each person</h3>
       <p>The Findee service builds a separate index for each Windows account that uses Findee on the PC. Yours lives under <span class="path">%ProgramData%\Findee\users</span>, in a folder named after your account, and only your account and Windows itself can read it. Another person on the same PC cannot see yours, and you cannot see theirs.</p>
       <h3>Only what you can open</h3>
       <p>Your index holds only the names you could see in File Explorer. While it builds your index, the service leaves out every folder you are not allowed to open, together with everything inside that folder. A private folder of another person, or a folder whose permissions keep you out, never reaches your index at all. Findee also checks a result again before it shows it, as a second check, so a folder that was closed to you after the index was built does not show either.</p>
       <h3>What Findee keeps in your account</h3>
-      <p>Your history of what you open (see <a href="#learning">How the learning works</a>) and your settings are in <span class="path">%LocalAppData%\Findee</span>, up to 2,000 items. They hold the name of each item, its full path, how many times you opened it and when. They are never shared.</p>
+      <p>Your history of what you open (see <a href="#learning">How the learning works</a>) and your settings are in <span class="path">%LocalAppData%\Findee</span>, up to 2,000 items. They hold the name of each item, its full path, how many times you opened it, and when. They are never shared.</p>
+      <p>The one exception is the supporter check. When it finds your email, Findee also writes a small shared file, <span class="path">%LocalAppData%\Markticulous\supporter.json</span>, that holds only that you are a supporter, the date of the check, and the supporter mark you chose (never your email), so that the other Markticulous apps on your PC can thank you without asking again. Uninstalling Findee leaves this file, because the other apps use it.</p>
       <h3>Windows Search</h3>
       <p>The <strong>Inside files and emails</strong> group is answered by Windows Search at the moment you search. Findee does not store those answers. Windows Search follows its own rules about who may see what, and Findee shows you only what it gives back to you.</p>
       <h3>What goes over the network</h3>
@@ -744,11 +773,11 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <li>With <strong>Update automatically</strong> on, the update installs by itself once Findee is not in use: the search box and Settings are closed, and the search box has not been opened for a couple of minutes. Findee closes, the update installs, and Findee opens again.</li>
         <li>With it off, the update waits for you. Press <strong>Restart to update</strong> in Settings, or choose <strong>Restart to update</strong> in the tray menu, whenever you are ready. <strong>An update still installs by itself within 14 days even when this is off</strong>, and only when Findee is not in use, so nobody stays on an old version for ever.</li>
       </ul>
-      <p>Your settings, your history and your index are kept. You see the orange dot on the tray icon while an update is on its way (see <a href="#opening">Opening Findee</a>).</p>
+      <p>Your settings, your history, and your index are kept. You see the orange dot on the tray icon while an update is on its way (see <a href="#opening">Opening Findee</a>).</p>
       <h3>Removing Findee</h3>
-      <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Findee and choose <strong>Uninstall</strong>. Uninstalling:</p>
+      <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Findee, and choose <strong>Uninstall</strong>. Uninstalling:</p>
       <ul>
-        <li>closes Findee, then removes the program, the Findee service and the Start menu shortcut;</li>
+        <li>closes Findee, then removes the program, the Findee service, and the Start menu shortcut;</li>
         <li>removes <span class="path">%ProgramData%\Findee</span>, with every index. They are a copy of your file list, and Findee makes them again if you reinstall;</li>
         <li>for <strong>the account that uninstalls</strong>, removes the Start with Windows entry, Findee&rsquo;s place in the shared shortcut list of the Markticulous apps, and <span class="path">%LocalAppData%\Findee</span> (history and settings).</li>
       </ul>
@@ -759,7 +788,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h2 class="sec"><span class="n">12</span>Why Findee is fast</h2>
       <ul>
         <li><strong>It reads the file list straight from NTFS.</strong> The service reads the drive&rsquo;s own table of every file instead of walking through the folders one by one, so the first list of a whole drive is quick to make.</li>
-        <li><strong>Afterwards it only follows the changes.</strong> Windows keeps a journal of every file that is created, renamed or deleted. The service reads just that, so it stays up to date without scanning again.</li>
+        <li><strong>Afterwards it only follows the changes.</strong> Windows keeps a journal of every file that is created, renamed, or deleted. The service reads just that, so it stays up to date without scanning again.</li>
         <li><strong>The search runs inside the app.</strong> There is no trip to the service for each letter you type. The app maps the list into memory and scans all the names at once on several processor cores.</li>
         <li><strong>Typing more narrows what is already found.</strong> When you add a letter to what you typed, Findee looks only through the earlier matches.</li>
         <li><strong>Folder paths are built only for the rows you can see.</strong></li>
@@ -785,27 +814,27 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h2 class="sec"><span class="n">13</span>Support Markticulous</h2>
       <p>Findee is made by one person who cares about the details. It will always be free. It has no ads and no tracking. If it saves you time, you can help keep it going with a coffee on <a href="https://ko-fi.com/markticulous">Ko-fi</a>.</p>
       <p>You will always find the support button under <strong>Settings &rarr; About</strong>, next to a link that explains <a href="https://markticulous.github.io/support/?app=findee">why these apps are made</a>.</p>
-      <p>Findee may ask for support once in a while. The first time comes after you have opened 250 results from Findee, and then again at each further 250. It never asks in the first two weeks, and never more than once in 90 days. The card has three buttons: <strong>Support</strong>, <strong>Later</strong> and <strong>Don&rsquo;t ask again</strong>. If you choose <strong>Don&rsquo;t ask again</strong>, that is final: Findee never asks again, and the tray item goes away. After the first 250, an item <strong>&hearts; Support Markticulous</strong> also appears in the tray menu.</p>
-      <p>If you have supported Markticulous, click <strong>I&rsquo;ve already supported</strong> on the About page. You can then choose a small thank-you picture, called an adornment, that is shown beside the version number. Findee can also check your support: it asks for the email you used on Ko-fi, and sends only a scrambled version of that email (a hash) to Markticulous to check it, and only when you click <strong>Check</strong>. Nothing else is sent. If you would rather not, click <strong>Skip the check</strong>: Findee takes your word for it.</p>
+      <p>Findee may ask for support once in a while. The first time comes after you have opened 250 results from Findee, and then again at each further 250. It never asks in the first two weeks, and never more than once in 90 days. The card has three buttons: <strong>Support</strong>, <strong>Later</strong>, and <strong>Don&rsquo;t ask again</strong>. If you choose <strong>Don&rsquo;t ask again</strong>, that is final: Findee never asks again, and the tray item goes away. After the first 250, an item <strong>&hearts; Support Markticulous</strong> also appears in the tray menu.</p>
+      <p>If you have supported Markticulous, click <strong>I&rsquo;ve already supported</strong> on the About page. You can then choose a small thank-you picture, called an adornment, that is shown beside the version number. Until then, no adornment shows. Findee can also check your support: it asks for the email you used on Ko-fi, and sends only a scrambled version of that email (a hash) to Markticulous to check it, and only when you click <strong>Check</strong>. Nothing else is sent. When the check passes, the other Markticulous apps on your PC know it too, so they do not ask again. If you would rather not, click <strong>Skip the check</strong>: Findee takes your word for it, in Findee only.</p>
     </section>
 
     <section id="wrong">
       <h2 class="sec"><span class="n">14</span>If something goes wrong</h2>
       <dl class="defs">
         <dt>The shortcut does nothing</dt>
-        <dd>Look for the Findee icon in the tray (under the <strong>^</strong> arrow too). If it is not there, start Findee from the Start menu. If it is there, another program may be using the same shortcut. Open <strong>Settings &rarr; General</strong> and choose another one in <strong>Open Findee with</strong>. The tray icon always opens the search box with a left-click.</dd>
+        <dd>Look for the Findee icon in the tray (under the <strong>^</strong> arrow too). If it is not there, start Findee from the Start menu. If it is there, another program may be using the same shortcut. Open <strong>Settings &rarr; General</strong> and choose another one under <strong>Shortcut</strong>. If Windows refused the shortcut when Findee started, a notice says so, for example <strong>Alt+Space is in use by another app. Open Findee from its tray icon for now.</strong> The tray icon always opens the search box with a left-click.</dd>
         <dt>&ldquo;Findee is building its index. Results will appear in a moment.&rdquo;</dt>
         <dd>The service is making the list of your files, which happens after the first install, after <strong>Rebuild index</strong>, and when you turn <strong>Include hidden and system files</strong> on or off. Wait a moment: a large drive takes a little longer. <strong>Settings &rarr; Index</strong> shows the state of each drive.</dd>
         <dt>&ldquo;The index is not being updated.&rdquo; or &ldquo;The Findee service is not running, so the index is not being updated.&rdquo;</dt>
-        <dd>The service that keeps the list of files is not running. Searches use the list as it was, so new files are missing. Restart the PC, or open the Windows Services list and start the service named <strong>Findee Index</strong> (its short name is <span class="path">FindeeService</span>). Nothing in Findee itself needs repairing.</dd>
+        <dd>The first line shows in the search box, the second on the Index page of Settings. The service that keeps the list of files is not running. Searches use the list as it was, so new files are missing. Restart the PC, or open the Windows Services list and start the service named <strong>Findee Index</strong> (its short name is <span class="path">FindeeService</span>). Nothing in Findee itself needs repairing.</dd>
         <dt>A file you know exists is not shown</dt>
         <dd>It may be new: the list follows changes within moments, but if the service was not running, it catches up when it starts. It may be in a folder Findee leaves out (see <a href="#settings">Settings &rarr; Index</a>), a hidden or system file (turn on <strong>Include hidden and system files</strong>), on a drive that is not a fixed NTFS drive, or in a folder you are not allowed to open. Only the best 50 results are listed, so add a word or a filter (see <a href="#searching">Searching</a>). If nothing helps, press <strong>Rebuild index</strong>.</dd>
         <dt>&ldquo;No matches.&rdquo;</dt>
         <dd>Nothing in your index has all of your words in its name. Check the spelling (a misspelt word with one missing or swapped letter is caught, a wrong letter is not) and try fewer words.</dd>
         <dt>Space does not preview</dt>
-        <dd>Space previews only after you have moved through the results with the arrow keys, the Page keys or a click, and have not typed since. For an app or an email it never previews. If Peekee is not installed, Findee says so (see <a href="#actions">Quick actions and preview</a>).</dd>
-        <dt>&ldquo;This file is no longer there.&rdquo;</dt>
-        <dd>The file was moved or deleted after the list was made. Findee forgets it from Recent. The list catches up with the change shortly.</dd>
+        <dd>Space previews only after you have moved through the results with the arrow keys, the Page keys, or a click, and have not typed since. For an app or an email it never previews. If Peekee is not installed, Findee says so (see <a href="#actions">Quick actions and preview</a>).</dd>
+        <dt>&ldquo;This file is no longer there.&rdquo; or &ldquo;This folder is no longer there.&rdquo;</dt>
+        <dd>Shown in cyan under the name of the result you opened. The item was moved or deleted after the list was made. Findee forgets it from Recent. The list catches up with the change shortly.</dd>
         <dt>&ldquo;Windows Search is off, so matches inside files are not shown.&rdquo;</dt>
         <dd>The Windows Search service is not running on this PC. Start the service named <strong>Windows Search</strong> in the Windows Services list. Matches inside files come only from folders Windows indexes (see <a href="#inside">Inside files and emails</a>).</dd>
         <dt>My emails do not show</dt>
@@ -827,7 +856,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 <footer class="colophon">
   <div class="colophon-in">
     <span>Findee, a file and app finder for Windows.</span>
-    <span class="tm">Microsoft, Windows and Outlook are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Findee is not made, endorsed or supported by Microsoft.</span>
+    <span class="tm">Microsoft, Windows, and Outlook are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Findee is not made, endorsed, or supported by Microsoft.</span>
     <a href="https://markticulous.github.io/support/?app=findee" target="_blank" rel="noopener">Support Markticulous</a>
     <a class="totop" href="#top">Back to top ↑</a>
   </div>
@@ -840,6 +869,27 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
   </svg>
 </button>
 
+<script>
+/* Regional spelling (brand bible rule 17), Backee's way. Findee opens this page with ?region=CA, UK or US; the words marked
+   data-sp are swapped to that region's spelling. With no region in the address (the copy on the web), the browser's language
+   decides, with the rule the app uses (Spelling.RegionOf): any -CA is Canada; en-US, plain English, and other languages are the
+   US; any other English is the UK. With no script the text stays as written (the UK spelling). */
+(function () {
+  var m = /[?&]region=(CA|UK|US)/i.exec(location.search);
+  var region = m ? m[1].toUpperCase() : null;
+  if (!region) {
+    var lang = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+    region = /-ca$/.test(lang) ? 'CA' : (/^en-/.test(lang) && !/-us$/.test(lang)) ? 'UK' : 'US';
+  }
+  if (region === 'UK' || region === 'CA') return; /* the page is written in the UK spelling, which Canada shares for these words */
+  var swaps = { color: 'color', colors: 'colors', colored: 'colored', neighboring: 'neighboring' };
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sp]'), function (el) {
+    var w = swaps[el.getAttribute('data-sp')];
+    if (!w) return;
+    el.textContent = /^[A-Z]/.test(el.textContent) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  });
+})();
+</script>
 <script src="version.js"></script>
 <script>
 /* The version chip. The app build writes version.js beside this page (it is committed, so the

@@ -535,7 +535,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dt>Copy text (OCR)</dt>
         <dd>On an image: reads the words in the picture and saves them as a new text clip. Great for screenshots of error messages.</dd>
         <dt>Copy as HEX / RGB / HSL</dt>
-        <dd>On a <span data-sp="color">colour</span>: copies it in another format, for example <code>#0D9488</code> as <code>rgb(13, 148, 136)</code>.</dd>
+        <dd>On a colour: copies it in another format, for example <code>#0D9488</code> as <code>rgb(13, 148, 136)</code>.</dd>
         <dt>Open link / Open containing folder</dt>
         <dd>On a web address or a file path: opens it in your browser or in File Explorer.</dd>
       </dl>
@@ -813,26 +813,15 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 </button>
 
 <script>
-/* Regional spelling (brand bible rule 17). Clipee opens this page with ?region=CA, UK or US; the words marked data-sp are
-   swapped to that region's spelling. Opened without a region (the copy on the web), the browser language chooses with the
-   same rule as the app's Spelling.RegionOf: -CA is Canada, any other en- except en-US is UK, anything else is US. */
+/* Regional spelling (brand bible rule 17). Clipee opens this page with ?region=CA, UK or US; the words
+   marked data-sp are swapped to that region's spelling. With no region (or no script) the text stays as written. */
 (function () {
-  var words = { /* key (the US spelling): US, UK, Canada */
-    color: ['color', 'colour', 'colour'],
-    colors: ['colors', 'colours', 'colours'],
-    colored: ['colored', 'coloured', 'coloured']
-  };
-  var m = /[?&]region=(CA|UK|US)/i.exec(location.search), region;
-  if (m) region = m[1].toUpperCase();
-  else {
-    var lang = (navigator.languages && navigator.languages[0]) || navigator.language || '';
-    region = /-CA$/i.test(lang) ? 'CA' : (/^en-/i.test(lang) && !/-US$/i.test(lang)) ? 'UK' : 'US';
-  }
-  var col = region === 'UK' ? 1 : region === 'CA' ? 2 : 0;
+  var m = /[?&]region=(CA|UK|US)/i.exec(location.search);
+  if (!m || m[1].toUpperCase() !== 'US') return; /* the page is written in the UK and Canada spelling */
+  var us = { color: 'color', colors: 'colors', colored: 'colored' };
   Array.prototype.forEach.call(document.querySelectorAll('[data-sp]'), function (el) {
-    var row = words[el.getAttribute('data-sp')];
-    if (!row) return;
-    var w = row[col];
+    var w = us[el.getAttribute('data-sp')];
+    if (!w) return;
     el.textContent = /^[A-Z]/.test(el.textContent) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
   });
 })();
