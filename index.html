@@ -147,7 +147,7 @@
   .row.pair .btn { justify-content: center; gap: 6px; }
   /* Maker stats, shown only when the page is opened with ?n (see the script): downloads, updates and repo visitors, dim, to the right of the second button. Outside the button, so the layout never moves. */
   .btn.has-stats { position: relative; overflow: visible; }
-  .dl-stats { position: absolute; left: 100%; top: 50%; translate: 16px -50%; font-size: 12px; font-weight: 400; color: var(--text4); opacity: .8; font-variant-numeric: tabular-nums; pointer-events: none; white-space: nowrap; }
+  .dl-stats { position: absolute; left: 100%; top: 50%; translate: 16px -50%; font-size: 12px; font-weight: 400; color: var(--text4); opacity: .8; font-variant-numeric: tabular-nums; cursor: default; white-space: nowrap; }
   .row.links { gap: 6px 18px; align-items: center; }
   .lnk { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); text-decoration: none; }
   .lnk:hover { color: var(--accent); text-decoration: underline; }
@@ -200,7 +200,7 @@
   .card[data-new-since] { position: relative; overflow: hidden; }
   .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 2.5px 0 3.5px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); cursor: default; outline: none; }
   @media (prefers-color-scheme: dark) { .card .nf { background: var(--cyan-ink); } }
-  .ftip { position: fixed; z-index: 50; max-width: 300px; padding: 6px 10px; border-radius: 4px; font: 400 12px/1.4 var(--font); color: var(--text); background: color-mix(in srgb, var(--surface-solid) 94%, transparent); border: 1px solid var(--ctrl-stroke); box-shadow: 0 4px 12px rgba(0,0,0,.14); pointer-events: none; opacity: 0; translate: 0 4px; transition: opacity 80ms linear, translate 80ms linear; }
+  .ftip { position: fixed; z-index: 50; max-width: 300px; white-space: pre-line; padding: 6px 10px; border-radius: 4px; font: 400 12px/1.4 var(--font); color: var(--text); background: color-mix(in srgb, var(--surface-solid) 94%, transparent); border: 1px solid var(--ctrl-stroke); box-shadow: 0 4px 12px rgba(0,0,0,.14); pointer-events: none; opacity: 0; translate: 0 4px; transition: opacity 80ms linear, translate 80ms linear; }
   .ftip.on { opacity: 1; translate: 0 0; transition: opacity 140ms ease-out, translate 140ms ease-out; }
   @media (prefers-reduced-motion: reduce) { .ftip, .ftip.on { transition: none; translate: 0 0; } }
 
@@ -846,6 +846,23 @@
   // dl: installer and portable downloads, all versions. upd: update packages fetched (existing installs updating). chk: update checks,
   // for apps that update through a signed update.json (Backee, Findee): each installed copy fetches it once a day, so it is not a download.
   // vis: unique visitors to the GitHub repo in the last 14 days, from stats.json, which a daily workflow writes (traffic needs a token).
+  // The Fluent tooltip (rule 8): opens after 350 ms on hover or keyboard focus, below the element, kept inside the window.
+  window.attachTip = function (el, text) {
+    var tip = null, timer = 0;
+    function show() {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        tip = tip || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'ftip', role: 'tooltip', textContent: text }));
+        var r = el.getBoundingClientRect(), w = tip.offsetWidth;
+        tip.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
+        tip.style.top = (r.bottom + 6) + 'px';
+        requestAnimationFrame(function () { tip.classList.add('on'); });
+      }, 350);
+    }
+    function hide() { clearTimeout(timer); if (tip) tip.classList.remove('on'); }
+    el.addEventListener('mouseenter', show); el.addEventListener('mouseleave', hide);
+    el.addEventListener('focus', show); el.addEventListener('blur', hide);
+  };
   if (new URLSearchParams(location.search).has('n')) {
     const stats = fetch('stats.json?' + Date.now()).then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
     for (const dl of document.querySelectorAll('a.btn.accent[href*="github.com/markticulous/"][href$="/releases/latest"]')) {
@@ -854,7 +871,7 @@
       if (!second || second === dl) continue;
       const releases = fetch('https://api.github.com/repos/' + repo + '/releases?per_page=100').then((r) => (r.ok ? r.json() : null)).catch(() => null);
       Promise.all([releases, stats]).then(([rels, st]) => {
-        const parts = [];
+        const parts = [], lines = [];
         if (Array.isArray(rels)) {
           let n = 0, u = 0, c = 0;
           for (const rel of rels) for (const a of rel.assets || []) {
@@ -863,14 +880,17 @@
             else if (!/^RELEASES$|^releases\..*\.json$|^update\.json\.sig$|user-guide|-module-/i.test(a.name)) n += a.download_count || 0;
           }
           parts.push(n.toLocaleString() + ' dl', u.toLocaleString() + ' upd');
-          if (c) parts.push(c.toLocaleString() + ' chk');
+          lines.push(n.toLocaleString() + ' installer downloads, all versions' + (c ? ', including the installers that installed copies fetch to update themselves' : ''),
+            u.toLocaleString() + ' update packages downloaded by installed copies' + (c ? ' (none: this app updates with its installer)' : ''));
+          if (c) { parts.push(c.toLocaleString() + ' chk'); lines.push(c.toLocaleString() + ' update checks by installed copies, about one a day for each copy'); }
         }
         const v = st && st[repo.split('/')[1].toLowerCase()];
-        if (v && typeof v.visitors === 'number') parts.push(v.visitors.toLocaleString() + ' vis');
+        if (v && typeof v.visitors === 'number') { parts.push(v.visitors.toLocaleString() + ' vis'); lines.push(v.visitors.toLocaleString() + ' unique visitors to the GitHub repository in the last 14 days'); }
         if (!parts.length) return;
         const tag = document.createElement('span');
         tag.className = 'dl-stats'; tag.textContent = parts.join(' · ');
         second.classList.add('has-stats'); second.append(tag);
+        window.attachTip(tag, lines.join('\n'));
       });
     }
   }
@@ -930,19 +950,8 @@
       var nf = c.querySelector('.nf'); if (!nf) return;
       var text = 'First published ' + new Date(since).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
       nf.tabIndex = 0; nf.setAttribute('aria-label', 'New. ' + text);
-      var tip = null, timer = 0;
-      function show() {
-        timer = setTimeout(function () {
-          tip = tip || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'ftip', role: 'tooltip', textContent: text }));
-          var r = nf.getBoundingClientRect(), w = tip.offsetWidth;
-          tip.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
-          tip.style.top = (r.bottom + 6) + 'px';
-          requestAnimationFrame(function () { tip.classList.add('on'); });
-        }, 350);
-      }
-      function hide() { clearTimeout(timer); if (tip) tip.classList.remove('on'); }
-      nf.addEventListener('mouseenter', show); nf.addEventListener('mouseleave', hide);
-      nf.addEventListener('focus', show); nf.addEventListener('blur', hide);
+      window.attachTip(nf, text);
+
     });
   })();
 </script>
