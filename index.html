@@ -198,8 +198,11 @@
   .nf { display: none; }
   .card[data-new="on"] .nf { display: inline-flex; }
   .card[data-new-since] { position: relative; overflow: hidden; }
-  .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 4px 0 2px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); pointer-events: none; }
+  .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 2px 0 4px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); cursor: default; outline: none; }
   @media (prefers-color-scheme: dark) { .card .nf { background: var(--cyan-ink); } }
+  .ftip { position: fixed; z-index: 50; max-width: 300px; padding: 6px 10px; border-radius: 4px; font: 400 12px/1.4 var(--font); color: var(--text); background: color-mix(in srgb, var(--surface-solid) 94%, transparent); border: 1px solid var(--ctrl-stroke); box-shadow: 0 4px 12px rgba(0,0,0,.14); pointer-events: none; opacity: 0; translate: 0 4px; transition: opacity 80ms linear, translate 80ms linear; }
+  .ftip.on { opacity: 1; translate: 0 0; transition: opacity 140ms ease-out, translate 140ms ease-out; }
+  @media (prefers-reduced-motion: reduce) { .ftip, .ftip.on { transition: none; translate: 0 0; } }
 
   .card .tag { flex: 1 1 8em; white-space: nowrap; text-align: right; color: var(--text3); font-size: 11px; } /* platform line: right end of the button row, on the buttons' text baseline */
   .card p { margin: 0; color: var(--text2); }
@@ -432,7 +435,8 @@
           </div>
         </div>
       </article>
-      <article class="card" data-scrub>
+      <article class="card" data-scrub data-new-since="2026-11-05" data-new-until="2026-12-30">
+        <span class="nf">New</span>
         <div class="app-head">
           <img class="inset" src="assets/peekee.svg" alt="" width="56" height="56">
           <div>
@@ -913,12 +917,29 @@
   document.querySelectorAll('[data-year]').forEach((e) => { e.textContent = new Date().getFullYear(); });
 </script>
 <script>
-  // "New" ribbon: on for 45 days from data-new-since (day 1 is the release day, gone on day 46).
+  // "New" ribbon: on for 45 days from data-new-since (day 1 is the release day, gone on day 46), or to data-new-until (its last day) when set.
   (function () {
     var DAY = 864e5, now = new Date(), today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
     document.querySelectorAll('[data-new-since]').forEach(function (c) {
       var p = c.dataset.newSince.split('-'), since = Date.UTC(+p[0], p[1] - 1, +p[2]);
-      if (today < since + 45 * DAY) c.dataset.new = 'on'; else c.removeAttribute('data-new');
+      var u = (c.dataset.newUntil || '').split('-'), end = u.length === 3 ? Date.UTC(+u[0], u[1] - 1, +u[2]) + DAY : since + 45 * DAY;   // data-new-until: the last day shown
+      if (today < end) c.dataset.new = 'on'; else c.removeAttribute('data-new');
+      var nf = c.querySelector('.nf'); if (!nf) return;
+      var text = 'First published ' + new Date(since).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+      nf.tabIndex = 0; nf.setAttribute('aria-label', 'New. ' + text);
+      var tip = null, timer = 0;
+      function show() {
+        timer = setTimeout(function () {
+          tip = tip || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'ftip', role: 'tooltip', textContent: text }));
+          var r = nf.getBoundingClientRect(), w = tip.offsetWidth;
+          tip.style.left = Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2)) + 'px';
+          tip.style.top = (r.bottom + 6) + 'px';
+          requestAnimationFrame(function () { tip.classList.add('on'); });
+        }, 350);
+      }
+      function hide() { clearTimeout(timer); if (tip) tip.classList.remove('on'); }
+      nf.addEventListener('mouseenter', show); nf.addEventListener('mouseleave', hide);
+      nf.addEventListener('focus', show); nf.addEventListener('blur', hide);
     });
   })();
 </script>
