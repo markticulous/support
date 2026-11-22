@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Findee — User Guide</title>
+<link rel="icon" href="images/findee-64.png">
+<meta name="color-scheme" content="light dark">
+<style>
+/* One file plus its pictures. No fonts to fetch, nothing that needs a
+   connection: it opens from the Findee install folder. Layout and behaviour
+   follow the Backee guide; the colours are the Markticulous cyan. */
+
+:root {
+  --paper:  #f4f6f8;
+  --card:   #ffffff;
+  --ink:    #1f2328;
+  --mute:   #5d6570;
+  --line:   #dde1e6;
+  --rule:   #c5cbd3;
+  --accent: #0e7490;
+  --mark:   #06b6d4;
+  --code-bg:#eaedf1;
+  --bar-h: 46px;
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mono: "Cascadia Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:  #121417;
+    --card:   #1a1d21;
+    --ink:    #e6e8eb;
+    --mute:   #9aa1ab;
+    --line:   #2c3036;
+    --rule:   #3d434b;
+    --accent: #22d3ee;
+    --mark:   #67e8f9;
+    --code-bg:#22262b;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-variant-numeric: oldstyle-num;
+}
+
+/* ---- the bar that stays --------------------------------------------- */
+
+.wordmark {
+  position: sticky; top: 0; z-index: 10;
+  margin: 0;
+  min-height: var(--bar-h);
+  padding: 0 max(32px, calc((100% - 1180px) / 2));
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: .34em; text-transform: uppercase;
+  color: var(--mute);
+}
+.wordmark .logo { flex: none; width: 28px; height: 28px; margin-right: -2px; }
+.wordmark-mark { flex: none; height: 24px; width: auto; color: var(--ink); overflow: visible; }
+
+/* The Markticulous byline plate: hollow, hairline edge, two corners cropped square. */
+.byline {
+  flex: none;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 8px;
+  border-radius: 1px 6px 1px 6px;
+  box-shadow: inset 0 0 0 var(--hair) var(--rule);
+  font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-size: 9px; font-weight: 500; letter-spacing: .12em; line-height: 1;
+  white-space: nowrap; text-transform: uppercase;
+}
+.byline-by, .byline-suffix { opacity: .6; }
+/* The plate's edge is one screen pixel at every display scale (rule 20). */
+:root { --hair: 1px; }
+@media (min-resolution: 1.25dppx) { :root { --hair: .8px; } }
+@media (min-resolution: 1.5dppx) { :root { --hair: calc(2px / 3); } }
+@media (min-resolution: 1.75dppx) { :root { --hair: calc(4px / 7); } }
+@media (min-resolution: 2dppx) { :root { --hair: .5px; } }
+
+.ver {
+  flex: none;
+  margin-left: 14px;
+  font-size: 11px; font-weight: 500; letter-spacing: .04em;
+  text-transform: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: color-mix(in srgb, var(--mute) 72%, transparent);
+}
+
+/* ---- the plate at the top ------------------------------------------ */
+
+.masthead { border-bottom: 1px solid var(--rule); background: var(--card); }
+.masthead-in { max-width: 1180px; margin: 0 auto; padding: 34px 32px 30px; }
+.masthead h1 {
+  margin: 14px 0 0;
+  font-family: var(--sans);
+  font-size: clamp(30px, 5vw, 44px); font-weight: 300;
+  letter-spacing: -.015em; line-height: 1.1;
+}
+.standfirst { max-width: 32em; margin: 16px 0 0; font-size: 19px; line-height: 1.55; }
+.standfirst + .standfirst { margin-top: 12px; font-size: 17px; color: var(--mute); }
+
+/* ---- the two columns ------------------------------------------------ */
+
+.shell {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 32px 96px;
+  display: grid; gap: 56px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  align-items: start;
+}
+
+.toc {
+  position: sticky; top: var(--bar-h);
+  padding: 44px 0 40px;
+  font-family: var(--sans); font-size: 13.5px; line-height: 1.45;
+  max-height: calc(100vh - var(--bar-h));
+  overflow: auto;
+}
+.toc h2 {
+  margin: 0 0 14px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mute);
+}
+.toc ol { margin: 0; padding: 0; list-style: none; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc a {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 4px;
+  padding: 5px 0 5px 10px; margin-left: -12px;
+  color: var(--mute); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 11px; color: var(--rule); padding-top: 2px;
+}
+.toc a:hover { color: var(--ink); }
+.toc a.is-here { color: var(--ink); font-weight: 600; border-left-color: var(--mark); }
+.toc a.is-here::before { color: var(--mark); }
+
+main { padding: 40px 0 0; max-width: 40em; }
+
+/* ---- sections ------------------------------------------------------- */
+
+section { padding-top: 26px; scroll-margin-top: calc(var(--bar-h) + 14px); }
+h3[id] { scroll-margin-top: calc(var(--bar-h) + 14px); }
+section + section { margin-top: 44px; border-top: 1px solid var(--line); }
+
+h2.sec {
+  margin: 0 0 22px;
+  font-family: var(--sans); font-size: 25px; font-weight: 500;
+  letter-spacing: -.01em; line-height: 1.2;
+}
+h2.sec .n {
+  display: block; margin-bottom: 7px;
+  font-size: 11px; font-weight: 600; letter-spacing: .16em;
+  font-variant-numeric: tabular-nums lining-nums;
+  color: var(--mark);
+}
+
+h3 {
+  margin: 34px 0 10px;
+  font-family: var(--sans); font-size: 16px; font-weight: 600; letter-spacing: -.005em;
+}
+h3:first-of-type { margin-top: 26px; }
+
+p { margin: 0 0 16px; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+strong { font-weight: 700; }
+
+/* ---- the manual furniture ------------------------------------------- */
+
+code, .path, kbd { font-family: var(--mono); font-size: .86em; font-variant-numeric: normal; }
+code, .path { padding: 1px 5px; border-radius: 3px; background: var(--code-bg); word-break: break-word; }
+kbd {
+  padding: 1px 7px;
+  border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 4px;
+  background: var(--card); font-size: .82em; white-space: nowrap;
+}
+
+ol.steps { margin: 0 0 18px; padding: 0; list-style: none; counter-reset: step; }
+ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 18px; }
+ol.steps > li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mark); color: #fff;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; font-variant-numeric: lining-nums;
+}
+
+ul { margin: 0 0 16px; padding-left: 1.2em; }
+li { margin-bottom: 6px; }
+
+dl.defs { margin: 0 0 18px; }
+dl.defs dt { margin-top: 16px; font-family: var(--sans); font-size: 14.5px; font-weight: 600; }
+dl.defs dt:first-child { margin-top: 0; }
+dl.defs dd { margin: 3px 0 0; color: var(--mute); }
+
+.note {
+  margin: 0 0 20px; padding: 14px 18px;
+  border-left: 3px solid var(--mark);
+  background: var(--card);
+  border-radius: 0 5px 5px 0;
+}
+.note p { margin-bottom: 10px; }
+.note p:last-child { margin-bottom: 0; }
+.note .lede {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mark); margin-bottom: 6px;
+}
+
+table.ref { width: 100%; border-collapse: collapse; margin: 0 0 18px; font-size: 15.5px; }
+table.ref th {
+  text-align: left;
+  font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+  padding: 0 14px 8px 0;
+  border-bottom: 1px solid var(--rule);
+}
+table.ref td { padding: 10px 14px 10px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.ref td:first-child { font-family: var(--sans); font-size: 14.5px; font-weight: 600; white-space: nowrap; }
+table.ref td:last-child { color: var(--mute); padding-right: 0; }
+
+/* Screenshots: taken at 150% scaling, shown at their real on-screen size. */
+figure { margin: 6px 0 24px; }
+figure img {
+  display: block; max-width: 100%; height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--line), 0 8px 24px rgba(0,0,0,.10);
+}
+figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color: var(--mute); }
+
+.mute { color: var(--mute); }
+
+/* ---- the colophon --------------------------------------------------- */
+
+.colophon { border-top: 1px solid var(--rule); background: var(--card); font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+.colophon-in {
+  max-width: 1180px; margin: 0 auto; padding: 26px 32px 34px;
+  display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: baseline;
+}
+.colophon a { color: var(--accent); }
+.colophon .tm { flex-basis: 100%; font-size: 12px; }
+.totop { margin-left: auto; text-decoration: none; color: var(--mute); }
+.totop:hover { color: var(--ink); }
+
+/* ---- narrow ---------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  body { font-size: 16.5px; }
+  .wordmark { padding: 0 20px; gap: 10px; letter-spacing: .2em; font-size: 12px; }
+  .masthead-in { padding: 26px 20px 24px; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 20px 64px; }
+  .toc { position: static; max-height: none; padding: 28px 0 8px; border-bottom: 1px solid var(--line); }
+  .toc ol { columns: 2; column-gap: 24px; }
+}
+
+@media (max-width: 480px) {
+  .toc ol { columns: 1; }
+  .wordmark { letter-spacing: .1em; gap: 8px; }
+  .find-input { padding-right: 24px; }
+  .byline { display: none; }
+  .toc a { margin-left: 0; padding-left: 0; border-left: 0; }
+  .toc a.is-here { border-left: 0; }
+  main { padding-top: 12px; }
+  .colophon-in { padding: 22px 20px 28px; }
+  .totop { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --mute: #333; --line: #ccc; --rule: #999; --code-bg: #f0f0f0; }
+  .toc, .totop, .uptop, .find { display: none; }
+  .wordmark { position: static; padding: 0 0 10px; }
+  section, h3[id] { scroll-margin-top: 0; }
+  .shell { display: block; padding: 0; max-width: none; }
+  main { max-width: none; }
+  h2.sec, h3 { break-after: avoid; }
+  .note, ol.steps > li, table.ref tr, figure { break-inside: avoid; }
+  a { color: #000; }
+}
+
+/* ---- back to the top ------------------------------------------------- */
+
+.uptop {
+  position: fixed; right: 16px; bottom: 100px; z-index: 25;
+  width: 42px; height: 42px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  border-radius: 50%;
+  background: var(--card); color: var(--mark);
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  cursor: pointer;
+  opacity: 0; transform: translateY(6px); pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease, background .18s ease;
+}
+.uptop svg { width: 20px; height: 20px; }
+.uptop.is-on { opacity: 1; transform: none; pointer-events: auto; }
+.uptop:hover { background: color-mix(in srgb, var(--mark) 12%, var(--card)); }
+.uptop:focus-visible { outline: 2px solid var(--mark); outline-offset: 2px; }
+@media (max-width: 480px) { .uptop { right: 12px; bottom: 78px; } }
+
+/* ---- search the guide ----------------------------------------------- */
+
+.find { position: relative; margin-left: auto; display: inline-flex; align-items: center; min-width: 0; }
+.find-input {
+  width: clamp(116px, 32vw, 260px);
+  font-family: var(--sans); font-size: 13px; color: var(--ink);
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+  padding: 5px 26px 5px 10px;
+  border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--paper); -webkit-appearance: none; appearance: none;
+}
+.find-input::-webkit-search-cancel-button { display: none; }
+.find-input:focus { outline: 2px solid var(--mark); outline-offset: 1px; border-color: var(--mark); }
+.find-input::placeholder { color: var(--mute); }
+.find-clear {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; padding: 0; border-radius: 50%;
+  background: color-mix(in srgb, var(--mark) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mark) 30%, transparent);
+  color: var(--mark); cursor: pointer;
+  display: grid; place-items: center;
+  font-family: var(--sans); font-size: 10px; font-weight: 700; line-height: 1;
+}
+.find-clear[hidden] { display: none; }
+.find-clear:hover { background: color-mix(in srgb, var(--mark) 30%, transparent); }
+.find-list {
+  position: fixed; z-index: 30;
+  max-width: 360px;
+  margin: 0; padding: 4px; list-style: none;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  max-height: 60vh; overflow-y: auto; text-align: left;
+  letter-spacing: normal; text-transform: none; font-weight: 400;
+}
+.find-list[hidden] { display: none; }
+.find-list li { margin: 0; }
+.find-list button {
+  display: block; width: 100%; text-align: left; cursor: pointer;
+  font-family: var(--sans); font-size: 13.5px; color: var(--ink);
+  padding: 7px 10px; border: 0; border-radius: 5px; background: none;
+}
+.find-list button:hover, .find-list button:focus,
+.find-list li.is-on button { background: color-mix(in srgb, var(--mark) 9%, transparent); outline: none; }
+.find-list .hits { float: right; margin-left: 10px; font-size: 11.5px; color: var(--mute); }
+.find-none { padding: 8px 10px; font-family: var(--sans); font-size: 13.5px; color: var(--mute); }
+
+::highlight(findee-find) { background: #ffe08a; color: #1f2328; }
+
+/* A figure still to come from the release-candidate bench: unmistakable, so it cannot ship unnoticed. */
+.ph { padding: 1px 6px; border-radius: 3px; background: #ffe08a; color: #1f2328; font-family: var(--mono); font-size: .86em; }
+</style>
+</head>
+<body id="top">
+
+<p class="wordmark">
+  <img class="logo" src="images/findee-64.png" alt="">
+  <!-- The drawn Findee wordmark, take A2 (assets/logo/findee-wordmark-dark.svg geometry, viewBox cropped to the letters), inline so "find"
+       follows the page's light or dark ink; "ee" keeps the brand cyan. -->
+  <svg class="wordmark-mark" viewBox="0 15.9 119 31.45" role="img" aria-label="Findee">
+    <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+      <g stroke="currentColor"><path d="M8.5,45.25 V25.5 A7.5,7.5 0 0 1 16,18 H17"/><path d="M2.1,30.25 H14.9"/><path d="M23.7,30.25 V45.25"/><circle cx="23.7" cy="20.1" r="2.1" fill="currentColor" stroke="none"/><path d="M32.5,45.25 V37.75 A7.5,7.5 0 0 1 47.5,37.75 V45.25"/><circle cx="63.2" cy="37.75" r="7.5"/><path d="M70.7,18 V45.25"/></g>
+      <g stroke="#06B6D4"><path d="M79.5,37.75 H94.5 A7.5,7.5 0 1 0 92.31,43.05"/><path d="M101.9,37.75 H116.9 A7.5,7.5 0 1 0 114.71,43.05"/></g>
+    </g>
+  </svg>
+  <span class="byline">
+    <span class="byline-by">A</span><span class="byline-name">Markticulous</span><span class="byline-suffix">build</span>
+  </span>
+  <span class="ver" id="verChip"></span>
+  <span class="find">
+    <input type="search" id="findInput" class="find-input" autocomplete="off" spellcheck="false"
+           placeholder="Search the guide…" aria-label="Search the guide"
+           aria-controls="findList" aria-expanded="false">
+    <button type="button" class="find-clear" id="findClear" aria-label="Clear the search" hidden>&#10005;</button>
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </span>
+</p>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <h1>User Guide</h1>
+    <p class="standfirst">Findee finds your files, folders and apps as you type. Press <kbd>Alt</kbd>+<kbd>Space</kbd>, type a few letters, and press <kbd>Enter</kbd>. It learns what you open, so the things you use most come first.</p>
+    <p class="standfirst">To find something in here, use the search box in the bar at the top: four letters or more. It lists the sections your word appears in and marks each place on the page; the &#10005; clears it. Once you are well down the page, an arrow at the bottom right takes you back to the top.</p>
+  </div>
+</header>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#hurry">In a hurry to get started?</a></li>
+      <li><a href="#glance">Findee at a glance</a></li>
+      <li><a href="#opening">Opening Findee</a></li>
+      <li><a href="#searching">Searching</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#learning">How the learning works</a></li>
+      <li><a href="#actions">Quick actions and preview</a></li>
+      <li><a href="#inside">Inside files and emails</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#privacy">Privacy: what Findee can see</a></li>
+      <li><a href="#install">Installing, updating and removing</a></li>
+      <li><a href="#fast">Why Findee is fast</a></li>
+      <li><a href="#support">Support Markticulous</a></li>
+      <li><a href="#wrong">If something goes wrong</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section id="hurry">
+      <h2 class="sec"><span class="n">01</span>In a hurry to get started?</h2>
+      <ol class="steps">
+        <li>Run the Findee setup. At the end, leave <strong>Open Findee</strong> ticked. Findee waits in the tray, next to the clock. If you cannot see its icon, look under the <strong>^</strong> arrow with the other hidden tray icons.</li>
+        <li>Press <kbd>Alt</kbd>+<kbd>Space</kbd>. A search box opens in the upper part of your screen.</li>
+        <li>Type a few letters of a file, a folder or an app. The results appear as you type.</li>
+        <li>Press <kbd>Enter</kbd> to open the first result, or use <kbd>&darr;</kbd> and <kbd>&uarr;</kbd> to pick another one.</li>
+      </ol>
+      <p>That is all. The first time, Findee needs a short while to list the files on your drives. The search box says so while it works, and it can be used as soon as the list is ready. To have Findee ready every time you sign in, open <strong>Settings</strong> and tick <strong>Start with Windows</strong> (see <a href="#settings">Settings</a>).</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-recent-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-recent.webp" alt="The Findee search box with nothing typed, and under it a list headed Recent with a Word document, Notepad, a spreadsheet, a folder, Calculator, another document and a PDF">
+        </picture>
+        <figcaption>The search box before you type anything. It shows what you opened most, under <strong>Recent</strong>.</figcaption>
+      </figure>
+    </section>
+
+    <section id="glance">
+      <h2 class="sec"><span class="n">02</span>Findee at a glance</h2>
+      <p>Findee has two parts. The <strong>Findee service</strong> runs quietly in the background and starts with Windows. It keeps a list of the files and folders on your drives, and it keeps that list up to date as files come and go. The <strong>Findee app</strong> is the search box and the tray icon you use. The app does the searching itself, over the list the service keeps, so it feels instant.</p>
+      <p>Findee shows three kinds of result, in three groups:</p>
+      <dl class="defs">
+        <dt>Apps</dt>
+        <dd>The programs in your Start menu, including Microsoft Store apps.</dd>
+        <dt>Files and folders</dt>
+        <dd>Everything on your fixed NTFS drives that you can open, found by its name.</dd>
+        <dt>Inside files and emails</dt>
+        <dd>Matches in what is written inside your documents and in your Outlook mail, taken from Windows Search (see <a href="#inside">Inside files and emails</a>).</dd>
+      </dl>
+      <p>Findee has no main window. You use it from the search box, and you change its settings in the <strong>Settings</strong> window from the tray menu.</p>
+      <p>Version 1 covers the fixed NTFS drives in your PC. Network drives and drives with other formats, such as exFAT or ReFS, are not searched.</p>
+    </section>
+
+    <section id="opening">
+      <h2 class="sec"><span class="n">03</span>Opening Findee</h2>
+      <h3>The shortcut</h3>
+      <p>Press <kbd>Alt</kbd>+<kbd>Space</kbd> from anywhere. The search box opens with the cursor ready, so you can type at once. Press the same shortcut again, or <kbd>Esc</kbd>, to close it. It also closes when you click on something else.</p>
+      <p>If another program already uses <kbd>Alt</kbd>+<kbd>Space</kbd> (PowerToys Run does), choose a different shortcut in <strong>Settings &rarr; General</strong>. Findee warns you about clashes it knows of, but never stops you from choosing.</p>
+      <h3>The tray icon</h3>
+      <p>The Findee icon sits in the tray, next to the clock. <strong>Left-click</strong> it to open the search box. <strong>Right-click</strong> it to open its menu:</p>
+      <dl class="defs">
+        <dt>Restart to update</dt>
+        <dd>Shown only while an update is ready, with an orange dot (see <a href="#install">Installing, updating and removing</a>).</dd>
+        <dt>Open Findee</dt>
+        <dd>Opens the search box, like the shortcut.</dd>
+        <dt>Settings&hellip;</dt>
+        <dd>Opens the Settings window. In the search box, <kbd>Ctrl</kbd>+<kbd>,</kbd> does the same.</dd>
+        <dt>&hearts; Support Markticulous</dt>
+        <dd>Appears only after Findee has been useful for a while (see <a href="#support">Support Markticulous</a>).</dd>
+        <dt>Quit</dt>
+        <dd>Closes the tray icon and the shortcut. The Findee service keeps the list of files up to date, so searching is quick when you start Findee again. Start Findee from the Start menu whenever you want it back. Starting it a second time while it runs simply opens the search box.</dd>
+      </dl>
+      <p>While an update is on its way, a small orange dot sits at the top right of the tray icon. It breathes while the update downloads and blinks once it is ready. If you turned off animation effects in Windows, it stays lit instead.</p>
+    </section>
+
+    <section id="searching">
+      <h2 class="sec"><span class="n">04</span>Searching</h2>
+      <p>Type part of a name. Findee looks at the <strong>names</strong> of files and folders, and shows matches as you type. It does not mind capital letters.</p>
+      <ul>
+        <li><strong>Several words</strong> find names that contain all of them, in any order. <span class="path">q3 report</span> finds both <span class="path">Quarterly report Q3.docx</span> and <span class="path">Q3 sales report.pdf</span>.</li>
+        <li><strong>Quotes</strong> keep words together. <span class="path">&quot;meeting notes&quot;</span> finds names that contain exactly that phrase, spaces included.</li>
+        <li><strong>Part of a word</strong> is enough. <span class="path">calc</span> finds Calculator.</li>
+      </ul>
+      <figure>
+        <picture>
+          <source srcset="images/popup-report-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-report.webp" alt="The word report typed in the search box, with Files and folders listed first (Quarterly report Q3.docx, Reports, Report 2025.pdf, Sales report October.pdf) and below them a group called Inside files and emails with a document and an email">
+        </picture>
+        <figcaption>Typing <strong>report</strong>. The part of each name that matches is shown in bold.</figcaption>
+      </figure>
+      <h3>Filters</h3>
+      <p>Add a filter anywhere in what you type to narrow the results. You can use as many as you like together.</p>
+      <table class="ref">
+        <thead><tr><th>Filter</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>kind:image</td><td>Only one kind of item. The kinds are <strong>image</strong>, <strong>document</strong>, <strong>audio</strong>, <strong>video</strong>, <strong>archive</strong>, <strong>email</strong>, <strong>code</strong>, <strong>folder</strong> and <strong>app</strong>. For example, <span class="path">kind:document</span> finds PDF, Word, Excel, PowerPoint, text and similar files.</td></tr>
+          <tr><td>ext:pdf or *.pdf</td><td>Only files that end in <span class="path">.pdf</span>. Use it more than once to allow several endings: <span class="path">ext:jpg ext:png</span>.</td></tr>
+          <tr><td>in:projects</td><td>Only items whose folder path contains the text, such as <span class="path">C:\Users\Sam\Projects</span>. The text cannot contain a space.</td></tr>
+          <tr><td>modified:week</td><td>Only items changed in that time: <strong>today</strong>, <strong>yesterday</strong>, <strong>week</strong> (the last 7 days), <strong>month</strong> (the last 30 days), <strong>year</strong> (the last 365 days), a year such as <span class="path">modified:2025</span>, or a month such as <span class="path">modified:2025-10</span>.</td></tr>
+          <tr><td>size:&gt;10mb</td><td>Only files bigger (<span class="path">&gt;</span>) or smaller (<span class="path">&lt;</span>) than a size. The units are <strong>b</strong>, <strong>kb</strong>, <strong>mb</strong> and <strong>gb</strong>. For example, <span class="path">size:&lt;500kb</span>.</td></tr>
+        </tbody>
+      </table>
+      <p>You can use filters on their own, with no words, as long as one of them is <span class="path">ext:</span>, <span class="path">kind:</span> or <span class="path">in:</span>. For example, <span class="path">kind:image modified:week</span> lists the pictures from the last week. Something that looks like a filter but is not one Findee knows, such as <span class="path">author:sam</span>, is searched for as an ordinary word.</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-filter-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-filter.webp" alt="The text ext:pdf report typed in the search box, with only two PDF files listed under Files and folders">
+        </picture>
+        <figcaption><span class="path">ext:pdf report</span> lists only the PDF files with <strong>report</strong> in their name.</figcaption>
+      </figure>
+      <p>Filters also decide which groups show. <span class="path">kind:app</span> shows only apps, and <span class="path">kind:email</span> shows only emails. Filters that apply only to files and folders (<span class="path">ext:</span>, <span class="path">in:</span>, <span class="path">size:</span>, <span class="path">modified:</span> and the file kinds) hide the Apps group. Because Windows Search cannot apply them, they also hide the Inside files and emails group, with two exceptions: <span class="path">kind:document</span> and <span class="path">kind:email</span> keep it.</p>
+      <h3>Small typing mistakes</h3>
+      <p>When you type <strong>one word of 4 to 12 letters</strong> and Findee finds <strong>fewer than 5</strong> results, it also tries the word with <strong>one letter missing</strong> or <strong>two neighbouring letters swapped</strong>. So <span class="path">reprot</span> finds <span class="path">report</span>. In other words, it puts right a letter typed twice by mistake (<span class="path">reeport</span>) and two letters typed in the wrong order. The extra matches are shown below the better ones.</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-typo-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-typo.webp" alt="The misspelt word reprot typed in the search box, with four results for report listed under Files and folders">
+        </picture>
+        <figcaption>Typing <strong>reprot</strong> still finds the reports.</figcaption>
+      </figure>
+      <div class="note">
+        <p class="lede">What it does not catch</p>
+        <p>A <strong>wrong</strong> letter (<span class="path">rexort</span>) or a <strong>missing</strong> letter (<span class="path">repot</span>) is not caught. Neither is a mistake in a search with several words, in a word shorter than 4 or longer than 12 letters, or in a search that already finds 5 results or more. The extra search runs only when the first one finds few results, so a correct search is never slowed down by it.</p>
+      </div>
+    </section>
+
+    <section id="results">
+      <h2 class="sec"><span class="n">05</span>Results</h2>
+      <h3>The groups</h3>
+      <p>Results come in up to three groups, each with a heading. A group with nothing to show is left out.</p>
+      <ol class="steps">
+        <li><strong>Apps</strong> (up to 5). An app that matches ranks above a file with the same kind of match.</li>
+        <li><strong>Files and folders</strong> (the best 50). Each row shows the name, with the matching part in bold, and the folder it is in underneath. Files in dependency and build folders, such as <span class="path">node_modules</span>, <span class="path">site-packages</span>, <span class="path">.git</span>, <span class="path">bin</span> and <span class="path">obj</span>, are ranked lower, so your own files come first. They can still be found.</li>
+        <li><strong>Inside files and emails</strong> (up to 20). It appears a moment after the others, below them, without moving your selection.</li>
+      </ol>
+      <figure>
+        <picture>
+          <source srcset="images/popup-calc-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-calc.webp" alt="The text calc typed in the search box, with the Calculator app listed under Apps and a spreadsheet called Budget calculator listed under Files and folders">
+        </picture>
+        <figcaption>An app and a file in their own groups.</figcaption>
+      </figure>
+      <p>How a result ranks depends on how well its name matches what you typed (a whole name first, then a name that starts with it, then a word in the name that starts with it, then anywhere in the name), on how recently it changed, on how short its name is, and on how often you open it (see <a href="#learning">How the learning works</a>). The first result is selected after every search, so <kbd>Enter</kbd> opens it.</p>
+      <h3>Moving and opening</h3>
+      <table class="ref">
+        <thead><tr><th>Key or click</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>&darr; and &uarr;</td><td>Move one result. The group headings are skipped.</td></tr>
+          <tr><td>Page Down and Page Up</td><td>Move eight results.</td></tr>
+          <tr><td>Enter or double-click</td><td>Open the result.</td></tr>
+          <tr><td>Ctrl+Enter or right-click</td><td>Open the folder it is in, with the item selected in File Explorer.</td></tr>
+          <tr><td>Esc</td><td>Close the search box.</td></tr>
+        </tbody>
+      </table>
+      <p>Typing always goes to the search box, whichever result is selected. If something you open has gone, the row says <strong>This file is no longer there.</strong> (or <strong>This folder is no longer there.</strong>) and stays where it is, and Findee forgets it.</p>
+      <p>Under the results, a line of small, softer text lists the keys that work on the selected result (see <a href="#actions">Quick actions and preview</a>). It changes with the result, since not every action fits every kind of result.</p>
+      <h3>Recent</h3>
+      <p>With nothing typed in the search box, Findee shows your 8 strongest items, with the heading <strong>Recent</strong>: the files, folders and apps you open most (see the first picture in this guide). Before you have opened anything, the box says <strong>Type to find files, folders and apps.</strong></p>
+    </section>
+
+    <section id="learning">
+      <h2 class="sec"><span class="n">06</span>How the learning works</h2>
+      <ul>
+        <li>Each time you open something, it gets a boost in later searches.</li>
+        <li>The boost grows with how often you open it, up to a cap, and halves every two weeks you leave it alone.</li>
+        <li>Findee remembers up to 2,000 items. When it is full, the least useful one is dropped.</li>
+        <li>Something you open often is found even when its name ranks below the first 200 matches.</li>
+        <li>With an empty search box, your 8 strongest items show as &ldquo;Recent&rdquo;.</li>
+      </ul>
+      <p>The history is kept for your Windows account only, in <span class="path">%LocalAppData%\Findee</span> on your PC. Nothing about it leaves your PC. Anyone else who uses the PC has their own history. To start again, close Findee and delete that folder&rsquo;s <span class="path">opened.dat</span> file.</p>
+    </section>
+
+    <section id="actions">
+      <h2 class="sec"><span class="n">07</span>Quick actions and preview</h2>
+      <p>Keys that work on the selected result. They are also listed in a small line under the results, which shows only the ones that fit the result you have selected.</p>
+      <table class="ref">
+        <thead><tr><th>Key</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Enter</td><td>Opens the result.</td></tr>
+          <tr><td>Ctrl+Enter</td><td>Opens its folder in File Explorer with the item selected. For an app, it opens the folder the program is in (not available for Microsoft Store apps).</td></tr>
+          <tr><td>Ctrl+C</td><td>Copies the file, so you can paste it in File Explorer, an email or a chat. If you have selected some of the text in the search box, <kbd>Ctrl</kbd>+<kbd>C</kbd> copies that text instead.</td></tr>
+          <tr><td>Ctrl+Shift+C</td><td>Copies the full path of the file or folder.</td></tr>
+          <tr><td>Ctrl+O</td><td>Opens the Windows <strong>Open with</strong> list for a file.</td></tr>
+          <tr><td>Ctrl+Shift+Enter</td><td>Runs a program as administrator (for apps from the Start menu, and for <span class="path">.exe</span>, <span class="path">.bat</span>, <span class="path">.cmd</span> and <span class="path">.ps1</span> files). Windows asks for permission first.</td></tr>
+          <tr><td>Space</td><td>Previews the file with Peekee (see below).</td></tr>
+          <tr><td>Shift+F10 or the Menu key</td><td>Opens a small menu with the same actions. Those that do not fit the result are dimmed.</td></tr>
+        </tbody>
+      </table>
+      <p>You can also <strong>drag</strong> a file or folder from the list into File Explorer or another program, to copy it there. Apps cannot be dragged.</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-actions-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-actions.webp" alt="The search box with results for report, and under the list a line of keys that ends with Space preview">
+        </picture>
+        <figcaption>When Peekee is installed, the line under the results ends with <strong>Space preview</strong>.</figcaption>
+      </figure>
+      <h3>Previewing with Peekee</h3>
+      <p><strong>Peekee</strong> is a free Markticulous app that shows a quick look at a file without opening it. Findee uses it for previews. If Peekee is not running, Findee starts it.</p>
+      <p>Space is also a letter in the search box, so Findee only treats it as &ldquo;preview&rdquo; once you have started moving through the results. The rule is simple:</p>
+      <ul>
+        <li>After you move the selection with <kbd>&darr;</kbd>, <kbd>&uarr;</kbd>, <kbd>Page Up</kbd>, <kbd>Page Down</kbd> or a click, and have not typed since, <kbd>Space</kbd> previews the selected file.</li>
+        <li>While you are typing, <kbd>Space</kbd> types a space, as you would expect. Typing anything puts you back in typing mode.</li>
+        <li>For an app, or for an email, <kbd>Space</kbd> always types a space.</li>
+      </ul>
+      <p>If Peekee is not installed, <kbd>Space</kbd> shows a short line once each time you open the search box: <strong>Install Peekee, a free Markticulous app, to preview files with Space.</strong> The word Peekee is a link to its page. Until Peekee is installed, <span class="mute">Space preview</span> is also left out of the key line under the results.</p>
+      <figure>
+        <picture>
+          <source srcset="images/popup-peekee-hint-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-peekee-hint.webp" alt="The search box with results for report and, above the list, the line: Install Peekee, a free Markticulous app, to preview files with Space, with the word Peekee as a link">
+        </picture>
+        <figcaption>The hint when Space is pressed on a result and Peekee is not installed.</figcaption>
+      </figure>
+    </section>
+
+    <section id="inside">
+      <h2 class="sec"><span class="n">08</span>Inside files and emails</h2>
+      <p>Findee&rsquo;s own list holds names. To look <em>inside</em> your documents and emails, Findee asks <strong>Windows Search</strong>, the search that is already part of Windows. It shows the answer in its own group, <strong>Inside files and emails</strong>, below your files.</p>
+      <ul>
+        <li><strong>It starts after a short pause.</strong> Findee waits a moment (about 150 milliseconds) after your last key, and only for words of at least three letters. The group appears when the answer arrives, below the other groups, without moving your selection. If Windows Search takes longer than two seconds, Findee gives up for that search.</li>
+        <li><strong>It only knows what Windows Search knows.</strong> Windows Search looks inside the places Windows has been told to index, usually your own folders. A document in a place Windows does not index is found by its name only.</li>
+        <li><strong>Findee does not copy any of it.</strong> The matches are read from Windows Search as you search, and are forgotten when the search box closes (see <a href="#privacy">Privacy</a>).</li>
+        <li><strong>Emails come from classic Outlook only.</strong> They show the sender and the date under the subject. Press <kbd>Enter</kbd> and the message opens in classic Outlook. <strong>New Outlook</strong>, the newer app that replaces it, keeps no mail on this PC for Windows Search to read, so its mail is <strong>not included</strong>.</li>
+        <li><strong>Filters limit it.</strong> The group shows for plain searches, and for <span class="path">kind:document</span> and <span class="path">kind:email</span>. Other filters hide it (see <a href="#searching">Searching</a>).</li>
+      </ul>
+      <p>If Windows Search is turned off on your PC, the group is simply missing, and a quiet line says <strong>Windows Search is off, so matches inside files are not shown.</strong> Everything else carries on working.</p>
+    </section>
+
+    <section id="settings">
+      <h2 class="sec"><span class="n">09</span>Settings</h2>
+      <p>Open Settings from the tray menu, or with <kbd>Ctrl</kbd>+<kbd>,</kbd> in the search box. Changes apply at once. There is no Save button. The list on the left also shows <strong>Findee</strong> with the Markticulous plate and the version at the bottom, on every page. Click the plate to open About.</p>
+      <h3>General</h3>
+      <figure>
+        <picture>
+          <source srcset="images/settings-general-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-general.webp" alt="The General page of Settings with the shortcut box, Start with Windows, and the Updates section">
+        </picture>
+        <figcaption>Settings, General page.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>Open Findee with</dt>
+        <dd>The shortcut that opens the search box. Click the box and press the keys you want, for example <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd>. A shortcut needs <kbd>Ctrl</kbd>, <kbd>Alt</kbd>, <kbd>Shift</kbd> or <kbd>Win</kbd> with a letter, a digit, <kbd>Space</kbd> or a function key. Findee warns you when another program, including the other Markticulous apps, already uses the same shortcut, and leaves the choice to you. The standard shortcut is <kbd>Alt</kbd>+<kbd>Space</kbd>.</dd>
+        <dt>Start with Windows</dt>
+        <dd>Opens the tray icon when you sign in to Windows, so the shortcut is ready. The index is kept up to date by the service whether or not Findee is open.</dd>
+        <dt>Updates</dt>
+        <dd>The same block in every Markticulous app. See below.</dd>
+      </dl>
+      <h3>The Updates block</h3>
+      <figure>
+        <picture>
+          <source srcset="images/settings-updates-ready-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-updates-ready.webp" alt="The Updates section of the General page with Update automatically ticked, an orange dot and the button Restart to update, and the text that a version is ready">
+        </picture>
+        <figcaption>Settings, General page, with an update ready to install.</figcaption>
+      </figure>
+      <ul>
+        <li><strong>Update automatically</strong> is ticked unless you change it. Findee installs an update only when its search and Settings windows are closed, and within 14 days even when this is off. Your settings and history are kept.</li>
+        <li>One button, whose words follow the state: <strong>Check now</strong>; <strong>Checking&hellip;</strong>; <strong>Downloading&hellip;</strong> with a breathing orange dot; and <strong>Restart to update</strong> with a blinking dot, which installs the ready update at once. A button that has nothing to do is dimmed.</li>
+        <li>Beside the button, the status: <strong>Checking for updates&hellip;</strong>, <strong>Downloading {version}&hellip;</strong>, <strong>Version {version} is ready.</strong> or <strong>Findee is up to date.</strong> (in cyan); <strong>Update check failed.</strong> (in red); or <strong>Updates work in the installed app.</strong> in a copy of Findee that was not installed with the setup.</li>
+        <li>Under it, <strong>Last checked</strong> says when the last check was made, for example <strong>Last checked today at 16:15.</strong> It stays hidden until the first check.</li>
+      </ul>
+      <h3>Index</h3>
+      <figure>
+        <picture>
+          <source srcset="images/settings-index-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-index.webp" alt="The Index page of Settings with a row for each drive showing how many files and folders are indexed and that it is ready, then Include hidden and system files, Rebuild index and the list of folders left out of the index">
+        </picture>
+        <figcaption>Settings, Index page.</figcaption>
+      </figure>
+      <dl class="defs">
+        <dt>Drives</dt>
+        <dd>One row for each fixed NTFS drive: its letter, how many files and folders are in the index, when it was last updated (for example <strong>just now</strong> or <strong>3 minutes ago</strong>) and its state: <strong>Ready</strong>, <strong>Building&hellip;</strong> or <strong>Waiting to retry</strong>. If the Findee service is not running, a line says so in place of the rows.</dd>
+        <dt>Include hidden and system files</dt>
+        <dd>Off by default. Turning it on or off rebuilds your index. It applies to your index only.</dd>
+        <dt>Rebuild index</dt>
+        <dd>Makes the list again from scratch. Searches keep working while it is built. The button is dimmed while a build is already under way, and when the service is not running.</dd>
+        <dt>Left out of the index</dt>
+        <dd>The folders Findee never lists: the Windows folder, Program Files, ProgramData, the recycle bin, System Volume Information, Windows.old, other people&rsquo;s profile folders and your own AppData folder. They hold system files, installed programs and other people&rsquo;s data, and leaving them out keeps the index small and the results about your own files. The &#9432; beside the heading says the same.</dd>
+      </dl>
+      <h3>About</h3>
+      <figure>
+        <picture>
+          <source srcset="images/settings-about-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/settings-about.webp" alt="The About page of Settings with the Findee icon and name, the Open data folder button, and the support section with the Support Markticulous button">
+        </picture>
+        <figcaption>Settings, About page. The support section is at the bottom (see <a href="#support">Support Markticulous</a>).</figcaption>
+      </figure>
+      <p>The Findee name drawn as a wordmark beside the app icon, with the version. <strong>Open data folder</strong> opens <span class="path">%LocalAppData%\Findee</span>, where your settings and your history are kept. Below are the support section and the credits.</p>
+      <h3>User Guide</h3>
+      <p>The last entry in the list opens this guide in your web browser.</p>
+    </section>
+
+    <section id="privacy">
+      <h2 class="sec"><span class="n">10</span>Privacy: what Findee can see</h2>
+      <p>Findee collects <strong>nothing about you</strong>. It has no telemetry, no ads and no account. Everything it knows stays on your PC.</p>
+      <h3>What the index holds</h3>
+      <p>For every file and folder, the index holds four things: its <strong>name</strong>, the <strong>folder</strong> it is in, its <strong>size</strong> and the <strong>date</strong> it was last changed. It <strong>never holds what is inside a file</strong>: no text, no pictures, no mail.</p>
+      <h3>One index for each person</h3>
+      <p>The Findee service builds a separate index for each Windows account that uses Findee on the PC. Yours lives under <span class="path">%ProgramData%\Findee\users</span>, in a folder named after your account, and only your account and Windows itself can read it. Another person on the same PC cannot see yours, and you cannot see theirs.</p>
+      <h3>Only what you can open</h3>
+      <p>Your index holds only the names you could see in File Explorer. While it builds your index, the service leaves out every folder you are not allowed to open, together with everything inside that folder. A private folder of another person, or a folder whose permissions keep you out, never reaches your index at all. Findee also checks a result again before it shows it, as a second check, so a folder that was closed to you after the index was built does not show either.</p>
+      <h3>What Findee keeps in your account</h3>
+      <p>Your history of what you open (see <a href="#learning">How the learning works</a>) and your settings are in <span class="path">%LocalAppData%\Findee</span>, up to 2,000 items. They hold the name of each item, its full path, how many times you opened it and when. They are never shared.</p>
+      <h3>Windows Search</h3>
+      <p>The <strong>Inside files and emails</strong> group is answered by Windows Search at the moment you search. Findee does not store those answers. Windows Search follows its own rules about who may see what, and Findee shows you only what it gives back to you.</p>
+      <h3>What goes over the network</h3>
+      <ul>
+        <li><strong>The update check.</strong> Once a day, the Findee service asks GitHub whether a newer Findee is available. It sends nothing about you or your files.</li>
+        <li><strong>The supporter check</strong>, only if you choose it (see <a href="#support">Support Markticulous</a>).</li>
+        <li><strong>Links</strong> you click, such as the one to Peekee, open in your web browser.</li>
+      </ul>
+      <p>Nothing else leaves your PC.</p>
+      <h3>Taking it all away</h3>
+      <p>Uninstalling Findee removes the index and the service, and your history and settings (see <a href="#install">Installing, updating and removing</a>).</p>
+    </section>
+
+    <section id="install">
+      <h2 class="sec"><span class="n">11</span>Installing, updating and removing</h2>
+      <h3>Installing</h3>
+      <ol class="steps">
+        <li>Download <span class="path">Findee-Setup-1.0.0.exe</span> from the <a href="https://markticulous.github.io/#findee">Findee page</a>. The number is the version, so yours may be different.</li>
+        <li>Double-click it. If Windows shows &ldquo;Windows protected your PC&rdquo;, click <strong>More info</strong>, then <strong>Run anyway</strong>. This appears because Findee is new and not yet signed with a publisher certificate.</li>
+        <li>If double-clicking does nothing, Windows has blocked the downloaded file. Right-click it &rarr; <strong>Properties</strong>, tick <strong>Unblock</strong> at the bottom of the General tab, click <strong>OK</strong>, then double-click it again.</li>
+        <li>Accept the terms on the one page that follows and click <strong>Install</strong>. Windows asks for an administrator&rsquo;s permission once. Choose <strong>Yes</strong>.</li>
+        <li>At the end, leave <strong>Open Findee</strong> ticked to start it.</li>
+      </ol>
+      <p>Findee installs for everyone on the PC, in <span class="path">Program Files\Findee</span>, together with the Findee service (named <strong>Findee Index</strong> in the Windows Services list) that keeps your index up to date even when nobody is signed in. If the .NET 10 Desktop Runtime is not on the PC yet, the setup downloads it from Microsoft first; if it is, nothing extra is fetched. You will find Findee in the Start menu. There is no desktop shortcut.</p>
+      <h3>Updating</h3>
+      <p>The service checks for a new version once a day, and also when you press <strong>Check now</strong> in <strong>Settings &rarr; General &rarr; Updates</strong>. An update is checked against a signature before anything is installed, so a damaged or tampered file is refused. Then:</p>
+      <ul>
+        <li>With <strong>Update automatically</strong> on, the update installs by itself once Findee is not in use: the search box and Settings are closed, and the search box has not been opened for a couple of minutes. Findee closes, the update installs, and Findee opens again.</li>
+        <li>With it off, the update waits for you. Press <strong>Restart to update</strong> in Settings, or choose <strong>Restart to update</strong> in the tray menu, whenever you are ready. <strong>An update still installs by itself within 14 days even when this is off</strong>, and only when Findee is not in use, so nobody stays on an old version for ever.</li>
+      </ul>
+      <p>Your settings, your history and your index are kept. You see the orange dot on the tray icon while an update is on its way (see <a href="#opening">Opening Findee</a>).</p>
+      <h3>Removing Findee</h3>
+      <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Findee and choose <strong>Uninstall</strong>. Uninstalling:</p>
+      <ul>
+        <li>closes Findee, then removes the program, the Findee service and the Start menu shortcut;</li>
+        <li>removes <span class="path">%ProgramData%\Findee</span>, with every index. They are a copy of your file list, and Findee makes them again if you reinstall;</li>
+        <li>for <strong>the account that uninstalls</strong>, removes the Start with Windows entry, Findee&rsquo;s place in the shared shortcut list of the Markticulous apps, and <span class="path">%LocalAppData%\Findee</span> (history and settings).</li>
+      </ul>
+      <p>It does not remove files of other accounts. <strong>Another person&rsquo;s history and settings stay</strong> in their own <span class="path">%LocalAppData%\Findee</span> folder after you uninstall, because Windows lets only that person remove them. They are small, and they can delete the folder by hand. The .NET runtime stays, since other programs may use it.</p>
+    </section>
+
+    <section id="fast">
+      <h2 class="sec"><span class="n">12</span>Why Findee is fast</h2>
+      <ul>
+        <li><strong>It reads the file list straight from NTFS.</strong> The service reads the drive&rsquo;s own table of every file instead of walking through the folders one by one, so the first list of a whole drive is quick to make.</li>
+        <li><strong>Afterwards it only follows the changes.</strong> Windows keeps a journal of every file that is created, renamed or deleted. The service reads just that, so it stays up to date without scanning again.</li>
+        <li><strong>The search runs inside the app.</strong> There is no trip to the service for each letter you type. The app maps the list into memory and scans all the names at once on several processor cores.</li>
+        <li><strong>Typing more narrows what is already found.</strong> When you add a letter to what you typed, Findee looks only through the earlier matches.</li>
+        <li><strong>Folder paths are built only for the rows you can see.</strong></li>
+        <li><strong>It is small and quiet at rest.</strong> The search window is built when you open it and its memory is given back when it closes. While you are not searching, Findee uses almost no processor time and little memory.</li>
+      </ul>
+      <p>Measured on one PC, with the finished release:</p>
+      <table class="ref">
+        <thead><tr><th>What</th><th>Measured</th></tr></thead>
+        <tbody>
+          <tr><td>Search box on screen after the shortcut, first time</td><td>89 ms (limit 100 ms)</td></tr>
+          <tr><td>Search box on screen after the shortcut, later times</td><td>19 ms (limit 50 ms)</td></tr>
+          <tr><td>One search over a million names</td><td>0.8 ms; the slowest of nine test searches 4.6 ms (limit 15 ms)</td></tr>
+          <tr><td>Memory at rest (app and service)</td><td>App 58.7 MB, service 9.2 MB (limit 80 MB each)</td></tr>
+          <tr><td>Processor time at rest</td><td>App 0.5 ms, service 0.1 ms in each quiet minute (limit 10 ms)</td></tr>
+          <tr><td>Size on disk</td><td>3.8 MB for the app and the service; the setup download is 3.1 MB</td></tr>
+          <tr><td>The first index of a drive</td><td>C: in 4.7 seconds (3.4 million file records); all four drives in 8.1 seconds</td></tr>
+        </tbody>
+      </table>
+      <p class="mute">Test PC and date: AMD Ryzen 9 5950X, Windows 11, 21 November 2026.</p>
+    </section>
+
+    <section id="support">
+      <h2 class="sec"><span class="n">13</span>Support Markticulous</h2>
+      <p>Findee is made by one person who cares about the details. It will always be free. It has no ads and no tracking. If it saves you time, you can help keep it going with a coffee on <a href="https://ko-fi.com/markticulous">Ko-fi</a>.</p>
+      <p>You will always find the support button under <strong>Settings &rarr; About</strong>, next to a link that explains <a href="https://markticulous.github.io/support/?app=findee">why these apps are made</a>.</p>
+      <p>Findee may ask for support once in a while. The first time comes after you have opened 250 results from Findee, and then again at each further 250. It never asks in the first two weeks, and never more than once in 90 days. The card has three buttons: <strong>Support</strong>, <strong>Later</strong> and <strong>Don&rsquo;t ask again</strong>. If you choose <strong>Don&rsquo;t ask again</strong>, that is final: Findee never asks again, and the tray item goes away. After the first 250, an item <strong>&hearts; Support Markticulous</strong> also appears in the tray menu.</p>
+      <p>If you have supported Markticulous, click <strong>I&rsquo;ve already supported</strong> on the About page. You can then choose a small thank-you picture, called an adornment, that is shown beside the version number. Findee can also check your support: it asks for the email you used on Ko-fi, and sends only a scrambled version of that email (a hash) to Markticulous to check it, and only when you click <strong>Check</strong>. Nothing else is sent. If you would rather not, click <strong>Skip the check</strong>: Findee takes your word for it.</p>
+    </section>
+
+    <section id="wrong">
+      <h2 class="sec"><span class="n">14</span>If something goes wrong</h2>
+      <dl class="defs">
+        <dt>The shortcut does nothing</dt>
+        <dd>Look for the Findee icon in the tray (under the <strong>^</strong> arrow too). If it is not there, start Findee from the Start menu. If it is there, another program may be using the same shortcut. Open <strong>Settings &rarr; General</strong> and choose another one in <strong>Open Findee with</strong>. The tray icon always opens the search box with a left-click.</dd>
+        <dt>&ldquo;Findee is building its index. Results will appear in a moment.&rdquo;</dt>
+        <dd>The service is making the list of your files, which happens after the first install, after <strong>Rebuild index</strong>, and when you turn <strong>Include hidden and system files</strong> on or off. Wait a moment: a large drive takes a little longer. <strong>Settings &rarr; Index</strong> shows the state of each drive.</dd>
+        <dt>&ldquo;The index is not being updated.&rdquo; or &ldquo;The Findee service is not running, so the index is not being updated.&rdquo;</dt>
+        <dd>The service that keeps the list of files is not running. Searches use the list as it was, so new files are missing. Restart the PC, or open the Windows Services list and start the service named <strong>Findee Index</strong> (its short name is <span class="path">FindeeService</span>). Nothing in Findee itself needs repairing.</dd>
+        <dt>A file you know exists is not shown</dt>
+        <dd>It may be new: the list follows changes within moments, but if the service was not running, it catches up when it starts. It may be in a folder Findee leaves out (see <a href="#settings">Settings &rarr; Index</a>), a hidden or system file (turn on <strong>Include hidden and system files</strong>), on a drive that is not a fixed NTFS drive, or in a folder you are not allowed to open. Only the best 50 results are listed, so add a word or a filter (see <a href="#searching">Searching</a>). If nothing helps, press <strong>Rebuild index</strong>.</dd>
+        <dt>&ldquo;No matches.&rdquo;</dt>
+        <dd>Nothing in your index has all of your words in its name. Check the spelling (a misspelt word with one missing or swapped letter is caught, a wrong letter is not) and try fewer words.</dd>
+        <dt>Space does not preview</dt>
+        <dd>Space previews only after you have moved through the results with the arrow keys, the Page keys or a click, and have not typed since. For an app or an email it never previews. If Peekee is not installed, Findee says so (see <a href="#actions">Quick actions and preview</a>).</dd>
+        <dt>&ldquo;This file is no longer there.&rdquo;</dt>
+        <dd>The file was moved or deleted after the list was made. Findee forgets it from Recent. The list catches up with the change shortly.</dd>
+        <dt>&ldquo;Windows Search is off, so matches inside files are not shown.&rdquo;</dt>
+        <dd>The Windows Search service is not running on this PC. Start the service named <strong>Windows Search</strong> in the Windows Services list. Matches inside files come only from folders Windows indexes (see <a href="#inside">Inside files and emails</a>).</dd>
+        <dt>My emails do not show</dt>
+        <dd>Only classic Outlook mail is found, and only when Windows Search indexes it. Mail in the new Outlook is not included.</dd>
+        <dt>&ldquo;Update check failed.&rdquo;</dt>
+        <dd>The service could not reach GitHub, usually because the PC is offline. It tries again by itself, a little later each time, and you can press <strong>Check now</strong> when you are back online.</dd>
+        <dt>&ldquo;The update could not be verified, so it was not installed.&rdquo; or &ldquo;The update did not install. Findee kept the version it has.&rdquo;</dt>
+        <dd>Findee refused a damaged update, or the installer could not finish. Your current Findee keeps working as it was. The next check tries again. If it keeps happening, download the newest setup from the <a href="https://markticulous.github.io/#findee">Findee page</a> and run it over your copy: your settings and history are kept.</dd>
+        <dt>Looking for more detail</dt>
+        <dd>Go to <strong>Settings &rarr; About</strong> and click <strong>Open data folder</strong>. It opens <span class="path">%LocalAppData%\Findee</span>. The service writes what it is doing to <span class="path">%ProgramData%\Findee\logs\service.log</span>, which only administrators can open.</dd>
+        <dt>Asking for help</dt>
+        <dd>Write to Markticulous through the <a href="https://markticulous.github.io/support/?app=findee">support page</a> and say which version of Findee you have (it is shown at the bottom of the Settings list) and what you were doing.</dd>
+      </dl>
+    </section>
+
+  </main>
+</div>
+
+<footer class="colophon">
+  <div class="colophon-in">
+    <span>Findee, a file and app finder for Windows.</span>
+    <span class="tm">Microsoft, Windows and Outlook are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Findee is not made, endorsed or supported by Microsoft.</span>
+    <a href="https://markticulous.github.io/support/?app=findee" target="_blank" rel="noopener">Support Markticulous</a>
+    <a class="totop" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<button type="button" class="uptop" id="upTop" aria-label="Back to the top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M12 19V6"/><path d="M5.5 12.5 12 6l6.5 6.5"/>
+  </svg>
+</button>
+
+<script src="version.js"></script>
+<script>
+/* The version chip. The app build writes version.js beside this page (it is committed, so the
+   source copy shows it too); if it is missing, the chip stays blank. */
+(function () {
+  var v = window.FINDEE_VERSION;
+  if (v) document.getElementById('verChip').textContent = 'v' + v;
+})();
+</script>
+
+
+<script>
+/* Keep the contents list showing where you are. */
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  var targets = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (!el) return;
+    map[el.id] = a;
+    targets.push(el);
+  });
+  if (!targets.length || !window.IntersectionObserver) return;
+
+  var here = null;
+  function mark(el) {
+    if (here === el) return;
+    if (here) map[here.id].classList.remove('is-here');
+    here = el;
+    if (here) map[here.id].classList.add('is-here');
+  }
+
+  var seen = [];
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var at = seen.indexOf(e.target);
+      if (e.isIntersecting && at === -1) seen.push(e.target);
+      else if (!e.isIntersecting && at !== -1) seen.splice(at, 1);
+    });
+    if (!seen.length) {
+      if ((window.scrollY || document.documentElement.scrollTop) < 8) mark(targets[0]);
+      return;
+    }
+    mark(seen.slice().sort(function (a, b) {
+      return a.getBoundingClientRect().top - b.getBoundingClientRect().top;
+    })[0]);
+  }, { rootMargin: '-10% 0px -70% 0px' });
+
+  mark(targets[0]);
+  targets.forEach(function (t) { io.observe(t); });
+})();
+</script>
+
+<script>
+/* Search the guide: the whole text, four characters or more. Every match is
+   marked in place with the Custom Highlight API; where that is missing the
+   search still lists sections and simply does not mark. */
+(function () {
+  var box = document.getElementById('findInput');
+  var list = document.getElementById('findList');
+  var clear = document.getElementById('findClear');
+  if (!box || !list) return;
+
+  var MIN = 4, MAX = 14;
+  var canMark = typeof Highlight === 'function' && window.CSS && CSS.highlights;
+
+  var parts = [];
+  Array.prototype.forEach.call(document.querySelectorAll('section[id]'), function (sec) {
+    var h = sec.querySelector('h2.sec');
+    if (!h) return;
+    var n = h.querySelector('.n');
+    var name = (n ? h.textContent.slice(n.textContent.length) : h.textContent).trim();
+    parts.push({ el: sec, head: h, name: name, hay: sec.textContent.toLowerCase() });
+  });
+
+  var shown = [], at = -1;
+
+  function unmark() {
+    if (!canMark) return;
+    try { CSS.highlights.delete('findee-find'); } catch (e) { /* nothing to clear */ }
+  }
+
+  function mark(q) {
+    if (!canMark) return;
+    var root = document.querySelector('.shell') || document.body;
+    var walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('script, style, .find')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var ranges = [], node;
+    while ((node = walk.nextNode())) {
+      var hay = node.nodeValue.toLowerCase();
+      var from = 0, hit;
+      while ((hit = hay.indexOf(q, from)) !== -1) {
+        var r = document.createRange();
+        r.setStart(node, hit);
+        r.setEnd(node, hit + q.length);
+        ranges.push(r);
+        from = hit + q.length;
+      }
+    }
+    if (!ranges.length) { unmark(); return; }
+    var hl = new Highlight();
+    ranges.forEach(function (r) { hl.add(r); });
+    CSS.highlights.set('findee-find', hl);
+  }
+
+  /* Under the box, wherever the sticky bar has put it. */
+  function placeList() {
+    if (list.hidden) return;
+    var r = box.getBoundingClientRect();
+    var w = Math.max(200, Math.min(360, window.innerWidth - 16));
+    var left = Math.min(r.right - w, window.innerWidth - w - 8);
+    list.style.left = Math.round(Math.max(8, left)) + 'px';
+    list.style.top = Math.round(r.bottom + 6) + 'px';
+    list.style.width = w + 'px';
+    list.style.maxHeight = Math.max(120, window.innerHeight - r.bottom - 20) + 'px';
+  }
+
+  function close() {
+    list.hidden = true;
+    list.innerHTML = '';
+    box.setAttribute('aria-expanded', 'false');
+    shown = []; at = -1;
+  }
+
+  function go(part) {
+    close();
+    box.blur();
+    part.head.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#' + part.el.id);
+  }
+
+  function pick(i) {
+    var was = list.querySelector('li.is-on');
+    if (was) was.className = '';
+    at = i;
+    if (at < 0) return;
+    var li = list.children[at];
+    if (li) { li.className = 'is-on'; li.scrollIntoView({ block: 'nearest' }); }
+  }
+
+  function count(hay, q) {
+    var n = 0, from = 0, hit;
+    while ((hit = hay.indexOf(q, from)) !== -1) { n++; from = hit + q.length; }
+    return n;
+  }
+
+  function draw() {
+    var raw = box.value.trim();
+    if (clear) clear.hidden = raw.length === 0;
+
+    var q = raw.toLowerCase();
+    if (q.length < MIN) { close(); unmark(); return; }
+
+    mark(q);
+
+    shown = [];
+    parts.forEach(function (p) {
+      var n = count(p.hay, q);
+      if (n) shown.push({ part: p, n: n });
+    });
+    shown.sort(function (a, b) { return b.n - a.n; });
+    shown = shown.slice(0, MAX);
+
+    list.innerHTML = '';
+    if (!shown.length) {
+      var none = document.createElement('li');
+      none.className = 'find-none';
+      none.textContent = 'Nothing in the guide says ' + raw;
+      list.appendChild(none);
+      list.hidden = false;
+      box.setAttribute('aria-expanded', 'true');
+      placeList();
+      at = -1;
+      return;
+    }
+
+    shown.forEach(function (row) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      var hits = document.createElement('span');
+      hits.className = 'hits';
+      hits.textContent = row.n === 1 ? 'once' : row.n + ' times';
+      b.appendChild(hits);
+      b.appendChild(document.createTextNode(row.part.name));
+      b.addEventListener('click', function () { go(row.part); });
+      li.appendChild(b);
+      list.appendChild(li);
+    });
+    list.hidden = false;
+    box.setAttribute('aria-expanded', 'true');
+    placeList();
+    pick(0);
+  }
+
+  function wipe() {
+    box.value = '';
+    if (clear) clear.hidden = true;
+    close();
+    unmark();
+    box.focus();
+  }
+
+  box.addEventListener('input', draw);
+  box.addEventListener('focus', draw);
+  if (clear) clear.addEventListener('click', wipe);
+
+  box.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { wipe(); return; }
+    if (!shown.length) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); pick((at + 1) % shown.length); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); pick((at - 1 + shown.length) % shown.length); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (shown[at]) go(shown[at].part); }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.find')) close();
+  });
+
+  window.addEventListener('scroll', placeList, { passive: true });
+  window.addEventListener('resize', placeList);
+}());
+</script>
+
+<script>
+/* Back to the top: a fixed, eased-out trip however far down you are.
+   Reduced-motion users get the jump. */
+(function () {
+  var btn = document.getElementById('upTop');
+  if (!btn) return;
+
+  // The trip takes longer the further it goes (700 ms to 1.4 s), so the slow-down into the top is always seen (Mark, 2026-10-27).
+  var duration = function (from) { return Math.min(1400, Math.max(700, 500 + from / 10)); };
+  var SHOW_AT = function () { return window.innerHeight * 1.5; };
+  var still = function () {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
+  // The button never enters the footer: once the footer scrolls into view it rides 24px above it (Mark, 2026-10-27).
+  var footer = document.querySelector('footer.colophon');
+  var GAP = 24, base = null;
+  function measure() { btn.style.bottom = ''; base = parseFloat(getComputedStyle(btn).bottom) || 0; }
+  function sync() {
+    btn.classList.toggle('is-on', window.scrollY > SHOW_AT());
+    if (!footer) return;
+    if (base === null) measure();
+    var above = window.innerHeight - footer.getBoundingClientRect().top + GAP;
+    btn.style.bottom = Math.max(base, above) + 'px';
+  }
+
+  var run = null;
+  function toTop() {
+    if (run) cancelAnimationFrame(run);
+    var from = window.scrollY, MS = duration(from);
+    if (from <= 0) return;
+    if (still()) { window.scrollTo({ top: 0, behavior: 'instant' }); return; }
+    var t0 = (window.performance && performance.now) ? performance.now() : null;
+    var step = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / MS);
+      var e = 1 - Math.pow(1 - k, 5);   // quintic ease-out: fast away, a long soft glide to a stop at the top
+      window.scrollTo({ top: Math.round(from * (1 - e)), behavior: 'instant' });
+      if (k < 1) { run = requestAnimationFrame(step); return; }
+      run = null;
+      if (history.replaceState) history.replaceState(null, '', '#top');
+    };
+    run = requestAnimationFrame(step);
+  }
+
+  btn.addEventListener('click', toTop);
+  var foot = document.querySelector('.totop');
+  if (foot) foot.addEventListener('click', function (e) { e.preventDefault(); toTop(); });
+
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', function () { measure(); sync(); });
+  sync();
+}());
+</script>
+</body>
+</html>

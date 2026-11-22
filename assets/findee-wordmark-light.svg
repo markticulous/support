@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 15.4 119 44.7" width="238" height="89.4">
+  <!-- Findee wordmark, take A2 (chosen by Mark 2026-11-19), for light grounds. Same geometry as findee-wordmark-dark.svg; ink #0F172A, "ee" #06B6D4. -->
+  <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#0F172A">
+      <path d="M8.5,45.25 V25.5 A7.5,7.5 0 0 1 16,18 H17"/>
+      <path d="M2.1,30.25 H14.9"/>
+      <path d="M23.7,30.25 V45.25"/>
+      <circle cx="23.7" cy="20.1" r="2.1" fill="#0F172A" stroke="none"/>
+      <path d="M32.5,45.25 V37.75 A7.5,7.5 0 0 1 47.5,37.75 V45.25"/>
+      <circle cx="63.2" cy="37.75" r="7.5"/>
+      <path d="M70.7,18 V45.25"/>
+    </g>
+    <g stroke="#06B6D4">
+      <path d="M79.5,37.75 H94.5 A7.5,7.5 0 1 0 92.31,43.05"/>
+      <path d="M101.9,37.75 H116.9 A7.5,7.5 0 1 0 114.71,43.05"/>
+    </g>
+  </g>
+</svg>
