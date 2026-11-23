@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Peekee — User Guide</title>
-<link rel="icon" href="images/peekee-32.png">
+<link rel="icon" href="images/peekee-64.png">
 <meta name="color-scheme" content="light dark">
 <style>
 /* One file plus its pictures. No fonts to fetch, nothing that needs a
@@ -69,7 +69,7 @@ body {
   letter-spacing: .34em; text-transform: uppercase;
   color: var(--mute);
 }
-.wordmark .logo { flex: none; width: 20px; height: 20px; margin-right: -4px; }
+.wordmark .logo { flex: none; width: 28px; height: 28px; margin-right: -2px; }
 .wordmark-mark { flex: none; height: 24px; margin-top: 7px; width: auto; color: var(--ink); overflow: visible; }
 
 /* The Markticulous byline plate: hollow, hairline edge, two corners cropped square. */
@@ -78,12 +78,18 @@ body {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 4px 8px;
   border-radius: 1px 6px 1px 6px;
-  box-shadow: inset 0 0 0 1px var(--rule);
+  box-shadow: inset 0 0 0 var(--hair) var(--rule);
   font-family: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   font-size: 9px; font-weight: 500; letter-spacing: .12em; line-height: 1;
   white-space: nowrap; text-transform: uppercase;
 }
 .byline-by, .byline-suffix { opacity: .6; }
+/* The plate's edge is one screen pixel at every display scale (rule 20). */
+:root { --hair: 1px; }
+@media (min-resolution: 1.25dppx) { :root { --hair: .8px; } }
+@media (min-resolution: 1.5dppx) { :root { --hair: calc(2px / 3); } }
+@media (min-resolution: 1.75dppx) { :root { --hair: calc(4px / 7); } }
+@media (min-resolution: 2dppx) { :root { --hair: .5px; } }
 
 .ver {
   flex: none;
@@ -370,7 +376,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 <body id="top">
 
 <p class="wordmark">
-  <img class="logo" src="images/peekee-32.png" alt="">
+  <img class="logo" src="images/peekee-64.png" alt="">
   <!-- The drawn Peekee wordmark (assets/logo/peekee-wordmark-*.svg), inline so "peek" follows the page's light or dark ink;
        "ee" keeps the brand cyan. The viewBox keeps the tail of the p; the margin keeps the letters where Backee's sit. -->
   <svg class="wordmark-mark" viewBox="0 15.9 129.5 44.2" role="img" aria-label="Peekee">
@@ -441,10 +447,10 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>Opens the preview of the selected file, and closes it again. If nothing is selected, or Peekee cannot preview where you are, the key goes to the window as usual. On a shortcut (<code>.lnk</code>) it shows the file or folder the shortcut points to; a shortcut to a program shows its own card instead. You can choose <kbd>Ctrl</kbd> + <kbd>Space</kbd> or <kbd>Shift</kbd> + <kbd>Space</kbd> instead in <a href="#settings">Settings</a>.</dd>
         <dt>Esc</dt>
         <dd>Closes the preview. This works whichever key you chose to open it.</dd>
-        <dt>Arrow keys, Home, End, Page Up and Page Down</dt>
+        <dt>Arrow keys, Home, End, Page Up, and Page Down</dt>
         <dd>Move the selection in the window behind, as they always do, and the preview follows to the new file. You do not have to close it first.</dd>
         <dt>Left and Right on a file with pages</dt>
-        <dd>When the preview shows a file with several pages, such as a TIFF, an Illustrator file or a PDF drawn by Windows, <kbd>Right</kbd> turns to the next page and <kbd>Left</kbd> to the previous one. On the last page, <kbd>Right</kbd> goes back to the window behind, so in an Icons view it moves on to the next file; on the first page, <kbd>Left</kbd> does the same. PDFs shown by Edge and Office files shown by Office keep their own scrolling: use the mouse wheel there.</dd>
+        <dd>When the preview shows a file with several pages, such as a TIFF, an Illustrator file, or a PDF drawn by Windows, <kbd>Right</kbd> turns to the next page and <kbd>Left</kbd> to the previous one. On the last page, <kbd>Right</kbd> goes back to the window behind, so in an Icons view it moves on to the next file; on the first page, <kbd>Left</kbd> does the same. PDFs shown by Edge and Office files shown by Office keep their own scrolling: use the mouse wheel there.</dd>
         <dt>Several files selected</dt>
         <dd>The preview shows the focused file, and the header says how many are selected.</dd>
         <dt>Dragging an edge</dt>
@@ -458,22 +464,22 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <thead><tr><th>Button</th><th>What it does</th></tr></thead>
         <tbody>
           <tr><td>Open</td><td>Opens the file in the program Windows uses for it.</td></tr>
-          <tr><td>Pin</td><td>Not available yet. It is greyed out.</td></tr>
+          <tr><td>Pin</td><td>Not available yet. It is <span data-sp="grayed">grayed</span> out.</td></tr>
           <tr><td>Copy</td><td>Copies what you are looking at. A text file (up to the largest size set in Settings) is copied as text, a picture as a picture (a PDF or multi-page TIFF copies the page showing), and anything else, including a folder, as the file itself, so Paste in File Explorer copies it.</td></tr>
           <tr><td>Copy path</td><td>Copies the full path of the file as text.</td></tr>
           <tr><td>Close</td><td>Closes the preview.</td></tr>
           <tr><td>Previous page and Next page</td><td>Appear only for files with pages, such as a PDF or a TIFF with several pages. <kbd>Left</kbd> and <kbd>Right</kbd> do the same.</td></tr>
-          <tr><td>Fit page, Fit width, 100 percent, Zoom out and Zoom in</td><td>Appear for a PDF drawn by Windows. Zoom steps are 25, 50, 75, 100, 125, 150, 200, 300 and 400 percent. A button that would change nothing is greyed out.</td></tr>
+          <tr><td>Fit page, Fit width, 100 percent, Zoom out, and Zoom in</td><td>Appear for a PDF drawn by Windows. Zoom steps are 25, 50, 75, 100, 125, 150, 200, 300, and 400 percent. A button that would change nothing is <span data-sp="grayed">grayed</span> out.</td></tr>
         </tbody>
       </table>
-      <p>Open, Copy and Copy path are greyed out when no file is showing, and Copy is also greyed out for an item that could not be read.</p>
+      <p>Open, Copy, and Copy path are <span data-sp="grayed">grayed</span> out when no file is showing, and Copy is also <span data-sp="grayed">grayed</span> out for an item that could not be read.</p>
     </section>
 
     <section id="where">
       <h2 class="sec"><span class="n">03</span>Where Peekee works</h2>
       <dl class="defs">
         <dt>File Explorer</dt>
-        <dd>Every view: details, list, icons and tiles. Peekee reads the selection from Explorer and never changes anything.</dd>
+        <dd>Every view: details, list, icons, and tiles. Peekee reads the selection from Explorer and never changes anything.</dd>
         <dt>The Desktop</dt>
         <dd>Select an icon on the Desktop and press the key.</dd>
         <dt>Open and Save dialogs</dt>
@@ -490,33 +496,33 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>A preview opens at once and reads the file without changing it.</p>
       <dl class="defs">
         <dt>Images</dt>
-        <dd>PNG, JPG, GIF, BMP, WebP, TIFF and ICO, plus HEIC and AVIF where Windows has the codec installed. Amiga IFF pictures (<code>.iff</code>, <code>.ilbm</code>, <code>.lbm</code>, <code>.ham6</code>, <code>.ham8</code>, <code>.acbm</code>, <code>.rgb8</code>, <code>.rgbn</code>, including HAM and EHB, pictures with a palette for every line, Atari ST pictures, the true-colour RGB8 and RGBN kinds, and the PC <code>PBM</code> kind; a file that is cut short shows the part that is there) are drawn by Peekee itself; the footer says how many colours they use. Their pixel shape is not corrected, so a low-resolution Amiga picture can look narrower than it did on the Amiga. Photoshop files (<code>.psd</code> and the large-document <code>.psb</code>) show the merged picture saved in the file, in RGB, CMYK, gray, indexed or black and white at 8 or 16 bits; layers are not shown. If the file was saved without that picture, is over 16 megapixels or is in an unsupported mode, Peekee shows the small preview picture stored in the file when there is one, and the footer says "thumbnail only". A GIF plays, and the footer says how many frames it has, how fast it runs and how often it plays. A TIFF with several pages shows one page at a time, with page buttons in the header. The wheel zooms, dragging pans, and a double click fits the image to the window again. In <a href="#settings">Settings</a> you choose whether images open fitted to the window or at 100 percent, and what shows behind them.</dd>
+        <dd>PNG, JPG, GIF, BMP, WebP, TIFF, and ICO, plus HEIC and AVIF where Windows has the codec installed. Amiga IFF pictures (<code>.iff</code>, <code>.ilbm</code>, <code>.lbm</code>, <code>.ham6</code>, <code>.ham8</code>, <code>.acbm</code>, <code>.rgb8</code>, <code>.rgbn</code>, including HAM and EHB, pictures with a palette for every line, Atari ST pictures, the true-<span data-sp="color">color</span> RGB8 and RGBN kinds, and the PC <code>PBM</code> kind; a file that is cut short shows the part that is there) are drawn by Peekee itself; the footer says how many <span data-sp="colors">colors</span> they use. Their pixel shape is not corrected, so a low-resolution Amiga picture can look narrower than it did on the Amiga. Photoshop files (<code>.psd</code> and the large-document <code>.psb</code>) show the merged picture saved in the file, in RGB, CMYK, <span data-sp="gray">gray</span>, indexed, or black and white at 8 or 16 bits; layers are not shown. If the file was saved without that picture, is over 16 megapixels, or is in an unsupported mode, Peekee shows the small preview picture stored in the file when there is one, and the footer says "thumbnail only". A GIF plays, and the footer says how many frames it has, how fast it runs, and how often it plays. A TIFF with several pages shows one page at a time, with page buttons in the header. The wheel zooms, dragging pans, and a double click fits the image to the window again. In <a href="#settings">Settings</a> you choose whether images open fitted to the window or at 100 percent, and what shows behind them.</dd>
         <dt>Text and code</dt>
-        <dd>Plain text, logs, configuration files and source code, in a monospace font with line numbers. Long lines scroll sideways instead of wrapping. A file larger than the limit in Settings (2 MB to start with) shows its first part, with a note in the footer.</dd>
+        <dd>Plain text, logs, configuration files, and source code, in a monospace font with line numbers. Long lines scroll sideways instead of wrapping. A file larger than the limit in Settings (2 MB to start with) shows its first part, with a note in the footer.</dd>
         <dt>CSV and TSV</dt>
         <dd>A table of the first 5,000 rows. The first row becomes the column headers when the file seems to have one. Otherwise the columns are lettered.</dd>
         <dt>JSON</dt>
         <dd>Laid out with indents so it is easy to read. A file that is not valid JSON shows as plain text.</dd>
         <dt>Markdown</dt>
-        <dd>Shown as a formatted document with headings, lists, tables, code and the images that sit beside the file. Links are drawn as links but cannot be clicked.</dd>
+        <dd>Shown as a formatted document with headings, lists, tables, code, and the images that sit beside the file. Links are drawn as links but cannot be clicked.</dd>
         <dt>SVG</dt>
         <dd>Drawn and fitted to the window. Turn the mouse wheel to zoom about the pointer, drag to move around when zoomed in, and double click or press 0 to fit the window again. A drawing that uses features Peekee does not support, such as CSS classes, may look different from the way a browser shows it.</dd>
         <dt>Fonts</dt>
-        <dd>TTF, OTF and TTC files show as a type specimen: the family and style name, the alphabet, the digits and a sentence at three sizes. The font is not installed.</dd>
+        <dd>TTF, OTF, and TTC files show as a type specimen: the family and style name, the alphabet, the digits, and a sentence at three sizes. The font is not installed.</dd>
         <dt>Folders</dt>
         <dd>How many items are inside and how big they are in all (counted in the background), with the five newest items.</dd>
         <dt>Archives</dt>
-        <dd>The contents are listed without unpacking anything: zip, RAR, 7z, ISO, tar (also tar.gz, tgz, tar.bz2, tbz2, tar.xz and txz), gz, bz2, xz, CAB and LHA (lzh, lha). Folders inside show as a tree: click a folder row to open or close it. Name, Size and Modified have their own columns. An archive with a password, or one that is damaged, shows the information card instead.</dd>
+        <dd>The contents are listed without unpacking anything: zip, RAR, 7z, ISO, tar (also tar.gz, tgz, tar.bz2, tbz2, tar.xz, and txz), gz, bz2, xz, CAB, and LHA (lzh, lha). Folders inside show as a tree: click a folder row to open or close it. Name, Size, and Modified have their own columns. An archive with a password, or one that is damaged, shows the information card instead.</dd>
         <dt>WordPerfect</dt>
-        <dd>WordPerfect documents (<code>.wpd</code>, <code>.wp</code>, <code>.wp5</code>, <code>.wp6</code> and <code>.wp7</code>, from WordPerfect 5 and later) show their text only, in the same plain view as a text file, and the footer gives the word count. Fonts, layout, tables, pictures and footnotes are not shown, and a few special characters may appear as a question mark. A file that is password protected, or from which no text can be read, shows the information card.</dd>
+        <dd>WordPerfect documents (<code>.wpd</code>, <code>.wp</code>, <code>.wp5</code>, <code>.wp6</code>, and <code>.wp7</code>, from WordPerfect 5 and later) show their text only, in the same plain view as a text file, and the footer gives the word count. Fonts, layout, tables, pictures, and footnotes are not shown, and a few special characters may appear as a question mark. A file that is password protected, or from which no text can be read, shows the information card.</dd>
         <dt>Adobe Illustrator</dt>
         <dd>An <code>.ai</code> or <code>.ait</code> file saved with the PDF compatible option (the default for many years) shows as a PDF does, one page at a time, with the page buttons and zoom buttons. Peekee always uses the Windows PDF renderer for these, never the Edge previewer. An older file saved without that option shows the information card.</dd>
         <dt>PDF</dt>
-        <dd>One page at a time. Use the mouse wheel or the arrow buttons in the header to change page. In the pages drawn by Windows, the header also has Fit page (the default), Fit width, 100 percent, Zoom out and Zoom in, and the footer readout shows the page and the zoom, for example "Page 2 of 9 · 125%". With the default setting, <strong>Interactive</strong>, Peekee tries three ways in this order: the Microsoft Edge PDF previewer, another PDF previewer you have installed, and the PDF renderer built into Windows. With <strong>As images</strong> it uses the Windows renderer at once, which is faster and lighter but has no links, forms or text selection. Hold <kbd>Ctrl</kbd> and turn the wheel to zoom the built-in renderer, and double-click to return to the whole page.</dd>
-        <dt>Word, Excel, PowerPoint and email</dt>
-        <dd>These show through the preview component that Windows or Office installs, the same one File Explorer uses in its preview pane. Peekee bundles nothing for them. If no component is installed for a type, you get the information card. A file that came from the internet is not given to these components, and a PDF from the internet is drawn by the Windows renderer, until you right-click the file, choose Properties and tick Unblock.</dd>
+        <dd>One page at a time. Use the mouse wheel or the arrow buttons in the header to change page. In the pages drawn by Windows, the header also has Fit page (the default), Fit width, 100 percent, Zoom out, and Zoom in, and the footer readout shows the page and the zoom, for example "Page 2 of 9 · 125%". With the default setting, <strong>Interactive</strong>, Peekee tries three ways in this order: the Microsoft Edge PDF previewer, another PDF previewer you have installed, and the PDF renderer built into Windows. With <strong>As images</strong> it uses the Windows renderer at once, which is faster and lighter but has no links, forms, or text selection. Hold <kbd>Ctrl</kbd> and turn the wheel to zoom the built-in renderer, and double-click to return to the whole page.</dd>
+        <dt>Word, Excel, PowerPoint, and email</dt>
+        <dd>These show through the preview component that Windows or Office installs, the same one File Explorer uses in its preview pane. Peekee bundles nothing for them. If no component is installed for a type, you get the information card. A file that came from the internet is not given to these components, and a PDF from the internet is drawn by the Windows renderer, until you right-click the file, choose Properties, and tick Unblock.</dd>
         <dt>Anything else</dt>
-        <dd>The information card: the name, type, size and date of the file.</dd>
+        <dd>The information card: the name, type, size, and date of the file.</dd>
       </dl>
     </section>
 
@@ -525,9 +531,11 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <p>Open Settings from the tray menu. Changes apply at once. There is no Save button. The list on the left shows <strong>Peekee</strong> with the Markticulous plate and the version at the bottom, on every page. Click the plate to open the About page.</p>
       <dl class="defs">
         <dt>General</dt>
-        <dd><strong>Open the preview with</strong> is <strong>Space</strong>, <strong>Ctrl + Space</strong> or <strong>Shift + Space</strong>. Space also closes the preview, and Esc always does. If another Markticulous app already uses the combination, a warning under the setting says so; you can still choose it. <strong>Work in Open and Save dialogs</strong> lets Peekee preview inside the file dialogs of other programs. <strong>Start with Windows</strong> opens Peekee in the tray when you sign in. <strong>Check for updates automatically</strong> lets Peekee look for a newer version (see <a href="#privacy">Your privacy</a>), and <strong>Check now</strong> looks straight away. <strong>Restart to update</strong> is greyed out until an update has been downloaded.</dd>
+        <dd><strong>Open the preview with</strong> is <strong>Space</strong>, <strong>Ctrl + Space</strong>, or <strong>Shift + Space</strong>. Space also closes the preview, and Esc always does. If another Markticulous app already uses the combination, a warning under the setting says so; you can still choose it. <strong>Work in Open and Save dialogs</strong> lets Peekee preview inside the file dialogs of other programs. <strong>Start with Windows</strong> opens Peekee in the tray when you sign in. It is on from the first run, and Peekee says so once in a Windows notification. <strong>Check for updates automatically</strong> lets Peekee look for a newer version (see <a href="#privacy">Your privacy</a>), and <strong>Check now</strong> looks straight away. <strong>Restart to update</strong> is <span data-sp="grayed">grayed</span> out until an update has been downloaded.</dd>
+        <dt>Appearance</dt>
+        <dd><strong>Theme</strong> is <strong>Follow Windows</strong> (the default), <strong>Light</strong>, or <strong>Dark</strong>. It applies at once to the preview and to Settings, and Follow Windows changes with Windows while Peekee runs.</dd>
         <dt>Preview</dt>
-        <dd><strong>Window size</strong> sets how much of the screen a preview takes at first, from 30 to 90 percent. <strong>Remember the size I drag the window to</strong> keeps the size you chose by dragging an edge, and <strong>Forget the remembered size</strong> goes back to the setting above. <strong>Show the line at the bottom</strong> turns the footer (type, size, date) on or off. <strong>Images open</strong> is <strong>Fitted to the window</strong> or <strong>At 100 percent</strong>. <strong>Background behind pictures</strong> is the colour that fills the preview behind pictures, SVG files and the pages drawn by the Windows PDF renderer. Choose the window colour (light or dark with the theme, and the default), white, light grey, neutral grey (18 percent), dark grey or black. <strong>Show a checkerboard behind transparent parts</strong> (on by default) puts a checkerboard under the picture itself, so transparent areas show; with it off they show the background colour. An SVG with the checkerboard off and the window colour chosen keeps an automatic light or dark card. <strong>PDF files</strong> is <strong>Interactive</strong> (Edge or an installed previewer first) or <strong>As images</strong> (pages drawn by Windows). Under <strong>Text</strong>, <strong>Font size</strong> and <strong>Largest file shown</strong> (1, 2, 5, 10 or 20 MB) control text and code files. Larger files show their first part only. <strong>Extra picture formats</strong> adds Peekee's own reader for JPEG XL and AVIF pictures, which Windows cannot open without an extension from the Microsoft Store. Click <strong>Add</strong> to download it (1.4 MB); nothing is downloaded until you do. <strong>Remove</strong> deletes it again. Peekee checks the download against a fingerprint it carries and does not use a file that does not match.</dd>
+        <dd><strong>Window size</strong> sets how much of the screen a preview takes at first, from 30 to 90 percent. <strong>Remember the size I drag the window to</strong> keeps the size you chose by dragging an edge, and <strong>Forget the remembered size</strong> goes back to the setting above. <strong>Show the line at the bottom</strong> turns the footer (type, size, date) on or off. <strong>Images open</strong> is <strong>Fitted to the window</strong> or <strong>At 100 percent</strong>. <strong>Background behind pictures</strong> is the <span data-sp="color">color</span> that fills the preview behind pictures, SVG files, and the pages drawn by the Windows PDF renderer. Choose the window <span data-sp="color">color</span> (light or dark with the theme, and the default), white, light <span data-sp="gray">gray</span>, neutral <span data-sp="gray">gray</span> (18 percent), dark <span data-sp="gray">gray</span>, or black. <strong>Show a checkerboard behind transparent parts</strong> (on by default) puts a checkerboard under the picture itself, so transparent areas show; with it off they show the background <span data-sp="color">color</span>. An SVG with the checkerboard off and the window <span data-sp="color">color</span> chosen keeps an automatic light or dark card. <strong>PDF files</strong> is <strong>Interactive</strong> (Edge or an installed previewer first) or <strong>As images</strong> (pages drawn by Windows). Under <strong>Text</strong>, <strong>Font size</strong> and <strong>Largest file shown</strong> (1, 2, 5, 10, or 20 MB) control text and code files. Larger files show their first part only. <strong>Extra picture formats</strong> adds Peekee's own reader for JPEG XL and AVIF pictures, which Windows cannot open without an extension from the Microsoft Store. Click <strong>Add</strong> to download it (1.4 MB); nothing is downloaded until you do. <strong>Remove</strong> deletes it again. Peekee checks the download against a fingerprint it carries and does not use a file that does not match.</dd>
         <dt>About</dt>
         <dd>The Peekee name drawn as a wordmark beside the app icon, the version, <strong>Open data folder</strong> (where Peekee keeps its settings and downloaded extras, <code>%APPDATA%\Peekee</code>), the support section (see <a href="#support">Support Markticulous</a>) and the credits.</dd>
         <dt>User Guide</dt>
@@ -543,8 +551,6 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <dd>Appears at the top once an update has been downloaded. Choosing it restarts Peekee on the new version.</dd>
         <dt>Settings&hellip;</dt>
         <dd>Opens the Settings window.</dd>
-        <dt>Start with Windows</dt>
-        <dd>A tick means Peekee starts when you sign in. Click it to turn this on or off. It is the same setting as on the General page.</dd>
         <dt>&hearts; Support Markticulous</dt>
         <dd>Appears only after you have used Peekee for a while (see <a href="#support">Support Markticulous</a>).</dd>
         <dt>Quit</dt>
@@ -576,7 +582,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="privacy">
       <h2 class="sec"><span class="n">08</span>Your privacy</h2>
       <p>Peekee works only on your PC. It reads the file you select, shows it, and sends nothing about it anywhere. It has no ads and no tracking.</p>
-      <p>The only things that use the internet are ones you start or turn on: the update check, which asks GitHub whether a newer version exists when <strong>Check for updates automatically</strong> is on, and the links to Ko-fi and the support page, which open in your browser only when you click them. If you tell Peekee you have supported Markticulous and use the check, it sends a scrambled version of your email (a hash), and nothing else (see <a href="#support">Support Markticulous</a>).</p>
+      <p>The only things that use the internet are ones you start or turn on: the update check, which asks GitHub whether a newer version exists when <strong>Check for updates automatically</strong> is on, and the links to Ko-fi and the support page, which open in your browser only when you click them. If you tell Peekee you have supported Markticulous and use the check, it sends a scrambled version of your email (a hash), and nothing else (see <a href="#support">Support Markticulous</a>). When the check finds your email, Peekee also writes a small shared file, <code>%LocalAppData%\Markticulous\supporter.json</code>, that holds only that you are a supporter, the date of the check, and the supporter mark you chose (never your email), so that the other Markticulous apps on your PC can thank you without asking again.</p>
     </section>
 
     <section id="support">
@@ -591,7 +597,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
     <section id="install">
       <h2 class="sec"><span class="n">10</span>Installing and updating</h2>
       <h3>Installing</h3>
-      <p>Run the Peekee setup. It installs for your own account and does not need an administrator. Peekee then starts and puts its icon in the tray. Turn on <strong>Start with Windows</strong> in Settings if you want it ready every time.</p>
+      <p>Run the Peekee setup. It installs for your own account and does not need an administrator. Peekee then starts and puts its icon in the tray. It also starts with Windows from then on, and a Windows notification says so once; you can turn <strong>Start with Windows</strong> off in Settings.</p>
       <h3>Updates</h3>
       <p>When <strong>Check for updates automatically</strong> is on, Peekee checks about half a minute after it starts, and then once a day. A newer version downloads in the background, and <strong>Restart to update</strong> appears in the tray menu and on the General page. An orange dot shows on the tray icon and beside the button: it breathes while the update downloads and blinks once it is ready. Nothing restarts until you choose it. <strong>Check now</strong> looks straight away. The version you have is on the About page.</p>
       <h3>Uninstalling</h3>
@@ -603,8 +609,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <dl class="defs">
         <dt>Space does nothing</dt>
         <dd>Check that a file, not empty space, is selected, and that the file list has the keyboard focus: click the file once. Check that Peekee is running (look for its icon in the tray) and that the key in Settings is the one you are pressing. In an Open or Save dialog, make sure <strong>Work in Open and Save dialogs</strong> is on, and see <a href="#where">Where Peekee works</a> about older dialogs.</dd>
-        <dt>I see a card with the name, type and size instead of the file</dt>
-        <dd>Peekee has no way to draw that kind of file. For Word, Excel, PowerPoint and email files it means no preview component is installed for that type. Press the Open button in the header to open the file in its own program.</dd>
+        <dt>I see a card with the name, type, and size instead of the file</dt>
+        <dd>Peekee has no way to draw that kind of file. For Word, Excel, PowerPoint, and email files it means no preview component is installed for that type. Press the Open button in the header to open the file in its own program.</dd>
         <dt>A PDF looks different from one in Edge</dt>
         <dd>If neither the Edge previewer nor another PDF previewer is available, Peekee falls back to the renderer built into Windows. It shows the pages as pictures, one at a time.</dd>
         <dt>A text file is cut short</dt>
@@ -618,21 +624,21 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 
     <section id="types">
       <h2 class="sec"><span class="n">12</span>File types Peekee can show</h2>
-      <p>Every type Peekee recognises, grouped. Peekee also looks inside a file whose name gives no clue, so a picture or text file with an unusual extension is usually still shown.</p>
+      <p>Every type Peekee <span data-sp="recognizes">recognizes</span>, grouped. Peekee also looks inside a file whose name gives no clue, so a picture or text file with an unusual extension is usually still shown.</p>
       <table class="ref types">
         <thead><tr><th>Kind</th><th>Extensions</th><th>How it is shown</th></tr></thead>
         <tbody>
           <tr><td>Pictures</td><td><code>.png .jpg .jpeg .jpe .jfif .gif .webp .bmp .dib .ico .cur .tif .tiff .jxr .wdp .dds</code></td><td>Drawn by Windows. GIFs play; TIFFs with several pages show one page at a time.</td></tr>
           <tr><td>Pictures with a codec</td><td>.heic .heif and others</td><td>Shown when Windows has the codec installed (for example the HEIF extension from the Microsoft Store).</td></tr>
           <tr><td>JPEG XL and AVIF</td><td>.jxl .avif</td><td>Shown when Windows has the codec, or after you add <strong>Extra picture formats</strong> in Settings.</td></tr>
-          <tr><td>Photoshop</td><td><code>.psd .psb</code></td><td>The flattened image Photoshop stores in the file; RGB, grey, CMYK, indexed and 1-bit, 8 and 16 bits. No layers.</td></tr>
+          <tr><td>Photoshop</td><td><code>.psd .psb</code></td><td>The flattened image Photoshop stores in the file; RGB, <span data-sp="gray">gray</span>, CMYK, indexed, and 1-bit, 8 and 16 bits. No layers.</td></tr>
           <tr><td>Illustrator</td><td><code>.ai .ait</code></td><td>Files saved with PDF compatibility (the default since Illustrator CS) open in the PDF view.</td></tr>
-          <tr><td>Amiga and Atari pictures</td><td><code>.iff .ilbm .lbm .ham6 .ham8 .acbm .rgb8 .rgbn</code></td><td>Drawn by Peekee itself, including HAM, half-brite and pictures that change palette line by line.</td></tr>
-          <tr><td>SVG</td><td><code>.svg .svgz</code></td><td>Drawn by Peekee: shapes, paths, fills, strokes and gradients. Text and filters are left out. Zoom with the wheel and drag to pan.</td></tr>
+          <tr><td>Amiga and Atari pictures</td><td><code>.iff .ilbm .lbm .ham6 .ham8 .acbm .rgb8 .rgbn</code></td><td>Drawn by Peekee itself, including HAM, half-brite, and pictures that change palette line by line.</td></tr>
+          <tr><td>SVG</td><td><code>.svg .svgz</code></td><td>Drawn by Peekee: shapes, paths, fills, strokes, and gradients. Text and filters are left out. Zoom with the wheel and drag to pan.</td></tr>
           <tr><td>PDF</td><td><code>.pdf</code></td><td>Edge's previewer or your PDF previewer first, or the pages drawn by Windows, with zoom and page buttons.</td></tr>
           <tr><td>Office</td><td>.docx .xlsx .pptx and older Office files</td><td>Through the previewers Office installs. Without Office, the information card.</td></tr>
           <tr><td>Email</td><td><code>.eml .msg</code></td><td>Through the previewer Outlook or Windows installs, when there is one.</td></tr>
-          <tr><td>OpenDocument text</td><td><code>.odt</code></td><td>The text, headings and lists with a word count, read by Peekee, when no other previewer is installed for it.</td></tr>
+          <tr><td>OpenDocument text</td><td><code>.odt</code></td><td>The text, headings, and lists with a word count, read by Peekee, when no other previewer is installed for it.</td></tr>
           <tr><td>Shortcuts</td><td><code>.lnk</code></td><td>The file or folder the shortcut points to, shown as if you had selected it. A shortcut to a program or a web address shows its own card, with its own icon and what it starts: the target, its arguments, and for a Chrome or Edge web app (such as Google Keep) that it opens through the browser.</td></tr>
           <tr><td>Web links</td><td><code>.url .website</code></td><td>The address the link opens, large, with its host name. Nothing is opened or fetched.</td></tr>
           <tr><td>WordPerfect</td><td><code>.wpd .wp .wp5 .wp6 .wp7</code></td><td>The text only, read by Peekee, for WordPerfect 5 and 6 onwards.</td></tr>
@@ -642,8 +648,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
           <tr><td>Text and code</td><td><code>.txt .log .ini .cfg .conf .config .xml .yaml .yml .toml .html .htm .css .scss .js .ts .tsx .jsx .vue .py .ps1 .psm1 .bat .cmd .sh .sql .cs .vb .xaml .razor .cshtml .c .h .cpp .hpp .java .kt .swift .go .rs .rb .php .lua .tex .reg .srt .nfo .diff .patch .csproj .sln .slnx .props .targets .resx .editorconfig .gitignore .jsonc .json5 .ndjson .jsonl .env .psd1 .vbs .ahk .inf .properties .gradle .dart .r .pl .scala .clj .ex .exs .hs .fs .fsx .asm .bib .ass .sub .vtt .ics .vcf .m3u .m3u8 .cue .cmake</code>, and files named Makefile or Dockerfile</td><td>With line numbers. Any other file that turns out to be text is shown the same way.</td></tr>
           <tr><td>Archives</td><td><code>.zip .7z .rar .tar .tar.gz .tgz .tar.bz2 .tar.xz .gz .bz2 .xz .iso .cab .lzh .lha .jar .nupkg .vsix .epub .apk .appx .msix .whl .xpi</code></td><td>The list of what is inside, with sizes and dates. Nothing is unpacked.</td></tr>
           <tr><td>Fonts</td><td><code>.ttf .otf .ttc</code></td><td>A sample of the font at three sizes.</td></tr>
-          <tr><td>Folders</td><td>any folder</td><td>How many items it holds, its total size and the five newest items.</td></tr>
-          <tr><td>Everything else</td><td>any file</td><td>A card with the icon, type, size and dates. Any previewer installed on your PC for that type is used first.</td></tr>
+          <tr><td>Folders</td><td>any folder</td><td>How many items it holds, its total size, and the five newest items.</td></tr>
+          <tr><td>Everything else</td><td>any file</td><td>A card with the icon, type, size, and dates. Any previewer installed on your PC for that type is used first.</td></tr>
         </tbody>
       </table>
     </section>
@@ -655,7 +661,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
 <footer class="colophon">
   <div class="colophon-in">
     <span>Peekee, a file preview for Windows.</span>
-    <span class="tm">Microsoft, Windows, Office and Edge are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Peekee is not made, endorsed or supported by Microsoft.</span>
+    <span class="tm">Microsoft, Windows, Office, and Edge are trademarks of the Microsoft group of companies. Other names are trademarks of their owners. Peekee is not made, endorsed, or supported by Microsoft.</span>
     <a href="https://markticulous.github.io/support/?app=peekee" target="_blank" rel="noopener">Support Markticulous</a>
     <a class="totop" href="#top">Back to top ↑</a>
   </div>
@@ -668,6 +674,40 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
   </svg>
 </button>
 
+<script>
+/* Regional spelling (brand bible rule 17). Peekee opens this page with ?region=CA, UK or US; the words marked data-sp are
+   swapped to that region's spelling. Opened without a region (the copy on the web), the browser language chooses with the
+   same rule as the app's Spelling.RegionOf: -CA is Canada, any other en- except en-US is UK, anything else is US. */
+(function () {
+  var words = { /* key (the US spelling): US, UK, Canada */
+    color: ['color', 'colour', 'colour'],
+    colors: ['colors', 'colours', 'colours'],
+    centered: ['centered', 'centred', 'centred'],
+    center: ['center', 'centre', 'centre'],
+    license: ['license', 'licence', 'licence'],
+    gray: ['gray', 'grey', 'grey'],
+    grayed: ['grayed', 'greyed', 'greyed'],
+    behavior: ['behavior', 'behaviour', 'behaviour'],
+    organize: ['organize', 'organise', 'organize'],
+    customize: ['customize', 'customise', 'customize'],
+    favorite: ['favorite', 'favourite', 'favourite'],
+    recognizes: ['recognizes', 'recognises', 'recognizes']
+  };
+  var m = /[?&]region=(CA|UK|US)/i.exec(location.search), region;
+  if (m) region = m[1].toUpperCase();
+  else {
+    var lang = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    region = /-CA$/i.test(lang) ? 'CA' : (/^en-/i.test(lang) && !/-US$/i.test(lang)) ? 'UK' : 'US';
+  }
+  var col = region === 'UK' ? 1 : region === 'CA' ? 2 : 0;
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sp]'), function (el) {
+    var row = words[el.getAttribute('data-sp')];
+    if (!row) return;
+    var w = row[col];
+    el.textContent = /^[A-Z]/.test(el.textContent) ? w.charAt(0).toUpperCase() + w.slice(1) : w;
+  });
+})();
+</script>
 <script src="version.js"></script>
 <script>
 /* The version chip. The app build writes version.js beside this page (it is committed, so the
