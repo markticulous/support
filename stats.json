@@ -8,8 +8,11 @@
   "peekee": {
     "visitors": 2
   },
-  "deskside-radio": {
-    "visitors": 1
+  "findee": {
+    "visitors": null
   },
-  "updated": "2026-11-22"
+  "deskside-radio": {
+    "visitors": 0
+  },
+  "updated": "2026-11-23"
 }
