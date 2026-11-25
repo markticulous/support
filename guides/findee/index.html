@@ -511,7 +511,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <table class="ref">
         <thead><tr><th>Filter</th><th>What it does</th></tr></thead>
         <tbody>
-          <tr><td>kind:image</td><td>Only one kind of item. The kinds are <strong>image</strong>, <strong>document</strong>, <strong>audio</strong>, <strong>video</strong>, <strong>archive</strong>, <strong>email</strong>, <strong>code</strong>, <strong>folder</strong>, and <strong>app</strong>. For example, <span class="path">kind:document</span> finds PDF, Word, Excel, PowerPoint, text, and similar files.</td></tr>
+          <tr><td>kind:image</td><td>Only one kind of item. The kinds are <strong>image</strong>, <strong>document</strong>, <strong>pdf</strong>, <strong>spreadsheet</strong>, <strong>presentation</strong>, <strong>text</strong>, <strong>audio</strong>, <strong>video</strong>, <strong>archive</strong>, <strong>email</strong>, <strong>code</strong>, <strong>folder</strong>, and <strong>app</strong>. For example, <span class="path">kind:document</span> finds PDF, Word, Excel, PowerPoint, text, and similar files, while <span class="path">kind:pdf</span>, <span class="path">kind:spreadsheet</span>, <span class="path">kind:presentation</span>, and <span class="path">kind:text</span> each find just their own part of those.</td></tr>
           <tr><td>ext:pdf or *.pdf</td><td>Only files that end in <span class="path">.pdf</span>. Use it more than once to allow several endings: <span class="path">ext:jpg ext:png</span>.</td></tr>
           <tr><td>in:projects</td><td>Only items whose folder path contains the text, such as <span class="path">C:\Users\Sam\Projects</span>. The text cannot contain a space.</td></tr>
           <tr><td>modified:week</td><td>Only items changed in that time: <strong>today</strong>, <strong>yesterday</strong>, <strong>week</strong> (the last 7 days), <strong>month</strong> (the last 30 days), <strong>year</strong> (the last 365 days), a year such as <span class="path">modified:2025</span>, or a month such as <span class="path">modified:2025-10</span>.</td></tr>
@@ -526,7 +526,31 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         </picture>
         <figcaption><span class="path">ext:pdf report</span> lists only the PDF files with <strong>report</strong> in their name.</figcaption>
       </figure>
-      <p>Filters also decide which groups show. <span class="path">kind:app</span> shows only apps, and <span class="path">kind:email</span> shows only emails. Filters that apply only to files and folders (<span class="path">ext:</span>, <span class="path">in:</span>, <span class="path">size:</span>, <span class="path">modified:</span>, and the file kinds) hide the Apps group. Because Windows Search cannot apply them, they also hide the Inside files and emails group, with two exceptions: <span class="path">kind:document</span> and <span class="path">kind:email</span> keep it.</p>
+      <p>Filters also decide which groups show. <span class="path">kind:app</span> shows only apps, and <span class="path">kind:email</span> shows only emails. Filters that apply only to files and folders (<span class="path">ext:</span>, <span class="path">in:</span>, <span class="path">size:</span>, <span class="path">modified:</span>, and the file kinds) hide the Apps group. Because Windows Search cannot apply them, they also hide the Inside files and emails group, with these exceptions: <span class="path">kind:document</span>, its parts (<span class="path">kind:pdf</span>, <span class="path">kind:spreadsheet</span>, <span class="path">kind:presentation</span>, and <span class="path">kind:text</span>), and <span class="path">kind:email</span> keep it.</p>
+      <h3>Filter chips</h3>
+      <p>When a search finds more than fits on screen (9 or more matches), or finds files of three or more kinds, a row of small buttons appears directly under the search box. It starts with <strong>All</strong>, then has one button for each kind the words match: <strong>Folders</strong>, <strong>Images</strong>, <strong>PDFs</strong>, <strong>Documents</strong>, <strong>Spreadsheets</strong>, <strong>Presentations</strong>, <strong>Text</strong>, <strong>Audio</strong>, <strong>Video</strong>, <strong>Archives</strong>, and <strong>Code</strong>. The row does not appear for an empty box, for Recent, or when you have typed a <span class="path">kind:</span>, <span class="path">ext:</span>, or <span class="path">*.ext</span> filter yourself, because that already says what you want.</p>
+      <ul>
+        <li><strong>One kind or several.</strong> Click a button to show only that kind. Click it again, or click <strong>All</strong>, to show everything again. Hold <kbd>Ctrl</kbd> and click a button to choose more than one kind (for example <strong>PDFs</strong> and <strong>Documents</strong> together); a plain click chooses that kind alone. The text in the box does not change.</li>
+        <li><strong>From the keyboard.</strong> Press <kbd>Tab</kbd> for the next button and <kbd>Shift</kbd>+<kbd>Tab</kbd> for the previous one. <strong>All</strong> is part of the circle, and your typing stays in the box.</li>
+        <li><strong>It stays while you type.</strong> The button you chose stays on while you change the words. It turns off when you empty the box or close Findee. While one is on, the row still shows every kind the words match, so you can pick another.</li>
+        <li><strong>One line.</strong> If the popup is narrow, the kinds with the fewest matches drop off first, and the buttons that are on always stay. Make the popup wider to see them again.</li>
+        <li><strong>Other groups.</strong> While a button is on, the Apps group is hidden, and <strong>Inside files and emails</strong> shows only when the buttons that are on are <strong>Documents</strong>, <strong>PDFs</strong>, or both, limited to those kinds.</li>
+        <li><strong>What each button finds.</strong> <strong>Documents</strong> means word-processing files (Word, OpenDocument text, RTF, and similar). <strong>PDFs</strong>, <strong>Spreadsheets</strong>, <strong>Presentations</strong>, and <strong>Text</strong> are their own buttons. You can type the same kinds yourself: <span class="path">kind:pdf</span>, <span class="path">kind:spreadsheet</span>, <span class="path">kind:presentation</span>, and <span class="path">kind:text</span>. <span class="path">kind:document</span> still finds all of them together.</li>
+      </ul>
+      <figure>
+        <picture>
+          <source srcset="images/popup-chips-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-chips.webp" alt="The word report typed in the search box, with a row of buttons under it: All, Folders, PDFs, and Documents, and the results listed below">
+        </picture>
+        <figcaption>A search for <strong>report</strong> finds folders, PDFs, and documents, so the buttons appear.</figcaption>
+      </figure>
+      <figure>
+        <picture>
+          <source srcset="images/popup-chips-pdf-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="images/popup-chips-pdf.webp" alt="The same search with the PDFs button turned on, and only PDF files listed below it">
+        </picture>
+        <figcaption>With <strong>PDFs</strong> turned on, only the PDF files are listed.</figcaption>
+      </figure>
       <h3>Small typing mistakes</h3>
       <p>When you type <strong>one word of 4 to 12 letters</strong> and Findee finds <strong>fewer than 5</strong> results, it also tries the word with <strong>one letter missing</strong> or <strong>two <span data-sp="neighboring">neighbouring</span> letters swapped</strong>. So <span class="path">reprot</span> finds <span class="path">report</span>. In other words, it puts right a letter typed twice by mistake (<span class="path">reeport</span>) and two letters typed in the wrong order. The extra matches are shown below the better ones.</p>
       <figure>
@@ -647,7 +671,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <li><strong>It only knows what Windows Search knows.</strong> Windows Search looks inside the places Windows has been told to index, usually your own folders. A document in a place Windows does not index is found by its name only.</li>
         <li><strong>Findee does not copy any of it.</strong> The matches are read from Windows Search as you search, and are forgotten when the search box closes (see <a href="#privacy">Privacy</a>).</li>
         <li><strong>Emails come from classic Outlook only.</strong> They show the sender and the date under the subject. Press <kbd>Enter</kbd> and the message opens in classic Outlook. <strong>New Outlook</strong>, the newer app that replaces it, keeps no mail on this PC for Windows Search to read, so its mail is <strong>not included</strong>.</li>
-        <li><strong>Filters limit it.</strong> The group shows for plain searches, and for <span class="path">kind:document</span> and <span class="path">kind:email</span>. Other filters hide it (see <a href="#searching">Searching</a>).</li>
+        <li><strong>Filters limit it.</strong> The group shows for plain searches, and for <span class="path">kind:document</span>, its parts (<span class="path">kind:pdf</span>, <span class="path">kind:spreadsheet</span>, <span class="path">kind:presentation</span>, and <span class="path">kind:text</span>), and <span class="path">kind:email</span>. Other filters hide it; so does a filter chip, except <strong>Documents</strong> and <strong>PDFs</strong> (see <a href="#searching">Searching</a>).</li>
       </ul>
       <p>If Windows Search is turned off on your PC, the group is simply missing, and a quiet line says <strong>Windows Search is off, so matches inside files are not shown.</strong> Everything else carries on working.</p>
     </section>
@@ -682,7 +706,8 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       </figure>
       <ul>
         <li><strong>Update automatically</strong> is ticked unless you change it. Findee installs an update only when its search and Settings windows are closed, and within 14 days even when this is off. Your settings and history are kept.</li>
-        <li>One button, whose words follow the state: <strong>Check now</strong>; <strong>Checking&hellip;</strong>; <strong>Downloading&hellip;</strong> with a breathing orange dot; and <strong>Restart to update</strong> with a blinking dot, which installs the ready update at once. A button that has nothing to do is dimmed.</li>
+        <li>One button, whose words follow the state: <strong>Check now</strong>; <strong>Checking&hellip;</strong>; <strong>Downloading&hellip;</strong> with a breathing orange dot; and <strong>Restart to update</strong> with a blinking dot, which installs the ready update at once. A button that has nothing to do is dimmed. The same orange dot shows beside <strong>General</strong> in the sidebar, so you can see there is an update from any page.</li>
+        <li>After an update, one Windows notification says that Findee was updated and is running.</li>
         <li>Beside the button, the status: <strong>Checking for updates&hellip;</strong>, <strong>Downloading {version}&hellip;</strong>, <strong>Version {version} is ready.</strong> or <strong>Findee is up to date.</strong> (in cyan); <strong>Update check failed.</strong> or <strong>The Findee service is not running, so updates are not checked.</strong> (in red); or <strong>Updates work in the installed app.</strong> in a copy of Findee that was not installed with the setup.</li>
         <li>Under it, <strong>Last checked</strong> says when the last check was made, for example <strong>Last checked today at 16:15.</strong> It stays hidden until the first check.</li>
       </ul>
@@ -766,7 +791,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
         <li>Accept the terms on the one page that follows and click <strong>Install</strong>. Windows asks for an administrator&rsquo;s permission once. Choose <strong>Yes</strong>.</li>
         <li>At the end, leave <strong>Open Findee</strong> ticked to start it.</li>
       </ol>
-      <p>Findee installs for everyone on the PC, in <span class="path">Program Files\Findee</span>, together with the Findee service (named <strong>Findee Index</strong> in the Windows Services list) that keeps your index up to date even when nobody is signed in. If the .NET 10 Desktop Runtime is not on the PC yet, the setup downloads it from Microsoft first; if it is, nothing extra is fetched. You will find Findee in the Start menu. There is no desktop shortcut.</p>
+      <p>Findee installs for everyone on the PC, in <span class="path">Program Files\Findee</span>, together with the Findee service (named <strong>Findee Index</strong> in the Windows Services list) that keeps your index up to date even when nobody is signed in. If the .NET 10 Desktop Runtime is not on the PC yet, the setup downloads it from Microsoft first; if it is, nothing extra is fetched. You will find Findee in the Start menu, and on the desktop too if you leave <strong>Create a desktop shortcut</strong> ticked on the first page of the setup. An update keeps your choice.</p>
       <h3>Updating</h3>
       <p>The service checks for a new version once a day, and also when you press <strong>Check now</strong> in <strong>Settings &rarr; General &rarr; Updates</strong>. An update is checked against a signature before anything is installed, so a damaged or tampered file is refused. Then:</p>
       <ul>
@@ -777,7 +802,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <h3>Removing Findee</h3>
       <p>Open Windows <strong>Settings &rarr; Apps &rarr; Installed apps</strong>, find Findee, and choose <strong>Uninstall</strong>. Uninstalling:</p>
       <ul>
-        <li>closes Findee, then removes the program, the Findee service, and the Start menu shortcut;</li>
+        <li>closes Findee, then removes the program, the Findee service, and the Start menu and desktop shortcuts;</li>
         <li>removes <span class="path">%ProgramData%\Findee</span>, with every index. They are a copy of your file list, and Findee makes them again if you reinstall;</li>
         <li>for <strong>the account that uninstalls</strong>, removes the Start with Windows entry, Findee&rsquo;s place in the shared shortcut list of the Markticulous apps, and <span class="path">%LocalAppData%\Findee</span> (history and settings).</li>
       </ul>
@@ -823,7 +848,7 @@ figcaption { margin-top: 10px; font-family: var(--sans); font-size: 13px; color:
       <dl class="defs">
         <dt>The shortcut does nothing</dt>
         <dd>Look for the Findee icon in the tray (under the <strong>^</strong> arrow too). If it is not there, start Findee from the Start menu. If it is there, another program may be using the same shortcut. Open <strong>Settings &rarr; General</strong> and choose another one under <strong>Shortcut</strong>. If Windows refused the shortcut when Findee started, a notice says so, for example <strong>Alt+Space is in use by another app. Open Findee from its tray icon for now.</strong> The tray icon always opens the search box with a left-click.</dd>
-        <dt>&ldquo;Findee is building its index. Results will appear in a moment.&rdquo;</dt>
+        <dt>&ldquo;Findee is building its index&hellip;&rdquo;</dt>
         <dd>The service is making the list of your files, which happens after the first install, after <strong>Rebuild index</strong>, and when you turn <strong>Include hidden and system files</strong> on or off. Wait a moment: a large drive takes a little longer. <strong>Settings &rarr; Index</strong> shows the state of each drive.</dd>
         <dt>&ldquo;The index is not being updated.&rdquo; or &ldquo;The Findee service is not running, so the index is not being updated.&rdquo;</dt>
         <dd>The first line shows in the search box, the second on the Index page of Settings. The service that keeps the list of files is not running. Searches use the list as it was, so new files are missing. Restart the PC, or open the Windows Services list and start the service named <strong>Findee Index</strong> (its short name is <span class="path">FindeeService</span>). Nothing in Findee itself needs repairing.</dd>
