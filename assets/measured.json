@@ -3,56 +3,56 @@
     {
       "id": "clipee",
       "name": "Clipee",
-      "version": "1.2.0",
-      "measuredUtc": "2026-11-13T05:17:13Z",
+      "version": "1.4.0",
+      "measuredUtc": "2026-11-26T03:17:55Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "4.91 MB",
+          "value": "6.2 MB",
           "target": "10 MB or less",
           "pass": true
         },
         {
           "row": "R1",
-          "value": "0 ms (runs: 8, 0, 0)",
+          "value": "0 ms (runs: 0, 0, 8)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "55.8 MB",
+          "value": "57.7 MB",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "80 ms (visible 58 ms) (runs: 80.4, 80, 80)",
+          "value": "79.9 ms (visible 55.7 ms) (runs: 84.1, 79.9, 79.2)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "31.55 ms (visible 27.3 ms)",
+          "value": "26.25 ms (visible 21.1 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "U3",
-          "value": "2.34 ms",
+          "value": "3.3 ms",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "86.6 MB (at rest before the opens 65.6 MB, diff 21 MB)",
+          "value": "87.5 MB (at rest before the opens 67.7 MB, diff 19.8 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "0.3 MB (runs: -1.5, 4, 0.3)",
+          "value": "0.3 MB (runs: 0, 0.3, 1.4)",
           "target": "2 MB or less",
           "pass": true
         }
@@ -62,14 +62,14 @@
     {
       "id": "peekee",
       "name": "Peekee",
-      "version": "1.1.0",
-      "measuredUtc": "2026-11-14T16:59:41Z",
+      "version": "1.3.0",
+      "measuredUtc": "2026-11-26T00:01:04Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "4.6 MB",
+          "value": "4.7 MB",
           "target": "10 MB or less",
           "pass": true
         },
@@ -81,19 +81,19 @@
         },
         {
           "row": "R3",
-          "value": "57.5 MB",
+          "value": "59.7 MB",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "69.3 ms (visible 45 ms) (runs: 2 MB source text 69.8/69.2/69.3; small PNG 68.2/64.9/69.7)",
+          "value": "70.2 ms (visible 44.3 ms) (runs: 2 MB source text 74.3/70.2/68.9; small PNG 74.7/66.4/66.1)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "8.15 ms (visible 2.1 ms)",
+          "value": "8.45 ms (visible 2.4 ms)",
           "target": "50 ms or less",
           "pass": true
         },
@@ -105,13 +105,13 @@
         },
         {
           "row": "G2",
-          "value": "60.1 MB (at rest 57.5 MB, diff 2.6 MB)",
+          "value": "55.5 MB (at rest 59.9 MB, diff -4.4 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "-4.1 MB (runs: -4.7, 1.5, -4.1)",
+          "value": "-4.6 MB (runs: -5.4, -4.1, -4.6)",
           "target": "2 MB or less",
           "pass": true
         }
@@ -121,56 +121,56 @@
     {
       "id": "findee",
       "name": "Findee",
-      "version": "0.1.0",
-      "measuredUtc": "2026-11-21T14:31:35Z",
+      "version": "1.1.0",
+      "measuredUtc": "2026-11-25T12:19:51Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "3.84 MB",
+          "value": "4.33 MB",
           "target": "10 MB or less",
           "pass": true
         },
         {
           "row": "R1",
-          "value": "app 0.5 ms (runs: 0.5, 0.5, 0.8); service 0.1 ms (runs: 0.1, 0.1, 0.1)",
+          "value": "app 0.5 ms (runs: 0.7, 0.5, 0.5); service 0.1 ms (runs: 0.2, 0.1, 0.1)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "app 58.7 MB (runs: 58.4, 58.7, 58.8); service 9.2 MB (runs: 9.3, 9.2, 8.9)",
+          "value": "app 60.6 MB (runs: 62, 60.1, 60.6); service 9.1 MB (runs: 9.1, 9.2, 8.4)",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "89.1 ms (runs: 89.1, 81.2, 96.2)",
+          "value": "78.2 ms (runs: 73.6, 79.1, 78.2)",
           "target": "100 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "18.75 ms (runs: 21.5, 13.9, 22.8, 16)",
+          "value": "28.05 ms (runs: 30.4, 25.3, 30.1, 26)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "U3",
-          "value": "0.817 ms (worst query 4.596 ms; report 2.096; q3 0.836; annual report 0.817; 2024 tax 0.407; ext:pdf invoice 0.937; kind:image beach 0.737; \"meeting notes\" 0.554; zzzz 0.73; in:projects ext:cs 4.596)",
+          "value": "0.85 ms (worst query 4.928 ms; report 2.511; q3 0.9; annual report 0.85; 2024 tax 0.422; ext:pdf invoice 0.995; kind:image beach 0.664; \"meeting notes\" 0.579; zzzz 0.735; in:projects ext:cs 4.928)",
           "target": "15 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "46.6 MB (at rest before the opens 57.8 MB)",
+          "value": "47 MB (at rest before the opens 60.4 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "0.5 MB (runs: 0.5, 0.4, 0.5)",
+          "value": "0.6 MB (runs: 0.4, 0.6, 1)",
           "target": "2 MB or less",
           "pass": true
         }
@@ -180,50 +180,50 @@
     {
       "id": "backee",
       "name": "Backee",
-      "version": "1.0.2",
-      "measuredUtc": "2026-11-15T22:05:10Z",
+      "version": "1.1.2",
+      "measuredUtc": "2026-11-24T23:42:54Z",
       "cpu": "AMD Ryzen 9 5950X 16-Core Processor",
       "os": "Windows 11 (build 26300)",
       "rows": [
         {
           "row": "S1",
-          "value": "9.96 MB",
+          "value": "10 MB",
           "target": "10 MB or less",
           "pass": true
         },
         {
           "row": "R1",
-          "value": "UI 2.3 ms (runs: 2.3, 1.6, 2.6); service 9.8 ms (runs: 3.7, 9.8, 11.3); for information, UI with the service stopped 9.3 ms (runs: 9.5, 9.3, 9.3)",
+          "value": "UI 2.2 ms (runs: 4, 2.1, 2.2); service 8.1 ms (runs: 11.5, 8.1, 6.6); for information, UI with the service stopped 9.7 ms (runs: 9.4, 10.7, 9.7)",
           "target": "10 ms or less",
           "pass": true
         },
         {
           "row": "R3",
-          "value": "UI 43.5 MB (runs: 43.5, 43.1, 43.7); service 13.8 MB (runs: 14.1, 13.3, 13.8)",
+          "value": "UI 43.4 MB (runs: 44.1, 43.2, 43.4); service 14.3 MB (runs: 14.3, 13.8, 14.3)",
           "target": "80 MB or less",
           "pass": true
         },
         {
           "row": "U1",
-          "value": "128.7 ms (visible 125.2 ms) (runs: 136.1, 128.7, 125.4)",
+          "value": "127.3 ms (visible 124.9 ms) (runs: 138.5, 127.3, 125.4)",
           "target": "150 ms or less",
           "pass": true
         },
         {
           "row": "U2",
-          "value": "30.95 ms (visible 17.85 ms)",
+          "value": "35.9 ms (visible 18.85 ms)",
           "target": "50 ms or less",
           "pass": true
         },
         {
           "row": "G2",
-          "value": "71.9 MB (at rest before the opens 43.3 MB, diff 28.6 MB)",
+          "value": "72.8 MB (at rest before the opens 59.3 MB, diff 13.5 MB)",
           "target": "110 MB or less",
           "pass": true
         },
         {
           "row": "G3",
-          "value": "1.3 MB (runs: -0.4, 1.3, 2.2)",
+          "value": "0.3 MB (runs: -1.3, 0.8, 0.3)",
           "target": "2 MB or less",
           "pass": true
         }
