@@ -205,9 +205,10 @@
   .card[data-new-since] { position: relative; overflow: hidden; }
   .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 2.5px 0 3.5px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); cursor: default; outline: none; }
   @media (prefers-color-scheme: dark) { .card .nf { background: var(--cyan-ink); } }
-  /* "Coming" corner ribbon: a card with data-coming (an app in development) always shows it, in the update-dot orange with midnight ink. */
+  /* "Coming" corner ribbon: a card with data-coming (an app in development) always shows it, in deep amber (chosen by Mark 2026-11-26): #c4640a with white ink in light, #f59e0b with midnight ink in dark. */
   .card[data-coming] { position: relative; overflow: hidden; }
-  .card[data-coming] .nf { display: inline-flex; background: #ff9800; color: var(--midnight-deep); }
+  .card[data-coming] .nf { display: inline-flex; background: #c4640a; color: #fff; }
+  @media (prefers-color-scheme: dark) { .card[data-coming] .nf { background: #f59e0b; color: var(--midnight-deep); } }
   .ftip { position: fixed; z-index: 50; max-width: 300px; white-space: pre-line; padding: 6px 10px; border-radius: 4px; font: 400 12px/1.4 var(--font); color: var(--text); background: color-mix(in srgb, var(--surface-solid) 94%, transparent); border: 1px solid var(--ctrl-stroke); box-shadow: 0 4px 12px rgba(0,0,0,.14); pointer-events: none; opacity: 0; translate: 0 4px; transition: opacity 80ms linear, translate 80ms linear; }
   .ftip.on { opacity: 1; translate: 0 0; transition: opacity 140ms ease-out, translate 140ms ease-out; }
   @media (prefers-reduced-motion: reduce) { .ftip, .ftip.on { transition: none; translate: 0 0; } }
