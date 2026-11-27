@@ -205,6 +205,9 @@
   .card[data-new-since] { position: relative; overflow: hidden; }
   .card .nf { position: absolute; top: 16px; right: -34px; width: 118px; justify-content: center; transform: rotate(45deg); padding: 2.5px 0 3.5px; font: 500 12px/1 var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--on-cyan); background: #0c82a2; box-shadow: 0 1px 3px rgba(0,0,0,.25); cursor: default; outline: none; }
   @media (prefers-color-scheme: dark) { .card .nf { background: var(--cyan-ink); } }
+  /* "Coming" corner ribbon: a card with data-coming (an app in development) always shows it, in the update-dot orange with midnight ink. */
+  .card[data-coming] { position: relative; overflow: hidden; }
+  .card[data-coming] .nf { display: inline-flex; background: #ff9800; color: var(--midnight-deep); }
   .ftip { position: fixed; z-index: 50; max-width: 300px; white-space: pre-line; padding: 6px 10px; border-radius: 4px; font: 400 12px/1.4 var(--font); color: var(--text); background: color-mix(in srgb, var(--surface-solid) 94%, transparent); border: 1px solid var(--ctrl-stroke); box-shadow: 0 4px 12px rgba(0,0,0,.14); pointer-events: none; opacity: 0; translate: 0 4px; transition: opacity 80ms linear, translate 80ms linear; }
   .ftip.on { opacity: 1; translate: 0 0; transition: opacity 140ms ease-out, translate 140ms ease-out; }
   @media (prefers-reduced-motion: reduce) { .ftip, .ftip.on { transition: none; translate: 0 0; } }
@@ -495,6 +498,26 @@
           </div>
         </div>
       </article>
+      <article class="card" data-scrub data-coming>
+        <span class="nf">Coming</span>
+        <div class="app-head">
+          <img class="inset" src="assets/removee-v1.svg" alt="" width="56" height="56">
+          <div>
+            <h3>
+              <picture>
+                <source srcset="assets/removee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+                <img class="wm wm-removee" src="assets/removee-wordmark-light.svg" alt="Removee" height="24">
+              </picture>
+            </h3>
+          </div>
+        </div>
+        <p>A different kind of uninstaller. It records what each installation does, so every trace is purged, nothing is left behind, and anything removed can be put back.</p>
+        <div class="row">
+          <span class="soon">In development</span>
+          <a class="btn" href="#removee">Details</a>
+          <span class="tag">Windows 10 and 11</span>
+        </div>
+      </article>
       <article class="card" data-scrub>
         <div class="app-head">
           <img src="assets/deskside-radio.png" alt="" width="56" height="56">
@@ -513,26 +536,8 @@
           </div>
         </div>
       </article>
-      <article class="card" data-scrub>
-        <div class="app-head">
-          <img class="inset" src="assets/removee-v1.svg" alt="" width="56" height="56">
-          <div>
-            <h3>
-              <picture>
-                <source srcset="assets/removee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
-                <img class="wm wm-removee" src="assets/removee-wordmark-light.svg" alt="Removee" height="24">
-              </picture>
-            </h3>
-          </div>
-        </div>
-        <p>Uninstalls apps and purges every trace. It records what each installation does, so nothing is left behind and anything removed can be put back.</p>
-        <div class="row">
-          <span class="soon">In development</span>
-          <a class="btn" href="#removee">Details</a>
-          <span class="tag">Windows 10 and 11</span>
-        </div>
-      </article>
-      <article class="card" data-scrub>
+      <article class="card" data-scrub data-coming>
+        <span class="nf">Coming</span>
         <div class="app-head">
           <img src="assets/tagee.svg" alt="" width="56" height="56">
           <div><h3><span class="wm wm-tagee">Tag<b>ee</b></span></h3></div>
@@ -743,6 +748,36 @@
       </figure>
     </section>
 
+    <section class="profile" id="removee" aria-labelledby="removee-h">
+      <div class="copy" data-scrub>
+        <p class="eyebrow">In development<span class="sep">/</span>Windows 10 and 11</p>
+        <div class="app-head">
+          <img class="inset" src="assets/removee-v1.svg" alt="" width="56" height="56">
+          <h3 id="removee-h">
+            <picture>
+              <source srcset="assets/removee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
+              <img class="wm wm-removee" src="assets/removee-wordmark-light.svg" alt="Removee" height="24">
+            </picture>
+          </h3>
+        </div>
+        <p class="pitch">A different kind of uninstaller. It works from evidence, not guesses.</p>
+        <ul class="feats">
+          <li data-scrub>A quiet helper records the files and settings each installation adds, so removal knows exactly what to take out.</li>
+          <li data-scrub>Every removal ends with a check that no trace remains.</li>
+          <li data-scrub>Anything removed is kept for 30 days and goes back with one click.</li>
+        </ul>
+        <div class="row">
+          <span class="soon">In development</span>
+        </div>
+      </div>
+      <figure data-scrub class="shot window">
+        <picture class="pic">
+          <source srcset="assets/removee-screenshot-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="assets/removee-screenshot.webp" alt="A design preview of Removee after an app's own uninstaller has run: 87 leftover items in groups, each with the reason it is listed, and a Remove 87 items button" loading="lazy" width="1100" height="700">
+        </picture>
+      </figure>
+    </section>
+
     <section class="profile" id="deskside-radio" aria-labelledby="deskside-h">
       <div class="copy" data-scrub>
         <p class="eyebrow">Available<span class="sep">/</span>Runs in your browser</p>
@@ -770,36 +805,6 @@
       <figure data-scrub class="shot">
         <img src="assets/deskside-radio-screenshot.jpg" alt="Deskside Radio in its analogue dial theme, with nine station presets" loading="lazy" width="1600" height="1000">
         <span class="watermark wm wm-deskside" aria-hidden="true">Deskside Radio</span>
-      </figure>
-    </section>
-
-    <section class="profile" id="removee" aria-labelledby="removee-h">
-      <div class="copy" data-scrub>
-        <p class="eyebrow">In development<span class="sep">/</span>Windows 10 and 11</p>
-        <div class="app-head">
-          <img class="inset" src="assets/removee-v1.svg" alt="" width="56" height="56">
-          <h3 id="removee-h">
-            <picture>
-              <source srcset="assets/removee-wordmark-dark.svg" media="(prefers-color-scheme: dark)">
-              <img class="wm wm-removee" src="assets/removee-wordmark-light.svg" alt="Removee" height="24">
-            </picture>
-          </h3>
-        </div>
-        <p class="pitch">An uninstaller that works from evidence, not guesses.</p>
-        <ul class="feats">
-          <li data-scrub>A quiet helper records the files and settings each installation adds, so removal knows exactly what to take out.</li>
-          <li data-scrub>Every removal ends with a check that no trace remains.</li>
-          <li data-scrub>Anything removed is kept for 30 days and goes back with one click.</li>
-        </ul>
-        <div class="row">
-          <span class="soon">In development</span>
-        </div>
-      </div>
-      <figure data-scrub class="shot window">
-        <picture class="pic">
-          <source srcset="assets/removee-screenshot-dark.webp" media="(prefers-color-scheme: dark)">
-          <img src="assets/removee-screenshot.webp" alt="A design preview of Removee after an app's own uninstaller has run: 87 leftover items in groups, each with the reason it is listed, and a Remove 87 items button" loading="lazy" width="1100" height="700">
-        </picture>
       </figure>
     </section>
 
