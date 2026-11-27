@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 15.4 157.9 44.7" width="315.8" height="89.4">
+  <!-- Removee wordmark, take C (chosen by Mark 2026-11-26), for light grounds. Shared grid: stroke 4.2, round caps, x-height 30.25 to 45.25. Open r (arch r7.5, short flat arm), compact m (two arches r6); ink #0F172A, "ee" #06B6D4. -->
+  <g fill="none" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#0F172A">
+      <path d="M2.1,45.25 V37.75 A7.5,7.5 0 0 1 9.6,30.25 H11.6"/>
+      <path d="M18.2,37.75 H33.2 A7.5,7.5 0 1 0 31.01,43.05"/>
+      <path d="M42,45.25 V36.25 A6,6 0 0 1 54,36.25 V45.25 M54,36.25 A6,6 0 0 1 66,36.25 V45.25"/>
+      <circle cx="82.3" cy="37.75" r="7.5"/>
+      <path d="M96.6,30.25 L104.1,45.25 L111.6,30.25"/>
+    </g>
+    <g stroke="#06B6D4">
+      <path d="M118.4,37.75 H133.4 A7.5,7.5 0 1 0 131.21,43.05"/>
+      <path d="M140.8,37.75 H155.8 A7.5,7.5 0 1 0 153.61,43.05"/>
+    </g>
+  </g>
+</svg>
